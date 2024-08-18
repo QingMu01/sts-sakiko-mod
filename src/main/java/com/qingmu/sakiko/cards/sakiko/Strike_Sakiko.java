@@ -17,7 +17,7 @@ public class Strike_Sakiko extends CustomCard {
     public static final String ID = ModNameHelper.make(Strike_Sakiko.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Strike_Sakiko.png";
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
