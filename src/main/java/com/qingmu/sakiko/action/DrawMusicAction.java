@@ -17,7 +17,7 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class DrawMusicAction extends AbstractGameAction {
 
-    private static final TutorialStrings MSG = CardCrawlGame.languagePack.getTutorialString(ModNameHelper.make("DrawMusicAction"));
+    public static final TutorialStrings MSG = CardCrawlGame.languagePack.getTutorialString(ModNameHelper.make("DrawMusicAction"));
 
     public DrawMusicAction() {
         this.actionType = ActionType.DRAW;

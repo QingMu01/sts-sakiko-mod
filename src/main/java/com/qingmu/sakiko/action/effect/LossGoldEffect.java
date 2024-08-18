@@ -109,13 +109,13 @@ public class LossGoldEffect extends AbstractGameEffect {
                 this.isDone = true;
                 if (MathUtils.randomBoolean())
                     CardCrawlGame.sound.play("GOLD_GAIN", 0.1F);
-                if (!this.owner.isPlayer)
+                if (this.owner.isPlayer)
                     this.owner.loseGold(1);
                 AbstractDungeon.effectsQueue.add(new ShineLinesEffect(this.x, this.y));
                 boolean textEffectFound = false;
                 for (AbstractGameEffect e : AbstractDungeon.effectList) {
                     if (e instanceof GainGoldTextEffect && (
-                            (GainGoldTextEffect) e).ping(1)) {
+                            (GainGoldTextEffect) e).ping(-1)) {
                         textEffectFound = true;
                         break;
                     }
@@ -123,11 +123,11 @@ public class LossGoldEffect extends AbstractGameEffect {
                 if (!textEffectFound)
                     for (AbstractGameEffect e : AbstractDungeon.effectsQueue) {
                         if (e instanceof GainGoldTextEffect && (
-                                (GainGoldTextEffect) e).ping(1))
+                                (GainGoldTextEffect) e).ping(-1))
                             textEffectFound = true;
                     }
                 if (!textEffectFound && this.showGainEffect)
-                    AbstractDungeon.effectsQueue.add(new GainGoldTextEffect(1));
+                    AbstractDungeon.effectsQueue.add(new GainGoldTextEffect(-1));
             }
         }
     }

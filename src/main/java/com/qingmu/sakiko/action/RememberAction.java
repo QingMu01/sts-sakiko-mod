@@ -17,10 +17,8 @@ public class RememberAction extends AbstractGameAction {
     private AbstractPlayer p;
     private final boolean upgrade;
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("ExhumeAction");
-    ;
     public static final String[] TEXT = uiStrings.TEXT;
-    ;
-    private ArrayList<AbstractCard> exhumes = new ArrayList();
+    private ArrayList<AbstractCard> exhumes = new ArrayList<>();
 
     public RememberAction(boolean upgrade) {
         this.upgrade = upgrade;

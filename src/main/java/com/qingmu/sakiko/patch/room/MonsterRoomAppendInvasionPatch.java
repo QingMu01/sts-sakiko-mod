@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MonsterRoomAppendInvasionPatch {
 
     // 未触发时增加的概率
-    public static Float upgradeChance = 1.25f;
+    public static Float upgradeChance = 0.25f;
     public static InvasionChangeSaved invasion = (InvasionChangeSaved) BaseMod.getSaveFields().get("chance");
 
     /*
@@ -30,7 +30,7 @@ public class MonsterRoomAppendInvasionPatch {
     @SpirePatch(clz = MonsterRoom.class, method = "onPlayerEntry")
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko) {
+            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard")) {
                 if (AbstractDungeon.floorNum > 35 && BandMemberHelper.getBandMemberCount() < 4) {
                     System.out.println("触发了入侵事件1");
                     setEvent();

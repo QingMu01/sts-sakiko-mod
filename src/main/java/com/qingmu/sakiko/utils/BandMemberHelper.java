@@ -33,6 +33,7 @@ public class BandMemberHelper {
         int count = 0;
         for (AbstractRelic relic : p.relics) {
             if (relic instanceof AbstractBandMember) {
+                relic.flash();
                 count++;
             }
         }

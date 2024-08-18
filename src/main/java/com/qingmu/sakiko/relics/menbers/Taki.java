@@ -24,6 +24,6 @@ public class Taki extends AbstractBandMember {
     @Override
     public void atTurnStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new VigorPower(AbstractDungeon.player,1)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new VigorPower(AbstractDungeon.player,2)));
     }
 }

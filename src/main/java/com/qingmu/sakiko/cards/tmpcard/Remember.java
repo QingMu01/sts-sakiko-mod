@@ -1,6 +1,8 @@
 package com.qingmu.sakiko.cards.tmpcard;
 
 import basemod.abstracts.CustomCard;
+import com.badlogic.gdx.graphics.Color;
+import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -30,6 +32,8 @@ public class Remember extends CustomCard {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.REMEMBER);
         this.exhaust = true;
+        FlavorText.AbstractCardFlavorFields.boxColor.get(this).set(new Color(119.0F / 255.0F, 153.0F / 255.0F, 204.0F / 255.0F, 1.0F));
+
     }
 
     @Override

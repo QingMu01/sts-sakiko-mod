@@ -8,12 +8,14 @@ public class LoseGoldAction extends AbstractGameAction {
 
     public LoseGoldAction(int amount) {
         this.amount = amount;
+        this.source = AbstractDungeon.player;
     }
 
     @Override
     public void update() {
         for (int i = 0; i < this.amount; i++) {
-            AbstractDungeon.effectList.add(new LossGoldEffect(this.source, this.target.hb.cX, this.target.hb.cY, this.source.hb.cX, this.source.hb.cY, false));
+            AbstractDungeon.effectList.add(new LossGoldEffect(this.source.hb.cX, this.source.hb.cY));
         }
+        this.isDone = true;
     }
 }

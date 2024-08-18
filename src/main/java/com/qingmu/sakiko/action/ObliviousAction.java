@@ -35,7 +35,7 @@ public class ObliviousAction extends AbstractGameAction {
                     AbstractDungeon.player.limbo.addToBottom(tmp);
                     tmp.current_x = card.current_x;
                     tmp.current_y = card.current_y;
-                    tmp.target_x = Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
+                    tmp.target_x = Settings.WIDTH / 2.0F;
                     tmp.target_y = Settings.HEIGHT / 2.0F;
                     tmp.calculateCardDamage(m);
                     tmp.purgeOnUse = true;

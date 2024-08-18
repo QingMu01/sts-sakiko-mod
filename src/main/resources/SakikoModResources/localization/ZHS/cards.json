@@ -104,8 +104,7 @@
   },
   "SakikoMod:Sekaikan": {
     "NAME": "世界观",
-    "DESCRIPTION": "回合开始时，将一张 剧情 加入手牌。",
-    "UPGRADE_DESCRIPTION": "回合开始时，将一张 剧情+ 加入手牌。"
+    "DESCRIPTION": "回合开始时，将一张 *剧情 加入手牌。"
   },
   "SakikoMod:Superior": {
     "NAME": "高高在上",
@@ -247,7 +246,7 @@
   },
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
-    "DESCRIPTION": "造成 !D! 点伤害，获得 sakiko:心之壁 层数点 *格挡 。"
+    "DESCRIPTION": "造成 !D! 点伤害，获得 sakikomod:心之壁 层数点 *格挡 。"
   },
   "SakikoMod:TakeoverLife": {
     "NAME": "人生收购",
@@ -284,15 +283,47 @@
     "NAME": "假面舞会",
     "DESCRIPTION": "打出音乐牌时，对随机敌人造成 !M! 点伤害。"
   },
-
+  "SakikoMod:ChuuniSakiko": {
+    "NAME": "中二小祥",
+    "DESCRIPTION": "回合开始时，将一张 *幻想 加入手牌。"
+  },
+  "SakikoMod:Kimewaza": {
+    "NAME": "决胜技",
+    "DESCRIPTION": "消耗歌单中的所有牌。每消耗一张，造成 !D! 点伤害。 NL *消耗 。"
+  },
+  "SakikoMod:MusicLife": {
+    "NAME": "音乐人生",
+    "DESCRIPTION": "抽一张音乐牌，使其在本回合变为0费。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "抽一张音乐牌，使其在本回合变为0费。"
+  },
+  "SakikoMod:GrievousNews": {
+    "NAME": "噩耗来袭",
+    "DESCRIPTION": "抽1张牌。若抽到 *状态牌 或者 *诅咒牌 ，获得 !M! 层 sakikomod:心之壁 。"
+  },
+  "SakikoMod:Stud": {
+    "NAME": "最后一搏",
+    "DESCRIPTION": "丢弃所有手牌。 NL 每丢弃一张牌，在你的手牌中增加一张 *幻想 。"
+  },
+  "SakikoMod:NingyouForm": {
+    "NAME": "人偶形态",
+    "DESCRIPTION": "每打出一张 sakikomod:音乐 牌，获得 !M! 点 sakikomod:临时生命 。"
+  },
   "SakikoMod:Remember": {
     "NAME": "回忆",
+    "FLAVOR": "软糯的我又复活了...",
     "DESCRIPTION": " sakikomod:回忆 1。 NL *消耗 。"
   },
   "SakikoMod:Story": {
     "NAME": "剧情",
+    "FLAVOR": "不要破坏Ave Mujica的世界观desuwa！",
     "DESCRIPTION": "从三张音乐牌中选择一张加入你的歌单。 NL *消耗 。",
     "UPGRADE_DESCRIPTION": "从三张音乐牌中选择一张加入你的歌单。"
+  },
+  "SakikoMod:Fantasy": {
+    "NAME": "幻想",
+    "FLAVOR": "我想到一个新点子！",
+    "DESCRIPTION": "从三张牌中选择一张加入你的手牌。选择的牌打出后消耗。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "从三张中选择一张加入你的手牌。选择的牌打出后消耗。"
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",

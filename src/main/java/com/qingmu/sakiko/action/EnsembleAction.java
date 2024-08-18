@@ -21,5 +21,6 @@ public class EnsembleAction extends AbstractGameAction {
         for (int i = 0; i < bandMemberCount+1; i++) {
             this.addToBot(new DamageAction(this.target, this.info, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }
+        this.isDone = true;
     }
 }

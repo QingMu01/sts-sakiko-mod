@@ -75,7 +75,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveEditCards() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
-                .setDefaultSeen(true)
+                .setDefaultSeen(false)
                 .cards();
     }
 
@@ -85,10 +85,9 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .packageFilter("com.qingmu.sakiko.relics")
                 .any(CustomRelic.class, (info, relic) -> {
                     BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                    UnlockTracker.markRelicAsSeen(relic.relicId);
-//                    if (info.seen) {
-//
-//                    }
+                    if (info.seen) {
+                        UnlockTracker.markRelicAsSeen(relic.relicId);
+                    }
                 });
     }
 
@@ -136,7 +135,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receivePostInitialize() {
         // 添加成员入侵事件
         BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
-                .spawnCondition(()->false).bonusCondition(()->false)
+                .spawnCondition(() -> false).bonusCondition(() -> false)
                 .endsWithRewardsUI(false).create());
 
         // 添加音乐堆预览页面
@@ -158,15 +157,15 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.addMonster(SoyoMonster.ID, SoyoMonster.ID, () -> new SoyoMonster(0.0F, 0.0F));
         BaseMod.addMonster(RanaMonster.ID, RanaMonster.ID, () -> new RanaMonster(0.0F, 0.0F));
         // 添加成员遭遇战
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(UikaMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(MutsumiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(NyamuchiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(UmiriMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(TomoriMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(AnonMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(TakiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(SoyoMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID,new MonsterInfo(RanaMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UikaMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(MutsumiMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(NyamuchiMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UmiriMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TomoriMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(AnonMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TakiMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(SoyoMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(RanaMonster.ID, 0));
 
         // 添加成员入侵事件概率
         BaseMod.addSaveField("chance", new InvasionChangeSaved());
@@ -174,7 +173,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receiveStartGame() {
-        if (AbstractDungeon.floorNum == 0){
+        if (AbstractDungeon.floorNum == 0) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
         }
     }

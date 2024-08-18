@@ -142,5 +142,19 @@
       "打出音乐牌时，对随机敌人造成 #r",
       " 点伤害。。"
     ]
+  },
+  "SakikoMod:ChuuniPower": {
+    "NAME": "中二",
+    "DESCRIPTIONS": [
+      "回合开始时，将 #b",
+      " 张 #y幻想 加入手牌。"
+    ]
+  },
+  "SakikoMod:NingyouPower": {
+    "NAME": "人偶",
+    "DESCRIPTIONS": [
+      "打出音乐牌时，获得 #g",
+      " 点 #y临时生命 。"
+    ]
   }
 }

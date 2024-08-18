@@ -38,8 +38,7 @@ public class SekaikanPower extends AbstractPower {
 
     @Override
     public void atStartOfTurn() {
-        for (int i = 0; i < this.amount; i++) {
-            this.addToBot(new MakeTempCardInHandAction(new Story()));
-        }
+        this.flash();
+        this.addToBot(new MakeTempCardInHandAction(new Story(), this.amount));
     }
 }

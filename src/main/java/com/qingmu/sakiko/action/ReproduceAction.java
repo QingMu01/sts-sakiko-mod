@@ -23,8 +23,6 @@ public class ReproduceAction extends AbstractGameAction {
         CardGroup cardGroup = MusicDrawPileFiledPatch.drawMusicPile.get(player);
         if (!cardGroup.isEmpty()) {
             AbstractCard randomCard = cardGroup.getRandomCard(AbstractDungeon.cardRandomRng);
-//            randomCard.current_x = (float) (Settings.WIDTH / 2);
-//            randomCard.current_y = (float) (Settings.HEIGHT / 2);
             randomCard.target_x = (float) (Settings.WIDTH / 2);
             randomCard.target_y = (float) (Settings.HEIGHT / 2);
             cardGroup.moveToExhaustPile(randomCard);
