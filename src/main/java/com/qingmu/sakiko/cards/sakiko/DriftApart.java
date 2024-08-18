@@ -7,7 +7,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.DriftApartAction;
+import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
@@ -20,6 +22,7 @@ public class DriftApart extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.ATTACK;
@@ -41,7 +44,17 @@ public class DriftApart extends CustomCard {
     }
 
     @Override
+    public void applyPowers() {
+        super.applyPowers();
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID) + this.damage);
+        this.initializeDescription();
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DriftApartAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 }

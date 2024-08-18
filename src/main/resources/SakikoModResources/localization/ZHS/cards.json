@@ -11,6 +11,10 @@
     "NAME": "职业素养",
     "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。 NL 获得 *心之壁 层数的格挡。"
   },
+  "SakikoMod:MusicalComposition": {
+    "NAME": "音乐创作",
+    "DESCRIPTION": "从三张音乐牌中选择一张加入手牌，使这张牌的费用为0，且 *虚无 、 *消耗 。"
+  },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
     "DESCRIPTION": "获得4层 sakikomod:音符 。",
@@ -34,7 +38,10 @@
   },
   "SakikoMod:StageMachine": {
     "NAME": "舞台装置",
-    "DESCRIPTION": "获得 sakikomod:音符 层数 !M! 倍的格挡。"
+    "DESCRIPTION": "获得 sakikomod:音符 层数 !M! 倍的格挡。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （获得%d点格挡）"
+    ]
   },
   "SakikoMod:Osananajimi": {
     "NAME": "青梅竹马的牵绊",
@@ -42,7 +49,10 @@
   },
   "SakikoMod:Noise": {
     "NAME": "噪音",
-    "DESCRIPTION": "造成 sakikomod:音符 层数 点伤害。若本次攻击未被格挡，则给予2层易伤。"
+    "DESCRIPTION": "造成 sakikomod:音符 层数 点伤害。若本次攻击未被格挡，则给予2层易伤。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成 %d 点伤害）"
+    ]
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
@@ -65,7 +75,7 @@
     "NAME": "人偶之舞",
     "DESCRIPTION": "获得1层 sakikomod:闪耀 。对随机敌人造成 !D! 点伤害 *闪耀 层数次。 NL *消耗 。",
     "EXTENDED_DESCRIPTION": [
-      " NL （当前造成%d次伤害）"
+      " NL （造成%d次伤害）"
     ]
   },
   "SakikoMod:Talent": {
@@ -82,11 +92,14 @@
   },
   "SakikoMod:Mujina": {
     "NAME": "一丘之貉",
-    "DESCRIPTION": "每有一位乐队成员，获得 [E] 。"
+    "DESCRIPTION": "每有一位乐队成员，获得 [E] 。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （获得%d [E]）"
+    ]
   },
   "SakikoMod:EndOfWorld": {
     "NAME": "AveMujica的灭世",
-    "DESCRIPTION": "造成 !D! 点伤害。额外造成本回合获得的 sakikomod:音符 数伤害 。",
+    "DESCRIPTION": "造成 !D! 点伤害。额外造成本回合获得的 sakikomod:音符 数伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （额外造成%d点伤害）"
     ]
@@ -112,9 +125,9 @@
   },
   "SakikoMod:Ensemble": {
     "NAME": "合奏",
-    "DESCRIPTION": "造成 !D! 伤害， 乐队成员数 +1次。 NL ",
+    "DESCRIPTION": "造成 !D! 伤害， 乐队成员数 +1次。",
     "EXTENDED_DESCRIPTION": [
-      "（额外造成 %d 次伤害）"
+      " NL （额外造成 %d 次伤害）"
     ]
   },
   "SakikoMod:NoteTorrent": {
@@ -133,7 +146,7 @@
     "NAME": "谢幕",
     "DESCRIPTION": "造成 !D! 点伤害。你在这个回合每打出一次音乐牌，额外造成 !D! 点伤害。",
     "EXTENDED_DESCRIPTION": [
-      " NL （当前造成%d次伤害）"
+      " NL （造成%d次伤害）"
     ]
   },
   "SakikoMod:Climax": {
@@ -154,7 +167,10 @@
   },
   "SakikoMod:DriftApart": {
     "NAME": "拒人千里",
-    "DESCRIPTION": "造成你 sakikomod:心之壁 层数点伤害。"
+    "DESCRIPTION": "造成你 sakikomod:心之壁 层数点伤害。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成%d点伤害）"
+    ]
   },
   "SakikoMod:Mabushii": {
     "NAME": "抹布西",
@@ -242,11 +258,12 @@
   },
   "SakikoMod:PassTheBuck": {
     "NAME": "甩锅",
-    "DESCRIPTION": "造成 !D! 点伤害，sakikomod:忘却 1。"
+    "DESCRIPTION": "造成 !D! 点伤害， sakikomod:忘却 1。"
   },
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
-    "DESCRIPTION": "造成 !D! 点伤害，获得 sakikomod:心之壁 层数点 *格挡 。"
+    "DESCRIPTION": "造成 !D! 点伤害，获得 sakikomod:心之壁 层数点 *格挡 。",
+    "EXTENDED_DESCRIPTION": [" NL （获得 %d 点格挡。）"]
   },
   "SakikoMod:TakeoverLife": {
     "NAME": "人生收购",
@@ -261,7 +278,7 @@
   },
   "SakikoMod:AntiReconnaissance": {
     "NAME": "反侦察",
-    "DESCRIPTION": "获得 !M! 层心之壁。抽 1 张牌。"
+    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。抽 1 张牌。"
   },
   "SakikoMod:Obentou": {
     "NAME": "便当",
@@ -349,7 +366,7 @@
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL sakikomod:加持 1。。"
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL sakikomod:加持 1。"
   },
   "SakikoMod:NingenUta": {
     "NAME": "想要成为人类之歌",

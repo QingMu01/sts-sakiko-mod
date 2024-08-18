@@ -19,6 +19,7 @@ public class Mujina extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
     private static final int COST = 2;
 
     private static final CardType TYPE = CardType.SKILL;
@@ -39,8 +40,18 @@ public class Mujina extends CustomCard {
     }
 
     @Override
+    public void applyPowers() {
+        super.applyPowers();
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], BandMemberHelper.getBandMemberCount());
+        this.initializeDescription();
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainEnergyAction(BandMemberHelper.getBandMemberCount()));
+
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 
 }

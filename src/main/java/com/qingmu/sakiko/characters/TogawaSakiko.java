@@ -78,11 +78,7 @@ public class TogawaSakiko extends CustomPlayer {
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Professional"));
-        decks.add(ModNameHelper.make("AveMusica"));
-        // 音乐牌
-        decks.add(ModNameHelper.make("AveMujica"));
-        decks.add(ModNameHelper.make("Symbol_I"));
-        decks.add(ModNameHelper.make("Symbol_IV"));
+        decks.add(ModNameHelper.make("MusicalComposition"));
         return decks;
     }
 

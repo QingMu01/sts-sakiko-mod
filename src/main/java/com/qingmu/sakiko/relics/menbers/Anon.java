@@ -41,6 +41,7 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
         if (this.amount >= 15){
             this.flash();
             this.counter++;
+            this.amount = 0;
         }
     }
 }
