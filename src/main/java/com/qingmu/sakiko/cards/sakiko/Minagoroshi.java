@@ -29,7 +29,7 @@ public class Minagoroshi extends CustomCard {
 
     public Minagoroshi() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 21;
+        this.baseDamage = 18;
     }
 
     @Override

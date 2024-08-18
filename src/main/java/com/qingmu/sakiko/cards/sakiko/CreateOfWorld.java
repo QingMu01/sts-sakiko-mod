@@ -43,8 +43,8 @@ public class CreateOfWorld extends CustomCard {
         }
     }
     @Override
-    public void applyPowers(){
-        super.applyPowers();
+    public void applyPowersToBlock(){
+        super.applyPowersToBlock();
         int count = 0;
         AbstractPower power = AbstractDungeon.player.getPower(MusicalNotePower.POWER_ID);
         if (power != null)

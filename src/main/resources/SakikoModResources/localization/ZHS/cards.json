@@ -127,7 +127,7 @@
     "NAME": "合奏",
     "DESCRIPTION": "造成 !D! 伤害， 乐队成员数 +1次。",
     "EXTENDED_DESCRIPTION": [
-      " NL （额外造成 %d 次伤害）"
+      " NL （造成 %d 次伤害）"
     ]
   },
   "SakikoMod:NoteTorrent": {
@@ -146,7 +146,7 @@
     "NAME": "谢幕",
     "DESCRIPTION": "造成 !D! 点伤害。你在这个回合每打出一次音乐牌，额外造成 !D! 点伤害。",
     "EXTENDED_DESCRIPTION": [
-      " NL （造成%d次伤害）"
+      " NL （额外造成%d次伤害）"
     ]
   },
   "SakikoMod:Climax": {
@@ -225,12 +225,12 @@
   },
   "SakikoMod:Overdraw": {
     "NAME": "透支身体",
-    "DESCRIPTION": "回合开始时，将1张 *晕眩 加入你的弃牌堆。获得 [E] 。",
-    "UPGRADE_DESCRIPTION": "回合开始时，将1张 *晕眩 加入你的弃牌堆。获得 [E] 。额外抽1张牌。"
+    "DESCRIPTION": "回合开始时，获得 [E] ，然后将1张 *晕眩 加入你的弃牌堆。",
+    "UPGRADE_DESCRIPTION": "回合开始时，获得 [E] 、抽1张牌，然后将1张 *晕眩 加入你的弃牌堆。"
   },
   "SakikoMod:Mujikaku": {
     "NAME": "无自觉",
-    "DESCRIPTION": "你每打出1张 sakikomod:音乐 牌，使手牌中随机一张牌的费用在本回合变为0。"
+    "DESCRIPTION": "你每打出1张 sakikomod:音乐 牌，手牌中随机一张牌的费用在本回合变为0。"
   },
   "SakikoMod:Reproduce": {
     "NAME": "再生产",

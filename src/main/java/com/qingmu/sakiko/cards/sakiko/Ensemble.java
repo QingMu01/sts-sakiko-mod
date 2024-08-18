@@ -52,6 +52,7 @@ public class Ensemble extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new EnsembleAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }

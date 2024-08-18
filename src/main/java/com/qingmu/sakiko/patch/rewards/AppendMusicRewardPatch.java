@@ -17,7 +17,7 @@ public class AppendMusicRewardPatch {
     public static class SetupItemReward {
         public static void Postfix(CombatRewardScreen __instance) {
                 if (AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss || AbstractDungeon.getCurrRoom() instanceof MonsterRoomElite) {
-                    __instance.rewards.add(0, new MusicCardReward(String.valueOf(AbstractDungeon.floorNum)));
+                    __instance.rewards.add(new MusicCardReward(String.valueOf(AbstractDungeon.floorNum)));
 
             }
         }
