@@ -1,19 +1,21 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.DriftApartAction;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class DriftApart extends CustomCard {
+public class DeterminateAttack extends CustomCard {
 
-    public static final String ID = ModNameHelper.make(DriftApart.class.getSimpleName());
+    public static final String ID = ModNameHelper.make(DeterminateAttack.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
@@ -27,21 +29,24 @@ public class DriftApart extends CustomCard {
     private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
-    public DriftApart() {
+    public DeterminateAttack() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 0;
+        this.baseDamage = 9;
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(0);
+            this.upgradeDamage(2);
+            this.upgradeMagicNumber(1);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new DriftApartAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        this.addToBot(new DrawCardAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
     }
 }

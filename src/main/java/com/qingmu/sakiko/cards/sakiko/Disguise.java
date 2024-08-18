@@ -1,19 +1,19 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.ActiveKabeAction;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Professional extends CustomCard {
-    public static final String ID = ModNameHelper.make(Professional.class.getSimpleName());
+public class Disguise extends CustomCard {
+
+    public static final String ID = ModNameHelper.make(Disguise.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
@@ -24,26 +24,27 @@ public class Professional extends CustomCard {
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.BASIC;
+    private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
-    public Professional() {
+    public Disguise() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 5;
-        this.baseBlock = 0;
+        this.baseBlock = 8;
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(3);
+            this.upgradeBlock(4);
+            this.upgradeMagicNumber(1);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p,p,new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber),1)));
-        this.addToBot(new ActiveKabeAction(this.baseBlock));
+        this.addToBot(new GainBlockAction(p, p, this.block));
+        this.addToBot(new DrawCardAction(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
     }
 }

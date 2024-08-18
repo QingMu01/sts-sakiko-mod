@@ -2,18 +2,19 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.ActiveKabeAction;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Professional extends CustomCard {
-    public static final String ID = ModNameHelper.make(Professional.class.getSimpleName());
+public class AntiReconnaissance extends CustomCard {
+
+    public static final String ID = ModNameHelper.make(AntiReconnaissance.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
@@ -24,13 +25,12 @@ public class Professional extends CustomCard {
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.BASIC;
+    private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
-    public Professional() {
+    public AntiReconnaissance() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseMagicNumber = 5;
-        this.baseBlock = 0;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Professional extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p,p,new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber),1)));
-        this.addToBot(new ActiveKabeAction(this.baseBlock));
+        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, 1)));
+        this.addToBot(new DrawCardAction(p, 1));
     }
 }

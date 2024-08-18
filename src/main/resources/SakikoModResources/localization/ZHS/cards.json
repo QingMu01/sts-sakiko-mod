@@ -237,7 +237,53 @@
     "DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。 NL sakikomod:白月光 。",
     "UPGRADE_DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。"
   },
-
+  "SakikoMod:DeterminateAttack": {
+    "NAME": "决心一击",
+    "DESCRIPTION": "造成 !D! 点伤害，抽 !M! 张牌。"
+  },
+  "SakikoMod:PassTheBuck": {
+    "NAME": "甩锅",
+    "DESCRIPTION": "造成 !D! 点伤害，sakikomod:忘却 1。"
+  },
+  "SakikoMod:Denying": {
+    "NAME": "嘴硬",
+    "DESCRIPTION": "造成 !D! 点伤害，获得 sakiko:心之壁 层数点 *格挡 。"
+  },
+  "SakikoMod:TakeoverLife": {
+    "NAME": "人生收购",
+    "DESCRIPTION": "造成 !D! 点伤害，失去 !M! 枚 *金币 。",
+    "EXTENDED_DESCRIPTION": [
+      "出不起这个钱desuwa..."
+    ]
+  },
+  "SakikoMod:Oshiawaseni": {
+    "NAME": "祝你幸福",
+    "DESCRIPTION": "获得 !B! 点格挡，获得 !M! 层心之壁。"
+  },
+  "SakikoMod:AntiReconnaissance": {
+    "NAME": "反侦察",
+    "DESCRIPTION": "获得 !M! 层心之壁。抽 1 张牌。"
+  },
+  "SakikoMod:Obentou": {
+    "NAME": "便当",
+    "DESCRIPTION": "恢复 10 点生命值。失去 !M! 枚 *金币 。",
+    "EXTENDED_DESCRIPTION": [
+      "买不起便当desuwa..."
+    ]
+  },
+  "SakikoMod:Disguise": {
+    "NAME": "伪装",
+    "DESCRIPTION": "获得 !B! 点格挡。抽 !M! 张牌。"
+  },
+  "SakikoMod:Leader": {
+    "NAME": "乐队领袖",
+    "DESCRIPTION": "获得乐队成员数的闪耀。回合开始时，失去乐队成员数的金币。",
+    "UPGRADE_DESCRIPTION": " *固有 。 NL 获得乐队成员数的闪耀。回合开始时，失去乐队成员数的金币。"
+  },
+  "SakikoMod:Masquerade": {
+    "NAME": "假面舞会",
+    "DESCRIPTION": "打出音乐牌时，对随机敌人造成 !M! 点伤害。"
+  },
 
   "SakikoMod:Remember": {
     "NAME": "回忆",

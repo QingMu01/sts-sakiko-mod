@@ -126,8 +126,21 @@
   "SakikoMod:StarBeatPower": {
     "NAME": "心之鼓动",
     "DESCRIPTIONS": [
-      "每打出一次音乐牌，抽 #b",
+      "打出一次音乐牌时，抽 #b",
       " 张牌。"
+    ]
+  },
+  "SakikoMod:LeaderPower": {
+    "NAME": "领袖",
+    "DESCRIPTIONS": [
+      "回合开始时，失去金币。"
+    ]
+  },
+  "SakikoMod:MasqueradePower": {
+    "NAME": "假面舞会",
+    "DESCRIPTIONS": [
+      "打出音乐牌时，对随机敌人造成 #r",
+      " 点伤害。。"
     ]
   }
 }
