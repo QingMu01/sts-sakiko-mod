@@ -1,0 +1,133 @@
+{
+  "SakikoMod:MusicalNotePower": {
+    "NAME": "音符",
+    "DESCRIPTIONS": [
+      "每获得12层，从歌单抽一张牌 NL ",
+      "（再获得%d层即可抽牌。）"
+    ]
+  },
+  "SakikoMod:KirameiPower": {
+    "NAME": "闪耀",
+    "DESCRIPTIONS": [
+      "你抽到 #b音乐牌 时，根据你持有的 #y闪耀 对其进行升级。"
+    ]
+  },
+  "SakikoMod:KokoroNoKabePower": {
+    "NAME": "心之壁",
+    "DESCRIPTIONS": [
+      "回合开始时，获得 #b",
+      " 点格挡。 NL 你每次受到攻击，失去 #r",
+      " 点生命值。"
+    ]
+  },
+  "SakikoMod:FeverPower": {
+    "NAME": "Fever",
+    "DESCRIPTIONS": [
+      "你打出的下一张 #y非音乐牌 无视耗能，且打出两次。"
+    ]
+  },
+  "SakikoMod:LoseEnergizedPower": {
+    "NAME": "能量减少",
+    "DESCRIPTIONS": [
+      "回合开始时，失去 #r",
+      " 点能量"
+    ]
+  },
+  "SakikoMod:IbasyoPower": {
+    "NAME": "归宿",
+    "DESCRIPTIONS": [
+      "心之壁不在使你受到的伤害增加。"
+    ]
+  },
+  "SakikoMod:TalentPower": {
+    "NAME": "才华横溢",
+    "DESCRIPTIONS": [
+      "你再抽 #b",
+      " 张牌，获得",
+      "层 #y音符。"
+    ]
+  },
+  "SakikoMod:BoomerangPower": {
+    "NAME": "回旋镖",
+    "DESCRIPTIONS": [
+      "回合结束时，受到 #r",
+      " 点伤害。 NL 你打出的下 #b",
+      " 张非音乐牌打出两次。"
+    ]
+  },
+  "SakikoMod:BlockedPower": {
+    "NAME": "拉黑",
+    "DESCRIPTIONS": [
+      "这个目标无法造成伤害。"
+    ]
+  },
+  "SakikoMod:HedgehogPower": {
+    "NAME": "刺猬小祥",
+    "DESCRIPTIONS": [
+      "你受到攻击时，对目标造成你心之壁层数的伤害。"
+    ]
+  },
+  "SakikoMod:EncorePower": {
+    "NAME": "安可",
+    "DESCRIPTIONS": [
+      "在本回合结束后，额外获得一回合。"
+    ]
+  },
+  "SakikoMod:FeverReadyPower": {
+    "NAME": "准备中",
+    "DESCRIPTIONS": [
+      "当你有三层 #y准备中 时，进入 #yFever 。"
+    ]
+  },
+  "SakikoMod:SekaikanPower": {
+    "NAME": "世界观",
+    "DESCRIPTIONS": [
+      "回合开始时，将 #b",
+      " 张 #y剧情 加入手牌。"
+    ]
+  },
+  "SakikoMod:ClassicMusicianPower": {
+    "NAME": "古典乐派",
+    "DESCRIPTIONS": [
+      "你抽到音乐牌时，在主抽牌堆抽 #b",
+      " 张牌。"
+    ]
+  },
+  "SakikoMod:OverdrawPower": {
+    "NAME": "透支身体",
+    "DESCRIPTIONS": [
+      "回合开始时，将一张 #y晕眩 加入弃牌堆。 NL 回合开始时,获得 #b",
+      " [E] 。",
+      "额外抽 #b",
+      " 张牌。"
+    ]
+  },
+  "SakikoMod:MujikakuPower": {
+    "NAME": "无自觉",
+    "DESCRIPTIONS": [
+      "打出 #y音乐 牌时，手牌中随机牌的费用在本回合减少 #b",
+      " 点。"
+    ]
+  },
+  "SakikoMod:OjyousamaPower": {
+    "NAME": "大小姐的修养",
+    "DESCRIPTIONS": [
+      "回合开始时，额外抽 #b",
+      " 张牌。"
+    ]
+  },
+  "SakikoMod:YowaiwatashiPower": {
+    "NAME": "软弱的我已经死了",
+    "DESCRIPTIONS": [
+      "回合开始时，将 #b",
+      " 张 #y回忆 加入手牌。"
+    ]
+  },
+  "SakikoMod:StarBeatPower": {
+    "NAME": "心之鼓动",
+    "DESCRIPTIONS": [
+      "每打出一次音乐牌，抽 #b",
+      " 张牌。"
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "SakikoMod:UikaMonster": {
+    "NAME": "初华(?)",
+    "DIALOG": [
+      "小祥...?",
+      "我，无畏 @悲伤@ ..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:MutsumiMonster": {
+    "NAME": "睦(?)",
+    "DIALOG": [
+      "祥...?",
+      "我，无畏 @死亡@ ..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:NyamuchiMonster": {
+    "NAME": "喵梦(?)",
+    "DIALOG": [
+      "祥子...?",
+      "我，无畏 @爱情@ ..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:TomoriMonster": {
+    "NAME": "灯(?)",
+    "DIALOG": [
+      "小祥...?",
+      "能和我......组一辈子乐队吗？"
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:AnonMonster": {
+    "NAME": "爱音(?)",
+    "DIALOG": [
+      "祥子同学...?",
+      "我，无畏 @契约@ ..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:RanaMonster": {
+    "NAME": "乐奈(?)",
+    "DIALOG": [
+      "无聊的女孩子...?",
+      "抹茶巴菲..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:TakiMonster": {
+    "NAME": "立希(?)",
+    "DIALOG": [
+      "祥子...?",
+      "......"
+    ],
+    "MOVES": [
+      ""
+    ]
+  },
+  "SakikoMod:SoyoMonster": {
+    "NAME": "素世(?)",
+    "DIALOG": [
+      "小祥...?",
+      "我大概，一辈子也忘不掉Crychic了..."
+    ],
+    "MOVES": [
+      ""
+    ]
+  }
+}

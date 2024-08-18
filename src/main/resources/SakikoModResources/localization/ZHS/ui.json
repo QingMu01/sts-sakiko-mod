@@ -1,0 +1,31 @@
+{
+  "SakikoMod:MusicDrawPilePanel": {
+    "TEXT": [
+      "我的歌单是 #r空的 。"
+    ]
+  },
+  "SakikoMod:MusicDrawPileViewScreen": {
+    "TEXT": [
+      "每拥有12层 音符 时，从这里抽一张牌。",
+      "（这里显示的卡牌按照稀有度排列）",
+      "返回",
+      "歌单"
+    ]
+  },
+  "SakikoMod:MusicCardType": {
+    "TEXT": [
+      "音乐"
+    ]
+  },
+  "SakikoMod:ObliviousAction": {
+    "TEXT": [
+      "遗忘"
+    ]
+  },
+  "SakikoMod:MusicCardReward": {
+    "TEXT": [
+      "将一张音乐牌加入你的牌组中",
+      "选择一张音乐牌"
+    ]
+  }
+}

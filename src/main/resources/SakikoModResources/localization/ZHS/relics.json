@@ -1,0 +1,93 @@
+{
+  "SakikoMod:ClassicPiano": {
+    "NAME": "钢琴模型",
+    "FLAVOR": "仿造某人曾使用过的钢琴而制造的模型。在其一侧刻有“TWG”字样的图案。",
+    "DESCRIPTIONS": [
+      "你每打出 1 张非音乐牌，获得 2 层音符。"
+    ]
+  },
+  "SakikoMod:DoubleKeyboard": {
+    "NAME": "键盘玩具",
+    "FLAVOR": "能够发出多种乐器音色的装置，可惜只是一个儿童玩具。",
+    "DESCRIPTIONS": [
+      "替换 #y钢琴模型 。如果你打出和上一张类型一样的牌，获得 #b6 层 #y音符 。"
+    ]
+  },
+  "SakikoMod:Payslip": {
+    "NAME": "工资条",
+    "FLAVOR": "尖塔里怎么会有工资条？这也是大鲸鱼干的手笔吗？",
+    "DESCRIPTIONS": [
+      "你每次前进获得 5 #y金币。"
+    ]
+  },
+  "SakikoMod:NoteBook": {
+    "NAME": "奇怪的笔记本",
+    "FLAVOR": "花，也是有生命的呢。",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 2 层 #y闪耀 。"
+    ]
+  },
+  "SakikoMod:Mutsumi": {
+    "NAME": "睦的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "若叶睦能力的象征，战斗开始时，获得 1 层 #y力量 。"
+    ]
+  },
+  "SakikoMod:Nyamuchi": {
+    "NAME": "若麦的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "祐天寺若麦能力的象征，战斗开始时，获得 1 层 #y敏捷 。"
+    ]
+  },
+  "SakikoMod:Uika": {
+    "NAME": "初华的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "三角初华能力的象征，战斗结束后，恢复 #g3 点生命值。"
+    ]
+  },
+  "SakikoMod:Umiri": {
+    "NAME": "海铃的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "八幡海铃能力的象征，拾取时获得 #b100 枚 #y金币 。"
+    ]
+  },
+  "SakikoMod:Tomori": {
+    "NAME": "灯的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "高松灯能力的象征，战斗开始时，获得 1 层 #y闪耀 。"
+    ]
+  },
+  "SakikoMod:Taki": {
+    "NAME": "立希的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "八幡海铃能力的象征，回合开始时，获得 2 层 #y活力 。"
+    ]
+  },
+  "SakikoMod:Soyo": {
+    "NAME": "素世的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "长崎素世能力的象征，战斗开始时，获得 5 层 #y心之壁 。"
+    ]
+  },
+  "SakikoMod:Rana": {
+    "NAME": "乐奈的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "要乐奈能力的象征，战斗开始时，获得 1 层 #yFever 。"
+    ]
+  },
+  "SakikoMod:Anon": {
+    "NAME": "爱音的玩偶",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "千早爱音能力的象征，每前进15次，恢复一层充能。 NL 右键本遗物消耗一层充能，恢复 #g15 点生命值。"
+    ]
+  }
+}
