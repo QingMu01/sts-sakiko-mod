@@ -97,10 +97,10 @@
   "SakikoMod:OverdrawPower": {
     "NAME": "透支身体",
     "DESCRIPTIONS": [
-      "回合开始时，将一张 #y晕眩 加入弃牌堆。 NL 回合开始时,获得 #b",
-      " [E] 。",
-      "额外抽 #b",
-      " 张牌。"
+      "回合开始时，获得 #b",
+      " 能量，抽 #b",
+      " 张牌。获得 #b",
+      " 层 #y过劳 。"
     ]
   },
   "SakikoMod:MujikakuPower": {
@@ -156,6 +156,13 @@
     "DESCRIPTIONS": [
       "打出音乐牌时，获得 #g",
       " 点 #y临时生命 。"
+    ]
+  },
+  "SakikoMod:OverworkPower": {
+    "NAME": "过劳",
+    "DESCRIPTIONS": [
+      "距离结束回合还有 #r",
+      " 层。"
     ]
   }
 }

@@ -2,7 +2,6 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.status.Dazed;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -17,7 +16,7 @@ public class Overdraw extends CustomCard {
     public static final String ID = ModNameHelper.make(Overdraw.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Overdraw.png";
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
@@ -31,13 +30,14 @@ public class Overdraw extends CustomCard {
 
     public Overdraw() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.cardsToPreview = new Dazed();
+        this.baseMagicNumber = 2;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
+            this.isInnate = true;
             this.rawDescription = UPGRADE_DESCRIPTION;
             this.initializeDescription();
         }
@@ -45,10 +45,6 @@ public class Overdraw extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        if (this.upgraded) {
-            this.addToBot(new ApplyPowerAction(p, p, new OverdrawPower(p, 1, true)));
-        } else {
-            this.addToBot(new ApplyPowerAction(p, p, new OverdrawPower(p, 1, false)));
-        }
+        this.addToBot(new ApplyPowerAction(p, p, new OverdrawPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 }

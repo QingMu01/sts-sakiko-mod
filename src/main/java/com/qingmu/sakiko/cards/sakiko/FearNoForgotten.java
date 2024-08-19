@@ -30,6 +30,7 @@ public class FearNoForgotten extends CustomCard {
     public FearNoForgotten() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.exhaust = true;
+        this.isInnate = true;
         this.baseMagicNumber = 1;
     }
 

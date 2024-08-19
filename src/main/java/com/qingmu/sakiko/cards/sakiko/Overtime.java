@@ -9,8 +9,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.DrawReductionPower;
-import com.qingmu.sakiko.powers.LoseEnergizedPower;
+import com.qingmu.sakiko.powers.OverworkPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -34,13 +33,14 @@ public class Overtime extends CustomCard {
 
     public Overtime() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 3;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
+            this.upgradeMagicNumber(-1);
             this.rawDescription = UPGRADE_DESCRIPTION;
             this.initializeDescription();
         }
@@ -50,10 +50,7 @@ public class Overtime extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainEnergyAction(1));
         this.addToBot(new DrawCardAction(1));
-        if (!this.upgraded) {
-            this.addToBot(new ApplyPowerAction(p, p, new LoseEnergizedPower(p, 1)));
-            this.addToBot(new ApplyPowerAction(p, p, new DrawReductionPower(p, 1)));
-        }
+        this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 
 }

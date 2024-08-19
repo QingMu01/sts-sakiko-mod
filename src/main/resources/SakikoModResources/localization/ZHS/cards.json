@@ -57,7 +57,7 @@
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
-    "DESCRIPTION": "获得 [E] ,抽1张牌。下回合少获得 [E] ，少抽1张牌。",
+    "DESCRIPTION": "获得 [E] ,抽1张牌。获得 !M! 层 sakikomod:过劳 。",
     "UPGRADE_DESCRIPTION": "获得 [E] ,抽1张牌。"
   },
   "SakikoMod:CutOfMemory": {
@@ -192,8 +192,8 @@
   },
   "SakikoMod:FearNoForgotten": {
     "NAME": "无惧遗忘",
-    "DESCRIPTION": " sakikomod:忘却 1。 NL  *消耗 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:忘却 1。"
+    "DESCRIPTION": " *固有 。 sakikomod:忘却 1。 NL  *消耗 。",
+    "UPGRADE_DESCRIPTION": " *固有 。 sakikomod:忘却 1。"
   },
   "SakikoMod:Encore": {
     "NAME": "安可",
@@ -226,8 +226,8 @@
   },
   "SakikoMod:Overdraw": {
     "NAME": "透支身体",
-    "DESCRIPTION": "回合开始时，获得 [E] ，然后将1张 *晕眩 加入你的弃牌堆。",
-    "UPGRADE_DESCRIPTION": "回合开始时，获得 [E] 、抽1张牌，然后将1张 *晕眩 加入你的弃牌堆。"
+    "DESCRIPTION": "回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。",
+    "UPGRADE_DESCRIPTION": " *固有 。 NL 回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。"
   },
   "SakikoMod:Mujikaku": {
     "NAME": "无自觉",
@@ -249,7 +249,7 @@
     "DESCRIPTION": "回合开始时，将一张 *回忆 加入手牌。"
   },
   "SakikoMod:StarBeat": {
-    "NAME": "心之鼓动",
+    "NAME": "星之鼓动",
     "DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。 NL sakikomod:白月光 。",
     "UPGRADE_DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。"
   },
@@ -371,6 +371,6 @@
   },
   "SakikoMod:NingenUta": {
     "NAME": "想要成为人类之歌",
-    "DESCRIPTION": "获得一层 *人工制品 。 NL *消耗 。 NL sakikomod:加持 2。"
+    "DESCRIPTION": "获得 !M! 层 *人工制品 。 NL *消耗 。 NL sakikomod:加持 2。"
   }
 }

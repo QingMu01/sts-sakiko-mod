@@ -177,5 +177,6 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
         }
     }
+
 }
 
