@@ -31,7 +31,7 @@ public class CutOfMemory extends CustomCard {
 
     public CutOfMemory() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 8;
+        this.baseMagicNumber = 3;
         this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
     }
 
@@ -39,7 +39,7 @@ public class CutOfMemory extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(3);
+            this.upgradeMagicNumber(2);
         }
     }
 

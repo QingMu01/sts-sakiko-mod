@@ -34,7 +34,7 @@ public class PressureResist extends CustomCard {
     public PressureResist() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = 6;
-        this.baseMagicNumber = 6;
+        this.baseMagicNumber = 3;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PressureResist extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(3);
-            this.upgradeMagicNumber(3);
+            this.upgradeMagicNumber(2);
         }
     }
 

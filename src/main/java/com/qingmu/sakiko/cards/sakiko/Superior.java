@@ -44,7 +44,7 @@ public class Superior extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(3);
-            this.upgradeMagicNumber(3);
+            this.upgradeMagicNumber(2);
         }
     }
     @Override

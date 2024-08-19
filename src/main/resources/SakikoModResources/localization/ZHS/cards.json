@@ -13,7 +13,7 @@
   },
   "SakikoMod:MusicalComposition": {
     "NAME": "音乐创作",
-    "DESCRIPTION": "从三张音乐牌中选择一张加入手牌，使这张牌的费用为0，且 *虚无 、 *消耗 。"
+    "DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张加入手牌，使这张牌的费用为0，且 *虚无 、 *消耗 。"
   },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
@@ -22,7 +22,8 @@
   },
   "SakikoMod:BurnBoats": {
     "NAME": "破釜沉舟",
-    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 sakikomod:音符 层数次。清空你的 *音符 。 NL 这张牌不受 *力量 加成。"
+    "DESCRIPTION": "每有2层 sakikomod:音符 ，对随机敌人造成 !D! 点伤害。 NL 清空你的 *音符 。",
+    "EXTENDED_DESCRIPTION": [" NL （当前造成%d次伤害）"]
   },
   "SakikoMod:NotePunch": {
     "NAME": "音律冲击",
@@ -144,14 +145,14 @@
   },
   "SakikoMod:CurtainCall": {
     "NAME": "谢幕",
-    "DESCRIPTION": "造成 !D! 点伤害。你在这个回合每打出一次音乐牌，额外造成 !D! 点伤害。",
+    "DESCRIPTION": "造成 !D! 点伤害。你在这个回合每打出一次 sakikomod:音乐 牌，额外造成 !D! 点伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （额外造成%d次伤害）"
     ]
   },
   "SakikoMod:Climax": {
     "NAME": "渐入佳境",
-    "DESCRIPTION": "造成 !D! 点伤害。在本回合，你每打出一次音乐牌，这张牌的费用降低1。"
+    "DESCRIPTION": "造成 !D! 点伤害。在本回合，你每打出一次 sakikomod:音乐 牌，这张牌的费用降低1。"
   },
   "SakikoMod:OnlyOneself": {
     "NAME": "能相信的唯有自己",
@@ -217,7 +218,7 @@
   },
   "SakikoMod:ClassicMusician": {
     "NAME": "古典乐派",
-    "DESCRIPTION": "你抽到音乐牌时，在主抽牌堆抽一张牌。"
+    "DESCRIPTION": "你抽到 sakikomod:音乐 牌时，在主抽牌堆抽一张牌。"
   },
   "SakikoMod:GushingOverBandGirls": {
     "NAME": "憧憬成为乐队少女",
@@ -274,7 +275,7 @@
   },
   "SakikoMod:Oshiawaseni": {
     "NAME": "祝你幸福",
-    "DESCRIPTION": "获得 !B! 点格挡，获得 !M! 层心之壁。"
+    "DESCRIPTION": "获得 !B! 点格挡，获得 !M! 层 sakikomod:心之壁 。"
   },
   "SakikoMod:AntiReconnaissance": {
     "NAME": "反侦察",
@@ -298,7 +299,7 @@
   },
   "SakikoMod:Masquerade": {
     "NAME": "假面舞会",
-    "DESCRIPTION": "打出音乐牌时，对随机敌人造成 !M! 点伤害。"
+    "DESCRIPTION": "打出 sakikomod:音乐 牌时，对随机敌人造成 !M! 点伤害。"
   },
   "SakikoMod:ChuuniSakiko": {
     "NAME": "中二小祥",
@@ -310,8 +311,8 @@
   },
   "SakikoMod:MusicLife": {
     "NAME": "音乐人生",
-    "DESCRIPTION": "抽一张音乐牌，使其在本回合变为0费。 NL *消耗 。",
-    "UPGRADE_DESCRIPTION": "抽一张音乐牌，使其在本回合变为0费。"
+    "DESCRIPTION": "抽一张 sakikomod:音乐 牌，使其在本回合变为0费。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "抽一张 sakikomod:音乐 牌，使其在本回合变为0费。"
   },
   "SakikoMod:GrievousNews": {
     "NAME": "噩耗来袭",
@@ -333,8 +334,8 @@
   "SakikoMod:Story": {
     "NAME": "剧情",
     "FLAVOR": "不要破坏Ave Mujica的世界观desuwa！",
-    "DESCRIPTION": "从三张音乐牌中选择一张加入你的歌单。 NL *消耗 。",
-    "UPGRADE_DESCRIPTION": "从三张音乐牌中选择一张加入你的歌单。"
+    "DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张加入你的歌单。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张加入你的歌单。"
   },
   "SakikoMod:Fantasy": {
     "NAME": "幻想",

@@ -5,8 +5,8 @@ import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class BurnBoatsAction extends AbstractGameAction {
 
@@ -18,12 +18,7 @@ public class BurnBoatsAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        int count = 0;
-        AbstractPower power = AbstractDungeon.player.getPower(MusicalNotePower.POWER_ID);
-        if (power != null){
-            count = power.amount;
-        }
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID); i++) {
             this.addToTop(new AttackDamageRandomEnemyAction(this.card,AttackEffect.SLASH_HORIZONTAL));
         }
         this.addToBot(new RemoveSpecificPowerAction(AbstractDungeon.player, AbstractDungeon.player, MusicalNotePower.POWER_ID));

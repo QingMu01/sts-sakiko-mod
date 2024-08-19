@@ -30,7 +30,7 @@ public class AntiReconnaissance extends CustomCard {
 
     public AntiReconnaissance() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 5;
+        this.baseMagicNumber = 4;
     }
 
     @Override

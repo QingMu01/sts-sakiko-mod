@@ -3,12 +3,12 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.BurnBoatsAction;
+import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
@@ -21,6 +21,7 @@ public class BurnBoats extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.ATTACK;
@@ -30,32 +31,31 @@ public class BurnBoats extends CustomCard {
 
     public BurnBoats() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 1;
+        this.baseDamage = 2;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(1);
+            this.upgradeDamage(2);
         }
+    }
+
+    @Override
+    public void applyPowers() {
+        super.applyPowers();
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID));
+        this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new BurnBoatsAction(this));
-    }
 
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        AbstractPower strength = AbstractDungeon.player.getPower("Strength");
-        int strengthAmount = 0;
-        if (strength != null) {
-            strengthAmount = strength.amount;
-            strength.amount = 0;
-            super.calculateCardDamage(mo);
-            strength.amount = strengthAmount;
-        }
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+
     }
 
 }
