@@ -72,7 +72,7 @@
     "NAME": "皆杀",
     "DESCRIPTION": "造成 !D! 点伤害，若 *斩杀 ，这张卡在本场战斗的费用降低1点，然后从弃牌堆返回手牌。"
   },
-  "SakikoMod:DollDance": {
+    "SakikoMod:DollDance": {
     "NAME": "人偶之舞",
     "DESCRIPTION": "获得1层 sakikomod:闪耀 。对随机敌人造成 !D! 点伤害 *闪耀 层数次。 NL *消耗 。",
     "EXTENDED_DESCRIPTION": [
@@ -328,7 +328,7 @@
   },
   "SakikoMod:Remember": {
     "NAME": "回忆",
-    "FLAVOR": "软糯的我又复活了...",
+    "FLAVOR": "软糯的我又复活了desuwa...",
     "DESCRIPTION": " sakikomod:回忆 1。 NL *消耗 。"
   },
   "SakikoMod:Story": {

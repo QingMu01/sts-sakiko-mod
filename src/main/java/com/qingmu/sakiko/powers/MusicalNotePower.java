@@ -3,10 +3,13 @@ package com.qingmu.sakiko.powers;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.DrawMusicAction;
+import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicalNotePower extends AbstractPower {
@@ -53,8 +56,11 @@ public class MusicalNotePower extends AbstractPower {
         this.amount += stackAmount;
         this.turn_count += stackAmount;
         if (this.amount >= 12) {
-            this.reducePower(12);
-            this.addToBot(new DrawMusicAction());
+            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card.type == SakikoEnum.CardTypeEnum.MUSIC).count();
+            if (!MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).isEmpty() && count > 0){
+                this.reducePower(12);
+                this.addToBot(new DrawMusicAction());
+            }
         }
     }
 
