@@ -36,6 +36,12 @@ public class FeverReadyPower extends AbstractPower {
         this.description = DESCRIPTIONS[0];
     }
 
+    @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer){
+            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+        }
+    }
 
     @Override
     public void stackPower(int stackAmount) {

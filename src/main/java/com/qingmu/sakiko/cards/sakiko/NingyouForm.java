@@ -29,7 +29,7 @@ public class NingyouForm extends CustomCard {
 
     public NingyouForm() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 2;
+        this.baseMagicNumber = 1;
     }
 
     @Override
