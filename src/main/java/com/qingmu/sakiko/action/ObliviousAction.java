@@ -28,6 +28,7 @@ public class ObliviousAction extends AbstractGameAction {
     @Override
     public void update() {
         if (!p.hand.isEmpty() || !p.discardPile.isEmpty()){
+            AbstractDungeon.gridSelectScreen.selectedCards.clear();
             this.addToBot(new MultiGroupSelectAction(uiStrings.TEXT[0], (cards, groups) -> {
                 for (AbstractCard card : cards) {
                     AbstractMonster m = AbstractDungeon.getRandomMonster();

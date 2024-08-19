@@ -40,6 +40,7 @@ public class Leader extends CustomCard {
             this.upgradeName();
             this.rawDescription = UPGRADE_DESCRIPTION;
             this.isInnate = true;
+            this.initializeDescription();
         }
     }
 

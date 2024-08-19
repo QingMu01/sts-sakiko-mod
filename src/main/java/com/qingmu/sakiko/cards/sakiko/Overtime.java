@@ -51,8 +51,8 @@ public class Overtime extends CustomCard {
         this.addToBot(new GainEnergyAction(1));
         this.addToBot(new DrawCardAction(1));
         if (!this.upgraded) {
-            this.addToBot(new ApplyPowerAction(p, p, new LoseEnergizedPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
-            this.addToBot(new ApplyPowerAction(p, p, new DrawReductionPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+            this.addToBot(new ApplyPowerAction(p, p, new LoseEnergizedPower(p, 1)));
+            this.addToBot(new ApplyPowerAction(p, p, new DrawReductionPower(p, 1)));
         }
     }
 

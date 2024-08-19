@@ -11,12 +11,13 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
     public static final String ID = ModNameHelper.make(Anon.class.getSimpleName());
     private static final String IMG_PATH = "SakikoModResources/img/relics/members/anon_relic.png";
 
+    public int amount;
+
     public Anon() {
         super(ID, IMG_PATH);
         this.counter = 1;
+        this.amount = 0;
     }
-
-    public int amount = 0;
 
     @Override
     public String getUpdatedDescription() {
@@ -30,9 +31,6 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
                 this.flash();
                 this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 15));
                 this.counter--;
-            }
-            if (this.counter <= 0) {
-                this.grayscale = true;
             }
         }
     }

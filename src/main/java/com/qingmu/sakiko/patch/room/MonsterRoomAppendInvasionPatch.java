@@ -30,7 +30,7 @@ public class MonsterRoomAppendInvasionPatch {
     @SpirePatch(clz = MonsterRoom.class, method = "onPlayerEntry")
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard")) {
+            if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))) {
                 if (AbstractDungeon.floorNum > 35 && BandMemberHelper.getBandMemberCount() < 4) {
                     setEvent();
                 } else if (BandMemberHelper.getBandMemberCount() < 4){

@@ -44,7 +44,7 @@ public class Ibasyo extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new IbasyoPower(p, 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new IbasyoPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 
 }

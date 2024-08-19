@@ -28,6 +28,15 @@
     "MOVES": [
       ""
     ]
+  },  "SakikoMod:UmiriMonster": {
+    "NAME": "海铃(?)",
+    "DIALOG": [
+      "祥子同学...?",
+      "我，无畏 @恐惧@ ..."
+    ],
+    "MOVES": [
+      ""
+    ]
   },
   "SakikoMod:TomoriMonster": {
     "NAME": "灯(?)",

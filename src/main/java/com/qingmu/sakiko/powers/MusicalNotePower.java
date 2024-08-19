@@ -42,10 +42,10 @@ public class MusicalNotePower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        if (12-this.amount >= 0){
+        if (12 - this.amount >= 0) {
             this.description = DESCRIPTIONS[0]
                     + String.format(DESCRIPTIONS[1], Math.max((12 - this.amount), 0));
-        }else {
+        } else {
             this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
         }
     }
@@ -56,9 +56,21 @@ public class MusicalNotePower extends AbstractPower {
     }
 
     @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            if (this.amount >= 24) {
+                this.amount = this.amount / 2;
+            }
+        }
+    }
+
+    @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
         this.turn_count += stackAmount;
+        if (this.amount > 999) {
+            this.amount = 999;
+        }
         if (this.amount >= 12) {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card.type == SakikoEnum.CardTypeEnum.MUSIC).count();
             if (!MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {

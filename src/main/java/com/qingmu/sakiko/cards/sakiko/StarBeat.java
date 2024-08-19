@@ -17,7 +17,7 @@ public class StarBeat extends CustomCard {
     public static final String ID = ModNameHelper.make(StarBeat.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/StarBeat.png";
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
