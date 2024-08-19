@@ -2,8 +2,9 @@
   "SakikoMod:MusicalNotePower": {
     "NAME": "音符",
     "DESCRIPTIONS": [
-      "每获得12层，从歌单抽一张牌 NL ",
-      "（再获得%d层即可抽牌。）"
+      "每获得12层，从歌单抽一张牌。",
+      " NL （再获得%d层即可抽牌。）",
+      " NL （你的牌堆中没有可供抽取的音乐牌。）"
     ]
   },
   "SakikoMod:KirameiPower": {

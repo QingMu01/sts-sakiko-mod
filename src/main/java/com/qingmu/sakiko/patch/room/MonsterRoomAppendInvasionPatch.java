@@ -32,16 +32,13 @@ public class MonsterRoomAppendInvasionPatch {
         public static void Postfix(MonsterRoom __instance) {
             if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard")) {
                 if (AbstractDungeon.floorNum > 35 && BandMemberHelper.getBandMemberCount() < 4) {
-                    System.out.println("触发了入侵事件1");
                     setEvent();
                 } else if (BandMemberHelper.getBandMemberCount() < 4){
                     if (AbstractDungeon.eventRng.randomBoolean(invasion.chance)) {
-                        System.out.println("触发了入侵事件2");
                         invasion.chance = 0;
                         setEvent();
                     } else {
                         invasion.chance += upgradeChance;
-                        System.out.println("没有触发入侵事件");
                     }
                 }
             }

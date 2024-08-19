@@ -45,7 +45,8 @@ public class StageMachine extends CustomCard {
     @Override
     protected void applyPowersToBlock() {
         super.applyPowersToBlock();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], (PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * 2) + this.block);
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0]
+                , ((PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)) + this.block);
         this.initializeDescription();
     }
 

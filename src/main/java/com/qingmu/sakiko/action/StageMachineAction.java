@@ -3,8 +3,8 @@ package com.qingmu.sakiko.action;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class StageMachineAction extends AbstractGameAction {
     private AbstractPlayer p;
@@ -18,12 +18,7 @@ public class StageMachineAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        AbstractPower power = p.getPower(MusicalNotePower.POWER_ID);
-        int amount = 0;
-        if (power != null) {
-            amount = power.amount * this.amount;
-        }
-        this.addToBot(new GainBlockAction(p, amount + this.block));
+        this.addToBot(new GainBlockAction(p, (PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * this.amount) + this.block));
         this.isDone = true;
     }
 }

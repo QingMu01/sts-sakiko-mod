@@ -1,7 +1,7 @@
 package com.qingmu.sakiko.relics.menbers;
 
-import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Uika extends AbstractBandMember {
@@ -19,8 +19,7 @@ public class Uika extends AbstractBandMember {
     }
 
     @Override
-    public void onVictory() {
-        this.flash();
-        this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 3));
+    public void onEnterRoom(AbstractRoom room) {
+        AbstractDungeon.player.heal(2);
     }
 }

@@ -27,5 +27,8 @@
       "将一张音乐牌加入你的牌组中",
       "选择一张音乐牌"
     ]
+  },
+  "SakikoMod:MusicalCompositionScreen": {
+    "TEXT": [""]
   }
 }

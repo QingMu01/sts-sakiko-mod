@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
+import com.qingmu.sakiko.patch.SakikoEnum;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,7 +66,7 @@ public class RememberAction extends AbstractGameAction {
             }
             for (Iterator<AbstractCard> c = this.p.exhaustPile.group.iterator(); c.hasNext(); ) {
                 AbstractCard derp = c.next();
-                if (derp.cardID.equals(Remember.ID)) {
+                if (derp.cardID.equals(Remember.ID) || derp.hasTag(SakikoEnum.CardTagEnum.REMEMBER) || derp.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)) {
                     c.remove();
                     this.exhumes.add(derp);
                 }
