@@ -40,6 +40,7 @@ public class InvasionEvent extends PhasedEvent {
             room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20));
         }).setNextKey("Leave"));
 
+        // 不知道为什么写进循环里好像没有用的样子
         registerPhase("Leave_" + UikaMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[4]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         registerPhase("Leave_" + MutsumiMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[5]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         registerPhase("Leave_" + UmiriMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[6]).addOption(OPTIONS[2], (e) -> endOfEvent()));

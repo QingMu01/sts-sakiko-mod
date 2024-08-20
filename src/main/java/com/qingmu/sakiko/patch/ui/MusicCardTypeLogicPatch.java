@@ -75,7 +75,62 @@ public class MusicCardTypeLogicPatch {
                 return LineFinder.findInOrder(ctBehavior, finalMatcher);
             }
         }
+    }
 
+    /*
+     * 同上，单张卡牌展示的banner
+     * */
+    @SpirePatch(clz = SingleCardViewPopup.class, method = "renderCardBanner")
+    public static class RenderSingleCardBannerPatch {
+        @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
+        public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
+            if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || ___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
+                    tmpImg[0] = ImageMaster.CARD_BANNER_COMMON_L;
+                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                    tmpImg[0] = ImageMaster.CARD_BANNER_UNCOMMON_L;
+                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
+                    tmpImg[0] = ImageMaster.CARD_BANNER_RARE_L;
+                } else {
+                    tmpImg[0] = ImageMaster.CARD_BANNER_COMMON_L;
+                }
+            }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.MethodCallMatcher(SingleCardViewPopup.class, "renderHelper");
+                return LineFinder.findAllInOrder(ctBehavior, matcher);
+            }
+        }
+    }
+
+    @SpirePatch(clz = SingleCardViewPopup.class, method = "renderFrame")
+    public static class RenderSingleCardFramePatch {
+        @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
+        public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
+            if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || ___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
+                    tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_COMMON_L;
+                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                    tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_UNCOMMON_L;
+                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
+                    tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_RARE_L;
+                } else {
+                    tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_COMMON_L;
+                }
+            }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.MethodCallMatcher(SingleCardViewPopup.class, "renderHelper");
+                return new int[] {LineFinder.findInOrder(ctBehavior, matcher)[0] - 1};
+            }
+        }
     }
 
     /*
@@ -123,36 +178,9 @@ public class MusicCardTypeLogicPatch {
         }
     }
 
-    /*
-     * 这里是为了套用原版体系的类别
-     * */
-    @SpirePatch(clz = AbstractCard.class, method = "renderDynamicFrame")
-    public static class renderDynamicFramePatch {
-        public static void Postfix(AbstractCard __instance, SpriteBatch sb, float x, float y, float typeOffset, float typeWidth) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || __instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_MID, x, y, 0.0F, typeWidth);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_LEFT, x, y, -typeOffset, 1.0F);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_RIGHT, x, y, typeOffset, 1.0F);
-                } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_UNCOMMON_FRAME_MID, x, y, 0.0F, typeWidth);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_UNCOMMON_FRAME_LEFT, x, y, -typeOffset, 1.0F);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_UNCOMMON_FRAME_RIGHT, x, y, typeOffset, 1.0F);
-                } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_RARE_FRAME_MID, x, y, 0.0F, typeWidth);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_RARE_FRAME_LEFT, x, y, -typeOffset, 1.0F);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_RARE_FRAME_RIGHT, x, y, typeOffset, 1.0F);
-                } else {
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_MID, x, y, 0.0F, typeWidth);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_LEFT, x, y, -typeOffset, 1.0F);
-                    ((AbstractMusic) __instance).dynamicFrameRenderHelper(sb, ImageMaster.CARD_COMMON_FRAME_RIGHT, x, y, typeOffset, 1.0F);
-                }
-            }
-        }
-    }
-
+    // 同上这里是文字边框
     @SpirePatch(clz = AbstractCard.class, method = "renderSkillPortrait")
-    public static class renderSkillPortraitPatch {
+    public static class RenderSkillPortraitPatch {
         public static void Postfix(AbstractCard __instance, SpriteBatch sb, float x, float y, Color ___renderColor) {
             if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
                 if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || __instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
