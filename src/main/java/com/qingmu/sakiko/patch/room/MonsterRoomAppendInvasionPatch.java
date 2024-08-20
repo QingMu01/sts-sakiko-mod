@@ -11,8 +11,8 @@ import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.events.InvasionEvent;
-import com.qingmu.sakiko.utils.BandMemberHelper;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
+import com.qingmu.sakiko.utils.MemberHelper;
 
 import java.util.ArrayList;
 
@@ -31,9 +31,9 @@ public class MonsterRoomAppendInvasionPatch {
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
             if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))) {
-                if (AbstractDungeon.floorNum > 35 && BandMemberHelper.getBandMemberCount() < 4) {
+                if (AbstractDungeon.floorNum > 35 && MemberHelper.getBandMemberCount() < 4) {
                     setEvent();
-                } else if (BandMemberHelper.getBandMemberCount() < 4){
+                } else if (MemberHelper.getBandMemberCount() < 4){
                     if (AbstractDungeon.eventRng.randomBoolean(invasion.chance)) {
                         invasion.chance = 0;
                         setEvent();

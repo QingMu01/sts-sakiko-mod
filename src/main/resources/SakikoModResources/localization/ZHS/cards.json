@@ -57,8 +57,7 @@
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
-    "DESCRIPTION": "获得 [E] ,抽1张牌。获得 !M! 层 sakikomod:过劳 。",
-    "UPGRADE_DESCRIPTION": "获得 [E] ,抽1张牌。"
+    "DESCRIPTION": "获得 !M! [E] ,抽1张牌。获得 !M! 层 sakikomod:过劳 。"
   },
   "SakikoMod:CutOfMemory": {
     "NAME": "斩断过去",

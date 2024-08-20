@@ -8,7 +8,8 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.monsters.*;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class InvasionEvent extends PhasedEvent {
     private static final String[] OPTIONS = eventStrings.OPTIONS;
     private static final String IMG_PATH = "SakikoModResources/img/event/bg00949.png";
 
-    private final Map<String, Integer> optionMember = BandMemberHelper.getMember(4);
+    private final Map<String, Integer> optionMember = MemberHelper.getMember(4);
 
     public InvasionEvent() {
         super(ID, NAME, IMG_PATH);
@@ -39,7 +40,15 @@ public class InvasionEvent extends PhasedEvent {
             room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20));
         }).setNextKey("Leave"));
 
-        registerPhase("Leave", new TextPhase(DESCRIPTIONS[3]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + UikaMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[4]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + MutsumiMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[5]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + UmiriMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[6]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + NyamuchiMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[7]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + TomoriMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[8]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + AnonMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[9]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + SoyoMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[10]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + TakiMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[11]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave_" + RanaMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[12]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         transitionKey(0);
     }
 
@@ -47,13 +56,12 @@ public class InvasionEvent extends PhasedEvent {
         TextPhase textPhase = new TextPhase(DESCRIPTIONS[1]);
         optionMember.forEach((name, index) -> textPhase.addOption(OPTIONS[index + 3], (e) -> {
             // 成员战斗
-            registerPhase("MemberFight_" + name, new CombatPhase(BandMemberHelper.memberList.get(index))
+            registerPhase("MemberFight_" + name, new CombatPhase(MemberHelper.memberList.get(index))
                     .addRewards(true, room->{
                         // 离开，提示获得成员
                         room.rewards.add(new RewardItem(50,false));
                         room.rewards.add(new RewardItem(BaseMod.getCustomRelic(name.replace("Monster", ""))));
-                    }).setNextKey("Leave"));
-
+                    }).setNextKey("Leave_" + name));
             transitionKey("MemberFight_" + name);
         }));
         return textPhase;

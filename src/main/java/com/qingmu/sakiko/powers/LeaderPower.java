@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.LoseGoldAction;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class LeaderPower extends AbstractPower {
@@ -41,7 +41,7 @@ public class LeaderPower extends AbstractPower {
 
     @Override
     public void atStartOfTurn() {
-        int count = BandMemberHelper.getBandMemberCount();
+        int count = MemberHelper.getBandMemberCount();
         for (int i = 0; i < this.amount; i++) {
             this.addToBot(new LoseGoldAction(count));
         }

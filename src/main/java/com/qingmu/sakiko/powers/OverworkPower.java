@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.powers;
 
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.watcher.PressEndTurnButtonAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -15,6 +14,7 @@ public class OverworkPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
+    private int count = 0;
     public OverworkPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
@@ -28,15 +28,16 @@ public class OverworkPower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + (12 - this.amount) + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0] + (12 - this.count) + DESCRIPTIONS[1];
     }
 
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        if (this.amount >= 12){
+        this.count += stackAmount;
+        if (this.count >= 8){
             this.addToBot(new PressEndTurnButtonAction());
-            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+            this.count = 0;
         }
     }
 }

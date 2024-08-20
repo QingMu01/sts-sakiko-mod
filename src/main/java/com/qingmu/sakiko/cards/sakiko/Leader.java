@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.powers.LeaderPower;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -46,7 +46,7 @@ public class Leader extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, BandMemberHelper.getBandMemberCount())));
+        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, MemberHelper.getBandMemberCount())));
         this.addToBot(new ApplyPowerAction(p, p, new LeaderPower(p, 1)));
     }
 }

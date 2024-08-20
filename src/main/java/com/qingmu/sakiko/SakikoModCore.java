@@ -25,6 +25,7 @@ import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
+import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.nio.charset.StandardCharsets;
 
@@ -175,6 +176,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveStartGame() {
         if (AbstractDungeon.floorNum == 0) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
+            MusicCardFinder.initMusicPool();
         }
     }
 

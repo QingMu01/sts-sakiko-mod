@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.powers.MusicalNotePower;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -46,7 +46,7 @@ public class AveMusica extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (this.upgraded) {
-            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber + (2*BandMemberHelper.getBandMemberCount()))));
+            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber + (2* MemberHelper.getBandMemberCount()))));
         } else {
             this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
         }

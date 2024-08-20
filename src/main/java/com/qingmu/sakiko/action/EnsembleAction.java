@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.utils.MemberHelper;
 
 public class EnsembleAction extends AbstractGameAction {
 
@@ -17,7 +17,7 @@ public class EnsembleAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        int bandMemberCount = BandMemberHelper.getBandMemberCount();
+        int bandMemberCount = MemberHelper.getBandMemberCount();
         for (int i = 0; i < bandMemberCount+1; i++) {
             this.addToBot(new DamageAction(this.target, this.info, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }

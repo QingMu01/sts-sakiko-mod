@@ -26,7 +26,7 @@ public class MusicCardFinder {
     public static CardGroup uncommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
     public static CardGroup rareMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
 
-    static {
+    public static void initMusicPool() {
         for (AbstractCard card : BaseMod.getCustomCardsToAdd()) {
             if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
                 if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {

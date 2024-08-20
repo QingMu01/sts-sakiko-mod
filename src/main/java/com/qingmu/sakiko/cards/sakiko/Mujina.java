@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.utils.BandMemberHelper;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -42,13 +42,13 @@ public class Mujina extends CustomCard {
     @Override
     public void applyPowers() {
         super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], BandMemberHelper.getBandMemberCount());
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], MemberHelper.getBandMemberCount());
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GainEnergyAction(BandMemberHelper.getBandMemberCount()));
+        this.addToBot(new GainEnergyAction(MemberHelper.getBandMemberCount()));
 
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

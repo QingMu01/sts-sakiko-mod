@@ -58,9 +58,7 @@ public class MusicalNotePower extends AbstractPower {
     @Override
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
-            if (this.amount >= 24) {
-                this.amount = this.amount / 2;
-            }
+            this.amount = this.amount / 2;
         }
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class BandMemberHelper {
+public class MemberHelper {
 
     public static List<String> memberList = new ArrayList<>();
 
