@@ -28,6 +28,20 @@ public class SakikoEnum {
         @SpireEnum
         public static AbstractCard.CardType MUSIC;
     }
+
+    /*
+    * 新增稀有度，音乐基础、音乐普通、音乐罕见、音乐稀有
+    * */
+    public static class CardRarityEnum {
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_BASIC;
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_COMMON;
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_UNCOMMON;
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_RARE;
+    }
     /*
     * 本mod的特殊牌标记
     * */

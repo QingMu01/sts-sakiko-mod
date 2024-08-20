@@ -5,12 +5,32 @@ import com.megacrit.cardcrawl.actions.utility.ShowCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
+
+    /*
+    * 构建UseCardAction时，判断是否为MUSIC_POWER类型，如果是，则将卡牌类型改为POWER
+    * 这样做可以触发遗物、能力等的钩子，使觉醒者的好奇、鸡煲的增幅等能力正确触发
+    * */
+    @SpirePatch(clz = UseCardAction.class, method = SpirePatch.CONSTRUCTOR, paramtypez = {AbstractCard.class, AbstractCreature.class})
+    public static class MusicPowerTypePatch {
+        public static void Prefix(UseCardAction __instance, @ByRef AbstractCard[] card, AbstractCreature target) {
+            if (card[0].hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
+                card[0].type = AbstractCard.CardType.POWER;
+            }
+        }
+
+        public static void Postfix(UseCardAction __instance, @ByRef AbstractCard[] card, AbstractCreature target) {
+            if (card[0].hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
+                card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
+            }
+        }
+    }
 
     /*
      * 根据卡牌类型以及是否存在 MUSIC_POWER Tag，判断打出时是否按能力卡处理
@@ -48,13 +68,13 @@ public class UseMusicCardActionPatch {
     }
 
     /*
-    * 带有MUSIC_POWER Tag的Music类型卡牌，消耗时与原版一样，不触发勺子
-    * */
+     * 带有MUSIC_POWER Tag的Music类型卡牌，消耗时与原版一样，不触发勺子
+     * */
     @SpirePatch(clz = UseCardAction.class, method = "update")
     public static class CheckMusicCardCanDoSpoonPatch {
 
-        @SpireInsertPatch(locator = Locator.class,localvars = {"spoonProc"})
-        public static void insert(UseCardAction __instance,AbstractCard ___targetCard,@ByRef boolean[] spoonProc) {
+        @SpireInsertPatch(locator = Locator.class, localvars = {"spoonProc"})
+        public static void insert(UseCardAction __instance, AbstractCard ___targetCard, @ByRef boolean[] spoonProc) {
             if (__instance.exhaustCard && AbstractDungeon.player.hasRelic("Strange Spoon") && !___targetCard.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 spoonProc[0] = AbstractDungeon.cardRandomRng.randomBoolean();
             }

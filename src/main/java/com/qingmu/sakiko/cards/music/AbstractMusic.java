@@ -2,7 +2,9 @@ package com.qingmu.sakiko.cards.music;
 
 import basemod.AutoAdd;
 import basemod.abstracts.CustomCard;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.modthespire.lib.SpireOverride;
 import com.evacipated.cardcrawl.modthespire.lib.SpireSuper;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -71,5 +73,15 @@ public abstract class AbstractMusic extends CustomCard {
     @SpireOverride
     public void renderSkillPortrait(SpriteBatch sb, float x, float y) {
         SpireSuper.call(sb, x, y);
+    }
+
+    @SpireOverride
+    public void renderHelper(SpriteBatch sb, Color color, TextureAtlas.AtlasRegion img, float drawX, float drawY) {
+        SpireSuper.call(sb, color, img, drawX, drawY);
+    }
+
+    @SpireOverride
+    public void dynamicFrameRenderHelper(SpriteBatch sb, TextureAtlas.AtlasRegion img, float x, float y, float xOffset, float xScale) {
+        SpireSuper.call(sb, img, x, y, xOffset, xScale);
     }
 }

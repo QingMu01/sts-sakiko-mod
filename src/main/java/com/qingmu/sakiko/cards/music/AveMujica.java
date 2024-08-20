@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -22,7 +23,7 @@ public class AveMujica extends AbstractMusic {
     private static final int COST = 1;
 
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
     private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
 
     public AveMujica() {

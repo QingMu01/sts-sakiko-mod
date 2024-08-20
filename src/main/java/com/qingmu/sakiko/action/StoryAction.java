@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.qingmu.sakiko.action.effect.ShowCardAndToMusicListEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.util.ArrayList;
 
@@ -51,18 +52,15 @@ public class StoryAction extends AbstractGameAction {
 
     private ArrayList<AbstractCard> generateCardChoices() {
         ArrayList<AbstractCard> derp = new ArrayList<>();
-
         while (derp.size() != 3) {
             boolean dupe = false;
-            AbstractCard tmp = AbstractDungeon.returnTrulyRandomCardInCombat(this.cardType);
-
+            AbstractCard tmp = MusicCardFinder.returnTrulyRandomCardInCombat();
             for (AbstractCard c : derp) {
                 if (c.cardID.equals(tmp.cardID)) {
                     dupe = true;
                     break;
                 }
             }
-
             if (!dupe) {
                 derp.add(tmp.makeCopy());
             }

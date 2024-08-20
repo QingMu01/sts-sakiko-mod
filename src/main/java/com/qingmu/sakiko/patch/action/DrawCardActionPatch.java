@@ -11,6 +11,10 @@ import javassist.CtBehavior;
 
 @SpirePatch(clz = DrawCardAction.class, method = "update")
 public class DrawCardActionPatch {
+
+    /*
+    * 排除弃牌堆白月光，防止洗牌出现问题
+    * */
     @SpireInsertPatch(locator = Locator.class, localvars = {"discardSize"})
     public static void Insert(DrawCardAction __instance, @ByRef int[] discardSize) {
         discardSize[0] = (int) AbstractDungeon.player.discardPile.group.stream().filter(c -> !c.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)).count();

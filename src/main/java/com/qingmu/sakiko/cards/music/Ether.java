@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -25,7 +26,7 @@ public class Ether extends AbstractMusic {
     private static final int COST = 0;
 
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public Ether() {

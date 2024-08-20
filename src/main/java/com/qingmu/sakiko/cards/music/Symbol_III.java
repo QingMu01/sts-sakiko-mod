@@ -24,7 +24,7 @@ public class Symbol_III extends AbstractMusic {
     private static final int COST = 1;
 
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Symbol_III() {
