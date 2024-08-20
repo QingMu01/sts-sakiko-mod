@@ -77,7 +77,7 @@
   "SakikoMod:FeverReadyPower": {
     "NAME": "准备中",
     "DESCRIPTIONS": [
-      "当你有三层 #y准备中 时，进入 #yFever 。"
+      "当你有 #b5 层 #y准备中 时，进入 #yFever 。"
     ]
   },
   "SakikoMod:SekaikanPower": {

@@ -105,7 +105,7 @@ public class MusicCardTypeLogicPatch {
             }
         }
     }
-
+    // 同上，单卡展示的边框
     @SpirePatch(clz = SingleCardViewPopup.class, method = "renderFrame")
     public static class RenderSingleCardFramePatch {
         @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})

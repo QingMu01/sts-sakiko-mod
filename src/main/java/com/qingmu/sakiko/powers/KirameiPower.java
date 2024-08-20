@@ -32,8 +32,6 @@ public class KirameiPower extends AbstractPower {
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();
-
-        this.canGoNegative = true;
     }
 
     @Override
@@ -50,28 +48,14 @@ public class KirameiPower extends AbstractPower {
         if (this.amount >= 999) {
             this.amount = 999;
         }
-
-        if (this.amount <= -999) {
-            this.amount = -999;
-        }
-
     }
 
     @Override
     public void reducePower(int reduceAmount) {
         this.amount -= reduceAmount;
-        if (this.amount == 0) {
+        if (this.amount <= 0) {
             this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
-
-        if (this.amount >= 999) {
-            this.amount = 999;
-        }
-
-        if (this.amount <= -999) {
-            this.amount = -999;
-        }
-
     }
 
 }
