@@ -174,9 +174,9 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receiveStartGame() {
+        MusicCardFinder.initMusicPool();
         if (AbstractDungeon.floorNum == 0) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
-            MusicCardFinder.initMusicPool();
         }
     }
 

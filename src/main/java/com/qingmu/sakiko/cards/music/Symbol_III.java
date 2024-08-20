@@ -1,11 +1,10 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.RepairPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -30,15 +29,15 @@ public class Symbol_III extends AbstractMusic {
     public Symbol_III() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, COLOR, RARITY, TARGET);
         this.tags.add(CardTags.HEALING);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.baseMagicNumber = 7;
+        this.baseMagicNumber = 2;
         this.upgradeRequestNumber = 1;
+        this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
         if (this.timesUpgraded < 2) {
-            this.upgradeMagicNumber(2);
+            this.upgradeMagicNumber(1);
             this.timesUpgraded++;
             this.name = NAME + "+" + this.timesUpgraded;
             this.upgraded = true;
@@ -50,6 +49,6 @@ public class Symbol_III extends AbstractMusic {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         super.use(p, m);
-        this.addToBot(new ApplyPowerAction(p, p, new RepairPower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+        this.addToBot(new HealAction(p, p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
     }
 }

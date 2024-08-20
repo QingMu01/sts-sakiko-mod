@@ -23,7 +23,7 @@ public class KeypointEntry extends CustomCard {
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public KeypointEntry() {

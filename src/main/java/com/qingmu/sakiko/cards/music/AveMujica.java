@@ -23,19 +23,19 @@ public class AveMujica extends AbstractMusic {
     private static final int COST = 1;
 
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
 
     public AveMujica() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, COLOR, RARITY, TARGET);
-        this.baseDamage = 8;
+        this.baseDamage = 6;
         this.isMultiDamage = true;
         this.upgradeRequestNumber = 1;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeDamage(6+ this.timesUpgraded);
+        this.upgradeDamage(4+ this.timesUpgraded);
         this.timesUpgraded++;
         this.name = NAME + "+" + this.timesUpgraded;
         this.upgraded = true;

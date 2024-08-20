@@ -49,7 +49,7 @@ public abstract class AbstractMusic extends CustomCard {
     public void triggerWhenDrawn() {
         this.addToBot(new MusicUpgradeAction(this, this.upgradeRequestNumber));
     }
-
+    // 升华卡记得重下这个方法
     @Override
     public void onPlayCard(AbstractCard c, AbstractMonster m) {
         if (c == this) {
@@ -64,10 +64,10 @@ public abstract class AbstractMusic extends CustomCard {
             this.initializeTitle();
         }
     }
-
+    // 升华卡记得重下这个方法
     @Override
     public boolean canUpgrade() {
-        return AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
+        return (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT);
     }
 
     @SpireOverride

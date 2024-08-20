@@ -23,7 +23,9 @@
   "SakikoMod:BurnBoats": {
     "NAME": "破釜沉舟",
     "DESCRIPTION": "每有2层 sakikomod:音符 ，对随机敌人造成 !D! 点伤害。 NL 清空你的 *音符 。",
-    "EXTENDED_DESCRIPTION": [" NL （当前造成%d次伤害）"]
+    "EXTENDED_DESCRIPTION": [
+      " NL （当前造成%d次伤害）"
+    ]
   },
   "SakikoMod:NotePunch": {
     "NAME": "音律冲击",
@@ -71,7 +73,7 @@
     "NAME": "皆杀",
     "DESCRIPTION": "造成 !D! 点伤害，若 *斩杀 ，这张卡在本场战斗的费用降低1点，然后从弃牌堆返回手牌。"
   },
-    "SakikoMod:DollDance": {
+  "SakikoMod:DollDance": {
     "NAME": "人偶之舞",
     "DESCRIPTION": "获得1层 sakikomod:闪耀 。对随机敌人造成 !D! 点伤害 *闪耀 层数次。 NL *消耗 。",
     "EXTENDED_DESCRIPTION": [
@@ -263,7 +265,9 @@
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
     "DESCRIPTION": "造成 !D! 点伤害，获得 sakikomod:心之壁 层数点 *格挡 。",
-    "EXTENDED_DESCRIPTION": [" NL （获得 %d 点格挡。）"]
+    "EXTENDED_DESCRIPTION": [
+      " NL （获得 %d 点格挡。）"
+    ]
   },
   "SakikoMod:TakeoverLife": {
     "NAME": "人生收购",
@@ -344,32 +348,32 @@
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
-    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点力量。 NL sakikomod:加持 1。"
+    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点力量。 NL sakikomod:加持 1：额外获得1点力量。"
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
     "DESCRIPTION": "抽 !M! 张牌。 NL sakikomod:升华 4：抽牌直到将手牌抽满。",
-    "UPGRADE_DESCRIPTION": "已 sakikomod:升华 NL 抽牌直到将手牌抽满。"
+    "UPGRADE_DESCRIPTION": "抽牌直到将手牌抽满。"
   },
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
-    "DESCRIPTION": "sakikomod:音乐能力 NL 战斗结束后恢复 !M! 生命值。 NL sakikomod:加持 1。"
+    "DESCRIPTION": "恢复 !M! 生命值。 NL sakikomod:加持 1：额外恢复1点生命值。"
   },
   "SakikoMod:Symbol_IV": {
     "NAME": "Symbol IV:Earth",
-    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点敏捷。 NL sakikomod:加持 1。"
+    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点敏捷。 NL sakikomod:加持 1：额外获得1点敏捷。"
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
     "DESCRIPTION": "获得 !M! [E] 。 NL sakikomod:升华 4：将你的能量翻倍。",
-    "UPGRADE_DESCRIPTION": "已 sakikomod:升华 NL 将你的能量翻倍。"
+    "UPGRADE_DESCRIPTION": "将你的能量翻倍。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL sakikomod:加持 1。"
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL sakikomod:加持 1：造成的伤害伤害增加4+升级次数点。"
   },
   "SakikoMod:NingenUta": {
     "NAME": "想要成为人类之歌",
-    "DESCRIPTION": "获得 !M! 层 *人工制品 。 NL *消耗 。 NL sakikomod:加持 2。"
+    "DESCRIPTION": "获得 !M! 层 *人工制品 。 NL *消耗 。 NL sakikomod:加持 2：额外获得1层 *人工制品。"
   }
 }

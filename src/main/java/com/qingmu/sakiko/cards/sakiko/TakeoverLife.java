@@ -26,12 +26,12 @@ public class TakeoverLife extends CustomCard {
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public TakeoverLife() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 18;
+        this.baseDamage = 17;
         this.baseMagicNumber = 10;
     }
 
@@ -39,7 +39,7 @@ public class TakeoverLife extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(3);
+            this.upgradeDamage(4);
             this.upgradeMagicNumber(-3);
         }
     }
