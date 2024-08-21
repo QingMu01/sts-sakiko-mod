@@ -16,6 +16,7 @@ public class OverworkPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private int count = 0;
+    private int limit = 8;
     public OverworkPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
@@ -29,7 +30,7 @@ public class OverworkPower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + (12 - this.count) + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0] + (this.limit - this.count) + DESCRIPTIONS[1];
     }
 
     @Override
@@ -43,7 +44,7 @@ public class OverworkPower extends AbstractPower {
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
         this.count += stackAmount;
-        if (this.count >= 8){
+        if (this.count >= this.limit){
             this.addToBot(new PressEndTurnButtonAction());
             this.count = 0;
         }

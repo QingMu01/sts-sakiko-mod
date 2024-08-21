@@ -7,8 +7,8 @@ import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.powers.KirameiPower;
 
 public class MusicUpgradeAction extends AbstractGameAction {
-    private AbstractMusic card;
-    private int required;
+    private final AbstractMusic card;
+    private final int required;
 
     public MusicUpgradeAction(AbstractMusic card, int required) {
         this.card = card;
@@ -17,10 +17,10 @@ public class MusicUpgradeAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (this.card.canUpgrade()){
+        if (this.card.canUpgrade()) {
             int calculated = calculateUpgrade(this.required);
-            if (this.card.timesUpgraded < calculated){
-                for (int i = 0; i < calculated; i++) {
+            if (this.card.timesUpgraded < calculated) {
+                for (int i = 0; i < calculated - this.card.timesUpgraded; i++) {
                     this.card.upgrade();
                 }
                 this.card.superFlash();
@@ -37,5 +37,4 @@ public class MusicUpgradeAction extends AbstractGameAction {
             return 0;
         }
     }
-
 }

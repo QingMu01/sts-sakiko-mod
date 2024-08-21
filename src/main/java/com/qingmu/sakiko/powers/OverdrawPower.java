@@ -19,8 +19,8 @@ public class OverdrawPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    private static final String path48 = "SakikoModResources/img/powers/FeverPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/FeverPower128.png";
+    private static final String path48 = "SakikoModResources/img/powers/OverdrawPower48.png";
+    private static final String path128 = "SakikoModResources/img/powers/OverdrawPower84.png";
 
 
     public OverdrawPower(AbstractCreature owner, int amount) {

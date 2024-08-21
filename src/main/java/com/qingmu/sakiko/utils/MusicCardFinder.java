@@ -13,38 +13,25 @@ import java.util.Iterator;
 
 public class MusicCardFinder {
 
-    public static int cardBlizzStartOffset = 5;
-    public static int cardBlizzRandomizer = cardBlizzStartOffset;
-    public static int cardBlizzGrowth = 1;
-    public static int cardBlizzMaxOffset = -40;
-
-    public static CardGroup srcCommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
     public static CardGroup srcUncommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
     public static CardGroup srcRareMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
 
-    public static CardGroup commonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
     public static CardGroup uncommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
     public static CardGroup rareMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
 
     public static void initMusicPool() {
         for (AbstractCard card : BaseMod.getCustomCardsToAdd()) {
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
-                if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    commonMusicPool.addToTop(card);
-                } else if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+            if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+                if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     uncommonMusicPool.addToTop(card);
-                }else if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE){
+                } else if (card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
                     rareMusicPool.addToTop(card);
                 }
             }
         }
-        if (srcCommonMusicPool == null) srcCommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
         if (srcUncommonMusicPool == null) srcUncommonMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
         if (srcRareMusicPool == null) srcRareMusicPool = new CardGroup(CardGroup.CardGroupType.CARD_POOL);
 
-        for (AbstractCard card : commonMusicPool.group) {
-            srcCommonMusicPool.addToBottom(card);
-        }
         for (AbstractCard card : uncommonMusicPool.group) {
             srcUncommonMusicPool.addToBottom(card);
         }
@@ -61,13 +48,6 @@ public class MusicCardFinder {
         for (int i = 0; i < numCards; i++) {
             AbstractCard.CardRarity rarity = rollRarity();
             AbstractCard card = null;
-            if (rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                cardBlizzRandomizer = cardBlizzStartOffset;
-            } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
-                cardBlizzRandomizer -= cardBlizzGrowth;
-                if (cardBlizzRandomizer <= cardBlizzMaxOffset)
-                    cardBlizzRandomizer = cardBlizzMaxOffset;
-            }
             boolean containsDupe = true;
             while (containsDupe) {
                 containsDupe = false;
@@ -81,39 +61,26 @@ public class MusicCardFinder {
             }
             if (card != null && card.type == SakikoEnum.CardTypeEnum.MUSIC) {
                 retVal.add(card);
-            } else {
-                i--;
             }
         }
         ArrayList<AbstractCard> retVal2 = new ArrayList<>();
         for (AbstractCard c : retVal)
             retVal2.add(c.makeCopy());
-        for (AbstractCard c : retVal2) {
-            for (AbstractRelic r : AbstractDungeon.player.relics)
-                r.onPreviewObtainCard(c);
-        }
         return retVal2;
     }
 
     public static AbstractCard returnTrulyRandomCardInCombat() {
         ArrayList<AbstractCard> list = new ArrayList<>();
-        Iterator<AbstractCard> var2 = srcCommonMusicPool.group.iterator();
+        Iterator<AbstractCard> var2 = srcUncommonMusicPool.group.iterator();
         AbstractCard c;
-        while(var2.hasNext()) {
-            c = var2.next();
-            if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
-                list.add(c);
-            }
-        }
-        var2 = srcUncommonMusicPool.group.iterator();
-        while(var2.hasNext()) {
+        while (var2.hasNext()) {
             c = var2.next();
             if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
                 list.add(c);
             }
         }
         var2 = srcRareMusicPool.group.iterator();
-        while(var2.hasNext()) {
+        while (var2.hasNext()) {
             c = var2.next();
             if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
                 list.add(c);
@@ -125,27 +92,19 @@ public class MusicCardFinder {
     private static AbstractCard.CardRarity rollRarity() {
         int roll = AbstractDungeon.cardRng.random(99);
         roll += AbstractDungeon.cardBlizzRandomizer;
-        return AbstractDungeon.currMapNode == null ? getCardRarityFallback(roll) : AbstractDungeon.getCurrRoom().getCardRarity(roll);
+        return getCardRarityFallback(roll);
     }
 
     private static AbstractCard.CardRarity getCardRarityFallback(int roll) {
-        int rareRate = 3;
-        if (roll < rareRate) {
-            return SakikoEnum.CardRarityEnum.MUSIC_RARE;
-        } else {
-            return roll < 40 ? SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON : SakikoEnum.CardRarityEnum.MUSIC_COMMON;
-        }
+        return roll < 15 ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     }
 
     private static AbstractCard getCard(AbstractCard.CardRarity rarity) {
-        if (rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-            return commonMusicPool.getRandomCard(true);
-        } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+        if (rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
             return uncommonMusicPool.getRandomCard(true);
         } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
             return rareMusicPool.getRandomCard(true);
         }
         return null;
     }
-
 }

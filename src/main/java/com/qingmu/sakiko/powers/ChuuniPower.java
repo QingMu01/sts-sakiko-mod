@@ -18,17 +18,21 @@ public class ChuuniPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    private static final String path48 = "SakikoModResources/img/powers/FeverPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/FeverPower128.png";
+    private static final String path48 = "SakikoModResources/img/powers/ChuuniPower48.png";
+    private static final String path128 = "SakikoModResources/img/powers/ChuuniPower84.png";
 
-    public ChuuniPower(AbstractCreature owner, int amount) {
+    private boolean isUpgraded;
+
+    public ChuuniPower(AbstractCreature owner, int amount, boolean isUpgraded) {
         this.name = NAME;
-        this.ID = POWER_ID;
+        this.ID = POWER_ID + isUpgraded;
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
+
+        this.isUpgraded = isUpgraded;
 
         this.updateDescription();
     }
@@ -41,7 +45,7 @@ public class ChuuniPower extends AbstractPower {
     @Override
     public void atStartOfTurn() {
         this.flash();
-        this.addToTop(new MakeTempCardInHandAction(new Fantasy(), this.amount));
+        this.addToTop(new MakeTempCardInHandAction(new Fantasy(this.isUpgraded), this.amount));
     }
 
     @Override

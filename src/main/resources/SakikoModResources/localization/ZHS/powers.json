@@ -111,21 +111,21 @@
     ]
   },
   "SakikoMod:OjyousamaPower": {
-    "NAME": "大小姐的修养",
+    "NAME": "修养",
     "DESCRIPTIONS": [
       "回合开始时，额外抽 #b",
       " 张牌。"
     ]
   },
   "SakikoMod:YowaiwatashiPower": {
-    "NAME": "软弱的我已经死了",
+    "NAME": "软弱",
     "DESCRIPTIONS": [
       "回合开始时，将 #b",
       " 张 #y回忆 加入手牌。"
     ]
   },
   "SakikoMod:StarBeatPower": {
-    "NAME": "心之鼓动",
+    "NAME": "星之鼓动",
     "DESCRIPTIONS": [
       "打出一次音乐牌时，抽 #b",
       " 张牌。"
@@ -159,7 +159,7 @@
     ]
   },
   "SakikoMod:OverworkPower": {
-    "NAME": "过劳",
+    "NAME": "疲惫",
     "DESCRIPTIONS": [
       "距离结束回合还有 #r",
       " 层。"

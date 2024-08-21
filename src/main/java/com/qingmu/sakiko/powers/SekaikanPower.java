@@ -16,8 +16,8 @@ public class SekaikanPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    private static final String path48 = "SakikoModResources/img/powers/FeverPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/FeverPower128.png";
+    private static final String path48 = "SakikoModResources/img/powers/SekaikanPower48.png";
+    private static final String path128 = "SakikoModResources/img/powers/SekaikanPower84.png";
 
     public SekaikanPower(AbstractCreature owner, int amount) {
         this.name = NAME;

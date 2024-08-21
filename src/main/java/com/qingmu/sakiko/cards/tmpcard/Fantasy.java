@@ -16,10 +16,11 @@ public class Fantasy extends CustomCard {
     public static final String ID = ModNameHelper.make(Fantasy.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/tmpcard/Fantasy.png";
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final int COST = 0;
 
     private static final CardType TYPE = CardType.SKILL;
@@ -33,16 +34,22 @@ public class Fantasy extends CustomCard {
         FlavorText.AbstractCardFlavorFields.boxColor.get(this).set(new Color(1.0F, 221.0F / 255.0F, 136.0F / 255.0F, 1.0F));
     }
 
+    public Fantasy(boolean isUpgraded){
+        this();
+        this.upgrade();
+    }
+
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.exhaust = false;
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new FantasyAction());
+        this.addToBot(new FantasyAction(this.upgraded));
     }
 }

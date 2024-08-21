@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class CompositionAction extends AbstractGameAction {
 
         while (derp.size() != 3) {
             boolean dupe = false;
-            AbstractCard tmp = AbstractDungeon.returnTrulyRandomCardInCombat(this.cardType);
+            AbstractCard tmp = MusicCardFinder.returnTrulyRandomCardInCombat();
 
             for (AbstractCard c : derp) {
                 if (c.cardID.equals(tmp.cardID)) {

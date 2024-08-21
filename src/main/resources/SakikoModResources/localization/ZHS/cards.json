@@ -59,7 +59,7 @@
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
-    "DESCRIPTION": "获得 !M! [E] ,抽1张牌。获得 !M! 层 sakikomod:过劳 。"
+    "DESCRIPTION": "获得 !M! [E] ,抽1张牌。获得 !M! 层 sakikomod:疲惫 。"
   },
   "SakikoMod:CutOfMemory": {
     "NAME": "斩断过去",
@@ -227,8 +227,8 @@
   },
   "SakikoMod:Overdraw": {
     "NAME": "透支身体",
-    "DESCRIPTION": "回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。",
-    "UPGRADE_DESCRIPTION": " *固有 。 NL 回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。"
+    "DESCRIPTION": "回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:疲惫 。",
+    "UPGRADE_DESCRIPTION": " *固有 。 NL 回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:疲惫 。"
   },
   "SakikoMod:Mujikaku": {
     "NAME": "无自觉",
@@ -329,6 +329,131 @@
     "NAME": "人偶形态",
     "DESCRIPTION": "每打出一张 sakikomod:音乐 牌，获得 !M! 点 sakikomod:临时生命 。"
   },
+  "SakikoMod:Symbol_I": {
+    "NAME": "Symbol I:Fire",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Symbol_II": {
+    "NAME": "Symbol II:Air",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Symbol_III": {
+    "NAME": "Symbol III:Water",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Symbol_IV": {
+    "NAME": "Symbol IV:Earth",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Ether": {
+    "NAME": "Ether",
+    "DESCRIPTION": "获得 !M! [E] 。 NL sakikomod:升华 4：将你的能量翻倍。",
+    "UPGRADE_DESCRIPTION": "将你的能量翻倍。"
+  },
+  "SakikoMod:AveMujica": {
+    "NAME": "Ave Mujica",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Angles": {
+    "NAME": "Angles",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:BlackBirthday": {
+    "NAME": "黑色诞生日",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:ChoirSChoir": {
+    "NAME": "Choir 'S' Choir",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Futatsunotsuki": {
+    "NAME": "双月",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Mas_uerade": {
+    "NAME": "Mas?uerade Rhapsody Re?uest ",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:KamisamaBaka": {
+    "NAME": "神明、笨蛋",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Utopia": {
+    "NAME": "乌托邦",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:NingenUta_CryChic": {
+    "NAME": "想要成为人类之歌",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Haruhikage_CryChic": {
+    "NAME": "春日影",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:KizunaMusic_PPP": {
+    "NAME": "Kizuna Music",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:StarBeat_PPP": {
+    "NAME": "星之鼓动",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:HeyDay_AG": {
+    "NAME": "Hey-Day随想曲",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:YOLO_AG": {
+    "NAME": "Y.O.L.O.",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Louder_R": {
+    "NAME": "Louder",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:FireBird_R": {
+    "NAME": "Fire Bird",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:ShuwarinDreamin_PP": {
+    "NAME": "Shuwarin Dreamin",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:A2Z_PP": {
+    "NAME": "天下统一 A to Z",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Egao_HHW": {
+    "NAME": "笑容管弦乐",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Ship_HHW": {
+    "NAME": "豪华！豪爽！？怪盗！",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Daylight_M": {
+    "NAME": "Daylight",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Sunny_M": {
+    "NAME": "有所依靠的Sunny,Sunny",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:RIOT_RAS": {
+    "NAME": "R·I·O·T",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Expose_RAS": {
+    "NAME": "EXPOSE 'Burn out!!!'",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:SilhouetteDance_MYGO": {
+    "NAME": "影色舞",
+    "DESCRIPTION": "未完成。"
+  },
+  "SakikoMod:Mayoiuta_MYGO": {
+    "NAME": "迷星叫",
+    "DESCRIPTION": "未完成。"
+  },
   "SakikoMod:Remember": {
     "NAME": "回忆",
     "FLAVOR": "软糯的我又复活了desuwa...",
@@ -344,36 +469,6 @@
     "NAME": "幻想",
     "FLAVOR": "我想到一个新点子！",
     "DESCRIPTION": "从三张牌中选择一张加入你的手牌。选择的牌打出后消耗。 NL *消耗 。",
-    "UPGRADE_DESCRIPTION": "从三张中选择一张加入你的手牌。选择的牌打出后消耗。"
-  },
-  "SakikoMod:Symbol_I": {
-    "NAME": "Symbol I:Fire",
-    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点力量。 NL sakikomod:加持 1：额外获得1点力量。"
-  },
-  "SakikoMod:Symbol_II": {
-    "NAME": "Symbol II:Air",
-    "DESCRIPTION": "抽 !M! 张牌。 NL sakikomod:升华 4：抽牌直到将手牌抽满。",
-    "UPGRADE_DESCRIPTION": "抽牌直到将手牌抽满。"
-  },
-  "SakikoMod:Symbol_III": {
-    "NAME": "Symbol III:Water",
-    "DESCRIPTION": "恢复 !M! 生命值。 NL sakikomod:加持 1：额外恢复1点生命值。"
-  },
-  "SakikoMod:Symbol_IV": {
-    "NAME": "Symbol IV:Earth",
-    "DESCRIPTION": "sakikomod:音乐能力 NL 获得 !M! 点敏捷。 NL sakikomod:加持 1：额外获得1点敏捷。"
-  },
-  "SakikoMod:Ether": {
-    "NAME": "Ether",
-    "DESCRIPTION": "获得 !M! [E] 。 NL sakikomod:升华 4：将你的能量翻倍。",
-    "UPGRADE_DESCRIPTION": "将你的能量翻倍。"
-  },
-  "SakikoMod:AveMujica": {
-    "NAME": "Ave Mujica",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL sakikomod:加持 1：造成的伤害伤害增加4+升级次数点。"
-  },
-  "SakikoMod:NingenUta": {
-    "NAME": "想要成为人类之歌",
-    "DESCRIPTION": "获得 !M! 层 *人工制品 。 NL *消耗 。 NL sakikomod:加持 2：额外获得1层 *人工制品。"
+    "UPGRADE_DESCRIPTION": "从三张中选择一张加入你的手牌。选择的牌在本回合费用为0且打出后消耗。 NL *消耗 。"
   }
 }

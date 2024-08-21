@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
 
 import java.util.Iterator;
 
@@ -51,7 +50,6 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
             }
             this.vfxDone = true;
         }
-        MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).shuffle();
         this.isDone = true;
     }
 }

@@ -16,10 +16,17 @@ public class FantasyAction extends AbstractGameAction {
 
     private boolean retrieveCard = false;
 
-    public FantasyAction() {
+    private boolean isUpgraded;
+
+    public FantasyAction(int amount, boolean isUpgraded) {
         this.actionType = AbstractGameAction.ActionType.CARD_MANIPULATION;
         this.duration = Settings.ACTION_DUR_FAST;
-        this.amount = 1;
+        this.amount = amount;
+        this.isUpgraded = isUpgraded;
+    }
+
+    public FantasyAction(boolean isUpgraded){
+        this(1, isUpgraded);
     }
 
     @Override
@@ -37,6 +44,10 @@ public class FantasyAction extends AbstractGameAction {
                 if (AbstractDungeon.player.hasPower("MasterRealityPower")) {
                     disCard.upgrade();
                     disCard2.upgrade();
+                }
+                if (this.isUpgraded){
+                    disCard.setCostForTurn(0);
+                    disCard2.setCostForTurn(0);
                 }
                 disCard.exhaust = true;
                 disCard2.exhaust = true;

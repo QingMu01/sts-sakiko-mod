@@ -37,12 +37,12 @@ public class ChuuniSakiko extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(2);
+            this.cardsToPreview.upgrade();
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p,p,new ChuuniPower(p,1)));
+        this.addToBot(new ApplyPowerAction(p, p, new ChuuniPower(p, 1, this.upgraded)));
     }
 }

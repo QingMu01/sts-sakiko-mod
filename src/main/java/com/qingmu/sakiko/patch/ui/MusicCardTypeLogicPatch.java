@@ -85,9 +85,7 @@ public class MusicCardTypeLogicPatch {
         @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
         public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
             if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || ___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    tmpImg[0] = ImageMaster.CARD_BANNER_COMMON_L;
-                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     tmpImg[0] = ImageMaster.CARD_BANNER_UNCOMMON_L;
                 } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
                     tmpImg[0] = ImageMaster.CARD_BANNER_RARE_L;
@@ -111,9 +109,7 @@ public class MusicCardTypeLogicPatch {
         @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
         public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
             if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || ___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_COMMON_L;
-                } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_UNCOMMON_L;
                 } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
                     tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_RARE_L;
@@ -165,9 +161,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderBannerImagePatch {
         public static void Postfix(AbstractCard __instance, SpriteBatch sb, float drawX, float drawY, Color ___renderColor) {
             if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || __instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_BANNER_COMMON, drawX, drawY);
-                } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_BANNER_UNCOMMON, drawX, drawY);
                 } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_BANNER_RARE, drawX, drawY);
@@ -183,9 +177,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderSkillPortraitPatch {
         public static void Postfix(AbstractCard __instance, SpriteBatch sb, float x, float y, Color ___renderColor) {
             if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || __instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
-                    ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_FRAME_SKILL_COMMON, x, y);
-                } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+                if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_FRAME_SKILL_UNCOMMON, x, y);
                 } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_FRAME_SKILL_RARE, x, y);
