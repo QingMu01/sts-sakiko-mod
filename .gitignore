@@ -36,3 +36,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Build ###
+mods/
+preferences/
+runs/
+saves/
+sendToDevs/
+info.displayconfig
+twitchconfig.txt
