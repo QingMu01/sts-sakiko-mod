@@ -48,6 +48,7 @@ public class InvasionEvent extends PhasedEvent {
         registerPhase("Leave_" + SoyoMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[10]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         registerPhase("Leave_" + TakiMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[11]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         registerPhase("Leave_" + RanaMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[12]).addOption(OPTIONS[2], (e) -> endOfEvent()));
+        registerPhase("Leave", new TextPhase(DESCRIPTIONS[13]).addOption(OPTIONS[2], (e) -> endOfEvent()));
         transitionKey(0);
     }
 

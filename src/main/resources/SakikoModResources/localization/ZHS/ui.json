@@ -28,6 +28,14 @@
       "选择一张音乐牌"
     ]
   },
+  "SakikoMod:MusicSlot": {
+    "TEXT": [
+      "待演奏区",
+      "回合开始时，演奏其中的第一首音乐。你每拥有两名队友，额外演奏一首音乐。",
+      " NL 当前歌单： NL ",
+      "当前暂无等待演奏的音乐。"
+    ]
+  },
   "SakikoMod:MusicalCompositionScreen": {
     "TEXT": [""]
   }

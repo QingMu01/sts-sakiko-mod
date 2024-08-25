@@ -22,6 +22,7 @@ public class StarBeat_PPP extends AbstractMusic {
 
     public StarBeat_PPP() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.enchanted = 2;
         this.baseMagicNumber = 1;
     }

@@ -37,6 +37,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
             if (this.music.current_x < Settings.WIDTH / 2.0F) return;
             else this.vfxDone = true;
         }
+        this.music.play();
         CardGroup queue = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
         if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
             AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));

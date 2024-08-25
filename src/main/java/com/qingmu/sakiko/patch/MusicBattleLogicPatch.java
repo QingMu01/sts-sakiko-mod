@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.patch;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -57,9 +58,10 @@ public class MusicBattleLogicPatch {
             for (AbstractCard card : queue.group) {
                 loopCount++;
                 AbstractMusic music = (AbstractMusic) card;
-                music.play();
                 music.isPlayed = true;
                 AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(music));
+                AbstractDungeon.actionManager.addToBottom(new WaitAction(0.2F));
+
                 if (loopCount >= currCount) break;
             }
 

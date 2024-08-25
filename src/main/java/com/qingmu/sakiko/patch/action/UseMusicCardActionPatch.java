@@ -4,8 +4,10 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.utility.HandCheckAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -34,8 +36,8 @@ public class UseMusicCardActionPatch {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
             for (AbstractCard music : MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player).group) {
-                ((AbstractMusic)music).applyAmount();
                 ((AbstractMusic)music).triggerInBufferPlayCard(card[0]);
+                ((AbstractMusic)music).applyAmount();
             }
 
         }
@@ -51,13 +53,18 @@ public class UseMusicCardActionPatch {
             if (___targetCard instanceof AbstractMusic){
                 ___targetCard.applyPowers();
                 ((AbstractMusic)___targetCard).applyAmount();
-                MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player).addToTop(___targetCard);
+                CardGroup cardGroup = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
+                cardGroup.addToTop(___targetCard);
+                if (cardGroup.size() >= 4){
+                    AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));
+                }
                 AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
                 AbstractDungeon.player.cardInUse = null;
                 ___targetCard.stopGlowing();
+                ___targetCard.shrink();
                 ___targetCard.untip();
                 ___targetCard.unhover();
-
+                ___targetCard.unfadeOut();
                 __instance.isDone = true;
                 return SpireReturn.Return();
             }else {
