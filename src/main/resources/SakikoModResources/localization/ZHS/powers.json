@@ -2,7 +2,7 @@
   "SakikoMod:MusicalNotePower": {
     "NAME": "音符",
     "DESCRIPTIONS": [
-      "每获得12层，从歌单抽一张牌。",
+      "每获得12层，从歌单抽一张牌。回合结束时，若层数大于24，将失去一半的层数。",
       " NL （再获得%d层即可抽牌。）",
       " NL （你的牌堆中没有可供抽取的音乐牌。）"
     ]
@@ -37,7 +37,7 @@
   "SakikoMod:IbasyoPower": {
     "NAME": "归宿",
     "DESCRIPTIONS": [
-      "心之壁不在使你受到的伤害增加。"
+      "心之壁不再使你受到的伤害增加。"
     ]
   },
   "SakikoMod:TalentPower": {

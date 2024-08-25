@@ -76,7 +76,7 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-<!--                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar"/>-->
+                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar"/>
                                 <copy file="target/${project.artifactId}.jar" tofile="mods/${project.artifactId}.jar"/>
                             </target>
                         </configuration>
