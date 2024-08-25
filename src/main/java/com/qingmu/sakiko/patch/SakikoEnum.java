@@ -58,6 +58,8 @@ public class SakikoEnum {
     public static class CardGroupEnum {
         @SpireEnum
         public static CardGroup.CardGroupType DRAW_MUSIC_PILE;
+        @SpireEnum
+        public static CardGroup.CardGroupType PLAY_MUSIC_QUEUE;
     }
 
     /*

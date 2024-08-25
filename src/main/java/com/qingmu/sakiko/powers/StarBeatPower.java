@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class StarBeatPower extends AbstractPower {
@@ -37,8 +37,8 @@ public class StarBeatPower extends AbstractPower {
     }
 
     @Override
-    public void onAfterCardPlayed(AbstractCard usedCard) {
-        if (usedCard.type == SakikoEnum.CardTypeEnum.MUSIC) {
+    public void onAfterCardPlayed(AbstractCard card) {
+        if (card instanceof AbstractMusic) {
             this.flash();
             this.addToBot(new DrawCardAction(this.owner, this.amount));
         }

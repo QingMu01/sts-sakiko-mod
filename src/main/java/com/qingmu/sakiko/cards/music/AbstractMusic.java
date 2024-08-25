@@ -14,7 +14,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.action.MusicUpgradeAction;
-import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.FeverReadyPower;
 
@@ -29,17 +28,18 @@ public abstract class AbstractMusic extends CustomCard {
     private static final CardType CARD_TYPE = SakikoEnum.CardTypeEnum.MUSIC;
 
     protected int enchanted;
-    protected int sublimated;
 
     protected AbstractCreature music_source;
     protected AbstractCreature music_target;
 
+    public int amount = 0;
 
-    public AbstractMusic(String id, String name, String img, int cost, String rawDescription, CardRarity rarity, CardTarget target) {
-        super(id, name, img, cost, rawDescription, CARD_TYPE, COLOR, rarity, target);
+    public boolean isPlayed = false;
+
+    public AbstractMusic(String id, String name, String img, String rawDescription, CardRarity rarity, CardTarget target) {
+        super(id, name, img, 0, rawDescription, CARD_TYPE, COLOR, rarity, target);
         super.setBackgroundTexture(BG_SKILL_512, BG_SKILL_1024);
         this.enchanted = -1;
-        this.sublimated = -1;
     }
 
     public abstract void play();
@@ -49,34 +49,35 @@ public abstract class AbstractMusic extends CustomCard {
         this.music_source = p;
         this.music_target = m;
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FeverReadyPower(AbstractDungeon.player, 1)));
-        this.addToBot(new ReadyToPlayMusicAction(this));
     }
 
     @Override
     public void triggerWhenDrawn() {
-        if (this.enchanted > 0){
+        if (this.enchanted > 0) {
             this.addToBot(new MusicUpgradeAction(this, this.enchanted));
         }
     }
 
-    @Override
-    public void onPlayCard(AbstractCard c, AbstractMonster m) {
-        if (c == this) {
-            AbstractCard tmp = c.makeCopy();
-            this.baseBlock = tmp.baseBlock;
-            this.baseDamage = tmp.baseDamage;
-            this.baseMagicNumber = tmp.baseMagicNumber;
-            this.name = tmp.name;
-            this.upgraded = false;
-            this.timesUpgraded = 0;
-            this.resetAttributes();
-            this.initializeTitle();
-        }
+    public void applyAmount(){}
+    public void triggerInBufferPlayCard(AbstractCard card) {}
+
+    public void resetMusicCard() {
+        AbstractCard tmp = this.makeCopy();
+        this.baseBlock = tmp.baseBlock;
+        this.baseDamage = tmp.baseDamage;
+        this.baseMagicNumber = tmp.baseMagicNumber;
+        this.name = tmp.name;
+        this.upgraded = false;
+        this.timesUpgraded = 0;
+        this.amount = 0;
+        this.resetAttributes();
+        this.initializeTitle();
+
     }
 
     @Override
     public boolean canUpgrade() {
-        return AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && !this.upgraded;
+        return AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
     }
 
     @SpireOverride

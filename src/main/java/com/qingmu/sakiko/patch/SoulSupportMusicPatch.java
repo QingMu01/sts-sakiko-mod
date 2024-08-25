@@ -7,7 +7,8 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.Soul;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
 import com.qingmu.sakiko.ui.MusicDrawPilePanel;
 import javassist.CtBehavior;
@@ -22,14 +23,14 @@ public class SoulSupportMusicPatch {
     public static class ShufflePatch {
         @SpireInsertPatch(locator = Locator1.class)
         public static void updateDestination(Soul __instance, AbstractCard card, boolean isInvisible) {
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                __instance.group = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+            if (card instanceof AbstractMusic) {
+                __instance.group = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
             }
         }
 
         @SpireInsertPatch(locator = Locator2.class)
         public static void updateTarget(Soul __instance, AbstractCard card, boolean isInvisible, @ByRef Vector2[] ___target) {
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (card instanceof AbstractMusic) {
                 ___target[0].set(Settings.WIDTH * 0.04F, Settings.HEIGHT * 0.25F);
             }
         }
@@ -39,14 +40,14 @@ public class SoulSupportMusicPatch {
     public static class OnToDeckPatch {
         @SpireInsertPatch(locator = Locator3.class)
         public static void updateDestination(Soul __instance, AbstractCard card, boolean randomSpot, boolean visualOnly) {
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
-                __instance.group = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+            if (card instanceof AbstractMusic) {
+                __instance.group = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
             }
         }
 
         @SpireInsertPatch(locator = Locator2.class)
         public static void updateTarget(Soul __instance, AbstractCard card, boolean randomSpot, boolean visualOnly, @ByRef Vector2[] ___target) {
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (card instanceof AbstractMusic) {
                 ___target[0].set(Settings.WIDTH * 0.04F, Settings.HEIGHT * 0.25F);
             }
         }
@@ -72,7 +73,7 @@ public class SoulSupportMusicPatch {
         @SpireInsertPatch(locator = Locator5.class)
         public static SpireReturn<Boolean> updateCardPosInfo(Soul __instance) {
             if (__instance.group.type == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE){
-                return SpireReturn.Return(MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).group.contains(__instance.card));
+                return SpireReturn.Return(MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).group.contains(__instance.card));
             }else return SpireReturn.Continue();
         }
     }

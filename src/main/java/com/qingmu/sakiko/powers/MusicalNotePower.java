@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -8,8 +9,8 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.DrawMusicAction;
-import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicalNotePower extends AbstractPower {
@@ -58,7 +59,7 @@ public class MusicalNotePower extends AbstractPower {
     @Override
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
-            this.amount = this.amount / 2;
+            if (this.amount >= 24) this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
         }
     }
 
@@ -70,8 +71,8 @@ public class MusicalNotePower extends AbstractPower {
             this.amount = 999;
         }
         if (this.amount >= 12) {
-            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card.type == SakikoEnum.CardTypeEnum.MUSIC).count();
-            if (!MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {
+            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();
+            if (!MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {
                 this.reducePower(12);
                 this.addToBot(new DrawMusicAction());
             }

@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ public class MujikakuPower extends AbstractPower {
     private static final String path48 = "SakikoModResources/img/powers/MujikakuPower48.png";
     private static final String path128 = "SakikoModResources/img/powers/MujikakuPower84.png";
 
-    public MujikakuPower(AbstractCreature owner) {
+    public MujikakuPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = -1;
+        this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
 
@@ -39,31 +39,34 @@ public class MujikakuPower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0];
     }
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (card.type == SakikoEnum.CardTypeEnum.MUSIC && this.amount > 0 && !AbstractDungeon.player.hand.isEmpty()) {
-            flash();
-            ArrayList<AbstractCard> groupCopy = new ArrayList<>();
-            for (AbstractCard abstractCard : AbstractDungeon.player.hand.group) {
-                if (abstractCard.cost > 0 && abstractCard.costForTurn > 0 && !abstractCard.freeToPlayOnce) {
-                    groupCopy.add(abstractCard);
+        for (int i = 0; i < this.amount; i++) {
+            if (card instanceof AbstractMusic && !AbstractDungeon.player.hand.isEmpty()) {
+                flash();
+                ArrayList<AbstractCard> groupCopy = new ArrayList<>();
+                for (AbstractCard abstractCard : AbstractDungeon.player.hand.group) {
+                    if (abstractCard.cost > 0 && abstractCard.costForTurn > 0 && !abstractCard.freeToPlayOnce) {
+                        groupCopy.add(abstractCard);
+                    }
+                }
+                for (CardQueueItem queueItem : AbstractDungeon.actionManager.cardQueue) {
+                    if (queueItem.card != null) {
+                        groupCopy.remove(queueItem.card);
+                    }
+                }
+                AbstractCard c = null;
+                if (!groupCopy.isEmpty()) {
+                    c = groupCopy.get(AbstractDungeon.cardRandomRng.random(0, groupCopy.size() - 1));
+                }
+                if (c != null) {
+                    c.setCostForTurn(0);
                 }
             }
-            for (CardQueueItem i : AbstractDungeon.actionManager.cardQueue) {
-                if (i.card != null) {
-                    groupCopy.remove(i.card);
-                }
-            }
-            AbstractCard c = null;
-            if (!groupCopy.isEmpty()) {
-                c = groupCopy.get(AbstractDungeon.cardRandomRng.random(0, groupCopy.size() - 1));
-            }
-            if (c != null) {
-                c.setCostForTurn(0);
-            }
+
         }
     }
 

@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 
 import java.util.Iterator;
 
@@ -21,7 +21,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
         Iterator<AbstractCard> iterator = AbstractDungeon.player.discardPile.group.iterator();
         while (iterator.hasNext()){
             AbstractCard card = iterator.next();
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
+            if (card instanceof AbstractMusic){
                 tmp.addToBottom(card);
                 iterator.remove();
             }
@@ -42,7 +42,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
             if (iterator.hasNext()) {
                 ++this.count;
                 AbstractCard card = iterator.next();
-                if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+                if (card instanceof AbstractMusic) {
                     AbstractDungeon.getCurrRoom().souls.shuffle(card, this.count >= 11);
                     iterator.remove();
                 }

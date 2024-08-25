@@ -30,14 +30,14 @@ public class AntiReconnaissance extends CustomCard {
 
     public AntiReconnaissance() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 4;
+        this.baseMagicNumber = 3;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(3);
+            this.upgradeMagicNumber(2);
         }
     }
 

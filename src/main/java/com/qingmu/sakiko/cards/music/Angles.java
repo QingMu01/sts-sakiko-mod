@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -14,23 +16,34 @@ public class Angles extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Angles() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, RARITY, TARGET);
+        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 1;
+        this.baseMagicNumber = 2;
+        this.baseDamage = 4;
     }
 
     @Override
     public void upgrade() {
+        this.upgradeMagicNumber(1);
+        ++this.timesUpgraded;
+        this.upgraded = true;
+        this.name = NAME + "+" + this.timesUpgraded;
+        this.initializeTitle();
     }
 
 
     @Override
     public void play() {
-
+        if (this.music_target != null && !this.music_target.isDeadOrEscaped()) {
+            int count = this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
+            for (int i = 0; i < count; i++) {
+                this.addToBot(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
+            }
+        }
     }
 }

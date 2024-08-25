@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MasqueradePower extends AbstractPower {
@@ -44,7 +44,7 @@ public class MasqueradePower extends AbstractPower {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
+        if (card instanceof AbstractMusic){
             this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }
     }

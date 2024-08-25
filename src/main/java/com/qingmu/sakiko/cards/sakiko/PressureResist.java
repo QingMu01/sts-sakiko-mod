@@ -33,7 +33,7 @@ public class PressureResist extends CustomCard {
 
     public PressureResist() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 6;
+        this.baseDamage = 9;
         this.baseMagicNumber = 3;
     }
 

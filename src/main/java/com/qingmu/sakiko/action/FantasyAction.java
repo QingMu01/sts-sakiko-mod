@@ -33,7 +33,7 @@ public class FantasyAction extends AbstractGameAction {
     public void update() {
         ArrayList<AbstractCard> generatedCards = generateCardChoices(this.cardType);
         if (this.duration == Settings.ACTION_DUR_FAST) {
-            AbstractDungeon.cardRewardScreen.customCombatOpen(generatedCards, CardRewardScreen.TEXT[1], (this.cardType != null));
+            AbstractDungeon.cardRewardScreen.customCombatOpen(generatedCards, CardRewardScreen.TEXT[1], true);
             tickDuration();
             return;
         }

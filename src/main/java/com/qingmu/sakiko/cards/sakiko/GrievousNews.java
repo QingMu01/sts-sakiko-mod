@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -41,6 +42,6 @@ public class GrievousNews extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GrievousNewsAction(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToBot(new DrawCardAction(1, new GrievousNewsAction(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 }

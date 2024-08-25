@@ -34,7 +34,7 @@ public class Superior extends CustomCard {
 
     public Superior() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 9;
+        this.baseDamage = 6;
         this.baseMagicNumber=3;
         this.isMultiDamage = true;
     }

@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.KirameiPower;
 
 public class ReproduceAction extends AbstractGameAction {
@@ -20,7 +20,7 @@ public class ReproduceAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicDrawPileFiledPatch.drawMusicPile.get(player);
+        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(player);
         if (!cardGroup.isEmpty()) {
             AbstractCard randomCard = cardGroup.getRandomCard(AbstractDungeon.cardRandomRng);
             randomCard.target_x = (float) (Settings.WIDTH / 2);

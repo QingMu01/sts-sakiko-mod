@@ -42,7 +42,7 @@ public class Mujikaku extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new MujikakuPower(p)));
+        this.addToBot(new ApplyPowerAction(p, p, new MujikakuPower(p,1)));
 
     }
 }

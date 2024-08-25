@@ -106,8 +106,7 @@
   "SakikoMod:MujikakuPower": {
     "NAME": "无自觉",
     "DESCRIPTIONS": [
-      "打出 #y音乐 牌时，手牌中随机牌的费用在本回合减少 #b",
-      " 点。"
+      "打出 #y音乐 牌时，手牌中随机牌的费用在本回合为0。"
     ]
   },
   "SakikoMod:OjyousamaPower": {

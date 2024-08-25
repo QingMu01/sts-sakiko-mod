@@ -20,7 +20,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -150,8 +150,6 @@ public class MusicDrawPileViewScreen extends CustomScreen implements ScrollBarLi
                     index -= this.drawPileCopy.size() % 5;
             } else {
                 index -= 4;
-                if (index < 0)
-                    index = 0;
             }
             Gdx.input.setCursorPosition(
                     (int) this.drawPileCopy.group.get(index).hb.cX, Settings.HEIGHT -
@@ -252,9 +250,8 @@ public class MusicDrawPileViewScreen extends CustomScreen implements ScrollBarLi
         AbstractDungeon.isScreenUp = true;
         AbstractDungeon.screen = curScreen();
         this.drawPileCopy.clear();
-        for (AbstractCard c : MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).group) {
+        for (AbstractCard c : MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).group) {
             c.setAngle(0.0F, true);
-            c.targetDrawScale = 0.75F;
             c.targetDrawScale = 0.75F;
             c.drawScale = 0.75F;
             c.lighten(true);

@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 import java.util.Random;
 
@@ -24,7 +24,7 @@ public class KimewazaAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
         int cardCount = cardGroup.size();
         for (int i = 0; i < cardCount; i++) {
             AbstractCard card = cardGroup.getTopCard();

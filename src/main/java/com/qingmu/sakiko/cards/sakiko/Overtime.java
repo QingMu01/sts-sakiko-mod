@@ -47,7 +47,7 @@ public class Overtime extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
         this.addToBot(new DrawCardAction(1));
-        this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber) + 1)));
     }
 
 }

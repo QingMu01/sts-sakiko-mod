@@ -25,7 +25,7 @@ public class MusicCardTypeLogicPatch {
     @SpirePatch(clz = AbstractCard.class, method = "getCardBgAtlas")
     public static class GetCardBgAtlasPatch {
         public static SpireReturn<TextureAtlas.AtlasRegion> Prefix(AbstractCard __instance) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (__instance instanceof AbstractMusic) {
                 return SpireReturn.Return(ImageMaster.CARD_SKILL_BG_SILHOUETTE);
             } else {
                 return SpireReturn.Continue();
@@ -41,7 +41,7 @@ public class MusicCardTypeLogicPatch {
 
         @SpireInsertPatch(locator = RenderTypeTextLocator.class, localvars = {"text"})
         public static void Insert(AbstractCard __instance, SpriteBatch sb, @ByRef String[] text) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (__instance instanceof AbstractMusic) {
                 text[0] = uiStrings.TEXT[0];
             }
         }
@@ -63,7 +63,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderCardTypeTextPatch {
         @SpireInsertPatch(locator = RenderViewPopupTypeTextLocator.class, localvars = {"label"})
         public static void Insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef String[] label) {
-            if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (___card instanceof AbstractMusic) {
                 label[0] = uiStrings.TEXT[0];
             }
         }
@@ -84,7 +84,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderSingleCardBannerPatch {
         @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
         public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
-            if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (___card instanceof AbstractMusic) {
                 if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     tmpImg[0] = ImageMaster.CARD_BANNER_UNCOMMON_L;
                 } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
@@ -108,7 +108,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderSingleCardFramePatch {
         @SpireInsertPatch(locator = Locator.class, localvars = {"tmpImg"})
         public static void insert(SingleCardViewPopup __instance, SpriteBatch sb, AbstractCard ___card, @ByRef TextureAtlas.AtlasRegion[] tmpImg) {
-            if (___card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (___card instanceof AbstractMusic) {
                 if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     tmpImg[0] = ImageMaster.CARD_FRAME_SKILL_UNCOMMON_L;
                 } else if (___card.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
@@ -136,7 +136,7 @@ public class MusicCardTypeLogicPatch {
     public static class RenderPortraitFramePatch {
         @SpireInsertPatch(locator = RenderPortraitFrameLocator.class, localvars = {"tWidth", "tOffset"})
         public static void patch(AbstractCard __instance, SpriteBatch sb, float x, float y, @ByRef float[] tWidth, @ByRef float[] tOffset) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (__instance instanceof AbstractMusic) {
                 tWidth[0] = AbstractCard.typeWidthSkill;
                 tOffset[0] = AbstractCard.typeOffsetSkill;
                 ((AbstractMusic) __instance).renderSkillPortrait(sb, x, y);
@@ -160,7 +160,7 @@ public class MusicCardTypeLogicPatch {
     @SpirePatch(clz = AbstractCard.class, method = "renderBannerImage")
     public static class RenderBannerImagePatch {
         public static void Postfix(AbstractCard __instance, SpriteBatch sb, float drawX, float drawY, Color ___renderColor) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (__instance instanceof AbstractMusic) {
                 if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_BANNER_UNCOMMON, drawX, drawY);
                 } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
@@ -176,7 +176,7 @@ public class MusicCardTypeLogicPatch {
     @SpirePatch(clz = AbstractCard.class, method = "renderSkillPortrait")
     public static class RenderSkillPortraitPatch {
         public static void Postfix(AbstractCard __instance, SpriteBatch sb, float x, float y, Color ___renderColor) {
-            if (__instance.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (__instance instanceof AbstractMusic) {
                 if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
                     ((AbstractMusic) __instance).renderHelper(sb, ___renderColor, ImageMaster.CARD_FRAME_SKILL_UNCOMMON, x, y);
                 } else if (__instance.rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {

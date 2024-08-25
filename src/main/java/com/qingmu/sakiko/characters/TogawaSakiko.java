@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.cards.sakiko.Strike_Sakiko;
+import com.qingmu.sakiko.cards.sakiko.MusicalComposition;
 import com.qingmu.sakiko.relics.ClassicPiano;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -123,7 +123,7 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return new Strike_Sakiko();
+        return new MusicalComposition();
     }
 
     @Override

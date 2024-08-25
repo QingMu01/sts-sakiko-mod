@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ClassicMusicianPower extends AbstractPower {
@@ -40,7 +40,7 @@ public class ClassicMusicianPower extends AbstractPower {
 
     @Override
     public void onCardDraw(AbstractCard card) {
-        if (card.type == SakikoEnum.CardTypeEnum.MUSIC) {
+        if (card instanceof AbstractMusic) {
             this.addToBot(new DrawCardAction(this.owner, this.amount));
         }
     }

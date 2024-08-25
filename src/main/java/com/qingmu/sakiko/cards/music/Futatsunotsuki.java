@@ -14,13 +14,12 @@ public class Futatsunotsuki extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public Futatsunotsuki() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, RARITY, TARGET);
+        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 1;
     }
 

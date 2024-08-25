@@ -36,7 +36,9 @@ public class Fantasy extends CustomCard {
 
     public Fantasy(boolean isUpgraded){
         this();
-        this.upgrade();
+        if (isUpgraded){
+            this.upgrade();
+        }
     }
 
     @Override

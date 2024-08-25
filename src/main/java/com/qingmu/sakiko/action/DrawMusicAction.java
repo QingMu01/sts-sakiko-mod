@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
 import com.qingmu.sakiko.ui.MusicDrawPilePanel;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -30,7 +30,7 @@ public class DrawMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup drawMusicPile = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup drawMusicPile = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
         if (AbstractDungeon.player.hasPower("No Draw")) {
             AbstractDungeon.player.getPower("No Draw").flash();
         } else if (AbstractDungeon.player.hand.size() + this.amount > 10) {

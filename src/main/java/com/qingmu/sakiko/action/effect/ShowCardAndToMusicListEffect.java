@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDrawPileEffect;
 import com.megacrit.cardcrawl.vfx.combat.CardPoofEffect;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class ShowCardAndToMusicListEffect extends AbstractGameEffect {
 
@@ -40,7 +40,7 @@ public class ShowCardAndToMusicListEffect extends AbstractGameEffect {
             this.card.upgrade();
         }
         CardCrawlGame.sound.play("CARD_OBTAIN");
-        CardGroup cardGroup = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
         if (toBottom) {
             cardGroup.addToBottom(this.card);
         } else if (randomSpot) {

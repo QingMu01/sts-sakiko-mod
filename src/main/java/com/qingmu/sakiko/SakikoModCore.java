@@ -25,7 +25,6 @@ import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
-import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.nio.charset.StandardCharsets;
 
@@ -76,7 +75,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveEditCards() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
-                .setDefaultSeen(false)
+                .setDefaultSeen(true)
                 .cards();
     }
 
@@ -86,6 +85,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .packageFilter("com.qingmu.sakiko.relics")
                 .any(CustomRelic.class, (info, relic) -> {
                     BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
+                    UnlockTracker.markRelicAsSeen(relic.relicId);
                     if (info.seen) {
                         UnlockTracker.markRelicAsSeen(relic.relicId);
                     }
@@ -174,11 +174,9 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receiveStartGame() {
-        MusicCardFinder.initMusicPool();
         if (AbstractDungeon.floorNum == 0) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
         }
     }
-
 }
 

@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 
 
 
@@ -24,7 +24,7 @@ public class CurtainCallAction extends AbstractGameAction {
     public void update() {
         this.addToBot(new DamageAction(this.target, info, AttackEffect.SLASH_HORIZONTAL));
         for (AbstractCard c : AbstractDungeon.actionManager.cardsPlayedThisTurn) {
-            if (c.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (c instanceof AbstractMusic) {
                 this.addToBot(new DamageAction(this.target, info, AttackEffect.SLASH_HORIZONTAL));
             }
         }

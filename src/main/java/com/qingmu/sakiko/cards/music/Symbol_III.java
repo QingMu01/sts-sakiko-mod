@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
+import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -21,16 +22,24 @@ public class Symbol_III extends AbstractMusic {
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Symbol_III() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, RARITY, TARGET);
+        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(CardTags.HEALING);
         this.enchanted = 1;
+        this.baseMagicNumber = 2;
+        this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
+        this.upgradeMagicNumber(1);
+        ++this.timesUpgraded;
+        this.upgraded = true;
+        this.name = NAME + "+" + this.timesUpgraded;
+        this.initializeTitle();
     }
 
     @Override
     public void play() {
-
+        this.addToBot(new HealAction(this.music_source, this.music_source, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
     }
 }

@@ -55,7 +55,7 @@ public class KokoroNoKabePower extends TwoAmountPower {
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
         AbstractPower ibasyo = this.owner.getPower(IbasyoPower.POWER_ID);
-        int buffed = 0;
+        int buffed;
         int ibasyoAmount = 0;
         if (ibasyo != null) {
             ibasyo.flash();

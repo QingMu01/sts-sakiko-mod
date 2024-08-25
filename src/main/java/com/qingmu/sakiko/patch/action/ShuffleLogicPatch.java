@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.actions.defect.ShuffleAllAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.filed.ShuffleActionFiledPatch;
 import javassist.CtBehavior;
 
@@ -38,7 +38,7 @@ public class ShuffleLogicPatch {
         public static void Insert2(ShuffleAllAction __instance) {
             ArrayList<AbstractCard> cards = ShuffleActionFiledPatch.ShuffleAllActionFiled.moon_light.get(__instance);
             AbstractDungeon.player.discardPile.group.addAll(cards);
-            MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
+            MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
             cards.clear();
         }
 
@@ -65,7 +65,7 @@ public class ShuffleLogicPatch {
         public static void Insert2(EmptyDeckShuffleAction __instance) {
             ArrayList<AbstractCard> cards = ShuffleActionFiledPatch.EmptyDeckShuffleActionFiled.moon_light.get(__instance);
             AbstractDungeon.player.discardPile.group.addAll(cards);
-            MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
+            MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
             cards.clear();
         }
     }

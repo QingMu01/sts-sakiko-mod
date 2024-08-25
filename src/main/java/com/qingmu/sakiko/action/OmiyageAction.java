@@ -21,9 +21,9 @@ public class OmiyageAction extends AbstractGameAction {
     @Override
     public void update() {
         float random = AbstractDungeon.cardRandomRng.random();
-        if (random < 0.15f){
+        if (random < 0.2f){
             this.addToBot(new ApplyPowerAction(player, player,new PoisonPower(player, player, 5)));
-        }else if (random < 0.30f){
+        }else if (random < 0.4f){
             this.addToBot(new ApplyPowerAction(player, player,new WeakPower(player,1,false)));
             this.addToBot(new ApplyPowerAction(player, player,new FrailPower(player,1,false)));
         }else if (random < 0.65f){

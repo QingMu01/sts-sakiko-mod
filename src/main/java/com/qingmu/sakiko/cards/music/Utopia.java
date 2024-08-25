@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -17,20 +19,26 @@ public class Utopia extends AbstractMusic {
     private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Utopia() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 1;
+        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.enchanted = 2;
+        this.baseDamage = 1;
     }
 
     @Override
     public void upgrade() {
+        this.upgradeDamage(this.baseDamage);
+        ++this.timesUpgraded;
+        this.upgraded = true;
+        this.name = NAME + "+" + this.timesUpgraded;
+        this.initializeTitle();
     }
 
 
     @Override
     public void play() {
-
+        this.addToBot(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
     }
 }

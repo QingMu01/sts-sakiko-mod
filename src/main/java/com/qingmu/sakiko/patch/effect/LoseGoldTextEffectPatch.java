@@ -13,7 +13,7 @@ public class LoseGoldTextEffectPatch {
 
     public static SpireReturn<Void> Prefix(GainGoldTextEffect __instance, SpriteBatch sb, int ___gold, float ___x, float ___y, Color ___color) {
         if (___gold < 0) {
-            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, +___gold + GainGoldTextEffect.TEXT[0], ___x, ___y, ___color);
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, ___gold + GainGoldTextEffect.TEXT[0], ___x, ___y, ___color);
             return SpireReturn.Return();
         } else return SpireReturn.Continue();
     }

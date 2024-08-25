@@ -12,5 +12,4 @@ public abstract class AbstractBandMember extends CustomRelic {
         super(id, ImageMaster.loadImage(img), RELIC_TIER, LANDING_SOUND);
     }
 
-
 }

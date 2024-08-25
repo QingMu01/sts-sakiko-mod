@@ -21,6 +21,7 @@ public class ChuuniSakiko extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final int COST = 3;
 
     private static final CardType TYPE = CardType.POWER;
@@ -38,6 +39,8 @@ public class ChuuniSakiko extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.cardsToPreview.upgrade();
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 

@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -46,14 +46,14 @@ public class Climax extends CustomCard {
     }
 
     @Override
-    public void triggerOnCardPlayed(AbstractCard cardPlayed) {
-        if (cardPlayed.type == SakikoEnum.CardTypeEnum.MUSIC) this.setCostForTurn(this.costForTurn - 1);
+    public void triggerOnCardPlayed(AbstractCard card) {
+        if (card instanceof AbstractMusic) this.setCostForTurn(this.costForTurn - 1);
     }
 
     public void triggerWhenDrawn() {
         int count = 0;
         for (AbstractCard c : AbstractDungeon.actionManager.cardsPlayedThisTurn) {
-            if (c.type == SakikoEnum.CardTypeEnum.MUSIC) {
+            if (c instanceof AbstractMusic) {
                 ++count;
             }
         }

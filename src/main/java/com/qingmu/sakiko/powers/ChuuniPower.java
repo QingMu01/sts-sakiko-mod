@@ -45,7 +45,7 @@ public class ChuuniPower extends AbstractPower {
     @Override
     public void atStartOfTurn() {
         this.flash();
-        this.addToTop(new MakeTempCardInHandAction(new Fantasy(this.isUpgraded), this.amount));
+        this.addToBot(new MakeTempCardInHandAction(new Fantasy(this.isUpgraded), this.amount));
     }
 
     @Override

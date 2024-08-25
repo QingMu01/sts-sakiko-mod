@@ -31,7 +31,7 @@ public class Oshiawaseni extends CustomCard {
     public Oshiawaseni() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseBlock = 6;
-        this.baseMagicNumber = 5;
+        this.baseMagicNumber = 3;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Oshiawaseni extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeBlock(5);
-            this.upgradeMagicNumber(3);
+            this.upgradeMagicNumber(2);
         }
     }
 

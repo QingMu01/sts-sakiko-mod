@@ -36,9 +36,7 @@ public class InvasionEvent extends PhasedEvent {
         registerPhase("MemberSelect", getMemberSelectPhase());
 
         // 普通战斗
-        registerPhase("NormalFight", new CombatPhase(AbstractDungeon.monsterList.get(0)).addRewards(true, room->{
-            room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20));
-        }).setNextKey("Leave"));
+        registerPhase("NormalFight", new CombatPhase(AbstractDungeon.monsterList.get(0)).addRewards(true, room-> room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20))).setNextKey("Leave"));
 
         // 不知道为什么写进循环里好像没有用的样子
         registerPhase("Leave_" + UikaMonster.ID, new TextPhase(DESCRIPTIONS[3] + DESCRIPTIONS[4]).addOption(OPTIONS[2], (e) -> endOfEvent()));

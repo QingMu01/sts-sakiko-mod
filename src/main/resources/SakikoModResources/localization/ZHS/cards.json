@@ -86,7 +86,7 @@
   },
   "SakikoMod:Ibasyo": {
     "NAME": "归宿",
-    "DESCRIPTION": " sakikomod:白月光 。使 sakikomod:心之壁 对你造成的伤害减少1点。"
+    "DESCRIPTION": " sakikomod:白月光 。使 sakikomod:心之壁 对你造成的伤害减少 !M! 点。"
   },
   "SakikoMod:Boomerang": {
     "NAME": "回旋镖",
@@ -306,7 +306,8 @@
   },
   "SakikoMod:ChuuniSakiko": {
     "NAME": "中二小祥",
-    "DESCRIPTION": "回合开始时，将一张 *幻想 加入手牌。"
+    "DESCRIPTION": "回合开始时，将一张 *幻想 加入手牌。",
+    "UPGRADE_DESCRIPTION": "回合开始时，将一张 *幻想+ 加入手牌。"
   },
   "SakikoMod:Kimewaza": {
     "NAME": "决胜技",
@@ -314,8 +315,8 @@
   },
   "SakikoMod:MusicLife": {
     "NAME": "音乐人生",
-    "DESCRIPTION": "抽一张 sakikomod:音乐 牌，使其在本回合变为0费。 NL *消耗 。",
-    "UPGRADE_DESCRIPTION": "抽一张 sakikomod:音乐 牌，使其在本回合变为0费。"
+    "DESCRIPTION": "抽一张 sakikomod:音乐 牌。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "抽一张 sakikomod:音乐 牌。"
   },
   "SakikoMod:GrievousNews": {
     "NAME": "噩耗来袭",
@@ -331,40 +332,41 @@
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。 NL sakikomod:强化 1：额外获得1力量。"
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：抽取 *计数 层数张牌。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "EXTENDED_DESCRIPTION":[" NL （当前抽取%d张，不会超过手牌上限）"]
   },
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：恢复 !M! 点生命值。 NL  sakikomod:强化 1：额外恢复1点生命值。 NL *消耗 。"
   },
   "SakikoMod:Symbol_IV": {
     "NAME": "Symbol IV:Earth",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": "sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 敏捷。 NL sakikomod:强化 1：敏捷。"
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
     "DESCRIPTION": "获得 !M! [E] 。 NL sakikomod:升华 4：将你的能量翻倍。",
-    "UPGRADE_DESCRIPTION": "将你的能量翻倍。"
+    "UPGRADE_DESCRIPTION": "将你的能量翻倍，然后获得 !M! [E] 。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：每有一位乐队成员，获得 !M! 点  sakikomod:临时生命 。 NL  sakikomod:强化 4:每位成员额外提供1点  sakikomod:临时生命 。"
   },
   "SakikoMod:Angles": {
     "NAME": "Angles",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次。 NL  sakikomod:强化 1：额外造成1次伤害。"
   },
   "SakikoMod:BlackBirthday": {
-    "NAME": "黑色诞生日",
-    "DESCRIPTION": "未完成。"
+    "NAME": "黑色生日",
+    "DESCRIPTION": " sakikomod:演奏 ：随机 !M! 张手牌在本场战斗中升级。 NL 强化1：额外升级1张手牌。"
   },
   "SakikoMod:ChoirSChoir": {
     "NAME": "Choir 'S' Choir",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：如果目标生命值小于等于10，则将其生命值变为0。 NL sakikomod:强化 1：生命值要求提高5点。"
   },
   "SakikoMod:Futatsunotsuki": {
     "NAME": "双月",
@@ -380,11 +382,11 @@
   },
   "SakikoMod:Utopia": {
     "NAME": "乌托邦",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害。 NL  sakikomod:强化 2：这张卡的基础伤害翻倍。"
   },
   "SakikoMod:NingenUta_CryChic": {
     "NAME": "想要成为人类之歌",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：获得1层人工制品。 NL sakikomod:强化 2：额外获得1层人工制品。 NL *消耗 。"
   },
   "SakikoMod:Haruhikage_CryChic": {
     "NAME": "春日影",
@@ -392,19 +394,19 @@
   },
   "SakikoMod:KizunaMusic_PPP": {
     "NAME": "Kizuna Music",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 :每有一位乐队成员，获得3格挡。 NL sakikomod:强化 1：每位乐队成员额外提供2格挡。"
   },
   "SakikoMod:StarBeat_PPP": {
     "NAME": "星之鼓动",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 点闪耀。 NL sakikomod:强化 2：额外获得1点闪耀。"
   },
   "SakikoMod:HeyDay_AG": {
     "NAME": "Hey-Day随想曲",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：使目标失去1点力量。 NL sakikomod:强化 1，目标额外失去1点力量。 NL *消耗 。"
   },
   "SakikoMod:YOLO_AG": {
     "NAME": "Y.O.L.O.",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 层 *缓冲 。 NL sakikomod:强化 3：额外获得1层缓冲。"
   },
   "SakikoMod:Louder_R": {
     "NAME": "Louder",
@@ -412,11 +414,12 @@
   },
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *火焰屏障 。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "EXTENDED_DESCRIPTION":[" NL （当前获得%d层）"]
   },
   "SakikoMod:ShuwarinDreamin_PP": {
     "NAME": "Shuwarin Dreamin",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：战斗结束后，恢复 !M! 点生命值。 sakikomod:强化 1：额外恢复1点生命值。"
   },
   "SakikoMod:A2Z_PP": {
     "NAME": "天下统一 A to Z",
@@ -424,23 +427,24 @@
   },
   "SakikoMod:Egao_HHW": {
     "NAME": "笑容管弦乐",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": "使目标进入下一个意图。 NL （这张牌无法被强化。）"
   },
   "SakikoMod:Ship_HHW": {
     "NAME": "豪华！豪爽！？怪盗！",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": "击晕目标1回合。 NL *消耗 。 NL （这张牌无法被强化。）"
   },
   "SakikoMod:Daylight_M": {
     "NAME": "Daylight",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得1层虚弱和1层易伤。 sakikomod:强化 1：额外获得1层虚弱和易伤。 NL *消耗 。"
   },
   "SakikoMod:Sunny_M": {
     "NAME": "有所依靠的Sunny,Sunny",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:演奏 ：随机清除 !M! 个负面状态。 NL sakikomod:强化 2：清除数量增加1个。 NL *消耗 。"
   },
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *活力 。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "EXTENDED_DESCRIPTION":[" NL （当前获得%d层）"]
   },
   "SakikoMod:Expose_RAS": {
     "NAME": "EXPOSE 'Burn out!!!'",
@@ -448,11 +452,13 @@
   },
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *计数 层数次。 NL sakikomod:强化 1：每层 *计数 造成的伤害增加1点。",
+    "EXTENDED_DESCRIPTION":[" NL （当前造成%d次）"]
   },
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",
-    "DESCRIPTION": "未完成。"
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数两倍的格挡。 NL sakikomod:强化 1：每层 *计数 额外获得1点格挡。",
+    "EXTENDED_DESCRIPTION":[" NL （当前造成%d次）"]
   },
   "SakikoMod:Remember": {
     "NAME": "回忆",

@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReproduceAction;
-import com.qingmu.sakiko.patch.filed.MusicDrawPileFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -50,7 +50,7 @@ public class Reproduce extends CustomCard {
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        CardGroup cardGroup = MusicDrawPileFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
         this.cantUseMessage = CARD_STRINGS.EXTENDED_DESCRIPTION[0];
         return !cardGroup.isEmpty();
     }
