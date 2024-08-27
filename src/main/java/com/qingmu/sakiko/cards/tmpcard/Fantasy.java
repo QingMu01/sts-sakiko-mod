@@ -1,8 +1,6 @@
 package com.qingmu.sakiko.cards.tmpcard;
 
 import basemod.abstracts.CustomCard;
-import com.badlogic.gdx.graphics.Color;
-import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -31,7 +29,6 @@ public class Fantasy extends CustomCard {
     public Fantasy() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.exhaust = true;
-        FlavorText.AbstractCardFlavorFields.boxColor.get(this).set(new Color(1.0F, 221.0F / 255.0F, 136.0F / 255.0F, 1.0F));
     }
 
     public Fantasy(boolean isUpgraded){

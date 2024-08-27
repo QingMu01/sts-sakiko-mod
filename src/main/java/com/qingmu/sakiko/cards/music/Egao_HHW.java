@@ -1,11 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -41,8 +37,6 @@ public class Egao_HHW extends AbstractMusic {
 
     @Override
     public void play() {
-        if (!(AbstractDungeon.getCurrRoom() instanceof MonsterRoomBoss) && this.music_target != null && !this.music_target.isDeadOrEscaped()){
-            this.addToBot(new RollMoveAction((AbstractMonster) this.music_target));
-        }
+
     }
 }

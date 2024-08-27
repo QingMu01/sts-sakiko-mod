@@ -42,7 +42,7 @@ public class Angles extends AbstractMusic {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped()) {
             int count = this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
             for (int i = 0; i < count; i++) {
-                this.addToBot(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
+                this.addToTop(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
             }
         }
     }

@@ -44,9 +44,9 @@ public class Daylight_M extends AbstractMusic {
     @Override
     public void play() {
         for (AbstractMonster mo : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            this.addToBot(new ApplyPowerAction(mo, this.music_source
+            this.addToTop(new ApplyPowerAction(mo, this.music_source
                     , new WeakPower(mo, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, false), this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, true, AbstractGameAction.AttackEffect.NONE));
-            this.addToBot(new ApplyPowerAction(mo, this.music_source
+            this.addToTop(new ApplyPowerAction(mo, this.music_source
                     , new VulnerablePower(mo, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, false), this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, true, AbstractGameAction.AttackEffect.NONE));
         }
 

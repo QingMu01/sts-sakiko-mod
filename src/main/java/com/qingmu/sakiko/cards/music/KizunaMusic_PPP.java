@@ -39,7 +39,7 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new GainBlockAction(this.music_source, this.music_source
+        this.addToTop(new GainBlockAction(this.music_source, this.music_source
                 , this.block + ((this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber) * MemberHelper.getBandMemberCount())));
     }
 }

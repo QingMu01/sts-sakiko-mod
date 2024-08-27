@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.patch;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -41,7 +40,6 @@ public class MusicBattleLogicPatch {
                     iterator.remove();
                 }
             }
-            System.out.println("待演奏的音乐牌数量：" + MusicBattleFiledPatch.musicQueue.get(__instance).size());
         }
     }
 
@@ -52,19 +50,8 @@ public class MusicBattleLogicPatch {
     @SpirePatch(clz = AbstractPlayer.class, method = "applyStartOfTurnPostDrawRelics")
     public static class PlayMusicLogic {
         public static void Postfix(AbstractPlayer __instance) {
-            CardGroup queue = MusicBattleFiledPatch.musicQueue.get(__instance);
             int currCount = 1 + (MemberHelper.getBandMemberCount() / 2);
-            int loopCount = 0;
-            for (AbstractCard card : queue.group) {
-                loopCount++;
-                AbstractMusic music = (AbstractMusic) card;
-                music.isPlayed = true;
-                AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(music));
-                AbstractDungeon.actionManager.addToBottom(new WaitAction(0.2F));
-
-                if (loopCount >= currCount) break;
-            }
-
+            AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(currCount));
         }
     }
 }

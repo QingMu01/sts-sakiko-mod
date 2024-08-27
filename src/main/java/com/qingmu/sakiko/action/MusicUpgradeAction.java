@@ -19,12 +19,11 @@ public class MusicUpgradeAction extends AbstractGameAction {
     public void update() {
         if (this.card.canUpgrade()) {
             int calculated = calculateUpgrade(this.required);
-            if (this.card.timesUpgraded < calculated) {
-                for (int i = 0; i < calculated - this.card.timesUpgraded; i++) {
-                    this.card.upgrade();
-                }
-                this.card.superFlash();
+            for (int i = 0; i < calculated; i++) {
+                this.card.upgrade();
             }
+            this.card.superFlash();
+
         }
         this.isDone = true;
     }

@@ -56,9 +56,9 @@ public class Symbol_II extends AbstractMusic {
     @Override
     public void play() {
         if (this.amount + AbstractDungeon.player.hand.size() < 10){
-            this.addToBot(new DrawCardAction(this.amount));
+            this.addToTop(new DrawCardAction(this.amount));
         }else {
-            this.addToBot(new ExpertiseAction(AbstractDungeon.player, 10));
+            this.addToTop(new ExpertiseAction(AbstractDungeon.player, 10));
         }
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

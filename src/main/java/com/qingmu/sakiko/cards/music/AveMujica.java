@@ -38,7 +38,7 @@ public class AveMujica extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new AddTemporaryHPAction(this.music_source, this.music_source
+        this.addToTop(new AddTemporaryHPAction(this.music_source, this.music_source
                 , (this.magicNumber <= 0 ? this.baseMagicNumber : this.magicNumber) * MemberHelper.getBandMemberCount()));
     }
 }

@@ -23,6 +23,7 @@ public class Overtime extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final int COST = 0;
 
     private static final AbstractCard.CardType TYPE = AbstractCard.CardType.SKILL;
@@ -32,22 +33,23 @@ public class Overtime extends CustomCard {
 
     public Overtime() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 1;
+
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
-        this.addToBot(new DrawCardAction(1));
-        this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber) + 1)));
+        this.addToBot(new GainEnergyAction(1));
+        if (this.upgraded) this.addToBot(new DrawCardAction(1));
+        this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, 2)));
     }
 
 }

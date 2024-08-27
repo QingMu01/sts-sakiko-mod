@@ -41,9 +41,11 @@ public class Ether extends AbstractMusic {
     @Override
     public void play() {
         if (this.upgraded) {
-            this.addToBot(new DoubleEnergyAction());
+            this.addToTop(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new DoubleEnergyAction());
+        }else {
+            this.addToTop(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
         }
-        this.addToBot(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
 
     }
 }

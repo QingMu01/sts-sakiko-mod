@@ -53,7 +53,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     @Override
     public void play() {
         for (int i = 0; i < this.amount; i++) {
-            this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.music_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+            this.addToTop(new DamageRandomEnemyAction(new DamageInfo(this.music_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

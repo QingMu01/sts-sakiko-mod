@@ -40,7 +40,7 @@ public class HeyDay_AG extends AbstractMusic {
     @Override
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped())
-            this.addToBot(new ApplyPowerAction(this.music_target, this.music_source
+            this.addToTop(new ApplyPowerAction(this.music_target, this.music_source
                     , new StrengthPower(this.music_target, -(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber))));
     }
 }

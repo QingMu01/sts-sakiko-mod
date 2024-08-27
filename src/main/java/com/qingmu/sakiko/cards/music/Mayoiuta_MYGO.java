@@ -25,13 +25,11 @@ public class Mayoiuta_MYGO extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 1;
         this.baseMagicNumber = 1;
-        this.baseBlock = 2;
-
     }
 
     @Override
     public void applyAmount() {
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
         this.initializeDescription();
     }
 
@@ -42,7 +40,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void upgrade() {
-        this.upgradeBlock(1);
+        this.upgradeMagicNumber(1);
         ++this.timesUpgraded;
         this.upgraded = true;
         this.name = NAME + "+" + this.timesUpgraded;
@@ -52,7 +50,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new GainBlockAction(this.music_source, this.music_source, (this.baseBlock * this.amount) + (this.block - this.baseBlock) < 0 ? 0 : (this.block - this.baseBlock)));
+        this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.amount * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }

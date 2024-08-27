@@ -39,6 +39,6 @@ public class Utopia extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
+        this.addToTop(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
     }
 }

@@ -39,7 +39,7 @@ public class BlackBirthday extends AbstractMusic {
     public void play() {
         int count = this.baseMagicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
         for (int i = 0; i < count; i++) {
-            this.addToBot(new UpgradeRandomCardAction());
+            this.addToTop(new UpgradeRandomCardAction());
         }
     }
 }

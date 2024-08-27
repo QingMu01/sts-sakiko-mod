@@ -56,7 +56,7 @@ public class RIOT_RAS extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new ApplyPowerAction(this.music_source, this.music_source, new VigorPower(this.music_source, this.amount)));
+        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new VigorPower(this.music_source, this.amount)));
 
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

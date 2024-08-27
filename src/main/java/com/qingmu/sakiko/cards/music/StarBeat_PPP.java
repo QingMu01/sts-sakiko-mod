@@ -39,7 +39,7 @@ public class StarBeat_PPP extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new ApplyPowerAction(this.music_source, this.music_source
+        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
                 , new KirameiPower(this.music_source, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 }

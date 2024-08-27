@@ -42,6 +42,7 @@ public abstract class AbstractMusic extends CustomCard {
         this.enchanted = -1;
     }
 
+    // 实现的时候最好使用addToTop()方法，否则让所有被演奏卡牌的演奏动画播放完毕才生效
     public abstract void play();
 
     @Override
@@ -59,6 +60,8 @@ public abstract class AbstractMusic extends CustomCard {
     }
 
     public void applyAmount(){}
+
+    // 存在待演奏区时，有卡牌被打出时触发的钩子
     public void triggerInBufferPlayCard(AbstractCard card) {}
 
     public void resetMusicCard() {
@@ -70,6 +73,7 @@ public abstract class AbstractMusic extends CustomCard {
         this.upgraded = false;
         this.timesUpgraded = 0;
         this.amount = 0;
+        this.isPlayed = false;
         this.resetAttributes();
         this.initializeTitle();
 

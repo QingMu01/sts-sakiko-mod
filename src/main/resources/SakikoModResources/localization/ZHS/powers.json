@@ -160,7 +160,7 @@
   "SakikoMod:OverworkPower": {
     "NAME": "疲惫",
     "DESCRIPTIONS": [
-      "距离结束回合还有 #r",
+      "若你有八层以上的 #y疲惫 ，结束当前回合。疲惫会在回合结束时下降2层。 NL 距离结束回合还有 #r",
       " 层。"
     ]
   }

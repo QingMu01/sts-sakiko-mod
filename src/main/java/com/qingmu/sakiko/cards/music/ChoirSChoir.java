@@ -38,7 +38,7 @@ public class ChoirSChoir extends AbstractMusic {
     @Override
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped()){
-            this.addToBot(new JudgementAction(this.music_target, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new JudgementAction(this.music_target, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
         }
     }
 }
