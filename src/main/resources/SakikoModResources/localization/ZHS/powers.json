@@ -158,10 +158,17 @@
     ]
   },
   "SakikoMod:OverworkPower": {
-    "NAME": "疲惫",
+    "NAME": "过劳",
     "DESCRIPTIONS": [
-      "若你有八层以上的 #y疲惫 ，结束当前回合。疲惫会在回合结束时下降2层。 NL 距离结束回合还有 #r",
+      "若你有八层以上的 #y过劳 ，结束当前回合然后获得#y5 枚 #y金币 的赔偿金。过劳会在回合结束时下降2层。 NL 距离结束回合还有 #r",
       " 层。"
+    ]
+  },
+  "SakikoMod:HelloHappyPower": {
+    "NAME": "让世界充满笑容！",
+    "DESCRIPTIONS": [
+      "战斗结束时，获得 #y",
+      " 枚 #y金币 。"
     ]
   }
 }

@@ -29,14 +29,14 @@ public class Masquerade extends CustomCard {
 
     public Masquerade() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 8;
+        this.baseMagicNumber = 4;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(4);
+            this.upgradeMagicNumber(2);
         }
     }
 

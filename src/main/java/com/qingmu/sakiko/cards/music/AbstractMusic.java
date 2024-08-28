@@ -42,7 +42,7 @@ public abstract class AbstractMusic extends CustomCard {
         this.enchanted = -1;
     }
 
-    // 实现的时候最好使用addToTop()方法，否则让所有被演奏卡牌的演奏动画播放完毕才生效
+    // 实现的时候最好使用addToTop()方法，否则会导致所有被演奏卡牌的演奏动画播放完毕才生效
     public abstract void play();
 
     @Override
@@ -59,6 +59,7 @@ public abstract class AbstractMusic extends CustomCard {
         }
     }
 
+    // 更新计数
     public void applyAmount(){}
 
     // 存在待演奏区时，有卡牌被打出时触发的钩子
@@ -76,8 +77,46 @@ public abstract class AbstractMusic extends CustomCard {
         this.isPlayed = false;
         this.resetAttributes();
         this.initializeTitle();
-
     }
+
+//    @Override
+//    public void update() {
+//        updateFlashVfx();
+//        if (this.hoverTimer != 0.0F) {
+//            this.hoverTimer -= Gdx.graphics.getDeltaTime();
+//            if (this.hoverTimer < 0.0F)
+//                this.hoverTimer = 0.0F;
+//        }
+//        if (AbstractDungeon.player != null && AbstractDungeon.player.isDraggingCard && this == AbstractDungeon.player.hoveredCard) {
+//            this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
+//            this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
+//            if (AbstractDungeon.player.hasRelic("Necronomicon"))
+//                if (this.cost >= 2 && this.type == CardType.ATTACK && AbstractDungeon.player.getRelic("Necronomicon")
+//                        .checkTrigger()) {
+//                    AbstractDungeon.player.getRelic("Necronomicon").beginLongPulse();
+//                } else {
+//                    AbstractDungeon.player.getRelic("Necronomicon").stopPulse();
+//                }
+//        }
+//        if (Settings.FAST_MODE) {
+//            this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
+//            this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
+//        }
+//        this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
+//        this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
+//        this.hb.move(this.current_x, this.current_y);
+//        this.hb.resize(300.0F * Settings.scale * this.drawScale, 420.0F * Settings.scale * this.drawScale);
+//        if (this.hb.clickStarted && this.hb.hovered) {
+//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale * 0.9F);
+//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale * 0.9F);
+//        } else {
+//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale);
+//        }
+//        if (this.angle != this.targetAngle)
+//            this.angle = MathHelper.angleLerpSnap(this.angle, this.targetAngle);
+//        updateTransparency();
+//        updateColor();
+//    }
 
     @Override
     public boolean canUpgrade() {
@@ -93,4 +132,16 @@ public abstract class AbstractMusic extends CustomCard {
     public void renderHelper(SpriteBatch sb, Color color, TextureAtlas.AtlasRegion img, float drawX, float drawY) {
         SpireSuper.call(sb, color, img, drawX, drawY);
     }
+//    @SpireOverride
+//    private void updateFlashVfx() {
+//        SpireSuper.call();
+//    }
+//    @SpireOverride
+//    private void updateTransparency() {
+//        SpireSuper.call();
+//    }
+//    @SpireOverride
+//    private void updateColor() {
+//        SpireSuper.call();
+//    }
 }

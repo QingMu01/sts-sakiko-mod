@@ -59,8 +59,8 @@
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
-    "DESCRIPTION": "获得 [E] 获得 2 层 sakikomod:疲惫 。",
-    "UPGRADED_DESCRIPTION":"获得 [E] ,抽1张牌。获得 2 层 sakikomod:疲惫 。"
+    "DESCRIPTION": "获得 [E] 获得 2 层 sakikomod:过劳 。",
+    "UPGRADE_DESCRIPTION":"获得 [E] ,抽1张牌。获得 2 层 sakikomod:过劳 。"
   },
   "SakikoMod:CutOfMemory": {
     "NAME": "斩断过去",
@@ -228,8 +228,8 @@
   },
   "SakikoMod:Overdraw": {
     "NAME": "透支身体",
-    "DESCRIPTION": "回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:疲惫 。",
-    "UPGRADE_DESCRIPTION": " *固有 。 NL 回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:疲惫 。"
+    "DESCRIPTION": "回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。",
+    "UPGRADE_DESCRIPTION": " *固有 。 NL 回合开始时，获得 [E] 抽 1 张牌。 NL 回合开始时获得 !M! 层 sakikomod:过劳 。"
   },
   "SakikoMod:Mujikaku": {
     "NAME": "无自觉",
@@ -287,7 +287,7 @@
   },
   "SakikoMod:Obentou": {
     "NAME": "便当",
-    "DESCRIPTION": "恢复 10 点生命值。失去 !M! 枚 *金币 。",
+    "DESCRIPTION": "恢复 10 点生命值。失去 !M! 枚 *金币 。 NL *消耗 。",
     "EXTENDED_DESCRIPTION": [
       "买不起便当desuwa..."
     ]
@@ -331,13 +331,26 @@
     "NAME": "人偶形态",
     "DESCRIPTION": "每打出一张 sakikomod:音乐 牌，获得 !M! 点 sakikomod:临时生命 。"
   },
+  "SakikoMod:Resentment": {
+    "NAME": "打工人之怨念",
+    "DESCRIPTION": "造成 !D! 点伤害，然后获得2层 sakikomod:过劳 。你每有一层 *过劳 ，伤害增加 !M! 点。",
+    "EXTENDED_DESCRIPTION": [" NL （当前造成%d点伤害）"]
+  },
+  "SakikoMod:Arrange": {
+    "NAME": "歌单编排",
+    "DESCRIPTION": "使待演奏区的前 !M! 张音乐牌立刻生效。"
+  },"SakikoMod:ClockIn": {
+    "NAME": "打卡冲刺",
+    "DESCRIPTION": "将你的手牌补满，每抽 !M! 张牌，获得1层 sakikomod:过劳 。"
+  },
+
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
     "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。 NL sakikomod:强化 1：额外获得1力量。"
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
-    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：抽取 *计数 层数张牌。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：抽取 *计数 层数张牌。 NL sakikomod:升华 3。",
     "EXTENDED_DESCRIPTION":[" NL （当前抽取%d张，不会超过手牌上限）"]
   },
   "SakikoMod:Symbol_III": {
@@ -350,8 +363,8 @@
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
-    "DESCRIPTION": " sakikomod:演奏 ：获得 !M! [E] 。 NL sakikomod:升华 4：将你的能量翻倍。",
-    "UPGRADE_DESCRIPTION": "将你的能量翻倍，然后获得 !M! [E] 。"
+    "DESCRIPTION": " sakikomod:演奏 ：获得 [E] 。 NL sakikomod:升华 4。",
+    "UPGRADE_DESCRIPTION": "将你的能量翻倍，然后获得 [E] 。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
@@ -415,7 +428,7 @@
   },
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
-    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *火焰屏障 。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *火焰屏障 。 NL sakikomod:升华 3。",
     "EXTENDED_DESCRIPTION":[" NL （当前获得%d层）"]
   },
   "SakikoMod:ShuwarinDreamin_PP": {
@@ -428,15 +441,16 @@
   },
   "SakikoMod:Egao_HHW": {
     "NAME": "笑容管弦乐",
-    "DESCRIPTION": " sakikomod:演奏 ：使目标进入下一个意图。 NL （这张牌无法被强化。）"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：战斗结束后，获得 !M! 枚 *金币 。 NL sakikomod:强化 1：额外获得1枚 *金币 。"
   },
   "SakikoMod:Ship_HHW": {
     "NAME": "豪华！豪爽！？幽灵客轮！",
-    "DESCRIPTION": " sakikomod:演奏 ：击晕目标1回合。 NL *消耗 。 NL （这张牌无法被强化。）"
+    "DESCRIPTION": " sakikomod:演奏 ：击晕所有非boss敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。 NL sakikomod:升华 8。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：击晕所有敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。"
   },
   "SakikoMod:Daylight_M": {
     "NAME": "Daylight",
-    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得1层虚弱和1层易伤。 sakikomod:强化 1：额外获得1层虚弱和易伤。 NL *消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得1层虚弱和1层易伤。 NL sakikomod:强化 1：额外获得1层虚弱和易伤。 NL *消耗 。"
   },
   "SakikoMod:Sunny_M": {
     "NAME": "有所依靠的Sunny,Sunny",
@@ -444,7 +458,7 @@
   },
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
-    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *活力 。 NL sakikomod:升华 3： *计数 所需的牌减少1。",
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：获得 *计数 层数的 *活力 。 NL sakikomod:升华 3。",
     "EXTENDED_DESCRIPTION":[" NL （当前获得%d层）"]
   },
   "SakikoMod:Expose_RAS": {

@@ -21,12 +21,9 @@ public class Ether extends AbstractMusic {
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.NONE;
 
-    private int count = 0;
-
     public Ether() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 3;
-        this.baseMagicNumber = 1;
     }
 
     @Override
@@ -41,10 +38,10 @@ public class Ether extends AbstractMusic {
     @Override
     public void play() {
         if (this.upgraded) {
-            this.addToTop(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new GainEnergyAction(1));
             this.addToTop(new DoubleEnergyAction());
         }else {
-            this.addToTop(new GainEnergyAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new GainEnergyAction(1));
         }
 
     }

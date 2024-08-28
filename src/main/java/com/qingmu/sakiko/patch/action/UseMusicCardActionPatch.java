@@ -60,11 +60,11 @@ public class UseMusicCardActionPatch {
                 }
                 AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
                 AbstractDungeon.player.cardInUse = null;
+                ___targetCard.lighten(false);
+                ___targetCard.unfadeOut();
                 ___targetCard.stopGlowing();
-                ___targetCard.shrink();
                 ___targetCard.untip();
                 ___targetCard.unhover();
-                ___targetCard.unfadeOut();
                 __instance.isDone = true;
                 return SpireReturn.Return();
             }else {

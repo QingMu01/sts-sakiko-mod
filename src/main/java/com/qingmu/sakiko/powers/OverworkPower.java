@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.powers;
 
+import com.megacrit.cardcrawl.actions.common.GainGoldAction;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.watcher.PressEndTurnButtonAction;
@@ -44,7 +45,9 @@ public class OverworkPower extends AbstractPower {
     public void atStartOfTurnPostDraw() {
         if (this.amount > this.limit) {
             this.flash();
+            this.addToBot(new GainGoldAction(5));
             this.addToBot(new PressEndTurnButtonAction());
+            this.addToBot(new ReducePowerAction(this.owner,this.owner, this, 1));
         }
     }
 
@@ -53,6 +56,7 @@ public class OverworkPower extends AbstractPower {
         this.amount += stackAmount;
         if (this.amount >= this.limit){
             this.flash();
+            this.addToBot(new GainGoldAction(5));
             this.addToBot(new PressEndTurnButtonAction());
         }
     }

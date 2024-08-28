@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FeverPower extends AbstractPower {
@@ -45,7 +45,7 @@ public class FeverPower extends AbstractPower {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (card.type != SakikoEnum.CardTypeEnum.MUSIC && !card.purgeOnUse && this.amount > 0) {
+        if (!(card instanceof AbstractMusic) && !card.purgeOnUse && this.amount > 0) {
             this.flash();
             --this.amount;
             AbstractMonster m = null;

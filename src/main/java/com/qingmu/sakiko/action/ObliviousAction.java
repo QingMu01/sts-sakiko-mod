@@ -27,7 +27,7 @@ public class ObliviousAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (!p.hand.isEmpty() || !p.discardPile.isEmpty()){
+        if (!p.hand.isEmpty() || !p.discardPile.isEmpty()) {
             AbstractDungeon.gridSelectScreen.selectedCards.clear();
             this.addToBot(new MultiGroupSelectAction(uiStrings.TEXT[0], (cards, groups) -> {
                 for (AbstractCard card : cards) {
@@ -43,7 +43,7 @@ public class ObliviousAction extends AbstractGameAction {
                     AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
                     groups.get(card).moveToExhaustPile(card);
                 }
-            },this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND,CardGroup.CardGroupType.DISCARD_PILE));
+            }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
 
         }
         this.isDone = true;

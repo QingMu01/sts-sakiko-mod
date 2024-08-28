@@ -10,7 +10,10 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.*;
+import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
@@ -28,7 +31,7 @@ public class MusicSlotPatch {
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MusicSlot"));
 
     public static final float MUSIC_SLOT_X = Settings.WIDTH * 0.15f * Settings.scale;
-    public static final float MUSIC_SLOT_Y = Settings.HEIGHT * 0.70f * Settings.scale;
+    public static final float MUSIC_SLOT_Y = Math.max(Settings.HEIGHT * 0.70f * Settings.scale, 720.0f);
 
     public static final float MUSIC_SLOT_WIDTH = 70.0f * Settings.scale;
     public static final float MUSIC_SLOT_HEIGHT = 100.0f * Settings.scale;
@@ -75,14 +78,6 @@ public class MusicSlotPatch {
         }
     }
 
-    public static void renderOverdose(SpriteBatch sb) {
-        CardGroup musics = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
-        if (musics.size() > 3) {
-            List<AbstractCard> printAnimation = musics.group.subList(3, musics.size() - 1);
-
-        }
-    }
-
     public static class SlotItem {
 
         private AbstractMusic music;
@@ -103,11 +98,12 @@ public class MusicSlotPatch {
         public void update() {
             this.hb.update();
             if (this.music != null) {
+                this.music.update();
                 this.amount = this.music.amount;
                 if (this.hb.hovered) {
-                    this.music.current_x = MathHelper.cardLerpSnap(this.music.current_x, Settings.WIDTH / 2.0f);
-                    this.music.current_y = MathHelper.cardLerpSnap(this.music.current_y, Settings.HEIGHT / 2.0f);
-                    this.music.drawScale = MathHelper.cardScaleLerpSnap(music.drawScale, 1.0f);
+                    this.music.target_x = Settings.WIDTH / 2.0f;
+                    this.music.target_y = Settings.HEIGHT / 2.0f;
+                    this.music.targetDrawScale = 1.0f;
                 }
             }
             CardGroup cardGroup = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
@@ -130,11 +126,10 @@ public class MusicSlotPatch {
             this.update();
             if (this.music != null) {
                 if (!this.music.isPlayed && !this.hb.hovered) {
-                    this.music.current_x = MathHelper.cardLerpSnap(this.music.current_x, x);
-                    this.music.current_y = MathHelper.cardLerpSnap(this.music.current_y, y);
-                    this.music.drawScale = MathHelper.cardScaleLerpSnap(this.music.drawScale, 0.25f);
+                    this.music.target_x = x;
+                    this.music.target_y = y;
+                    this.music.targetDrawScale = 0.275f;
                 }
-                this.music.hb.resize(2, 2);
                 this.music.render(sb);
                 this.renderAmount(sb, x, y);
             }

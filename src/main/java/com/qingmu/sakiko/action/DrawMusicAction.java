@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
 import com.qingmu.sakiko.ui.MusicDrawPilePanel;
@@ -36,7 +36,7 @@ public class DrawMusicAction extends AbstractGameAction {
         } else if (AbstractDungeon.player.hand.size() + this.amount > 10) {
             AbstractDungeon.player.createHandIsFullDialog();
         } else if (drawMusicPile.size() < this.amount) {
-            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card.type == SakikoEnum.CardTypeEnum.MUSIC).count();
+            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();
             if (count > 0){
                 this.addToTop(new ShuffleMusicDeckAction());
                 this.addToBot(new DrawMusicAction());
