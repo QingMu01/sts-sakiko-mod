@@ -41,7 +41,9 @@ public class ObliviousAction extends AbstractGameAction {
                     tmp.calculateCardDamage(m);
                     tmp.purgeOnUse = true;
                     AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
-                    groups.get(card).moveToExhaustPile(card);
+                    if (!card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER) || !(card.type == AbstractCard.CardType.POWER)){
+                        groups.get(card).moveToExhaustPile(card);
+                    }
                 }
             }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
 

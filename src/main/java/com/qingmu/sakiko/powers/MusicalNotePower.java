@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.DrawMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.relics.Speaker;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicalNotePower extends AbstractPower {
@@ -59,7 +60,11 @@ public class MusicalNotePower extends AbstractPower {
     @Override
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
-            if (this.amount >= 24) this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+            if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
+                AbstractDungeon.player.getRelic(Speaker.ID).flash();
+            } else {
+                this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+            }
         }
     }
 

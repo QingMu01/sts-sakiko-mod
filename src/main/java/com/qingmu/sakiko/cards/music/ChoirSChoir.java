@@ -1,8 +1,13 @@
 package com.qingmu.sakiko.cards.music;
 
+import com.badlogic.gdx.graphics.Color;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.actions.watcher.JudgementAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.vfx.combat.GiantTextEffect;
+import com.megacrit.cardcrawl.vfx.combat.WeightyImpactEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -39,6 +44,10 @@ public class ChoirSChoir extends AbstractMusic {
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped()){
             this.addToTop(new JudgementAction(this.music_target, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new VFXAction(new GiantTextEffect(this.music_target.hb.cX, this.music_target.hb.cY)));
+            this.addToTop(new WaitAction(0.8F));
+            this.addToTop(new VFXAction(new WeightyImpactEffect(this.music_target.hb.cX, this.music_target.hb.cY, Color.GOLD.cpy())));
+
         }
     }
 }

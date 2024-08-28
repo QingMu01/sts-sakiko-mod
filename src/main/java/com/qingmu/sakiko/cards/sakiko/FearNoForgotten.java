@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ObliviousAction;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -32,6 +33,7 @@ public class FearNoForgotten extends CustomCard {
         this.exhaust = true;
         this.isInnate = true;
         this.baseMagicNumber = 1;
+        this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
     }
 
     @Override

@@ -40,11 +40,13 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (this.timesUpgraded < 9) {
+            this.upgradeMagicNumber(1);
+            ++this.timesUpgraded;
+            this.upgraded = true;
+            this.name = NAME + "+" + this.timesUpgraded;
+            this.initializeTitle();
+        }
     }
 
 

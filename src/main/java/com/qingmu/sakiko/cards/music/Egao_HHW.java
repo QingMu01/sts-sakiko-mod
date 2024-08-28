@@ -18,14 +18,13 @@ public class Egao_HHW extends AbstractMusic {
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
+    private static final CardTarget TARGET = CardTarget.SELF;
 
     public Egao_HHW() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.enchanted = 1;
         this.baseMagicNumber = 5;
-
     }
 
     @Override
