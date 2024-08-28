@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -83,6 +84,7 @@ public class RememberAction extends AbstractGameAction {
         }
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
             for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
+                RemoveCardFiledPatch.remove_flag.set(c, true);
                 this.p.hand.addToHand(c);
                 if (AbstractDungeon.player.hasPower("Corruption") && c.type == AbstractCard.CardType.SKILL)
                     c.setCostForTurn(-9);

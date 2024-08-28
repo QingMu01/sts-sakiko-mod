@@ -6,7 +6,7 @@
 
     <groupId>com.qingmu</groupId>
     <artifactId>sakiko-mod</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -76,8 +76,8 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar"/>
-                                <copy file="target/${project.artifactId}.jar" tofile="mods/${project.artifactId}.jar"/>
+                                <copy file="target/${project.artifactId}.jar" tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}-${project.version}.jar"/>
+                                <copy file="target/${project.artifactId}.jar" tofile="mods/${project.artifactId}-${project.version}.jar"/>
                             </target>
                         </configuration>
                         <goals>

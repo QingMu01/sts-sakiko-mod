@@ -2,6 +2,7 @@ package com.qingmu.sakiko.patch.action;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.utility.HandCheckAction;
+import com.megacrit.cardcrawl.actions.utility.ShowCardAndPoofAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -11,6 +12,7 @@ import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
@@ -72,6 +74,21 @@ public class UseMusicCardActionPatch {
             }
         }
 
+        @SpireInsertPatch(locator = Locator.class)
+        public static SpireReturn<Void> RemoveCardPatch(UseCardAction __instance, AbstractCard ___targetCard){
+            if (RemoveCardFiledPatch.remove_flag.get(___targetCard)){
+                if (___targetCard.type == AbstractCard.CardType.POWER || ___targetCard.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)){
+                    AbstractDungeon.player.hand.empower(___targetCard);
+                }else {
+                    AbstractDungeon.player.hand.removeCard(___targetCard);
+                    AbstractDungeon.actionManager.addToTop(new ShowCardAndPoofAction(___targetCard));
+                }
+                __instance.isDone = true;
+                AbstractDungeon.player.cardInUse = null;
+                RemoveCardFiledPatch.remove_flag.set(___targetCard,false);
+                return SpireReturn.Return();
+            }else return SpireReturn.Continue();
+        }
 
         public static class Locator extends SpireInsertLocator {
             @Override

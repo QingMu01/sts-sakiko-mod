@@ -483,7 +483,7 @@
   "SakikoMod:Remember": {
     "NAME": "回忆",
     "FLAVOR": "软糯的我又复活了desuwa...",
-    "DESCRIPTION": "从消耗堆选择 1 张牌，将其加入手牌。 NL *消耗 。"
+    "DESCRIPTION": "从消耗堆选择 1 张牌，将其加入手牌。选择的牌打出后将被移出本场战斗。 NL *消耗 。"
   },
   "SakikoMod:Story": {
     "NAME": "剧情",
