@@ -8,10 +8,12 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.powers.MoonsPower;
 
 public class PlayMusicAction extends AbstractGameAction {
 
@@ -22,6 +24,8 @@ public class PlayMusicAction extends AbstractGameAction {
     public PlayMusicAction(AbstractMusic music) {
         music.isPlayed = true;
         this.music = music;
+        this.source = music.music_source == null ? AbstractDungeon.player : music.music_source;
+        this.target = music.music_target == null ? AbstractDungeon.getRandomMonster() : music.music_target;
         if (music.exhaustOnUseOnce || music.exhaust) {
             this.exhaustCard = true;
         }
@@ -37,6 +41,11 @@ public class PlayMusicAction extends AbstractGameAction {
             if (this.music.current_x < Settings.WIDTH / 2.0F) return;
             else this.vfxDone = true;
         }
+        if (AbstractDungeon.player.hasPower(MoonsPower.POWER_ID)) {
+            MoonsPower power = (MoonsPower) AbstractDungeon.player.getPower(MoonsPower.POWER_ID);
+            power.onPlayMusicCard(this.music);
+        }
+        this.music.calculateCardDamage((AbstractMonster) this.target);
         this.music.play();
         this.music.resetMusicCard();
         CardGroup queue = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
@@ -55,7 +64,7 @@ public class PlayMusicAction extends AbstractGameAction {
             AbstractDungeon.player.cardInUse = null;
             return;
         }
-        if (this.music.purgeOnUse){
+        if (this.music.purgeOnUse) {
             AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
             queue.removeCard(this.music);
             AbstractDungeon.player.cardInUse = null;

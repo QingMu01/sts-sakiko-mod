@@ -29,6 +29,7 @@ public class A2Z_PP extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 1;
         this.baseMagicNumber = 3;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
     }
 
     @Override

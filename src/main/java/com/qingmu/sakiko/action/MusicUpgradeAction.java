@@ -23,7 +23,6 @@ public class MusicUpgradeAction extends AbstractGameAction {
                 this.card.upgrade();
             }
             this.card.superFlash();
-
         }
         this.isDone = true;
     }

@@ -28,6 +28,7 @@ public class FireBird_R extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 3;
         this.baseMagicNumber = 2;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
     }
 
     @Override

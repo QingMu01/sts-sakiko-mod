@@ -24,7 +24,7 @@ public class Utopia extends AbstractMusic {
     public Utopia() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 2;
-        this.baseDamage = 1;
+        this.baseDamage = 4;
     }
 
     @Override

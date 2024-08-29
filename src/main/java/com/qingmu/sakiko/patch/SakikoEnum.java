@@ -50,6 +50,8 @@ public class SakikoEnum {
         public static AbstractCard.CardTags MOONLIGHT;
         @SpireEnum
         public static AbstractCard.CardTags MUSIC_POWER;
+        @SpireEnum
+        public static AbstractCard.CardTags COUNTER;
     }
 
     /*

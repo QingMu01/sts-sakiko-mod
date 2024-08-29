@@ -24,7 +24,8 @@ public class Mayoiuta_MYGO extends AbstractMusic {
     public Mayoiuta_MYGO() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 1;
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
     }
 
     @Override
@@ -40,13 +41,11 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void upgrade() {
-        if (this.timesUpgraded < 9) {
-            this.upgradeMagicNumber(1);
-            ++this.timesUpgraded;
-            this.upgraded = true;
-            this.name = NAME + "+" + this.timesUpgraded;
-            this.initializeTitle();
-        }
+        this.upgradeMagicNumber(1);
+        ++this.timesUpgraded;
+        this.upgraded = true;
+        this.name = NAME + "+" + this.timesUpgraded;
+        this.initializeTitle();
     }
 
 

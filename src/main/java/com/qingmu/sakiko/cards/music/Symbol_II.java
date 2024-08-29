@@ -29,6 +29,7 @@ public class Symbol_II extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 2;
         this.baseMagicNumber = 3;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
     }
 
     @Override

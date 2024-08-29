@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -63,7 +62,7 @@ public class MusicalNotePower extends AbstractPower {
             if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
                 AbstractDungeon.player.getRelic(Speaker.ID).flash();
             } else {
-                this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+                this.reducePower(this.amount / 2);
             }
         }
     }

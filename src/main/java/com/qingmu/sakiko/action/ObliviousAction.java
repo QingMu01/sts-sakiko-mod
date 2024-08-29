@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -41,9 +42,13 @@ public class ObliviousAction extends AbstractGameAction {
                     tmp.target_y = Settings.HEIGHT / 2.0F;
                     tmp.calculateCardDamage(m);
                     tmp.purgeOnUse = true;
-                    AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
+                    if (card.cost == -1){
+                        AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, EnergyPanel.getCurrentEnergy(), true, true), true);
+                    }else {
+                        AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
+                    }
                     if (!RemoveCardFiledPatch.remove_flag.get(card)){
-                        if (card.type != AbstractCard.CardType.POWER && !card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER) && !RemoveCardFiledPatch.remove_flag.get(card)){
+                        if ((card.type != AbstractCard.CardType.POWER && !card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) || !RemoveCardFiledPatch.remove_flag.get(card)){
                             groups.get(card).moveToExhaustPile(card);
                         }else {
                             AbstractDungeon.player.hand.removeCard(card);

@@ -2,7 +2,7 @@ package com.qingmu.sakiko.relics.menbers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.powers.FeverPower;
+import com.qingmu.sakiko.powers.MoonsPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Rana extends AbstractBandMember {
@@ -22,6 +22,6 @@ public class Rana extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new FeverPower(AbstractDungeon.player,1)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new MoonsPower(AbstractDungeon.player,1)));
     }
 }

@@ -30,8 +30,8 @@ public class MusicSlotPatch {
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MusicSlot"));
 
-    public static final float MUSIC_SLOT_X = Settings.WIDTH * 0.15f * Settings.scale;
-    public static final float MUSIC_SLOT_Y = Math.max(Settings.HEIGHT * 0.70f * Settings.scale, 720.0f);
+    public static float MUSIC_SLOT_X = Settings.WIDTH * 0.15f * Settings.scale;
+    public static float MUSIC_SLOT_Y = Math.max(Settings.HEIGHT * 0.70f * Settings.scale, 720.0f);
 
     public static final float MUSIC_SLOT_WIDTH = 70.0f * Settings.scale;
     public static final float MUSIC_SLOT_HEIGHT = 100.0f * Settings.scale;
@@ -49,6 +49,8 @@ public class MusicSlotPatch {
     }
 
     public static void update() {
+        MUSIC_SLOT_X = AbstractDungeon.overlayMenu.energyPanel.current_x + MUSIC_SLOT_WIDTH;
+        MUSIC_SLOT_Y = AbstractDungeon.overlayMenu.energyPanel.current_y + (MUSIC_SLOT_PADDING+MUSIC_SLOT_HEIGHT) * 4;
         CardGroup musics = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
         List<AbstractCard> printMusic = musics.group.subList(0, Math.min(musics.size(), 3));
         while (slotItems.size() < 3) {

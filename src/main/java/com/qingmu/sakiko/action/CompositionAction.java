@@ -1,13 +1,14 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.screens.CardRewardScreen;
-import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
-import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.util.ArrayList;
@@ -25,54 +26,39 @@ public class CompositionAction extends AbstractGameAction {
     @Override
     public void update() {
         ArrayList<AbstractCard> generatedCards = this.generateCardChoices();
-        if (this.duration == Settings.ACTION_DUR_FAST) {
-            AbstractDungeon.cardRewardScreen.customCombatOpen(generatedCards, CardRewardScreen.TEXT[1], this.cardType != null);
-            this.tickDuration();
-        } else {
-            if (!this.retrieveCard) {
-                if (AbstractDungeon.cardRewardScreen.discoveryCard != null) {
-                    AbstractCard disCard = AbstractDungeon.cardRewardScreen.discoveryCard.makeStatEquivalentCopy();
-                    if (AbstractDungeon.player.hasPower("MasterRealityPower")) {
-                        disCard.upgrade();
-                    }
-
-                    disCard.current_x = -1000.0F * Settings.xScale;
-                    disCard.setCostForTurn(0);
-                    disCard.exhaust = true;
-                    disCard.isEthereal = true;
-                    if (this.amount == 1) {
-                        if (AbstractDungeon.player.hand.size() < 10) {
-                            AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
-                        } else {
-                            AbstractDungeon.effectList.add(new ShowCardAndAddToDiscardEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
-                        }
-                    }
-                    AbstractDungeon.cardRewardScreen.discoveryCard = null;
-                }
-                this.retrieveCard = true;
-            }
-            this.tickDuration();
-        }
+        this.addToBot(new ChooseOneAction(generatedCards));
+        this.isDone = true;
     }
 
     private ArrayList<AbstractCard> generateCardChoices() {
         ArrayList<AbstractCard> derp = new ArrayList<>();
-
         while (derp.size() != 3) {
             boolean dupe = false;
             AbstractCard tmp = MusicCardFinder.returnTrulyRandomCardInCombat();
-
             for (AbstractCard c : derp) {
                 if (c.cardID.equals(tmp.cardID)) {
                     dupe = true;
                     break;
                 }
             }
-
-            if (!dupe) {
-                derp.add(tmp.makeCopy());
+            if (!dupe && !tmp.hasTag(SakikoEnum.CardTagEnum.COUNTER)) {
+                AbstractCard card = tmp.makeCopy();
+                card.purgeOnUse = true;
+                for (int i = 0; i < calculateUpgrade(((AbstractMusic)tmp).getEnchanted()); i++) {
+                    card.upgrade();
+                }
+                derp.add(card);
             }
         }
         return derp;
     }
+    private int calculateUpgrade(int required) {
+        AbstractPower power = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
+        if (power != null) {
+            return power.amount / required;
+        } else {
+            return 0;
+        }
+    }
+
 }

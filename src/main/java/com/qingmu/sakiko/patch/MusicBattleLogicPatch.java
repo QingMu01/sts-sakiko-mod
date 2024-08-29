@@ -36,7 +36,7 @@ public class MusicBattleLogicPatch {
                     MusicBattleFiledPatch.drawMusicPile.get(__instance).addToRandomSpot(card);
                     iterator.remove();
                 } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
-                    __instance.discardPile.addToRandomSpot(card);
+                    __instance.discardPile.addToBottom(card);
                     iterator.remove();
                 }
             }

@@ -3,7 +3,6 @@ package com.qingmu.sakiko.utils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardPoolsFiledPatch;
@@ -16,9 +15,7 @@ public class MusicCardFinder {
 
     public static ArrayList<AbstractCard> findReward() {
         ArrayList<AbstractCard> retVal = new ArrayList<>();
-        int numCards = 3;
-        for (AbstractRelic r : AbstractDungeon.player.relics)
-            numCards = r.changeNumberOfCardsInReward(numCards);
+        int numCards = 4;
         for (int i = 0; i < numCards; i++) {
             AbstractCard.CardRarity rarity = rollRarity();
             AbstractCard card = null;

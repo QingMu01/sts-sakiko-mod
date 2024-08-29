@@ -14,7 +14,9 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.action.MusicUpgradeAction;
+import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.FeverReadyPower;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -29,8 +31,8 @@ public abstract class AbstractMusic extends CustomCard {
 
     protected int enchanted;
 
-    protected AbstractCreature music_source;
-    protected AbstractCreature music_target;
+    public AbstractCreature music_source;
+    public AbstractCreature music_target;
 
     public int amount = 0;
 
@@ -47,8 +49,8 @@ public abstract class AbstractMusic extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.music_source = p;
-        this.music_target = m;
+        this.music_source = p == null ? AbstractDungeon.player : p;
+        this.music_target = m == null ? AbstractDungeon.getRandomMonster() : m;
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FeverReadyPower(AbstractDungeon.player, 1)));
     }
 
@@ -59,11 +61,20 @@ public abstract class AbstractMusic extends CustomCard {
         }
     }
 
+    @Override
+    public void onChoseThisOption() {
+        this.use(null,null);
+        MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player).addToBottom(this);
+        this.addToTop(new ReadyToPlayMusicAction(1));
+    }
+
     // 更新计数
-    public void applyAmount(){}
+    public void applyAmount() {
+    }
 
     // 存在待演奏区时，有卡牌被打出时触发的钩子
-    public void triggerInBufferPlayCard(AbstractCard card) {}
+    public void triggerInBufferPlayCard(AbstractCard card) {
+    }
 
     public void resetMusicCard() {
         AbstractCard tmp = this.makeCopy();
@@ -79,44 +90,10 @@ public abstract class AbstractMusic extends CustomCard {
         this.initializeTitle();
     }
 
-//    @Override
-//    public void update() {
-//        updateFlashVfx();
-//        if (this.hoverTimer != 0.0F) {
-//            this.hoverTimer -= Gdx.graphics.getDeltaTime();
-//            if (this.hoverTimer < 0.0F)
-//                this.hoverTimer = 0.0F;
-//        }
-//        if (AbstractDungeon.player != null && AbstractDungeon.player.isDraggingCard && this == AbstractDungeon.player.hoveredCard) {
-//            this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
-//            this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
-//            if (AbstractDungeon.player.hasRelic("Necronomicon"))
-//                if (this.cost >= 2 && this.type == CardType.ATTACK && AbstractDungeon.player.getRelic("Necronomicon")
-//                        .checkTrigger()) {
-//                    AbstractDungeon.player.getRelic("Necronomicon").beginLongPulse();
-//                } else {
-//                    AbstractDungeon.player.getRelic("Necronomicon").stopPulse();
-//                }
-//        }
-//        if (Settings.FAST_MODE) {
-//            this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
-//            this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
-//        }
-//        this.current_x = MathHelper.cardLerpSnap(this.current_x, this.target_x);
-//        this.current_y = MathHelper.cardLerpSnap(this.current_y, this.target_y);
-//        this.hb.move(this.current_x, this.current_y);
-//        this.hb.resize(300.0F * Settings.scale * this.drawScale, 420.0F * Settings.scale * this.drawScale);
-//        if (this.hb.clickStarted && this.hb.hovered) {
-//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale * 0.9F);
-//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale * 0.9F);
-//        } else {
-//            this.drawScale = MathHelper.cardScaleLerpSnap(this.drawScale, this.targetDrawScale);
-//        }
-//        if (this.angle != this.targetAngle)
-//            this.angle = MathHelper.angleLerpSnap(this.angle, this.targetAngle);
-//        updateTransparency();
-//        updateColor();
-//    }
+
+    public int getEnchanted() {
+        return this.enchanted;
+    }
 
     @Override
     public boolean canUpgrade() {
@@ -132,16 +109,4 @@ public abstract class AbstractMusic extends CustomCard {
     public void renderHelper(SpriteBatch sb, Color color, TextureAtlas.AtlasRegion img, float drawX, float drawY) {
         SpireSuper.call(sb, color, img, drawX, drawY);
     }
-//    @SpireOverride
-//    private void updateFlashVfx() {
-//        SpireSuper.call();
-//    }
-//    @SpireOverride
-//    private void updateTransparency() {
-//        SpireSuper.call();
-//    }
-//    @SpireOverride
-//    private void updateColor() {
-//        SpireSuper.call();
-//    }
 }

@@ -28,6 +28,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         this.enchanted = 1;
         this.baseMagicNumber = 1;
         this.baseDamage = 2;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
     }
 
     @Override
