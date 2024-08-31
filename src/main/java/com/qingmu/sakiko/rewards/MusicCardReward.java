@@ -24,12 +24,6 @@ public class MusicCardReward extends CustomReward {
 
     @Override
     public boolean claimReward() {
-        if (AbstractDungeon.player.hasRelic("Question Card")) {
-            AbstractDungeon.player.getRelic("Question Card").flash();
-        }
-        if (AbstractDungeon.player.hasRelic("Busted Crown")) {
-            AbstractDungeon.player.getRelic("Busted Crown").flash();
-        }
         if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.COMBAT_REWARD) {
             AbstractDungeon.cardRewardScreen.open(this.cards, this, TEXT[1]);
             AbstractDungeon.previousScreen = AbstractDungeon.CurrentScreen.COMBAT_REWARD;
