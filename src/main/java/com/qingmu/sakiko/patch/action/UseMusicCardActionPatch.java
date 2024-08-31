@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -59,6 +60,7 @@ public class UseMusicCardActionPatch {
                 cardGroup.addToTop(___targetCard);
                 if (cardGroup.size() >= 4){
                     AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));
+                    AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(1));
                 }
                 AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
                 AbstractDungeon.player.cardInUse = null;
