@@ -50,7 +50,7 @@ public class Reproduce extends CustomCard {
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         this.cantUseMessage = CARD_STRINGS.EXTENDED_DESCRIPTION[0];
         return !cardGroup.isEmpty();
     }

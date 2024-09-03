@@ -175,7 +175,14 @@
     "NAME": "双月",
     "DESCRIPTIONS": [
       "你的下 #b",
-      " 次 #y演奏 生效两次 。"
+      " 次 #y演奏 生效两次。"
+    ]
+  },
+  "SakikoMod:AnonDasuruPower": {
+    "NAME": "爱堕",
+    "DESCRIPTIONS": [
+      "你已被爱音俘获，你的下 #b",
+      " 次 #r攻击 将被转换成等额治疗。爱门！"
     ]
   }
 }

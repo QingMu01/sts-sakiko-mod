@@ -23,8 +23,8 @@ public class MusicBattleLogicPatch {
          * */
 
         public static void Prefix(AbstractPlayer __instance) {
-            MusicBattleFiledPatch.drawMusicPile.get(__instance).clear();
-            MusicBattleFiledPatch.musicQueue.get(__instance).clear();
+            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).clear();
+            MusicBattleFiledPatch.MusicQueue.musicQueue.get(__instance).clear();
         }
 
         public static void Postfix(AbstractPlayer __instance) {
@@ -33,7 +33,7 @@ public class MusicBattleLogicPatch {
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 if (card instanceof AbstractMusic) {
-                    MusicBattleFiledPatch.drawMusicPile.get(__instance).addToRandomSpot(card);
+                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).addToRandomSpot(card);
                     iterator.remove();
                 } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
                     __instance.discardPile.addToBottom(card);

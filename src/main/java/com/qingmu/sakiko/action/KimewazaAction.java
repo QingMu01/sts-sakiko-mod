@@ -24,7 +24,7 @@ public class KimewazaAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         int cardCount = cardGroup.size();
         for (int i = 0; i < cardCount; i++) {
             AbstractCard card = cardGroup.getTopCard();

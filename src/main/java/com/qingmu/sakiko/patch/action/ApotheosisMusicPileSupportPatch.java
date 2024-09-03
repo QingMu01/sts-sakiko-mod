@@ -15,7 +15,7 @@ public class ApotheosisMusicPileSupportPatch {
     * */
     @SpireInsertPatch(locator = Locator.class)
     public static void insert(ApotheosisAction __instance) {
-        for (AbstractCard card : MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).group) {
+        for (AbstractCard card : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
             if (card.canUpgrade()) {
                 card.upgrade();
                 card.applyPowers();

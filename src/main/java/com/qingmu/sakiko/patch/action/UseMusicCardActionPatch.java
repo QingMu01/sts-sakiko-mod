@@ -38,7 +38,7 @@ public class UseMusicCardActionPatch {
             if (card[0].hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
-            for (AbstractCard music : MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player).group) {
+            for (AbstractCard music : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
                 ((AbstractMusic)music).triggerInBufferPlayCard(card[0]);
                 ((AbstractMusic)music).applyAmount();
             }
@@ -56,7 +56,7 @@ public class UseMusicCardActionPatch {
             if (___targetCard instanceof AbstractMusic){
                 ___targetCard.applyPowers();
                 ((AbstractMusic)___targetCard).applyAmount();
-                CardGroup cardGroup = MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player);
+                CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);
                 if (cardGroup.size() >= 4){
                     AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));

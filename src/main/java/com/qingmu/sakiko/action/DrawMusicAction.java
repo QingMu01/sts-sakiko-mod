@@ -30,7 +30,7 @@ public class DrawMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup drawMusicPile = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup drawMusicPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (AbstractDungeon.player.hasPower("No Draw")) {
             AbstractDungeon.player.getPower("No Draw").flash();
         } else if (AbstractDungeon.player.hand.size() + this.amount > 10) {

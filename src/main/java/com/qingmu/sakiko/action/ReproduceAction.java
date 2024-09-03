@@ -20,7 +20,7 @@ public class ReproduceAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(player);
         if (!cardGroup.isEmpty()) {
             AbstractCard randomCard = cardGroup.getRandomCard(AbstractDungeon.cardRandomRng);
             randomCard.target_x = (float) (Settings.WIDTH / 2);

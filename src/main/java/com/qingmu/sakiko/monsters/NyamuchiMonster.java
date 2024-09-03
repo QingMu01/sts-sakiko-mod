@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.monsters;
 
 import basemod.abstracts.CustomMonster;
+import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
@@ -14,6 +15,7 @@ import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.SoundHelper;
 
 public class NyamuchiMonster extends CustomMonster {
 
@@ -21,11 +23,14 @@ public class NyamuchiMonster extends CustomMonster {
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
     public static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String NAME = monsterStrings.NAME;
+    public static final String[] MOVES = monsterStrings.MOVES;
     // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/nyamuchi.png";
 
-    private boolean isFirstMove = true;
-    private int baseHp = 70, baseSlash = 15, baseMulti = 5, multiCount = 2, powerful = 1;
+    private int baseHp = 70, baseSlash = 17, baseMulti = 5, multiCount = 3;
+
+    private boolean isSlash = false;
+    private boolean isPowerful = false;
 
     public NyamuchiMonster(float x, float y) {
         super(NAME, ID, 50, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
@@ -37,12 +42,10 @@ public class NyamuchiMonster extends CustomMonster {
         // 进阶8 强化
         if (AbstractDungeon.ascensionLevel >= 8) {
             this.baseHp += 20;
-            this.powerful++;
         }
         // 进阶18 强化
         if (AbstractDungeon.ascensionLevel >= 18) {
             this.multiCount++;
-            this.powerful++;
         }
 
         // act1 基本属性
@@ -66,36 +69,46 @@ public class NyamuchiMonster extends CustomMonster {
             this.setHp(baseHp - 10, baseHp + 10);
         }
 
-        this.damage.add(new DamageInfo(this, baseSlash));
-        this.damage.add(new DamageInfo(this, baseMulti));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
         AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.NYAMUCHI_INIT.name());
     }
 
     @Override
     public void die() {
         super.die();
         AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.NYAMUCHI_DEATH.name());
     }
 
     @Override
     public void takeTurn() {
         switch (this.nextMove) {
             case 0: {
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new ApplyPowerAction(this, this, new StrengthPower(this, 1)));
+                this.multiCount++;
                 break;
             }
             case 1: {
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(0)));
+                AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[2], 1.0F, 2.0F));
                 break;
             }
             case 2: {
-                for (int j = 0; j < this.multiCount; j++){
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(1)));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0)));
+                break;
+            }
+            case 3: {
+                for (int i = 0; i < this.multiCount; i++) {
+                    this.addToBot(new AnimateSlowAttackAction(this));
+                    this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(1)));
                 }
                 break;
             }
@@ -105,15 +118,23 @@ public class NyamuchiMonster extends CustomMonster {
 
     @Override
     protected void getMove(int i) {
-        if (this.isFirstMove) {
-            this.isFirstMove = false;
+        if (this.isPowerful) {
+            this.isPowerful = false;
             this.setMove((byte) 0, Intent.BUFF);
-        } else {
-            if (i < 50) {
-                this.setMove((byte) 1, Intent.ATTACK, this.damage.get(0).base);
-            } else {
-                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base, this.multiCount, true);
-            }
+            return;
         }
+        if (this.isSlash) {
+            this.isSlash = false;
+            this.setMove(MOVES[0], (byte) 1, Intent.STUN);
+            this.isPowerful = true;
+        }
+
+        if (i < 30) {
+            this.setMove(MOVES[2], (byte) 2, Intent.ATTACK, this.damage.get(0).base);
+            this.isSlash = true;
+        } else {
+            this.setMove(MOVES[1], (byte) 3, Intent.ATTACK, this.damage.get(1).base, this.multiCount, true);
+        }
+
     }
 }

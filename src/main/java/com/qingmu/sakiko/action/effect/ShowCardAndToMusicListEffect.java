@@ -40,7 +40,7 @@ public class ShowCardAndToMusicListEffect extends AbstractGameEffect {
             this.card.upgrade();
         }
         CardCrawlGame.sound.play("CARD_OBTAIN");
-        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (toBottom) {
             cardGroup.addToBottom(this.card);
         } else if (randomSpot) {

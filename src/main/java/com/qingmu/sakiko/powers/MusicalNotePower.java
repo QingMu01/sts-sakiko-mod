@@ -76,7 +76,7 @@ public class MusicalNotePower extends AbstractPower {
         }
         if (this.amount >= 12) {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();
-            if (!MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {
+            if (!MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {
                 this.reducePower(12);
                 this.addToBot(new DrawMusicAction());
             }

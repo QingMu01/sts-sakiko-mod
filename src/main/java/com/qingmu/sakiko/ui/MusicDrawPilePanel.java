@@ -152,7 +152,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
     }
     private void openDrawPile() {
         AbstractPlayer p = AbstractDungeon.player;
-        if (!MusicBattleFiledPatch.drawMusicPile.get(p).isEmpty()) {
+        if (!MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(p).isEmpty()) {
             BaseMod.openCustomScreen(MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW);
         } else {
             AbstractDungeon.effectList.add(new ThoughtBubble(p.dialogX, p.dialogY, 3.0F, TEXT[0], true));
@@ -195,7 +195,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
         }else {
             sb.draw(img, this.current_x + DECK_X, this.current_y + DECK_Y + this.bob.y / 2.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0.0F, 0, 0, 128, 128, false, false);
         }
-        String msg = Integer.toString(MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).size());
+        String msg = Integer.toString(MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).size());
         this.gl.setText(FontHelper.turnNumFont, msg);
         sb.setColor(Color.WHITE);
         if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW){

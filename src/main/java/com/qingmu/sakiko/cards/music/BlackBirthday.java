@@ -37,7 +37,7 @@ public class BlackBirthday extends AbstractMusic {
 
     @Override
     public void play() {
-        int count = this.baseMagicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
+        int count = this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
         for (int i = 0; i < count; i++) {
             this.addToBot(new UpgradeRandomCardAction());
         }

@@ -250,7 +250,7 @@ public class MusicDrawPileViewScreen extends CustomScreen implements ScrollBarLi
         AbstractDungeon.isScreenUp = true;
         AbstractDungeon.screen = curScreen();
         this.drawPileCopy.clear();
-        for (AbstractCard c : MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player).group) {
+        for (AbstractCard c : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
             c.setAngle(0.0F, true);
             c.targetDrawScale = 0.75F;
             c.drawScale = 0.75F;

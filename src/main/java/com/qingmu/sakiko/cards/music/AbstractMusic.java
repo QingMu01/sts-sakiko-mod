@@ -64,7 +64,7 @@ public abstract class AbstractMusic extends CustomCard {
     @Override
     public void onChoseThisOption() {
         this.use(null,null);
-        MusicBattleFiledPatch.musicQueue.get(AbstractDungeon.player).addToBottom(this);
+        MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
         this.addToTop(new ReadyToPlayMusicAction(1));
     }
 

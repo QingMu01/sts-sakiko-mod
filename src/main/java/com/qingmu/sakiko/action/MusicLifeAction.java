@@ -10,7 +10,7 @@ import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 public class MusicLifeAction extends AbstractGameAction {
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (!cardGroup.isEmpty()){
             AbstractCard topCard = cardGroup.getTopCard();
             cardGroup.moveToHand(topCard, cardGroup);
