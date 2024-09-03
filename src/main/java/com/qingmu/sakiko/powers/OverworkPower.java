@@ -50,8 +50,8 @@ public class OverworkPower extends AbstractPower {
     public void atStartOfTurnPostDraw() {
         if (this.amount > this.limit) {
             this.flash();
-            this.timeLimit();
             this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+            this.timeLimit();
         }
     }
 

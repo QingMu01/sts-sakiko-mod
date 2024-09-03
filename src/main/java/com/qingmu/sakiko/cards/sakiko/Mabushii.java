@@ -1,12 +1,16 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.MabushiiAction;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
@@ -43,6 +47,9 @@ public class Mabushii extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new MabushiiAction(p, m, this.damage, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.baseDamage = (PowerHelper.getPowerAmount(KirameiPower.POWER_ID) + 1) * this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
+        this.calculateCardDamage(m);
+        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, 1)));
     }
 }

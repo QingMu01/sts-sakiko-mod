@@ -40,7 +40,6 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
         AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
         this.music.stopGlowing();
         queue.removeCard(this.music);
-        AbstractDungeon.player.cardInUse = null;
         this.isDone = true;
     }
 }

@@ -1,12 +1,15 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.evacipated.cardcrawl.mod.stslib.actions.common.DamageCallbackAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.NoiseAction;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
@@ -51,7 +54,13 @@ public class Noise extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new NoiseAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        this.calculateCardDamage(m);
+
+        this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL, (damage) -> {
+            if (damage > 0)
+                this.addToTop(new ApplyPowerAction(m, p, new VulnerablePower(m, 2, false)));
+        }));
 
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

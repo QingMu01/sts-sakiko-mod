@@ -1,14 +1,11 @@
 package com.qingmu.sakiko.monsters;
 
-import basemod.abstracts.CustomMonster;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -20,15 +17,13 @@ import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.cards.music.Haruhikage_CryChic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.ui.MusicSlotItem;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.MusicHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
 
-public class RanaMonster extends CustomMonster {
+public class RanaMonster extends AbstractMemberMonster {
 
     public static final String ID = ModNameHelper.make(RanaMonster.class.getSimpleName());
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -42,23 +37,22 @@ public class RanaMonster extends CustomMonster {
 
     private boolean isPlayBGM = false;
 
-    private MusicSlotItem musicSlotItem = new MusicSlotItem(this);
-
     private int pafeCount = 0;
 
     public RanaMonster(float x, float y) {
-        super(NAME, ID, 50, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
-        // 进阶3 强化
+        super(NAME, ID, IMG, x, y);
+        this.canPlayMusic = true;
+        // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseAttack += 3;
             this.baseSlash += 4;
             this.powerful += 5;
         }
-        // 进阶8 强化
+        // 进阶8 强化生命
         if (AbstractDungeon.ascensionLevel >= 8) {
             this.baseHp += 20;
         }
-        // 进阶18 强化
+        // 进阶18 强化行动
         if (AbstractDungeon.ascensionLevel >= 18) {
             this.baseAttack += 3;
             this.baseSlash += 4;
@@ -99,10 +93,10 @@ public class RanaMonster extends CustomMonster {
     public void die() {
         super.die();
         AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        if (pafeCount > 0) {
+        if (pafeCount > 0 && (pafeCount * powerful) - (pafeCount * 10) > 0) {
             AbstractRoom currRoom = AbstractDungeon.getCurrRoom();
             currRoom.mugged = true;
-            currRoom.addGoldToRewards((pafeCount * powerful) - (pafeCount * 10));
+            currRoom.addStolenGoldToRewards((pafeCount * powerful) - (pafeCount * 10));
         }
         CardCrawlGame.sound.play(SoundHelper.RANA_DEATH.name());
         CardCrawlGame.music.fadeOutTempBGM();
@@ -172,24 +166,9 @@ public class RanaMonster extends CustomMonster {
         }
     }
 
-    private void obtainMusic() {
+    @Override
+    protected void obtainMusic() {
         AbstractDungeon.effectList.add(new ObtainMusicCardEffect(new Haruhikage_CryChic(), this));
     }
 
-    @Override
-    public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this);
-        if (cardGroup.isEmpty()) {
-            this.musicSlotItem.removeMusic();
-        } else {
-            this.musicSlotItem.setMusic((AbstractMusic) cardGroup.getTopCard());
-        }
-        super.update();
-    }
-
-    @Override
-    public void render(SpriteBatch sb) {
-        musicSlotItem.render(sb, this.hb.cX, this.hb.cY + 300.0f);
-        super.render(sb);
-    }
 }

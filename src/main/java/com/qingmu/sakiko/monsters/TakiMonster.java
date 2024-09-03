@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.monsters;
 
-import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
@@ -15,7 +14,7 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class TakiMonster extends CustomMonster {
+public class TakiMonster extends AbstractMemberMonster {
 
     public static final String ID = ModNameHelper.make(TakiMonster.class.getSimpleName());
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -28,7 +27,7 @@ public class TakiMonster extends CustomMonster {
     private int baseHp = 70, baseSlash = 15, baseMulti = 5, multiCount = 2, powerful = 1;
 
     public TakiMonster(float x, float y) {
-        super(NAME, ID, 50, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
+        super(NAME, ID, IMG, x, y);
         // 进阶3 强化
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseSlash += 2;

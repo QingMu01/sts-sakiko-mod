@@ -24,7 +24,7 @@
     "NAME": "便携音响",
     "FLAVOR": "这玩意用来听歌还真不错！",
     "DESCRIPTIONS": [
-      "回合结束时，你的 #y音符 不再减少。"
+      "你获取的 #y音符 数量与上限值翻倍"
     ]
   },
   "SakikoMod:NoteBook": {

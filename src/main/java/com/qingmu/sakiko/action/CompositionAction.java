@@ -4,12 +4,11 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.MusicCardFinder;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 import java.util.ArrayList;
 
@@ -58,12 +57,7 @@ public class CompositionAction extends AbstractGameAction {
     }
 
     private int calculateUpgrade(int required) {
-        AbstractPower power = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
-        if (power != null) {
-            return power.amount / required;
-        } else {
-            return 0;
-        }
+        return PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / required;
     }
 
 }

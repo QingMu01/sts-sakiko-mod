@@ -102,9 +102,12 @@ public class KokoroNoKabePower extends TwoAmountPower {
         this.counter += stackAmount;
         // 每10层心之壁层，增加1心之壁伤害
         if (this.counter >= this.limit) {
-            this.stackDamageAmount(1);
-            this.limit += 5;
-            this.counter = Math.max((this.counter - this.limit), 0);
+            do {
+                this.stackDamageAmount(1);
+                this.counter -= this.limit;
+                this.limit += 5;
+            } while (this.counter >= this.limit);
+            this.counter = Math.max(this.counter, 0);
         }
         if (this.amount <= 0) {
             this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));

@@ -137,7 +137,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         // 添加成员入侵事件
         BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
                 .spawnCondition(() -> false).bonusCondition(() -> false)
-                .endsWithRewardsUI(false).create());
+                .endsWithRewardsUI(true).create());
 
         // 添加音乐堆预览页面
         BaseMod.addCustomScreen(new MusicDrawPileViewScreen());

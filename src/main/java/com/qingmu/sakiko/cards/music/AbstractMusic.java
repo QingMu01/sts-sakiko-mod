@@ -39,10 +39,15 @@ public abstract class AbstractMusic extends CustomCard {
     public boolean isPlayed = false;
 
     public AbstractMusic(String id, String name, String img, String rawDescription, CardRarity rarity, CardTarget target) {
-        super(id, name, img, 0, rawDescription, CARD_TYPE, COLOR, rarity, target);
+        this(id, name, img, rawDescription, COLOR, rarity, target);
+    }
+
+    public AbstractMusic(String id, String name, String img, String rawDescription, CardColor color, CardRarity rarity, CardTarget target) {
+        super(id, name, img, 0, rawDescription, CARD_TYPE, color, rarity, target);
         super.setBackgroundTexture(BG_SKILL_512, BG_SKILL_1024);
         this.enchanted = -1;
     }
+
 
     // 实现的时候最好使用addToTop()方法，否则会导致所有被演奏卡牌的演奏动画播放完毕才生效
     public abstract void play();
@@ -63,7 +68,7 @@ public abstract class AbstractMusic extends CustomCard {
 
     @Override
     public void onChoseThisOption() {
-        this.use(null,null);
+        this.use(null, null);
         MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
         this.addToTop(new ReadyToPlayMusicAction(1));
     }

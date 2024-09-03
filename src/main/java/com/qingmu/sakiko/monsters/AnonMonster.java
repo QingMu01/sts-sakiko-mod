@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.monsters;
 
-import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.animations.*;
 import com.megacrit.cardcrawl.actions.common.*;
@@ -18,7 +17,7 @@ import com.qingmu.sakiko.powers.monster.AnonDasuruPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
 
-public class AnonMonster extends CustomMonster {
+public class AnonMonster extends AbstractMemberMonster {
 
     public static final String ID = ModNameHelper.make(AnonMonster.class.getSimpleName());
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -34,7 +33,7 @@ public class AnonMonster extends CustomMonster {
     private int baseHp = 70, baseAttack = 8, baseSlash = 14, baseMulti = 6, multiCount = 2, baseBlock = 6;
 
     public AnonMonster(float x, float y) {
-        super(NAME, ID, 100, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
+        super(NAME, ID, IMG, x, y);
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseAttack += 2;

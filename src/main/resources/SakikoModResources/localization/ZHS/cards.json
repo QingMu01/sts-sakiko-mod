@@ -523,5 +523,9 @@
   "SakikoMod:Confront_Sakiko": {
     "NAME": "面对",
     "DESCRIPTION": "使你的 sakikomod:心之壁 与其对你造成的伤害翻倍。"
+  },
+  "SakikoMod:Haruhikage_Rana": {
+    "NAME": "乐奈的春日影",
+    "DESCRIPTION": "跳过你的一个回合。"
   }
 }

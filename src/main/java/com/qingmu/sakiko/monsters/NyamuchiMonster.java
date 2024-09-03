@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.monsters;
 
-import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -17,7 +16,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
 
-public class NyamuchiMonster extends CustomMonster {
+public class NyamuchiMonster extends AbstractMemberMonster {
 
     public static final String ID = ModNameHelper.make(NyamuchiMonster.class.getSimpleName());
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -33,17 +32,17 @@ public class NyamuchiMonster extends CustomMonster {
     private boolean isPowerful = false;
 
     public NyamuchiMonster(float x, float y) {
-        super(NAME, ID, 50, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
-        // 进阶3 强化
+        super(NAME, ID, IMG, x, y);
+        // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseSlash += 2;
             this.baseMulti++;
         }
-        // 进阶8 强化
+        // 进阶8 强化生命
         if (AbstractDungeon.ascensionLevel >= 8) {
             this.baseHp += 20;
         }
-        // 进阶18 强化
+        // 进阶18 强化行动
         if (AbstractDungeon.ascensionLevel >= 18) {
             this.multiCount++;
         }

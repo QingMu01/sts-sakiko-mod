@@ -1,10 +1,9 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class MusicUpgradeAction extends AbstractGameAction {
     private final AbstractMusic card;
@@ -28,11 +27,6 @@ public class MusicUpgradeAction extends AbstractGameAction {
     }
 
     private int calculateUpgrade(int required) {
-        AbstractPower power = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
-        if (power != null) {
-            return power.amount / required;
-        } else {
-            return 0;
-        }
+        return PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / required;
     }
 }

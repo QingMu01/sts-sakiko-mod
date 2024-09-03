@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.monsters;
 
-import basemod.abstracts.CustomMonster;
 import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
@@ -21,7 +20,7 @@ import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
 
-public class MutsumiMonster extends CustomMonster {
+public class MutsumiMonster extends AbstractMemberMonster {
 
     public static final String ID = ModNameHelper.make(MutsumiMonster.class.getSimpleName());
     private static final MonsterStrings monsterStrings = CardCrawlGame.languagePack.getMonsterStrings(ID);
@@ -32,15 +31,15 @@ public class MutsumiMonster extends CustomMonster {
     private static final String IMG = "SakikoModResources/img/monster/mutsumi.png";
 
     private boolean isFirstMove = true;
-    private int baseHp = 70, baseAttack = 8, baseSlash = 18, baseMulti = 5, multiCount = 3, powerful = 2;
+    private int baseHp = 70, baseAttack = 8, baseSlash = 16, baseMulti = 5, multiCount = 3, powerful = 2;
 
     public MutsumiMonster(float x, float y) {
-        super(NAME, ID, 50, 0.0F, 0.0F, 200.0F, 220.0F, IMG, x, y);
+        super(NAME, ID, IMG, x, y);
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseAttack += 3;
             this.baseSlash += 5;
-            this.baseMulti += 2;
+            this.baseMulti += 1;
         }
         // 进阶8 强化生命
         if (AbstractDungeon.ascensionLevel >= 8) {
