@@ -13,7 +13,8 @@
   },
   "SakikoMod:MusicalComposition": {
     "NAME": "音乐创作",
-    "DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张，立刻将其 sakikomod:演奏 。"
+    "DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张，立刻将其 sakikomod:演奏 。",
+    "UPGRADE_DESCRIPTION": "从三张 sakikomod:音乐 牌中选择一张，立刻将其 sakikomod:演奏 。这三张牌可以享受 sakikomod:闪耀 加成。"
   },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
@@ -515,7 +516,9 @@
   "SakikoMod:Run_Sakiko": {
     "NAME": "润",
     "DESCRIPTION": "从本场战斗中逃离。 NL （boss战无法逃离）",
-    "EXTENDED_DESCRIPTION": ["绝不能在这里退缩。。。"]
+    "EXTENDED_DESCRIPTION": [
+      "绝不能在这里退缩。。。"
+    ]
   },
   "SakikoMod:Confront_Sakiko": {
     "NAME": "面对",

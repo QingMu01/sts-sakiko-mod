@@ -17,7 +17,7 @@ public class OnlyOneselfAction extends AbstractGameAction {
         AbstractPower power = player.getPower(KokoroNoKabePower.POWER_ID);
         if (power != null) {
             ((KokoroNoKabePower)power).stackDamageAmount(1);
-            this.addToBot(new ApplyPowerAction(player, player, new KokoroNoKabePower(player, power.amount, 1)));
+            this.addToBot(new ApplyPowerAction(player, player, new KokoroNoKabePower(player, power.amount)));
         }
         this.isDone = true;
     }

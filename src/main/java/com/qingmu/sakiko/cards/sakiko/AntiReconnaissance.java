@@ -43,7 +43,7 @@ public class AntiReconnaissance extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
         this.addToBot(new DrawCardAction(p, 1));
     }
 }

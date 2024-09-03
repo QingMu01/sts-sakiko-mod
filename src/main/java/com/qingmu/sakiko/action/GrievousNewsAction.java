@@ -20,7 +20,7 @@ public class GrievousNewsAction extends AbstractGameAction {
     public void update() {
         for (AbstractCard c : DrawCardAction.drawnCards) {
             if (c.type == AbstractCard.CardType.CURSE || c.type == AbstractCard.CardType.STATUS) {
-                this.addToTop(new ApplyPowerAction(this.player, this.player, new KokoroNoKabePower(this.player, this.amount, 1)));
+                this.addToTop(new ApplyPowerAction(this.player, this.player, new KokoroNoKabePower(this.player, this.amount)));
                 break;
             }
         }

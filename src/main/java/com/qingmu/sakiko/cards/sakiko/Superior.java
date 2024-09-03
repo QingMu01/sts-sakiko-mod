@@ -35,7 +35,7 @@ public class Superior extends CustomCard {
     public Superior() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = 6;
-        this.baseMagicNumber=3;
+        this.baseMagicNumber = 3;
         this.isMultiDamage = true;
     }
 
@@ -47,12 +47,13 @@ public class Superior extends CustomCard {
             this.upgradeMagicNumber(2);
         }
     }
+
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new SFXAction("ATTACK_HEAVY"));
         this.addToBot(new VFXAction(p, new CleaveEffect(), 0.0F));
-        this.addToBot(new DamageAllEnemiesAction(p,this.multiDamage,this.damageTypeForTurn, AbstractGameAction.AttackEffect.NONE));
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KokoroNoKabePower(AbstractDungeon.player,this.magicNumber<0?this.baseMagicNumber:this.magicNumber,1)));
+        this.addToBot(new DamageAllEnemiesAction(p, this.multiDamage, this.damageTypeForTurn, AbstractGameAction.AttackEffect.NONE));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KokoroNoKabePower(AbstractDungeon.player, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
     }
 
 }

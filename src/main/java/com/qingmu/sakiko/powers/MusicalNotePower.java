@@ -29,6 +29,8 @@ public class MusicalNotePower extends AbstractPower {
 
     private int turn_count = 0;
 
+    private int amplify = 1, limit = 24;
+
     public MusicalNotePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
@@ -57,22 +59,19 @@ public class MusicalNotePower extends AbstractPower {
     }
 
     @Override
-    public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer) {
-            if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
-                AbstractDungeon.player.getRelic(Speaker.ID).flash();
-            } else {
-                this.reducePower(this.amount / 2);
-            }
-        }
-    }
-
-    @Override
     public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
-        this.turn_count += stackAmount;
-        if (this.amount > 999) {
-            this.amount = 999;
+        if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
+            AbstractDungeon.player.getRelic(Speaker.ID).flash();
+            this.limit = 48;
+            this.amplify = 2;
+        } else {
+            this.limit = 24;
+            this.amplify = 1;
+        }
+        this.amount += stackAmount * this.amplify;
+        this.turn_count += stackAmount * this.amplify;
+        if (this.amount > this.limit) {
+            this.amount = this.limit;
         }
         if (this.amount >= 12) {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();

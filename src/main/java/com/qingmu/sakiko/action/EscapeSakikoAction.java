@@ -2,10 +2,8 @@ package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 
@@ -37,16 +35,12 @@ public class EscapeSakikoAction extends AbstractGameAction {
         }
         effect += this.amount;
         if (effect > 0) {
-            this.addToBot(new ApplyPowerAction(this.p, this.p, new KokoroNoKabePower(this.p, effect * 3, 1)));
+            this.addToBot(new ApplyPowerAction(this.p, this.p, new KokoroNoKabePower(this.p, effect * 3)));
             if (!this.freeToPlayOnce) {
                 this.p.energy.use(EnergyPanel.totalCount);
             }
         }
-        AbstractPower power = this.p.getPower(KokoroNoKabePower.POWER_ID);
-        if (power != null)
-            this.addToBot(new GainBlockAction(this.p, power.amount + (effect * 3)));
-        else
-            this.addToBot(new GainBlockAction(this.p, effect * 3));
+        this.addToBot(new ActiveKabeAction());
         this.isDone = true;
 
     }

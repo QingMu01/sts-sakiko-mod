@@ -54,7 +54,7 @@ public class Confront_Sakiko extends CustomCard {
     public void onChoseThisOption() {
         AbstractPower power = AbstractDungeon.player.getPower(KokoroNoKabePower.POWER_ID);
         if (power != null){
-            this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KokoroNoKabePower(AbstractDungeon.player, power.amount,1)));
+            this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KokoroNoKabePower(AbstractDungeon.player, power.amount)));
             ((KokoroNoKabePower)power).stackDamageAmount(((KokoroNoKabePower) power).amount2);
         }
     }

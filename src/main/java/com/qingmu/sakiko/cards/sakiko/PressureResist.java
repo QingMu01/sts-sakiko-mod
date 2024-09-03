@@ -50,7 +50,7 @@ public class PressureResist extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber), 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber))));
 
     }
 }

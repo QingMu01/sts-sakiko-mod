@@ -19,8 +19,8 @@ public class CreateOfWorldAction extends AbstractGameAction {
     public void update() {
         this.addToBot(new GainBlockAction(this.player, this.player, this.amount));
         AbstractPower power = this.player.getPower(MusicalNotePower.POWER_ID);
-        if (power != null)
-            this.addToBot(new GainBlockAction(this.player, this.player, ((MusicalNotePower)power).getTurnCount()));
+        if (power != null && ((MusicalNotePower) power).getTurnCount() > 0)
+            this.addToBot(new GainBlockAction(this.player, this.player, ((MusicalNotePower) power).getTurnCount()));
         this.isDone = true;
 
 

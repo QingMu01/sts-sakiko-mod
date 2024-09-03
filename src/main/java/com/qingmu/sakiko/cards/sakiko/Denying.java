@@ -55,7 +55,7 @@ public class Denying extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
-        this.addToBot(new ActiveKabeAction(0));
+        this.addToBot(new ActiveKabeAction());
 
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();

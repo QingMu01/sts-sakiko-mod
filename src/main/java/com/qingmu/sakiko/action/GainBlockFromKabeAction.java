@@ -6,11 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.PowerHelper;
 
-public class ActiveKabeAction extends AbstractGameAction {
-
-    public ActiveKabeAction() {
-    }
-
+public class GainBlockFromKabeAction extends AbstractGameAction {
     @Override
     public void update() {
         int powerAmount = PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID);

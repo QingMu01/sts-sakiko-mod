@@ -23,7 +23,7 @@ public class Soyo extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new KokoroNoKabePower(AbstractDungeon.player,5,1)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new KokoroNoKabePower(AbstractDungeon.player,5)));
     }
 
 }

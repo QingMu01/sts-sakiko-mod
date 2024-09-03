@@ -16,11 +16,13 @@ import java.util.ArrayList;
 public class CompositionAction extends AbstractGameAction {
     private boolean retrieveCard = false;
     private final AbstractCard.CardType cardType = SakikoEnum.CardTypeEnum.MUSIC;
+    private boolean upgrade;
 
-    public CompositionAction() {
+    public CompositionAction(boolean isUpgrade) {
         this.duration = Settings.ACTION_DUR_FAST;
         this.amount = 1;
         this.actionType = ActionType.CARD_MANIPULATION;
+        this.upgrade = isUpgrade;
     }
 
     @Override
@@ -44,14 +46,17 @@ public class CompositionAction extends AbstractGameAction {
             if (!dupe && !tmp.hasTag(SakikoEnum.CardTagEnum.COUNTER)) {
                 AbstractCard card = tmp.makeCopy();
                 card.purgeOnUse = true;
-                for (int i = 0; i < calculateUpgrade(((AbstractMusic)tmp).getEnchanted()); i++) {
-                    card.upgrade();
+                if (this.upgrade) {
+                    for (int i = 0; i < calculateUpgrade(((AbstractMusic) tmp).getEnchanted()); i++) {
+                        card.upgrade();
+                    }
                 }
                 derp.add(card);
             }
         }
         return derp;
     }
+
     private int calculateUpgrade(int required) {
         AbstractPower power = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
         if (power != null) {

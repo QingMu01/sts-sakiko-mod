@@ -22,7 +22,7 @@ public class EndOfWorldAction extends AbstractGameAction {
     public void update() {
         this.addToBot(new DamageAction(this.monster, new DamageInfo(this.player, this.amount, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         AbstractPower power = this.player.getPower(MusicalNotePower.POWER_ID);
-        if (power != null)
+        if (power != null && ((MusicalNotePower) power).getTurnCount() > 0)
             this.addToBot(new DamageAction(this.monster, new DamageInfo(this.player, ((MusicalNotePower) power).getTurnCount(), DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         this.isDone = true;
 
