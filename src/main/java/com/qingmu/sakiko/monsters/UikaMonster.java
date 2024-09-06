@@ -1,18 +1,22 @@
 package com.qingmu.sakiko.monsters;
 
+import com.evacipated.cardcrawl.mod.stslib.actions.common.DamageCallbackAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.megacrit.cardcrawl.powers.FrailPower;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.powers.WeakPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.SoundHelper;
 
 public class UikaMonster extends AbstractMemberMonster {
 
@@ -23,97 +27,78 @@ public class UikaMonster extends AbstractMemberMonster {
 
     private static final String IMG = "SakikoModResources/img/monster/uika.png";
 
-    private boolean isFirstMove = true;
-    private int baseHp = 50, baseSlash = 11, baseMulti = 5, multiCount = 2, powerful = 1;
-
-
     public UikaMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
-        // 进阶3 强化
-        if (AbstractDungeon.ascensionLevel >= 3) {
-            this.baseSlash += 2;
-            this.baseMulti++;
-        }
-        // 进阶8 强化
-        if (AbstractDungeon.ascensionLevel >= 8) {
-            this.baseHp += 20;
-            this.powerful++;
-        }
-        // 进阶18 强化
+        this.powerful = 1;
         if (AbstractDungeon.ascensionLevel >= 18) {
-            this.multiCount++;
-            this.powerful++;
+            this.powerful = 2;
         }
-
-        // act1 基本属性
-        if (AbstractDungeon.id.equals(Exordium.ID)) {
-            this.setHp(baseHp - 5, baseHp + 5);
-        }
-        // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
-            this.baseHp += 40;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-        // act3 基本属性
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
-            this.baseHp += 80;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-
-        this.damage.add(new DamageInfo(this, baseSlash));
-        this.damage.add(new DamageInfo(this, baseMulti));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.UIKA_INIT.name());
     }
 
     @Override
     public void die() {
         super.die();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.UIKA_DEATH.name());
     }
 
     @Override
     public void takeTurn() {
         switch (this.nextMove) {
             case 0: {
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, this.powerful, true)));
                 break;
             }
             case 1: {
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(0)));
+                this.addToBot(new AnimateJumpAction(this));
+                this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, this.powerful, true)));
                 break;
             }
             case 2: {
-                for (int j = 0; j < this.multiCount; j++){
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(1)));
-                }
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(1)));
                 break;
             }
+            case 3: {
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0)));
+                this.addToBot(new GainBlockAction(this, this.baseBlock));
+                break;
+            }
+            case 4: {
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageCallbackAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.SMASH, (amount) -> {
+                    if (amount > 0) {
+                        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, this.powerful, true)));
+                    }
+                }));
+            }
         }
-        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
+        this.addToBot(new RollMoveAction(this));
     }
 
     @Override
     protected void getMove(int i) {
-        if (this.isFirstMove) {
-            this.isFirstMove = false;
-            this.setMove((byte) 0, Intent.BUFF);
-        } else {
-            if (i < 50) {
-                this.setMove((byte) 1, Intent.ATTACK, this.damage.get(0).base);
+        if (i < 30) {
+            if (i < 15) {
+                this.setMove((byte) 0, Intent.DEBUFF);
             } else {
-                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base, this.multiCount, true);
+                this.setMove((byte) 1, Intent.DEBUFF);
             }
+        } else if (i < 60) {
+            this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
+        } else if (i < 80) {
+            this.setMove((byte) 3, Intent.ATTACK_DEFEND, this.damage.get(0).base);
+        } else {
+            this.setMove((byte) 4, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
         }
     }
 }

@@ -1,18 +1,19 @@
 package com.qingmu.sakiko.monsters;
 
+import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.qingmu.sakiko.powers.monster.TakiInferiorityPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.SoundHelper;
 
 public class TakiMonster extends AbstractMemberMonster {
 
@@ -23,96 +24,98 @@ public class TakiMonster extends AbstractMemberMonster {
     // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/taki.png";
 
-    private boolean isFirstMove = true;
-    private int baseHp = 70, baseSlash = 15, baseMulti = 5, multiCount = 2, powerful = 1;
-
     public TakiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
-        // 进阶3 强化
-        if (AbstractDungeon.ascensionLevel >= 3) {
-            this.baseSlash += 2;
-            this.baseMulti++;
-        }
-        // 进阶8 强化
-        if (AbstractDungeon.ascensionLevel >= 8) {
-            this.baseHp += 20;
-            this.powerful++;
-        }
+        this.powerful = 1;
         // 进阶18 强化
         if (AbstractDungeon.ascensionLevel >= 18) {
-            this.multiCount++;
-            this.powerful++;
+            this.powerful = 2;
         }
-
-        // act1 基本属性
-        if (AbstractDungeon.id.equals(Exordium.ID)) {
-            this.setHp(baseHp - 5, baseHp + 5);
-        }
-        // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
-            this.baseHp += 40;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-        // act3 基本属性
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
-            this.baseHp += 80;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-
-        this.damage.add(new DamageInfo(this, baseSlash));
-        this.damage.add(new DamageInfo(this, baseMulti));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.TAKI_INIT.name());
     }
 
     @Override
     public void die() {
         super.die();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        CardCrawlGame.sound.play(SoundHelper.TAKI_DEATH.name());
     }
 
     @Override
     public void takeTurn() {
         switch (this.nextMove) {
             case 0: {
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)));
+                this.addToBot(new AnimateJumpAction(this));
+                this.addToBot(new ApplyPowerAction(this, this, new TakiInferiorityPower(this, powerful)));
                 break;
             }
             case 1: {
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(0)));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0)));
+                this.addToBot(new GainBlockAction(this, this, this.baseBlock));
                 break;
             }
-            case 2: {
-                for (int j = 0; j < this.multiCount; j++){
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player,this.damage.get(1)));
+            case 2:{
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0)));
+                break;
+            }
+            case 3:{
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(1)));
+                break;
+            }
+            case 4:{
+                for (int i = 0; i < this.multiCount; i++){
+                    this.addToBot(new AnimateFastAttackAction(this));
+                    this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(2)));
                 }
                 break;
             }
+            case 5:{
+                this.addToBot(new GainBlockAction(this, this, this.baseBlock));
+            }
         }
-        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
+        this.addToBot(new RollMoveAction(this));
     }
 
     @Override
     protected void getMove(int i) {
-        if (this.isFirstMove) {
-            this.isFirstMove = false;
-            this.setMove((byte) 0, Intent.BUFF);
-        } else {
-            if (i < 50) {
-                this.setMove((byte) 1, Intent.ATTACK, this.damage.get(0).base);
+        if (this.hasPower(TakiInferiorityPower.POWER_ID)) {
+            if (i < 5) {
+                // 强化劣等感
+                this.setMove((byte) 0, Intent.BUFF);
+            } else if (i < 35) {
+                this.setMove((byte) 1, Intent.ATTACK_DEFEND, this.damage.get(0).base);
+            } else if (i < 50) {
+                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(0).base);
+            } else if (i < 60) {
+                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(1).base);
+            } else if (i < 80) {
+                this.setMove((byte) 4, Intent.ATTACK, this.damage.get(2).base, this.multiCount, true);
             } else {
-                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base, this.multiCount, true);
+                this.setMove((byte) 5, Intent.DEFEND);
             }
+        } else {
+            if (i < 60) {
+                // 强化劣等感
+                this.setMove((byte) 0, Intent.BUFF);
+            } else if (i < 70) {
+                this.setMove((byte) 1, Intent.ATTACK_DEFEND, this.damage.get(0).base);
+            } else if (i < 80) {
+                this.setMove((byte) 2, Intent.ATTACK, this.damage.get(0).base);
+            } else if (i < 90) {
+                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(1).base);
+            } else {
+                this.setMove((byte) 4, Intent.ATTACK, this.damage.get(2).base, this.multiCount, true);
+            }
+
         }
     }
 }

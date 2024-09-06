@@ -179,5 +179,4 @@ public class TogawaSakiko extends CustomPlayer {
     public String getVampireText() {
         return Vampires.DESCRIPTIONS[1];
     }
-
 }

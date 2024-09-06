@@ -1,23 +1,20 @@
 package com.qingmu.sakiko.monsters;
 
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
-import com.qingmu.sakiko.cards.music.Haruhikage_CryChic;
+import com.qingmu.sakiko.cards.monster.Haruhikage_Rana;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.MusicHelper;
@@ -33,7 +30,6 @@ public class RanaMonster extends AbstractMemberMonster {
     // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/rana.png";
 
-    private int baseHp = 70, baseAttack = 8, baseSlash = 15, powerful = 10;
 
     private boolean isPlayBGM = false;
 
@@ -44,46 +40,18 @@ public class RanaMonster extends AbstractMemberMonster {
         this.canPlayMusic = true;
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
-            this.baseAttack += 3;
-            this.baseSlash += 4;
-            this.powerful += 5;
-        }
-        // 进阶8 强化生命
-        if (AbstractDungeon.ascensionLevel >= 8) {
-            this.baseHp += 20;
+            this.powerful = 15;
         }
         // 进阶18 强化行动
         if (AbstractDungeon.ascensionLevel >= 18) {
-            this.baseAttack += 3;
-            this.baseSlash += 4;
             this.powerful += 5;
         }
-
-        // act1 基本属性
-        if (AbstractDungeon.id.equals(Exordium.ID)) {
-            this.setHp(baseHp - 5, baseHp + 5);
-        }
-        // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
-            this.baseHp += 40;
-            this.baseSlash += 4;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-        // act3 基本属性
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
-            this.baseHp += 80;
-            this.baseSlash += 8;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-
-        this.damage.add(new DamageInfo(this, this.baseAttack));
-        this.damage.add(new DamageInfo(this, this.baseSlash));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
         CardCrawlGame.sound.play(SoundHelper.RANA_INIT.name());
         CardCrawlGame.music.precacheTempBgm(MusicHelper.HARUHIKAGE.name());
         obtainMusic();
@@ -92,7 +60,7 @@ public class RanaMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
         if (pafeCount > 0 && (pafeCount * powerful) - (pafeCount * 10) > 0) {
             AbstractRoom currRoom = AbstractDungeon.getCurrRoom();
             currRoom.mugged = true;
@@ -119,6 +87,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 break;
             }
             case 2: {
+                this.addToBot(new AnimateJumpAction(this));
                 this.addToBot(new ApplyPowerAction(this, this, new IntangiblePower(this, 1)));
                 this.setMove(MOVES[0], (byte) 3, Intent.ATTACK_BUFF, this.damage.get(0).base);
                 return;
@@ -132,7 +101,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 break;
             }
         }
-        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
+        this.addToBot(new RollMoveAction(this));
     }
 
     @Override
@@ -168,7 +137,7 @@ public class RanaMonster extends AbstractMemberMonster {
 
     @Override
     protected void obtainMusic() {
-        AbstractDungeon.effectList.add(new ObtainMusicCardEffect(new Haruhikage_CryChic(), this));
+        AbstractDungeon.effectList.add(new ObtainMusicCardEffect(new Haruhikage_Rana(), this));
     }
 
 }

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.common.GainGoldAction;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.actions.watcher.PressEndTurnButtonAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -22,6 +24,7 @@ public class OverworkPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private int limit = 8;
+    private int cardCount = 0;
 
     public OverworkPower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -40,18 +43,30 @@ public class OverworkPower extends AbstractPower {
     }
 
     @Override
-    public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer) {
-            this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
-        }
+    public void atStartOfTurn() {
+        this.cardCount = 0;
     }
 
     @Override
     public void atStartOfTurnPostDraw() {
-        if (this.amount > this.limit) {
-            this.flash();
-            this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+        if (this.amount >= this.limit){
             this.timeLimit();
+        }
+    }
+
+    @Override
+    public void onUseCard(AbstractCard card, UseCardAction action) {
+        this.cardCount++;
+    }
+
+    @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            if (this.cardCount == 0) {
+                this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.amount / 2));
+            } else {
+                this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
+            }
         }
     }
 
@@ -78,6 +93,5 @@ public class OverworkPower extends AbstractPower {
         AbstractDungeon.topLevelEffectsQueue.add(new TimeWarpTurnEndEffect());
         this.addToBot(new GainGoldAction(5));
         this.addToBot(new PressEndTurnButtonAction());
-        this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
     }
 }

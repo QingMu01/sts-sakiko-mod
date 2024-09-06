@@ -9,11 +9,12 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.powers.MoonsPower;
+import com.qingmu.sakiko.powers.OnPlayMusicPower;
 
 public class PlayerPlayedMusicAction extends AbstractGameAction {
 
@@ -41,11 +42,21 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             if (this.music.current_x < Settings.WIDTH / 2.0F) return;
             else this.vfxDone = true;
         }
+        // 调用钩子
         this.music.calculateCardDamage((AbstractMonster) this.target);
-        if (AbstractDungeon.player.hasPower(MoonsPower.POWER_ID)) {
-            MoonsPower power = (MoonsPower) AbstractDungeon.player.getPower(MoonsPower.POWER_ID);
-            power.onPlayMusicCard(this.music);
+        for (AbstractPower power : AbstractDungeon.player.powers) {
+            if (power instanceof OnPlayMusicPower){
+                ((OnPlayMusicPower) power).onPlayMusicCard(music);
+            }
         }
+        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            for (AbstractPower power : monster.powers) {
+                if (power instanceof OnPlayMusicPower){
+                    ((OnPlayMusicPower) power).onPlayMusicCard(music);
+                }
+            }
+        }
+
         this.music.play();
         this.music.resetMusicCard();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
@@ -67,6 +78,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         if (this.music.purgeOnUse) {
             AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
             queue.removeCard(this.music);
+            AbstractDungeon.player.limbo.removeCard(this.music);
             AbstractDungeon.player.cardInUse = null;
             this.isDone = true;
             return;

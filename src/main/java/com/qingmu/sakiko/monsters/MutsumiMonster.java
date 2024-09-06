@@ -7,14 +7,10 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.status.Slimed;
 import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -31,66 +27,22 @@ public class MutsumiMonster extends AbstractMemberMonster {
     private static final String IMG = "SakikoModResources/img/monster/mutsumi.png";
 
     private boolean isFirstMove = true;
-    private int baseHp = 70, baseAttack = 8, baseSlash = 16, baseMulti = 5, multiCount = 3, powerful = 2;
 
     public MutsumiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
-        // 进阶3 强化伤害
-        if (AbstractDungeon.ascensionLevel >= 3) {
-            this.baseAttack += 3;
-            this.baseSlash += 5;
-            this.baseMulti += 1;
-        }
-        // 进阶8 强化生命
-        if (AbstractDungeon.ascensionLevel >= 8) {
-            this.baseHp += 20;
-        }
-        // 进阶18 强化行动
-        if (AbstractDungeon.ascensionLevel >= 18) {
-            this.baseAttack += 3;
-            this.multiCount++;
-            this.powerful++;
-        }
-
-        // act1 基本属性
-        if (AbstractDungeon.id.equals(Exordium.ID)) {
-            this.setHp(baseHp - 5, baseHp + 5);
-        }
-        // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
-            this.baseAttack += 3;
-            this.baseHp += 40;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-        // act3 基本属性
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
-            this.baseAttack += 6;
-            this.baseHp += 80;
-            this.baseSlash += 3;
-            this.baseMulti += 1;
-            this.multiCount += 1;
-            this.setHp(baseHp - 10, baseHp + 10);
-        }
-
-        this.damage.add(new DamageInfo(this, this.baseAttack));
-        this.damage.add(new DamageInfo(this, this.baseSlash));
-        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
         CardCrawlGame.sound.play(SoundHelper.MUTSUMI_INIT.name());
     }
 
     @Override
     public void die() {
         super.die();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
         CardCrawlGame.sound.play(SoundHelper.MUTSUMI_DEATH.name());
     }
 
@@ -98,38 +50,38 @@ public class MutsumiMonster extends AbstractMemberMonster {
     public void takeTurn() {
         switch (this.nextMove) {
             case 0: {
-                AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new VoidCard(), 1));
-                AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Slimed(), 2));
+                this.addToBot(new MakeTempCardInDiscardAction(new VoidCard(), 1));
+                this.addToBot(new MakeTempCardInDiscardAction(new Slimed(), 2));
                 break;
             }
             case 1: {
-                AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), true));
-                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, powerful, true)));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), true));
+                this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true)));
                 break;
             }
             case 2: {
-                AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(new Slimed(), powerful));
+                this.addToBot(new MakeTempCardInDiscardAction(new Slimed(), powerful));
                 break;
             }
             case 3: {
-                AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(0), true));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), true));
                 break;
             }
             case 4: {
-                AbstractDungeon.actionManager.addToBottom(new AnimateSlowAttackAction(this));
-                AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(1), true));
+                this.addToBot(new AnimateSlowAttackAction(this));
+                this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(1), true));
                 break;
             }
             case 5: {
                 for (int i = 0; i < this.multiCount; i++) {
-                    AbstractDungeon.actionManager.addToBottom(new AnimateFastAttackAction(this));
-                    AbstractDungeon.actionManager.addToBottom(new DamageAction(AbstractDungeon.player, this.damage.get(2), true));
+                    this.addToBot(new AnimateFastAttackAction(this));
+                    this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(2), true));
                 }
             }
         }
-        AbstractDungeon.actionManager.addToBottom(new RollMoveAction(this));
+        this.addToBot(new RollMoveAction(this));
     }
 
     @Override
@@ -138,8 +90,8 @@ public class MutsumiMonster extends AbstractMemberMonster {
             this.isFirstMove = false;
             // 首回合弃牌堆赛1虚空、2粘液/进阶18塞2虚空3粘液
             this.setMove(MOVES[0], (byte) 0, Intent.STRONG_DEBUFF);
-        } else if (!AbstractDungeon.player.hasPower(VulnerablePower.POWER_ID)) {
-            // 如果玩家没有易伤，优先上易伤
+        } else if (!AbstractDungeon.player.hasPower(VulnerablePower.POWER_ID) && AbstractDungeon.cardRandomRng.randomBoolean(0.6f)) {
+            // 如果玩家没有易伤，60%上易伤
             this.setMove(MOVES[1], (byte) 1, Intent.ATTACK_DEBUFF, this.damage.get(0).base);
         } else {
             if (i < 20) {

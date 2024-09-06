@@ -37,6 +37,8 @@ public class SakikoEnum {
         public static AbstractCard.CardRarity MUSIC_UNCOMMON;
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_RARE;
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_SPECIAL;
     }
     /*
     * 本mod的特殊牌标记

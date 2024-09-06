@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.powers.BlurPower;
 import com.megacrit.cardcrawl.relics.Calipers;
 import com.qingmu.sakiko.action.ActiveKabeAction;
+import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class KokoroNoKabePower extends TwoAmountPower {
@@ -33,6 +34,7 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     private int counter = 0;
     private int limit = 10;
+    public int lastApply = 0;
 
     public int blockFromKabe = 0;
 
@@ -42,10 +44,12 @@ public class KokoroNoKabePower extends TwoAmountPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
+        lastApply = amount;
         this.amount2 = 0;
         if (this.counter == 0) {
             this.counter = amount;
         }
+        this.lastApply = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();
@@ -78,13 +82,19 @@ public class KokoroNoKabePower extends TwoAmountPower {
         }
         // 计算归宿减伤
         int buffed;
-        int ibasyoAmount = 0;
+        int reduceDamage = 0;
         AbstractPower ibasyo = this.owner.getPower(IbasyoPower.POWER_ID);
         if (ibasyo != null) {
             ibasyo.flash();
-            ibasyoAmount = ibasyo.amount;
+            reduceDamage += ibasyo.amount;
         }
-        buffed = this.amount2 - ibasyoAmount;
+        // 计算祝福减伤
+        AbstractPower blessing = this.owner.getPower(TomoriBlessingPower.POWER_ID);
+        if (blessing != null) {
+            blessing.flash();
+            reduceDamage += blessing.amount;
+        }
+        buffed = this.amount2 - reduceDamage;
         if (buffed > 0) {
             if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner) {
                 this.flash();
@@ -95,11 +105,11 @@ public class KokoroNoKabePower extends TwoAmountPower {
         return damageAmount;
     }
 
-
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
         this.counter += stackAmount;
+        this.lastApply = stackAmount;
         // 每10层心之壁层，增加1心之壁伤害
         if (this.counter >= this.limit) {
             do {

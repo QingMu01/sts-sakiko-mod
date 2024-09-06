@@ -1,7 +1,7 @@
 package com.qingmu.sakiko.action;
 
-import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -21,8 +21,7 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
         this.music = music;
         this.source = source;
         this.target = music.music_target == null ? AbstractDungeon.player : music.music_target;
-        this.music.glowColor = Color.RED;
-        this.music.beginGlowing();
+        this.addToBot(new AnimateJumpAction(this.source));
     }
 
     @Override
@@ -38,7 +37,6 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
         this.music.play();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
         AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
-        this.music.stopGlowing();
         queue.removeCard(this.music);
         this.isDone = true;
     }

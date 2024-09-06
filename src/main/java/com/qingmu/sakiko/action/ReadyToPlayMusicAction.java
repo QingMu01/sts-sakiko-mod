@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -35,11 +34,11 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
             return;
         }
 
-        AbstractCard card = this.queue.getNCardFromTop(this.queue.size() - 1 - this.count);
+        AbstractMusic music =(AbstractMusic)  this.queue.getNCardFromTop(this.queue.size() - 1 - this.count);
         if (this.source.isPlayer) {
-            this.addToBot(new PlayerPlayedMusicAction((AbstractMusic) card));
+            this.addToBot(new PlayerPlayedMusicAction(music));
         } else {
-            this.addToBot(new MonsterPlayedMusicAction((AbstractMusic) card, this.source));
+            this.addToBot(new MonsterPlayedMusicAction(music, this.source));
         }
         this.amount--;
         this.count++;

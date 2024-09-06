@@ -1,9 +1,12 @@
 package com.qingmu.sakiko.cards.monster;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.monster.RanaHaruhikagePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Haruhikage_Rana extends AbstractMusic {
@@ -16,11 +19,11 @@ public class Haruhikage_Rana extends AbstractMusic {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_SPECIAL;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public Haruhikage_Rana() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, CardColor.COLORLESS, RARITY, TARGET);
+        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 999;
     }
 
@@ -38,6 +41,6 @@ public class Haruhikage_Rana extends AbstractMusic {
 
     @Override
     public void play() {
-
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this.music_source, new RanaHaruhikagePower(AbstractDungeon.player, this.music_source, 2)));
     }
 }

@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.defect.DoubleEnergyAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -39,7 +40,9 @@ public class Ether extends AbstractMusic {
     public void play() {
         if (this.upgraded) {
             this.addToTop(new GainEnergyAction(1));
-            this.addToTop(new DoubleEnergyAction());
+            if (EnergyPanel.getCurrentEnergy() > 0){
+                this.addToTop(new DoubleEnergyAction());
+            }
         }else {
             this.addToTop(new GainEnergyAction(1));
         }

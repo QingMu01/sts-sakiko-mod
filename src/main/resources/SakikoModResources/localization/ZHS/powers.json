@@ -38,7 +38,8 @@
   "SakikoMod:IbasyoPower": {
     "NAME": "归宿",
     "DESCRIPTIONS": [
-      "心之壁不再使你受到的伤害增加。"
+      "心之壁对你造成的伤害减少 #r",
+      " 点。"
     ]
   },
   "SakikoMod:TalentPower": {
@@ -161,7 +162,7 @@
   "SakikoMod:OverworkPower": {
     "NAME": "过劳",
     "DESCRIPTIONS": [
-      "若你有八层以上的 #y过劳 ，结束当前回合然后获得 #y5 枚 #y金币 的赔偿金。过劳会在回合结束时下降1层。触发时额外下降1层。 NL 距离结束回合还有 #r",
+      "若你有八层以上的 #y过劳 ，结束当前回合，然后获得 #y5 枚 #y金币 的赔偿金。 NL 过劳会在回合结束时下降1层。当前回合未出牌则下降一半层数。 NL 距离结束回合还有 #r",
       " 层。"
     ]
   },
@@ -184,6 +185,33 @@
     "DESCRIPTIONS": [
       "你已被爱音俘获，你的下 #b",
       " 次 #r攻击 将被转换成等额治疗。爱门！"
+    ]
+  },
+  "SakikoMod:RanaHaruhikagePower": {
+    "NAME": "春日影",
+    "DESCRIPTIONS": [
+      "你感觉自己控制不住地想要逃跑。"
+    ]
+  },
+  "SakikoMod:SoyoConstrictedPower": {
+    "NAME": "素世的挽留",
+    "DESCRIPTIONS": [
+      "在你的回合结束时，受到 #r",
+      " 点伤害。"
+    ]
+  },
+  "SakikoMod:TakiInferiorityPower": {
+    "NAME": "立希的劣等感",
+    "DESCRIPTIONS": [
+      "你每进行一次演奏，获得 #b",
+      " 点力量。"
+    ]
+  },
+  "SakikoMod:TomoriBlessingPower": {
+    "NAME": "灯的祝福",
+    "DESCRIPTIONS": [
+      "心之壁对你造成的伤害减少 #r",
+      " 点。使你获取心之壁的量减半。"
     ]
   }
 }

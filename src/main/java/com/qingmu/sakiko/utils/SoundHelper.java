@@ -15,7 +15,7 @@ public enum SoundHelper {
     SOYO_INIT("SakikoModResources/sounds/soyo_init.ogg"),// 小祥，你终于来了
     SOYO_MAGIC("SakikoModResources/sounds/soyo_magic.ogg"),// 哦捏该
     SOYO_DEATH("SakikoModResources/sounds/soyo_death.ogg"),// 我大概，一辈子也忘不掉crychic了
-    TAKI_MAGIC("SakikoModResources/sounds/taki_init.ogg"),// 灯在等你啊
+    TAKI_INIT("SakikoModResources/sounds/taki_init.ogg"),// 灯在等你啊
     TAKI_DEATH("SakikoModResources/sounds/taki_death.ogg"),// 赛啊苦
     TOMORI_INIT("SakikoModResources/sounds/tomori_init.ogg"),// SAKI酱。。。
     TOMORI_MAGIC("SakikoModResources/sounds/tomori_magic.ogg"), // 大家都迷路了

@@ -1,7 +1,8 @@
 package com.qingmu.sakiko.relics.menbers;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.qingmu.sakiko.powers.IbasyoPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Uika extends AbstractBandMember {
@@ -19,7 +20,7 @@ public class Uika extends AbstractBandMember {
     }
 
     @Override
-    public void onEnterRoom(AbstractRoom room) {
-        AbstractDungeon.player.heal(2);
+    public void atBattleStart() {
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new IbasyoPower(AbstractDungeon.player, 1)));
     }
 }

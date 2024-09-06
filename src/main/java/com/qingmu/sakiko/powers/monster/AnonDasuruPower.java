@@ -19,7 +19,7 @@ public class AnonDasuruPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/AnonDasuru48.png";
-    private static final String path128 = "SakikoModResources/img/powers/AnonDasuru84.png";
+    private static final String path128 = "SakikoModResources/img/powers/AnonDasuru128.png";
 
     private AbstractCreature source;
 

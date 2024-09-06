@@ -78,9 +78,9 @@ public class EncorePower extends AbstractPower {
         this.flash();
         int i = (AbstractDungeon.player.energy.energyMaster - 1) - this.residue;
         if (i > 0) {
-            this.addToBot(new LoseEnergyAction(i));
+            this.addToTop(new LoseEnergyAction(i));
         } else {
-            this.addToBot(new GainEnergyAction(i));
+            this.addToTop(new GainEnergyAction(i));
         }
 
 

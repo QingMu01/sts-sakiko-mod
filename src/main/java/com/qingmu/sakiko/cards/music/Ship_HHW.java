@@ -27,6 +27,7 @@ public class Ship_HHW extends AbstractMusic {
     public Ship_HHW() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.enchanted = 8;
+        this.exhaust = true;
     }
 
     @Override

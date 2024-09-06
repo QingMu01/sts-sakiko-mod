@@ -457,8 +457,8 @@
   },
   "SakikoMod:Ship_HHW": {
     "NAME": "豪华！豪爽！？幽灵客轮！",
-    "DESCRIPTION": " sakikomod:演奏 ：击晕所有非boss敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。 NL sakikomod:升华 8：可以对boss敌人生效。",
-    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：击晕所有敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。"
+    "DESCRIPTION": " sakikomod:演奏 ：击晕所有非boss敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。 NL sakikomod:升华 8：可以对boss敌人生效。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：击晕所有敌人1回合，每击晕1名敌人，失去5层 sakikomod:心之壁 。 NL *消耗 。"
   },
   "SakikoMod:Daylight_M": {
     "NAME": "Daylight",
@@ -526,6 +526,6 @@
   },
   "SakikoMod:Haruhikage_Rana": {
     "NAME": "乐奈的春日影",
-    "DESCRIPTION": "跳过你的一个回合。"
+    "DESCRIPTION": " sakikomod:演奏 ：使自己行动两次。"
   }
 }
