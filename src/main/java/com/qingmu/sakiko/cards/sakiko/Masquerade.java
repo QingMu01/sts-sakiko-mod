@@ -42,6 +42,6 @@ public class Masquerade extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new MasqueradePower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new MasqueradePower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

@@ -27,6 +27,7 @@ public class Symbol_II extends AbstractMusic {
 
     public Symbol_II() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 2;
         this.baseMagicNumber = 3;
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
@@ -49,7 +50,7 @@ public class Symbol_II extends AbstractMusic {
     @Override
     public void triggerInBufferPlayCard(AbstractCard card) {
         this.count++;
-        if (this.count >= (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)) {
+        if (this.count >= (Math.max(this.magicNumber,this.baseMagicNumber))) {
             this.amount++;
             this.count = 0;
         }

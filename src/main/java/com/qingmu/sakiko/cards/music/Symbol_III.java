@@ -23,6 +23,7 @@ public class Symbol_III extends AbstractMusic {
 
     public Symbol_III() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(CardTags.HEALING);
         this.enchanted = 1;
         this.baseMagicNumber = 2;
@@ -40,6 +41,6 @@ public class Symbol_III extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new HealAction(this.music_source, this.music_source, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber,this.baseMagicNumber)));
     }
 }

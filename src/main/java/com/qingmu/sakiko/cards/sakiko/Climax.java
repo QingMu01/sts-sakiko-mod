@@ -12,11 +12,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
+import com.qingmu.sakiko.patch.filed.GameActionManagerFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Climax extends CustomCard {
+public class Climax extends CustomCard implements OnPlayMusicCard {
 
     public static final String ID = ModNameHelper.make(Climax.class.getSimpleName());
 
@@ -46,13 +48,13 @@ public class Climax extends CustomCard {
     }
 
     @Override
-    public void triggerOnCardPlayed(AbstractCard card) {
-        if (card instanceof AbstractMusic) this.setCostForTurn(this.costForTurn - 1);
+    public void onPlayMusicCard(AbstractMusic music) {
+        this.setCostForTurn(this.costForTurn - 1);
     }
 
     public void triggerWhenDrawn() {
         int count = 0;
-        for (AbstractCard c : AbstractDungeon.actionManager.cardsPlayedThisTurn) {
+        for (AbstractCard c : GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager)) {
             if (c instanceof AbstractMusic) {
                 ++count;
             }

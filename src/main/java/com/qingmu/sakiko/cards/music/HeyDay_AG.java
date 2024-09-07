@@ -41,6 +41,6 @@ public class HeyDay_AG extends AbstractMusic {
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped())
             this.addToTop(new ApplyPowerAction(this.music_target, this.music_source
-                    , new StrengthPower(this.music_target, -(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber))));
+                    , new StrengthPower(this.music_target, -(Math.max(this.magicNumber,this.baseMagicNumber)))));
     }
 }

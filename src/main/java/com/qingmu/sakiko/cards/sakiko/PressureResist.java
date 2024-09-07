@@ -1,15 +1,14 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -34,7 +33,7 @@ public class PressureResist extends CustomCard {
     public PressureResist() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = 9;
-        this.baseMagicNumber = 3;
+        this.baseMagicNumber = 2;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class PressureResist extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(3);
-            this.upgradeMagicNumber(2);
+            this.upgradeMagicNumber(1);
         }
     }
 
@@ -50,7 +49,8 @@ public class PressureResist extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber))));
-
+        if (m.intent == AbstractMonster.Intent.ATTACK || m.intent == AbstractMonster.Intent.ATTACK_BUFF || m.intent == AbstractMonster.Intent.ATTACK_DEBUFF || m.intent == AbstractMonster.Intent.ATTACK_DEFEND){
+            this.addToBot(new AddTemporaryHPAction(p, p, Math.max(this.magicNumber,this.baseMagicNumber)));
+        }
     }
 }

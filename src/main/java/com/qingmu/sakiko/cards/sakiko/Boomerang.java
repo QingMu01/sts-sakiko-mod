@@ -2,6 +2,8 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -22,14 +24,14 @@ public class Boomerang extends CustomCard {
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
     private static final int COST = 1;
 
-    private static final CardType TYPE = CardType.SKILL;
+    private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.SELF;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Boomerang() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 10;
+        this.baseMagicNumber = 9;
     }
 
     @Override
@@ -39,9 +41,11 @@ public class Boomerang extends CustomCard {
             this.upgradeMagicNumber(-3);
         }
     }
+
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new BoomerangPower(AbstractDungeon.player,this.magicNumber<0?this.baseMagicNumber:this.magicNumber,1)));
+        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
+        this.addToBot(new ApplyPowerAction(p, p, new BoomerangPower(AbstractDungeon.player, this.damage, 1)));
     }
 
 }

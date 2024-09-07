@@ -41,6 +41,6 @@ public class Arrange extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ReadyToPlayMusicAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToBot(new ReadyToPlayMusicAction(Math.max(this.magicNumber,this.baseMagicNumber)));
     }
 }

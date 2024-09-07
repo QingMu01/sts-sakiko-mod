@@ -46,18 +46,20 @@ public class DriftApart extends CustomCard {
 
     @Override
     public void applyPowers() {
+        this.baseDamage = PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID);
         super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID) + this.damage);
+        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.baseDamage = PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID);
-        this.calculateCardDamage(m);
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 }

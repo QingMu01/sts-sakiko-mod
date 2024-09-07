@@ -29,9 +29,10 @@ public class SoyoMonster extends AbstractMemberMonster {
 
     public SoyoMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        this.powerful = 5;
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
-            this.powerful = 7;
+            this.powerful += 2;
         }
         // 进阶18 强化行动
         if (AbstractDungeon.ascensionLevel >= 18) {

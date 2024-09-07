@@ -45,6 +45,6 @@ public class Overdraw extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new OverdrawPower(p, 1, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new OverdrawPower(p, 1, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

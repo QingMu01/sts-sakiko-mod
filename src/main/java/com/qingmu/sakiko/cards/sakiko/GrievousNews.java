@@ -42,6 +42,6 @@ public class GrievousNews extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new DrawCardAction(1, new GrievousNewsAction(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new DrawCardAction(1, new GrievousNewsAction(p, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

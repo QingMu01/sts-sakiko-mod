@@ -1,38 +1,40 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class KimewazaAction extends AbstractGameAction {
 
-    private DamageInfo info;
 
-    public KimewazaAction(AbstractMonster monster, DamageInfo info) {
-        this.info = info;
-        this.setValues(monster, info);
+    public KimewazaAction() {
     }
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
-        int cardCount = cardGroup.size();
-        for (int i = 0; i < cardCount; i++) {
-            AbstractCard card = cardGroup.getTopCard();
-            card.target_x = generateRandomFloat((float) Settings.WIDTH / 2, 30.0F);
-            card.target_y = generateRandomFloat((float) (Settings.HEIGHT / 2), 30.0F);
-            cardGroup.moveToExhaustPile(card);
-            this.addToBot(new DamageAction(this.target, this.info, AttackEffect.FIRE));
-            this.addToBot(new WaitAction(0.1F));
+        CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+        Iterator<AbstractCard> iterator = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group.iterator();
+        while (iterator.hasNext()){
+            AbstractCard card = iterator.next();
+            card.exhaust = true;
+            queue.addToTop(card);
+            if (queue.size() >= 4){
+                AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) card));
+            }
+            card.target_x = generateRandomFloat((float) Settings.WIDTH / 2, 100.0F);
+            card.target_y = generateRandomFloat((float) (Settings.HEIGHT / 2), 50.0F);
+            iterator.remove();
+        }
+        if (queue.size() - 3 > 0){
+            this.addToBot(new ReadyToPlayMusicAction(queue.size() - 3));
         }
         this.isDone = true;
     }

@@ -46,7 +46,7 @@ public class Spotlight extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.LIGHTNING));
-        this.addToBot(new ApplyPowerAction(m, p, new WeakPower(m,this.magicNumber<0?this.baseMagicNumber:this.magicNumber,false)));
+        this.addToBot(new ApplyPowerAction(m, p, new WeakPower(m,Math.max(this.magicNumber,this.baseMagicNumber),false)));
     }
 
 }

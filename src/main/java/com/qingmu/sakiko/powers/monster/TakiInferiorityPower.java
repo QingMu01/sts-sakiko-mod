@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.powers.OnPlayMusicPower;
+import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class TakiInferiorityPower extends AbstractPower implements OnPlayMusicPower {
@@ -39,6 +39,7 @@ public class TakiInferiorityPower extends AbstractPower implements OnPlayMusicPo
 
     @Override
     public void onPlayMusicCard(AbstractMusic music) {
+        this.flash();
         this.addToBot(new ApplyPowerAction(this.owner, this.owner, new StrengthPower(this.owner, this.amount)));
     }
 }

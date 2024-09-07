@@ -43,7 +43,7 @@ public class Professional extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p,p,new KokoroNoKabePower(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber))));
+        this.addToBot(new ApplyPowerAction(p,p,new KokoroNoKabePower(p, (Math.max(this.magicNumber,this.baseMagicNumber)))));
         this.addToBot(new ActiveKabeAction());
     }
 }

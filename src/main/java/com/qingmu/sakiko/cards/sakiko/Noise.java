@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
@@ -35,6 +36,7 @@ public class Noise extends CustomCard {
 
     public Noise() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseDamage = 0;
     }
 
@@ -48,21 +50,22 @@ public class Noise extends CustomCard {
 
     @Override
     public void applyPowers() {
+        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
         super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) + this.damage);
+        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
-        this.calculateCardDamage(m);
-
         this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL, (damage) -> {
             if (damage > 0)
                 this.addToTop(new ApplyPowerAction(m, p, new VulnerablePower(m, 2, false)));
         }));
-
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 }

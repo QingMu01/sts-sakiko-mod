@@ -1,7 +1,7 @@
-package com.qingmu.sakiko.powers;
+package com.qingmu.sakiko.inteface.relic;
 
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 
-public interface OnPlayMusicPower {
+public interface OnPlayMusicRelic {
     void onPlayMusicCard(AbstractMusic music);
 }

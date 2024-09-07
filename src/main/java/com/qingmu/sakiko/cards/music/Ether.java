@@ -24,6 +24,7 @@ public class Ether extends AbstractMusic {
 
     public Ether() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 3;
     }
 

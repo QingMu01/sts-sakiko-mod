@@ -21,6 +21,7 @@ public class BlackBirthday extends AbstractMusic {
 
     public BlackBirthday() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 1;
         this.baseMagicNumber = 1;
     }
@@ -37,7 +38,7 @@ public class BlackBirthday extends AbstractMusic {
 
     @Override
     public void play() {
-        int count = this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
+        int count = Math.max(this.magicNumber,this.baseMagicNumber);
         for (int i = 0; i < count; i++) {
             this.addToBot(new UpgradeRandomCardAction());
         }

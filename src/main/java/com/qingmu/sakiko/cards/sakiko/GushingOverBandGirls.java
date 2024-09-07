@@ -30,19 +30,19 @@ public class GushingOverBandGirls extends CustomCard {
 
     public GushingOverBandGirls() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 3;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.upgradeMagicNumber(2);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(AbstractDungeon.player, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(AbstractDungeon.player, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

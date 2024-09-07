@@ -45,6 +45,6 @@ public class ClockIn extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         int size = AbstractDungeon.player.hand.size();
         int needDraw = 11 - size;
-        this.addToBot(new DrawCardAction(needDraw, new ClockInAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new DrawCardAction(needDraw, new ClockInAction(Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

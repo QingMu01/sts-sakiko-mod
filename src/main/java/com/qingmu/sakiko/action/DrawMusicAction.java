@@ -23,6 +23,7 @@ public class DrawMusicAction extends AbstractGameAction {
         this.actionType = ActionType.DRAW;
         this.amount = 1;
     }
+
     public DrawMusicAction(int amount) {
         this.actionType = ActionType.DRAW;
         this.amount = amount;
@@ -30,6 +31,10 @@ public class DrawMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
+        if (this.amount == 0) {
+            this.isDone = true;
+            return;
+        }
         CardGroup drawMusicPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (AbstractDungeon.player.hasPower("No Draw")) {
             AbstractDungeon.player.getPower("No Draw").flash();
@@ -37,14 +42,14 @@ public class DrawMusicAction extends AbstractGameAction {
             AbstractDungeon.player.createHandIsFullDialog();
         } else if (drawMusicPile.size() < this.amount) {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();
-            if (count > 0){
+            if (count > 0) {
                 this.addToTop(new ShuffleMusicDeckAction());
-                this.addToBot(new DrawMusicAction());
-            }else {
+                this.addToBot(new DrawMusicAction(this.amount));
+            } else {
                 AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, MSG.TEXT[0], true));
             }
         } else {
-            if (amount > 0){
+            if (amount > 0) {
                 amount--;
                 AbstractCard topCard = drawMusicPile.getTopCard();
                 moveToHand(drawMusicPile, topCard);

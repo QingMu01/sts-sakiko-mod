@@ -3,9 +3,12 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.OnlyOneselfAction;
+import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -19,11 +22,12 @@ public class OnlyOneself extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 2;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
+    private static final int COST = 1;
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
-    private static final CardRarity RARITY = CardRarity.RARE;
+    private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public OnlyOneself() {
@@ -34,8 +38,27 @@ public class OnlyOneself extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);
+            this.upgradeBaseCost(0);
         }
+    }
+
+    @Override
+    public void applyPowers() {
+        super.applyPowers();
+        AbstractPower power = AbstractDungeon.player.getPower(KokoroNoKabePower.POWER_ID);
+        if (power != null) {
+            KokoroNoKabePower kokoroNoKabePower = (KokoroNoKabePower) power;
+            this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], kokoroNoKabePower.limit-kokoroNoKabePower.counter);
+        }else {
+            this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], 10);
+        }
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override

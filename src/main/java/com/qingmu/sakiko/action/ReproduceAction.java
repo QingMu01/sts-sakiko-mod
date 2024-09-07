@@ -6,7 +6,6 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.KirameiPower;
 
@@ -22,10 +21,10 @@ public class ReproduceAction extends AbstractGameAction {
     public void update() {
         CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(player);
         if (!cardGroup.isEmpty()) {
-            AbstractCard randomCard = cardGroup.getRandomCard(AbstractDungeon.cardRandomRng);
-            randomCard.target_x = (float) (Settings.WIDTH / 2);
-            randomCard.target_y = (float) (Settings.HEIGHT / 2);
-            cardGroup.moveToExhaustPile(randomCard);
+            AbstractCard card = cardGroup.getTopCard();
+            card.target_x = (float) (Settings.WIDTH / 2);
+            card.target_y = (float) (Settings.HEIGHT / 2);
+            cardGroup.moveToExhaustPile(card);
             this.addToBot(new ApplyPowerAction(player, player, new KirameiPower(player, this.amount)));
         }
         this.isDone = true;

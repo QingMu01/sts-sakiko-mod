@@ -26,4 +26,9 @@ public class Umiri extends AbstractBandMember {
         CardCrawlGame.sound.play("GOLD_GAIN");
         AbstractDungeon.player.gainGold(100);
     }
+
+    @Override
+    public void removePower() {
+
+    }
 }

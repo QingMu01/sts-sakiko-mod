@@ -22,7 +22,7 @@
   },
   "SakikoMod:Speaker": {
     "NAME": "便携音响",
-    "FLAVOR": "这玩意用来听歌还真不错！",
+    "FLAVOR": "这个用来听歌真不错desuwa！",
     "DESCRIPTIONS": [
       "你获取的 #y音符 数量与上限值翻倍"
     ]
@@ -32,6 +32,13 @@
     "FLAVOR": "花，也是有生命的呢。",
     "DESCRIPTIONS": [
       "战斗开始时，获得 2 层 #y闪耀 。"
+    ]
+  },
+  "SakikoMod:OctopusSakiko": {
+    "NAME": "戴面具的章鱼",
+    "FLAVOR": "名为章鱼的人偶？为什么和我这么像desuwa！",
+    "DESCRIPTIONS": [
+      "奇数回合的首次 #y演奏 使你抽两张牌。偶数回合的首次 #y演奏 使你获得 [E] 。"
     ]
   },
   "SakikoMod:Mutsumi": {

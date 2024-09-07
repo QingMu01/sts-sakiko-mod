@@ -45,12 +45,12 @@ public class Obentou extends CustomCard {
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return (p.gold > (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber) || this.purgeOnUse);
+        return (p.gold > (Math.max(this.magicNumber,this.baseMagicNumber)) || this.purgeOnUse);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new HealAction(p, p, 10));
-        this.addToBot(new LoseGoldAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToBot(new LoseGoldAction(Math.max(this.magicNumber,this.baseMagicNumber)));
     }
 }

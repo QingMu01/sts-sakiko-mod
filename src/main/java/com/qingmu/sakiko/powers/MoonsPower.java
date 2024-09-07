@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.effect.DoublePlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MoonsPower extends AbstractPower implements OnPlayMusicPower {

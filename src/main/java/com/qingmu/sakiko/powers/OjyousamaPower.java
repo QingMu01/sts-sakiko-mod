@@ -1,9 +1,9 @@
 package com.qingmu.sakiko.powers;
 
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -15,8 +15,10 @@ public class OjyousamaPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
+    private final int playerHandSize;
 
     public OjyousamaPower(AbstractCreature owner, int amount) {
+        this.playerHandSize = AbstractDungeon.player.gameHandSize;
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
@@ -31,11 +33,26 @@ public class OjyousamaPower extends AbstractPower {
         this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
+//    @Override
+//    public void atStartOfTurnPostDraw() {
+//        this.flash();
+//        this.addToBot(new DrawCardAction(this.owner, this.amount));
+//    }
+
     @Override
-    public void atStartOfTurnPostDraw() {
-        this.flash();
-        this.addToBot(new DrawCardAction(this.owner, this.amount));
+    public void onInitialApplication() {
+        if (this.amount + AbstractDungeon.player.gameHandSize > 10){
+            AbstractDungeon.player.gameHandSize = 10;
+        }else {
+            AbstractDungeon.player.gameHandSize += this.amount;
+        }
     }
+
+    @Override
+    public void onRemove() {
+        AbstractDungeon.player.gameHandSize = this.playerHandSize;
+    }
+
 
     @Override
     public void stackPower(int stackAmount) {

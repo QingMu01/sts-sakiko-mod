@@ -46,7 +46,7 @@ public class HedgehogSakiko extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (!this.upgraded)
-            this.addToBot(new ApplyPowerAction(p, p, new VulnerablePower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, false)));
-        this.addToBot(new ApplyPowerAction(p, p, new HedgehogPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+            this.addToBot(new ApplyPowerAction(p, p, new VulnerablePower(p, Math.max(this.magicNumber,this.baseMagicNumber), false)));
+        this.addToBot(new ApplyPowerAction(p, p, new HedgehogPower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

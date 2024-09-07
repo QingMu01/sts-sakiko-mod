@@ -2,16 +2,16 @@ package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class StarBeatPower extends AbstractPower {
+public class StarBeatPower extends AbstractPower implements OnPlayMusicPower {
     public static final String POWER_ID = ModNameHelper.make(StarBeatPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
@@ -37,10 +37,8 @@ public class StarBeatPower extends AbstractPower {
     }
 
     @Override
-    public void onAfterCardPlayed(AbstractCard card) {
-        if (card instanceof AbstractMusic) {
-            this.flash();
-            this.addToBot(new DrawCardAction(this.owner, this.amount));
-        }
+    public void onPlayMusicCard(AbstractMusic music) {
+        this.flash();
+        this.addToBot(new DrawCardAction(this.owner, this.amount));
     }
 }

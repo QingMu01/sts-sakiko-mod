@@ -10,11 +10,15 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
+import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
+import com.qingmu.sakiko.inteface.relic.OnPlayMusicRelic;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.patch.filed.GameActionManagerFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.powers.OnPlayMusicPower;
 
 public class PlayerPlayedMusicAction extends AbstractGameAction {
 
@@ -30,6 +34,55 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         if (music.exhaustOnUseOnce || music.exhaust) {
             this.exhaustCard = true;
         }
+        // 调用钩子
+        this.music.calculateCardDamage((AbstractMonster) this.target);
+        for (AbstractPower power : AbstractDungeon.player.powers) {
+            if (power instanceof OnPlayMusicPower) {
+                ((OnPlayMusicPower) power).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractRelic relic : AbstractDungeon.player.relics) {
+            if (relic instanceof OnPlayMusicRelic) {
+                ((OnPlayMusicRelic) relic).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.drawPile.group) {
+            if (card instanceof OnPlayMusicCard) {
+                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.hand.group) {
+            if (card instanceof OnPlayMusicCard) {
+                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+            if (card instanceof OnPlayMusicCard) {
+                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.exhaustPile.group) {
+            if (card instanceof OnPlayMusicCard) {
+                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+            }
+        }
+        for (AbstractCard card : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
+            if (card instanceof OnPlayMusicCard) {
+                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+            }
+        }
+
+        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            for (AbstractPower power : monster.powers) {
+                if (power instanceof OnPlayMusicPower) {
+                    ((OnPlayMusicPower) power).onPlayMusicCard(music);
+                }
+            }
+        }
+
+        // 添加记录
+        GameActionManagerFiledPatch.musicPlayedThisCombat.get(AbstractDungeon.actionManager).add(this.music);
+        GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager).add(this.music);
     }
 
     @Override
@@ -42,21 +95,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             if (this.music.current_x < Settings.WIDTH / 2.0F) return;
             else this.vfxDone = true;
         }
-        // 调用钩子
-        this.music.calculateCardDamage((AbstractMonster) this.target);
-        for (AbstractPower power : AbstractDungeon.player.powers) {
-            if (power instanceof OnPlayMusicPower){
-                ((OnPlayMusicPower) power).onPlayMusicCard(music);
-            }
-        }
-        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            for (AbstractPower power : monster.powers) {
-                if (power instanceof OnPlayMusicPower){
-                    ((OnPlayMusicPower) power).onPlayMusicCard(music);
-                }
-            }
-        }
-
         this.music.play();
         this.music.resetMusicCard();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);

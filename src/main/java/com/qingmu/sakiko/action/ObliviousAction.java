@@ -25,12 +25,12 @@ public class ObliviousAction extends AbstractGameAction {
     public ObliviousAction(AbstractPlayer p, int amount) {
         this.amount = amount;
         this.p = p;
+        this.duration = Settings.ACTION_DUR_FAST;
     }
 
     @Override
     public void update() {
-        if (!p.hand.isEmpty() || !p.discardPile.isEmpty()) {
-            AbstractDungeon.gridSelectScreen.selectedCards.clear();
+        if ((!p.hand.isEmpty() || !p.discardPile.isEmpty()) && this.duration == Settings.ACTION_DUR_FAST) {
             this.addToBot(new MultiGroupSelectAction(uiStrings.TEXT[0], (cards, groups) -> {
                 for (AbstractCard card : cards) {
                     AbstractMonster m = AbstractDungeon.getRandomMonster();
@@ -42,23 +42,23 @@ public class ObliviousAction extends AbstractGameAction {
                     tmp.target_y = Settings.HEIGHT / 2.0F;
                     tmp.calculateCardDamage(m);
                     tmp.purgeOnUse = true;
-                    if (card.cost == -1){
+                    if (card.cost == -1) {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, EnergyPanel.getCurrentEnergy(), true, true), true);
-                    }else {
+                    } else {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
                     }
-                    if (!RemoveCardFiledPatch.remove_flag.get(card)){
-                        if ((card.type != AbstractCard.CardType.POWER && !card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) || !RemoveCardFiledPatch.remove_flag.get(card)){
+                    if (!RemoveCardFiledPatch.remove_flag.get(card)) {
+                        if ((card.type != AbstractCard.CardType.POWER && !card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) || !RemoveCardFiledPatch.remove_flag.get(card)) {
                             groups.get(card).moveToExhaustPile(card);
-                        }else {
+                        } else {
                             AbstractDungeon.player.hand.removeCard(card);
-                            RemoveCardFiledPatch.remove_flag.set(card,false);
+                            RemoveCardFiledPatch.remove_flag.set(card, false);
                         }
                     }
                 }
             }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
-
+            this.tickDuration();
         }
-        this.isDone = true;
+        this.tickDuration();
     }
 }

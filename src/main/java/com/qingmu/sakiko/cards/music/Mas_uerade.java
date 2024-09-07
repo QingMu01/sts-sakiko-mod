@@ -25,6 +25,7 @@ public class Mas_uerade extends AbstractMusic {
 
     public Mas_uerade() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 1;
         this.baseDamage = 6;
         this.isMultiDamage = true;

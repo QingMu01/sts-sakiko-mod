@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.BurnBoatsAction;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
@@ -31,6 +32,7 @@ public class BurnBoats extends CustomCard {
 
     public BurnBoats() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseDamage = 2;
     }
 
@@ -50,12 +52,14 @@ public class BurnBoats extends CustomCard {
     }
 
     @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new BurnBoatsAction(this));
-
+    public void onMoveToDiscard() {
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();
+    }
 
+    @Override
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        this.addToBot(new BurnBoatsAction(this));
     }
 
 }

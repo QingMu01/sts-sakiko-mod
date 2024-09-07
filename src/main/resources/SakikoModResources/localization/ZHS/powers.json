@@ -2,9 +2,9 @@
   "SakikoMod:MusicalNotePower": {
     "NAME": "音符",
     "DESCRIPTIONS": [
-      "每获得12层，从歌单抽一张 #y音乐 牌，然后失去12层。",
-      " NL （再获得%d层即可抽牌。）",
-      " NL （你的牌堆中没有可供抽取的音乐牌。）"
+      "每获得 #b%d 层音符，从歌单抽一张 #y音乐 牌，然后失去 #b%d 层音符。",
+      " NL （再获得%d层即可抽牌）",
+      " NL （你的牌堆中没有可供抽取的音乐牌）"
     ]
   },
   "SakikoMod:KirameiPower": {
@@ -45,17 +45,16 @@
   "SakikoMod:TalentPower": {
     "NAME": "才华横溢",
     "DESCRIPTIONS": [
-      "你再抽 #b",
-      " 张牌，获得",
-      "层 #y音符。"
+      "除回合开始抽牌外，每抽 #b1 张牌，获得 #b",
+      " 层音符。"
     ]
   },
   "SakikoMod:BoomerangPower": {
     "NAME": "回旋镖",
     "DESCRIPTIONS": [
       "回合结束时，受到 #r",
-      " 点伤害。 NL 你打出的下 #b",
-      " 张非音乐牌打出两次。"
+      " 点伤害。 NL 你的下 #b",
+      " 次攻击造成双倍伤害。"
     ]
   },
   "SakikoMod:BlockedPower": {
@@ -178,6 +177,12 @@
     "DESCRIPTIONS": [
       "你的下 #b",
       " 次 #y演奏 生效两次。"
+    ]
+  },
+  "SakikoMod:ScapegoatPower": {
+    "NAME": "背锅侠",
+    "DESCRIPTIONS": [
+      "这个单位代替你受到心之壁的伤害。"
     ]
   },
   "SakikoMod:AnonDasuruPower": {

@@ -30,7 +30,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void applyAmount() {
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * (Math.max(this.magicNumber,this.baseMagicNumber)));
         this.initializeDescription();
     }
 
@@ -51,7 +51,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.amount * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.amount * (Math.max(this.magicNumber,this.baseMagicNumber))));
         this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }

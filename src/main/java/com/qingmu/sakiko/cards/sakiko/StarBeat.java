@@ -39,15 +39,13 @@ public class StarBeat extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.tags.remove(SakikoEnum.CardTagEnum.MOONLIGHT);
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeMagicNumber(1);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new StarBeatPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new StarBeatPower(p, Math.max(this.magicNumber, this.baseMagicNumber))));
 
     }
 }

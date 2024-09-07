@@ -24,6 +24,7 @@ public class Symbol_IV extends AbstractMusic {
 
     public Symbol_IV() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 1;
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.baseMagicNumber = 1;
@@ -42,7 +43,7 @@ public class Symbol_IV extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new DexterityPower(this.music_source, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+                , new DexterityPower(this.music_source, Math.max(this.magicNumber,this.baseMagicNumber))));
 
     }
 }

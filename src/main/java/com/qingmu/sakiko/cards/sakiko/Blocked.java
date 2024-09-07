@@ -43,6 +43,6 @@ public class Blocked extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(m, p, new BlockedPower(m,this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(m, p, new BlockedPower(m,Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

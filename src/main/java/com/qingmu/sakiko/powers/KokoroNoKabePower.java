@@ -8,8 +8,10 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.powers.BlurPower;
@@ -32,9 +34,9 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     private static final String path128 = "SakikoModResources/img/powers/KokoroNoKabe128.png";
 
-    private int counter = 0;
-    private int limit = 10;
-    public int lastApply = 0;
+    public int counter = 0;
+    public int limit = 10;
+    public int lastApply;
 
     public int blockFromKabe = 0;
 
@@ -44,10 +46,14 @@ public class KokoroNoKabePower extends TwoAmountPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
-        lastApply = amount;
-        this.amount2 = 0;
-        if (this.counter == 0) {
-            this.counter = amount;
+        this.counter = amount;
+        if (this.counter >= this.limit) {
+            do {
+                this.stackDamageAmount(1);
+                this.counter -= this.limit;
+                this.limit += 5;
+            } while (this.counter >= this.limit);
+            this.counter = Math.max(this.counter, 0);
         }
         this.lastApply = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
@@ -79,6 +85,12 @@ public class KokoroNoKabePower extends TwoAmountPower {
         if (this.amount2 == 0 || currentBlock >= this.blockFromKabe || this.blockFromKabe == 0) {
             this.blockFromKabe -= damageAmount;
             return damageAmount;
+        }
+        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (monster.hasPower(ScapegoatPower.POWER_ID)) {
+                this.addToTop(new LoseHPAction(monster, monster, this.amount2));
+                return damageAmount;
+            }
         }
         // 计算归宿减伤
         int buffed;

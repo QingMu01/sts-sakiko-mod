@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.CreateOfWorldAction;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -31,6 +32,7 @@ public class CreateOfWorld extends CustomCard {
 
     public CreateOfWorld() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseBlock = 8;
         this.isMultiDamage = true;
     }

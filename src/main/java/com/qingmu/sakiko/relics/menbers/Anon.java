@@ -26,7 +26,7 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
 
     @Override
     public void onRightClick() {
-        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT){
+        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && this.canUse){
             if (this.counter > 0) {
                 this.flash();
                 this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 15));
@@ -37,11 +37,17 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
 
     @Override
     public void onEnterRoom(AbstractRoom room) {
+        this.canUse = true;
         this.amount++;
         if (this.amount >= 15){
             this.flash();
             this.counter++;
             this.amount = 0;
         }
+    }
+
+    @Override
+    public void removePower() {
+        this.canUse = false;
     }
 }

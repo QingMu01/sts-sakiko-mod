@@ -23,33 +23,39 @@
   },
   "SakikoMod:BurnBoats": {
     "NAME": "破釜沉舟",
-    "DESCRIPTION": "每有2层 sakikomod:音符 ，对随机敌人造成 !D! 点伤害。 NL 清空你的 *音符 。",
+    "DESCRIPTION": "每有2层 sakikomod:音符 ，对随机敌人造成 !D! 点伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前造成%d次伤害）"
     ]
   },
   "SakikoMod:NotePunch": {
-    "NAME": "音律冲击",
-    "DESCRIPTION": "造成 !D! 点伤害。获得 !M! 层 sakikomod:音符 。"
+    "NAME": "音符冲击",
+    "DESCRIPTION": "造成当前 sakikomod:音符 层数点伤害。未被格挡的伤害将转化为你的 *音符 。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成 !D! 点伤害）"
+    ]
   },
   "SakikoMod:PressureResist": {
     "NAME": "抗压",
-    "DESCRIPTION": "造成 !D! 点伤害。获得 !M! 层 sakikomod:心之壁 。"
+    "DESCRIPTION": "造成 !D! 点伤害。如果目标的意图是攻击获得 !M! 点 sakikomod:临时生命 。"
   },
   "SakikoMod:WeaknessBreak": {
     "NAME": "弱点突破",
-    "DESCRIPTION": "造成 !D! 点伤害, NL 对 *易伤 的敌人造成两次伤害。"
+    "DESCRIPTION": "造成 !D! 点伤害, NL 攻击 *易伤 的敌人会给予其 !M! 层 *虚弱。"
   },
   "SakikoMod:StageMachine": {
     "NAME": "舞台装置",
     "DESCRIPTION": "获得 sakikomod:音符 层数 !M! 倍的格挡。",
     "EXTENDED_DESCRIPTION": [
-      " NL （获得%d点格挡）"
+      " NL （获得 !B! 点格挡）"
     ]
   },
   "SakikoMod:Osananajimi": {
     "NAME": "青梅竹马的牵绊",
-    "DESCRIPTION": "如果你的乐队成员中有 *初华 ，获得 !M! 层 sakikomod:闪耀 。如果你的乐队成员中有 *睦 ，获得 !M! [E] ，抽 !M! 张牌。 NL *消耗 。"
+    "DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。 NL *消耗 。",
+    "EXTENDED_DESCRIPTION": [
+      " 选择一张牌"
+    ]
   },
   "SakikoMod:Noise": {
     "NAME": "噪音",
@@ -77,14 +83,14 @@
   },
   "SakikoMod:DollDance": {
     "NAME": "人偶之舞",
-    "DESCRIPTION": "获得1层 sakikomod:闪耀 。对随机敌人造成 !D! 点伤害 *闪耀 层数次。 NL *消耗 。",
+    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 *闪耀 层数次。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成%d次伤害）"
     ]
   },
   "SakikoMod:Talent": {
     "NAME": "才华横溢",
-    "DESCRIPTION": "你每抽 3 张牌，获得 !M! 层 sakikomod:音符 。"
+    "DESCRIPTION": "除回合开始抽牌外，每抽1张牌，获得 !M! 层 sakikomod:音符 。"
   },
   "SakikoMod:Ibasyo": {
     "NAME": "归宿",
@@ -92,13 +98,13 @@
   },
   "SakikoMod:Boomerang": {
     "NAME": "回旋镖",
-    "DESCRIPTION": "本回合，下一次打出的牌打出两次，回合结束时对自己造成 !M! 伤害。"
+    "DESCRIPTION": "对目标造成 !D! 点伤害。本回合，你的下一次攻击造成双倍伤害，回合结束对自己造成 !D! 点伤害。"
   },
   "SakikoMod:Mujina": {
     "NAME": "一丘之貉",
-    "DESCRIPTION": "每有一位乐队成员，获得 [E] 。",
+    "DESCRIPTION": "抽一张牌。你每有2名队友，再抽一张牌。 *消耗 。",
     "EXTENDED_DESCRIPTION": [
-      " NL （获得%d [E] ）"
+      " NL （抽%d张牌）"
     ]
   },
   "SakikoMod:EndOfWorld": {
@@ -136,7 +142,10 @@
   },
   "SakikoMod:NoteTorrent": {
     "NAME": "音符洪流",
-    "DESCRIPTION": "对全部敌人造成 !D! 点伤害X次。你每有4层 sakikomod:音符 ，额外造成一次伤害。"
+    "DESCRIPTION": "对随机敌人造成 sakikomod:音符 层数 点伤害。你的卡组中每有一张 *音符 相关的非音乐牌，额外造成一次伤害。 *消耗 。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成 !D! 点伤害%d次）"
+    ]
   },
   "SakikoMod:AppendAttack": {
     "NAME": "追加攻击",
@@ -144,22 +153,22 @@
   },
   "SakikoMod:KeypointEntry": {
     "NAME": "关键切入点",
-    "DESCRIPTION": "造成 !D! 点伤害。如果目标的意图不是攻击，则改为造成两倍伤害。"
+    "DESCRIPTION": "造成 !D! 点伤害。如果本次攻击没有被格挡，抽 1 张牌，获得 1 [E] 。"
   },
   "SakikoMod:CurtainCall": {
     "NAME": "谢幕",
-    "DESCRIPTION": "造成 !D! 点伤害。你在这个回合每打出一次 sakikomod:音乐 牌，额外造成 !D! 点伤害。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （额外造成%d次伤害）"
-    ]
+    "DESCRIPTION": "造成 !D! 点伤害。你在本回合中每 sakikomod:演奏 一次，这张牌的伤害提高 !M! 点。"
   },
   "SakikoMod:Climax": {
     "NAME": "渐入佳境",
-    "DESCRIPTION": "造成 !D! 点伤害。在本回合，你每打出一次 sakikomod:音乐 牌，这张牌的费用降低1。"
+    "DESCRIPTION": "造成 !D! 点伤害。在本回合，你每 sakikomod:演奏 一次，这张牌的费用降低1。"
   },
   "SakikoMod:OnlyOneself": {
     "NAME": "能相信的唯有自己",
-    "DESCRIPTION": "将你的 sakikomod:心之壁 翻倍。 NL *心之壁 对你造成的伤害提升 1 点"
+    "DESCRIPTION": "将 sakikomod:心之壁 伤害提高1点，获得对应层数的 *心之壁 。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （获得%d层 sakikomod:心之壁 ）"
+    ]
   },
   "SakikoMod:Omiyage": {
     "NAME": "月之森的特产",
@@ -167,23 +176,28 @@
   },
   "SakikoMod:ForgetAll": {
     "NAME": "忘记一切",
-    "DESCRIPTION": " sakikomod:忘却 2。 NL *消耗 。"
+    "DESCRIPTION": " sakikomod:忘却 2。 NL *虚无 。"
   },
   "SakikoMod:DriftApart": {
     "NAME": "拒人千里",
     "DESCRIPTION": "造成你 sakikomod:心之壁 层数点伤害。",
     "EXTENDED_DESCRIPTION": [
-      " NL （造成%d点伤害）"
+      " NL （造成 !D! 点伤害）"
     ]
   },
   "SakikoMod:Mabushii": {
     "NAME": "抹布西",
-    "DESCRIPTION": "获得1层 sakikomod:闪耀 。造成 !M! 倍 *闪耀 层数点伤害。 NL *消耗 。"
+    "DESCRIPTION": "造成 !M! 倍 *闪耀 层数点伤害。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成 !D! 点伤害）"
+    ]
   },
   "SakikoMod:FallApart": {
     "NAME": "分崩离析",
-    "DESCRIPTION": "场上所有人获得 !M! 层 *易伤 。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": "获得 1 层 *易伤 。 NL 所有敌人获得 !M! 层 *易伤 。 NL 消耗 。"
+    "DESCRIPTION": "移除队友的加成。每移除一种，获得 !M! 层 sakikomod:心之壁 。 NL *消耗 。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （获得 %d 层 sakikomod:心之壁 ）"
+    ]
   },
   "SakikoMod:Blocked": {
     "NAME": "拉黑",
@@ -238,7 +252,7 @@
   },
   "SakikoMod:Reproduce": {
     "NAME": "再生产",
-    "DESCRIPTION": "从歌单中随机消耗一张牌，获得 !M! sakikomod:闪耀 。",
+    "DESCRIPTION": "从歌单顶部消耗一张牌，获得 !M! sakikomod:闪耀 。",
     "EXTENDED_DESCRIPTION": [
       "我的歌单中没有 #r音乐牌 可供再生产了。"
     ]
@@ -249,20 +263,22 @@
   },
   "SakikoMod:Yowaiwatashi": {
     "NAME": "软弱的我已经死了",
-    "DESCRIPTION": "回合开始时，将一张 *回忆 加入手牌。"
+    "DESCRIPTION": "消耗 !M! 张手牌，每消耗一张，在你的手牌中加入一张 *回忆 。"
   },
   "SakikoMod:StarBeat": {
     "NAME": "星之鼓动",
-    "DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。 NL sakikomod:白月光 。",
-    "UPGRADE_DESCRIPTION": "每次打出 sakikomod:音乐 牌，抽 !M! 张牌。"
+    "DESCRIPTION": "每次演奏时，抽 !M! 张牌。 NL sakikomod:白月光 。"
   },
   "SakikoMod:DeterminateAttack": {
     "NAME": "决心一击",
-    "DESCRIPTION": "造成 !D! 点伤害，抽 !M! 张牌。"
+    "DESCRIPTION": "造成 sakikomod:音符 层数点伤害，抽 !M! 张牌。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成 !D! 点伤害）"
+    ]
   },
   "SakikoMod:PassTheBuck": {
     "NAME": "甩锅",
-    "DESCRIPTION": "造成 !D! 点伤害， sakikomod:忘却 1。"
+    "DESCRIPTION": "造成 !D! 点伤害，接下来 !M! 个回合 sakikomod:心之壁 对你造成的伤害将由目标来承受。"
   },
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
@@ -299,12 +315,12 @@
   },
   "SakikoMod:Leader": {
     "NAME": "乐队领袖",
-    "DESCRIPTION": "获得乐队成员数的闪耀。回合开始时，失去乐队成员数的金币。",
-    "UPGRADE_DESCRIPTION": " *固有 。 NL 获得乐队成员数的闪耀。回合开始时，失去乐队成员数的金币。"
+    "DESCRIPTION": "每有一位乐队成员，获得 2 点 sakikomod:闪耀 。 NL 回合开始时，支付每位队友 2 枚金币作为工资。",
+    "UPGRADE_DESCRIPTION": " *固有 。 NL 每有一位乐队成员，获得 2 点 sakikomod:闪耀 。 NL 回合开始时，支付每位队友 2 枚金币作为工资。"
   },
   "SakikoMod:Masquerade": {
     "NAME": "假面舞会",
-    "DESCRIPTION": "打出 sakikomod:音乐 牌时，对随机敌人造成 !M! 点伤害。"
+    "DESCRIPTION": "每次 sakikomod:演奏 时，对随机敌人造成 !M! 点伤害。"
   },
   "SakikoMod:ChuuniSakiko": {
     "NAME": "中二小祥",
@@ -313,12 +329,12 @@
   },
   "SakikoMod:Kimewaza": {
     "NAME": "决胜技",
-    "DESCRIPTION": "消耗歌单中的所有牌。每消耗一张，造成 !D! 点伤害。 NL *消耗 。"
+    "DESCRIPTION": "打出歌单中的所有牌。这些牌将在演奏后被消耗。 NL *消耗 。"
   },
   "SakikoMod:MusicLife": {
     "NAME": "音乐人生",
-    "DESCRIPTION": "抽一张 sakikomod:音乐 牌。 NL *消耗 。",
-    "UPGRADE_DESCRIPTION": "抽一张 sakikomod:音乐 牌。"
+    "DESCRIPTION": "从歌单中选择一张 sakikomod:音乐 牌，将其加入手牌。 NL *消耗 。",
+    "UPGRADE_DESCRIPTION": "从歌单中选择一张 sakikomod:音乐 牌，将其加入手牌。"
   },
   "SakikoMod:GrievousNews": {
     "NAME": "噩耗来袭",
@@ -331,7 +347,7 @@
   },
   "SakikoMod:NingyouForm": {
     "NAME": "人偶形态",
-    "DESCRIPTION": "每打出一张 sakikomod:音乐 牌，获得 !M! 点 sakikomod:临时生命 。"
+    "DESCRIPTION": "每次 sakikomod:演奏 ，获得 !M! 点 sakikomod:临时生命 。"
   },
   "SakikoMod:Resentment": {
     "NAME": "打工人之怨念",
@@ -342,11 +358,27 @@
   },
   "SakikoMod:Arrange": {
     "NAME": "歌单编排",
-    "DESCRIPTION": "使待演奏区的前 !M! 张音乐牌立刻生效。"
+    "DESCRIPTION": "立刻 sakikomod:演奏 待演奏区的前 !M! 张 sakikomod:音乐 牌。"
   },
   "SakikoMod:ClockIn": {
     "NAME": "打卡冲刺",
     "DESCRIPTION": "将你的手牌补满，每抽 !M! 张牌，获得1层 sakikomod:过劳 。"
+  },
+  "SakikoMod:Hype": {
+    "NAME": "炒作",
+    "DESCRIPTION": "造成 !D! 点伤害X次。每次未被格挡的攻击都会使你获得1层 sakikomod:闪耀 。"
+  },
+  "SakikoMod:UntouchableMemories": {
+    "NAME": "无法触及的回忆",
+    "DESCRIPTION": "造成 !D! 点伤害。 sakikomod:忘却 1。"
+  },
+  "SakikoMod:GravityRadar": {
+    "NAME": "重力雷达",
+    "DESCRIPTION": " *固有 NL 从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 *消耗 。"
+  },
+  "SakikoMod:LastStage": {
+    "NAME": "最后的舞台",
+    "DESCRIPTION": "查看你的歌单，选择任意张消耗，每消耗一张，这张牌在本场战斗中的伤害提高 !M! 。造成 !D! 点伤害。"
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
@@ -526,6 +558,6 @@
   },
   "SakikoMod:Haruhikage_Rana": {
     "NAME": "乐奈的春日影",
-    "DESCRIPTION": " sakikomod:演奏 ：使自己行动两次。"
+    "DESCRIPTION": " sakikomod:演奏 ：跳过玩家两个回合。"
   }
 }

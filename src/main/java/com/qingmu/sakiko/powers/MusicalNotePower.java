@@ -29,14 +29,19 @@ public class MusicalNotePower extends AbstractPower {
 
     private int turn_count = 0;
 
-    private int amplify = 1, limit = 24;
+    private int drawTrigger = 4;
+
+    private int limit = 24;
 
     public MusicalNotePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = amount;
+        if (AbstractDungeon.player.hasRelic(Speaker.ID))
+            this.amount = amount * 2;
+        else
+            this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
 
@@ -45,17 +50,16 @@ public class MusicalNotePower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        if (12 - this.amount >= 0) {
-            this.description = DESCRIPTIONS[0]
-                    + String.format(DESCRIPTIONS[1], Math.max((12 - this.amount), 0));
-        } else {
-            this.description = DESCRIPTIONS[0] + DESCRIPTIONS[2];
-        }
+        if (this.drawTrigger - this.amount >= 0)
+            this.description = String.format(DESCRIPTIONS[0], this.drawTrigger, this.drawTrigger) + String.format(DESCRIPTIONS[1], this.drawTrigger - this.amount);
+        else
+            this.description = String.format(DESCRIPTIONS[0], this.drawTrigger, this.drawTrigger) + DESCRIPTIONS[2];
     }
 
     @Override
     public void atStartOfTurn() {
         this.turn_count = 0;
+        this.drawTrigger = 4;
     }
 
     @Override
@@ -63,21 +67,28 @@ public class MusicalNotePower extends AbstractPower {
         if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
             AbstractDungeon.player.getRelic(Speaker.ID).flash();
             this.limit = 48;
-            this.amplify = 2;
         } else {
             this.limit = 24;
-            this.amplify = 1;
         }
-        this.amount += stackAmount * this.amplify;
-        this.turn_count += stackAmount * this.amplify;
+        this.amount += stackAmount;
+        this.turn_count += stackAmount;
         if (this.amount > this.limit) {
             this.amount = this.limit;
         }
-        if (this.amount >= 12) {
-            long count = AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count();
-            if (!MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).isEmpty() || count > 0) {
-                this.reducePower(12);
-                this.addToBot(new DrawMusicAction());
+        if (this.amount >= this.drawTrigger) {
+            int count = (int) AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count() + MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).size();
+            int needToDraw = 0;
+            if (count > 0) {
+                do {
+                    this.reducePower(Math.min(this.drawTrigger, 12));
+                    this.drawTrigger += 4;
+                    needToDraw++;
+                } while (this.amount >= Math.min(this.drawTrigger, 12));
+                if (count > needToDraw) {
+                    this.addToBot(new DrawMusicAction(needToDraw));
+                } else {
+                    this.addToBot(new DrawMusicAction(count));
+                }
             }
         }
     }

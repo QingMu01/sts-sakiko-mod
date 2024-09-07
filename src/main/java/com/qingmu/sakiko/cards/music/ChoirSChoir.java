@@ -26,6 +26,7 @@ public class ChoirSChoir extends AbstractMusic {
 
     public ChoirSChoir() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 1;
         this.baseMagicNumber = 10;
     }
@@ -43,7 +44,7 @@ public class ChoirSChoir extends AbstractMusic {
     @Override
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped()){
-            this.addToTop(new JudgementAction(this.music_target, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+            this.addToTop(new JudgementAction(this.music_target, Math.max(this.magicNumber,this.baseMagicNumber)));
             this.addToTop(new VFXAction(new GiantTextEffect(this.music_target.hb.cX, this.music_target.hb.cY)));
             this.addToTop(new WaitAction(0.8F));
             this.addToTop(new VFXAction(new WeightyImpactEffect(this.music_target.hb.cX, this.music_target.hb.cY, Color.GOLD.cpy())));

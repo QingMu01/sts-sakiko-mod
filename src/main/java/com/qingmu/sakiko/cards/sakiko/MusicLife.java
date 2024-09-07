@@ -44,6 +44,6 @@ public class MusicLife extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new MusicLifeAction());
+        this.addToBot(new MusicLifeAction(1));
     }
 }

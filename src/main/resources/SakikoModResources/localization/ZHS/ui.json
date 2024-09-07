@@ -37,5 +37,23 @@
       "敌方待演奏区",
       "敌方将要演奏的音乐。"
     ]
+  },
+  "SakikoMod:MusicLifeAction": {
+    "TEXT": [
+      "我的歌单是 #r空的 。",
+      "选择任意张牌"
+    ]
+  },
+  "SakikoMod:LastStageAction": {
+    "TEXT": [
+      "我的歌单是 #r空的 。",
+      "选择任意张牌"
+    ]
+  },
+  "SakikoMod:YowaiwatashiAction": {
+    "TEXT": [
+      "我的歌单是 #r空的 。",
+      "选择任意张牌"
+    ]
   }
 }

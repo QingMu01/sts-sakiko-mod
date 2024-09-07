@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -13,9 +11,10 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MasqueradePower extends AbstractPower {
+public class MasqueradePower extends AbstractPower implements OnPlayMusicPower {
 
     public static final String POWER_ID = ModNameHelper.make(MasqueradePower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -43,11 +42,12 @@ public class MasqueradePower extends AbstractPower {
     }
 
     @Override
-    public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (card instanceof AbstractMusic){
-            this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        }
+    public void onPlayMusicCard(AbstractMusic music) {
+        this.flash();
+        this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+
     }
+
 
     @Override
     public void stackPower(int stackAmount) {
@@ -67,4 +67,5 @@ public class MasqueradePower extends AbstractPower {
             this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
     }
+
 }

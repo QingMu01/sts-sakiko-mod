@@ -1,7 +1,7 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
-import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -20,7 +20,7 @@ public class Mujina extends CustomCard {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
     private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
-    private static final int COST = 2;
+    private static final int COST = 1;
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
@@ -35,23 +35,26 @@ public class Mujina extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);
+            this.upgradeBaseCost(0);
         }
     }
 
     @Override
     public void applyPowers() {
         super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], MemberHelper.getBandMemberCount());
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], 1 + (MemberHelper.getBandMemberCount() / 2));
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GainEnergyAction(MemberHelper.getBandMemberCount()));
-
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
+        this.addToBot(new DrawCardAction(1 + (MemberHelper.getBandMemberCount() / 2)));
     }
 
 }

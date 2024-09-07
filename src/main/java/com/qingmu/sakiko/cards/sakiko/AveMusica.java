@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -31,6 +32,7 @@ public class AveMusica extends CustomCard {
 
     public AveMusica() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseMagicNumber = 4;
     }
 
@@ -46,9 +48,9 @@ public class AveMusica extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (this.upgraded) {
-            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber + (2* MemberHelper.getBandMemberCount()))));
+            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, Math.max(this.magicNumber,this.baseMagicNumber) + (2* MemberHelper.getBandMemberCount()))));
         } else {
-            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+            this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
         }
     }
 }

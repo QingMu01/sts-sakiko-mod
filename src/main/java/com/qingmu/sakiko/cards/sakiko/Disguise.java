@@ -45,6 +45,6 @@ public class Disguise extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainBlockAction(p, p, this.block));
-        this.addToBot(new DrawCardAction(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToBot(new DrawCardAction(p, Math.max(this.magicNumber,this.baseMagicNumber)));
     }
 }

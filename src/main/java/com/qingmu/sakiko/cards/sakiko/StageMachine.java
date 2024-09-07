@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.StageMachineAction;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
@@ -30,6 +31,7 @@ public class StageMachine extends CustomCard {
 
     public StageMachine() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseMagicNumber = 1;
         this.baseBlock = 0;
     }
@@ -44,16 +46,20 @@ public class StageMachine extends CustomCard {
 
     @Override
     protected void applyPowersToBlock() {
+        this.baseBlock = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.magicNumber,this.baseMagicNumber);
         super.applyPowersToBlock();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0]
-                , ((PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)) + this.block);
+        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new StageMachineAction(p, (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber), this.block));
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
+        this.addToBot(new StageMachineAction(p, (Math.max(this.magicNumber,this.baseMagicNumber)), this.block));
     }
 }

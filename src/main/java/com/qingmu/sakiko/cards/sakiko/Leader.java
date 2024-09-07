@@ -46,7 +46,7 @@ public class Leader extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, MemberHelper.getBandMemberCount())));
+        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, MemberHelper.getBandMemberCount() * 2)));
         this.addToBot(new ApplyPowerAction(p, p, new LeaderPower(p, 1)));
     }
 }

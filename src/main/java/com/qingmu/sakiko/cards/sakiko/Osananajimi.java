@@ -42,6 +42,6 @@ public class Osananajimi extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new OsananajimiAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToBot(new OsananajimiAction(p, p, Math.max(this.magicNumber, this.baseMagicNumber), false, false));
     }
 }

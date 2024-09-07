@@ -37,6 +37,6 @@ public class Louder_R extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new ExhaustAction(this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber, false, true, true));
+        this.addToTop(new ExhaustAction(Math.max(this.magicNumber,this.baseMagicNumber), false, true, true));
     }
 }

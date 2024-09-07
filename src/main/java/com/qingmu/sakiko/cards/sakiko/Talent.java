@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.TalentPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -29,6 +30,7 @@ public class Talent extends CustomCard {
 
     public Talent() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseMagicNumber = 2;
     }
 
@@ -39,9 +41,10 @@ public class Talent extends CustomCard {
             this.upgradeMagicNumber(1);
         }
     }
+
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new TalentPower(AbstractDungeon.player,this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new TalentPower(AbstractDungeon.player, Math.max(this.magicNumber, this.baseMagicNumber))));
     }
 
 }

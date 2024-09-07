@@ -22,6 +22,7 @@ public class Angles extends AbstractMusic {
 
     public Angles() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.enchanted = 1;
         this.baseMagicNumber = 2;
         this.baseDamage = 4;
@@ -40,7 +41,7 @@ public class Angles extends AbstractMusic {
     @Override
     public void play() {
         if (this.music_target != null && !this.music_target.isDeadOrEscaped()) {
-            int count = this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
+            int count = Math.max(this.magicNumber,this.baseMagicNumber);
             for (int i = 0; i < count; i++) {
                 this.addToTop(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
             }

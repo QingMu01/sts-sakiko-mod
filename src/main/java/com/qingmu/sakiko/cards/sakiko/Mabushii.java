@@ -23,6 +23,7 @@ public class Mabushii extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.ATTACK;
@@ -32,9 +33,8 @@ public class Mabushii extends CustomCard {
 
     public Mabushii() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 8;
+        this.baseMagicNumber = 6;
         this.baseDamage = 0;
-        this.exhaust = true;
     }
 
     @Override
@@ -46,9 +46,21 @@ public class Mabushii extends CustomCard {
     }
 
     @Override
+    public void applyPowers() {
+        this.baseDamage = PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber,this.baseMagicNumber);
+        super.applyPowers();
+        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.baseDamage = (PowerHelper.getPowerAmount(KirameiPower.POWER_ID) + 1) * this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber;
-        this.calculateCardDamage(m);
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
         this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, 1)));
     }

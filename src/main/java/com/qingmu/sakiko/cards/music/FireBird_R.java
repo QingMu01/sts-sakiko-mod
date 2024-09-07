@@ -48,7 +48,7 @@ public class FireBird_R extends AbstractMusic {
     @Override
     public void triggerInBufferPlayCard(AbstractCard card) {
         this.count++;
-        if (this.count >= (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)) {
+        if (this.count >= (Math.max(this.magicNumber,this.baseMagicNumber))) {
             this.amount++;
             this.count = 0;
         }

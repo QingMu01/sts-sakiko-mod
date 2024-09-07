@@ -1,18 +1,18 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.evacipated.cardcrawl.mod.stslib.actions.common.DamageCallbackAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.vfx.combat.VerticalImpactEffect;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
@@ -25,6 +25,7 @@ public class NotePunch extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final int COST = 1;
 
@@ -35,26 +36,36 @@ public class NotePunch extends CustomCard {
 
     public NotePunch() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 9;
-        this.baseMagicNumber = 4;
+        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
+        this.baseDamage = 0;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(2);
-            this.upgradeMagicNumber(2);
+            this.upgradeBaseCost(0);
         }
     }
 
     @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
-        if (m != null) {
-            this.addToBot(new VFXAction(new VerticalImpactEffect(m.hb.cX + m.hb.width / 4.0F, m.hb.cY - m.hb.height / 4.0F)));
-        }
-        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL));
-        this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(m, this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+    public void applyPowers() {
+        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        super.applyPowers();
+        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+    }
 
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+    }
+
+    @Override
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_DIAGONAL, (damageAmount) -> {
+            if (damageAmount > 0) {
+                this.addToBot(new ApplyPowerAction(p, p, new MusicalNotePower(p, damageAmount)));
+            }
+        }));
     }
 }

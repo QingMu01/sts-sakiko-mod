@@ -92,7 +92,7 @@ public class TomoriMonster extends AbstractMemberMonster {
             } else if (i < 50) {
                 this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
             } else if (i < 65) {
-                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(2).base);
+                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(2).base, this.multiCount, true);
             } else {
                 this.setMove((byte) 4, Intent.DEFEND);
             }
@@ -104,7 +104,7 @@ public class TomoriMonster extends AbstractMemberMonster {
             } else if (i < 80) {
                 this.setMove((byte) 2, Intent.ATTACK, this.damage.get(1).base);
             } else if (i < 90) {
-                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(2).base);
+                this.setMove((byte) 3, Intent.ATTACK, this.damage.get(2).base, this.multiCount, true);
             } else {
                 this.setMove((byte) 4, Intent.DEFEND);
             }

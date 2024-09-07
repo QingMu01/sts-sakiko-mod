@@ -38,6 +38,6 @@ public class Sunny_M extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new RandomRemoveDebuffAction(this.music_source, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber));
+        this.addToTop(new RandomRemoveDebuffAction(this.music_source, Math.max(this.magicNumber,this.baseMagicNumber)));
     }
 }

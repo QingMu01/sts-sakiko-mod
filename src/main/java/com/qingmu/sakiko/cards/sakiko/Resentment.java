@@ -48,13 +48,13 @@ public class Resentment extends CustomCard {
     @Override
     public void applyPowers() {
         super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(OverworkPower.POWER_ID) * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber) + this.damage);
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(OverworkPower.POWER_ID) * (Math.max(this.magicNumber,this.baseMagicNumber)) + this.damage);
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage + PowerHelper.getPowerAmount(OverworkPower.POWER_ID) * (this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber), this.damageTypeForTurn)));
+        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage + PowerHelper.getPowerAmount(OverworkPower.POWER_ID) * (Math.max(this.magicNumber,this.baseMagicNumber)), this.damageTypeForTurn)));
         this.addToBot(new ApplyPowerAction(p, p, new OverworkPower(p, 2)));
     }
 }

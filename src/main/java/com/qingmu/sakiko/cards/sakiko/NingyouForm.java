@@ -43,6 +43,6 @@ public class NingyouForm extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new NingyouPower(p, this.magicNumber < 0 ? this.baseMagicNumber : this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new NingyouPower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

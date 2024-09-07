@@ -47,6 +47,6 @@ public class AppendAttack extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        this.addToBot(new ApplyPowerAction(p, p, new VigorPower(p, this.magicNumber<0?this.baseMagicNumber:this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new VigorPower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
     }
 }

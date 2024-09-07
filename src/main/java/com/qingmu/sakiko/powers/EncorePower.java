@@ -76,14 +76,9 @@ public class EncorePower extends AbstractPower {
     @Override
     public void onEnergyRecharge() {
         this.flash();
-        int i = (AbstractDungeon.player.energy.energyMaster - 1) - this.residue;
-        if (i > 0) {
-            this.addToTop(new LoseEnergyAction(i));
-        } else {
-            this.addToTop(new GainEnergyAction(i));
-        }
-
-
+        int i = (AbstractDungeon.player.energy.energyMaster - 1);
+        this.addToTop(new LoseEnergyAction(i));
+        this.addToTop(new GainEnergyAction(this.residue));
     }
 
     @Override

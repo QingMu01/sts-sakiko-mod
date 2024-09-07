@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.modthespire.lib.SpireOverride;
 import com.evacipated.cardcrawl.modthespire.lib.SpireSuper;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -38,6 +39,8 @@ public abstract class AbstractMusic extends CustomCard {
 
     public boolean isPlayed = false;
 
+    public int usedTurn = 0;
+
     public AbstractMusic(String id, String name, String img, String rawDescription, CardRarity rarity, CardTarget target) {
         this(id, name, img, rawDescription, COLOR, rarity, target);
     }
@@ -56,6 +59,7 @@ public abstract class AbstractMusic extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.music_source = p == null ? AbstractDungeon.player : p;
         this.music_target = m == null ? AbstractDungeon.getRandomMonster() : m;
+        this.usedTurn = GameActionManager.turn;
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FeverReadyPower(AbstractDungeon.player, 1)));
     }
 
