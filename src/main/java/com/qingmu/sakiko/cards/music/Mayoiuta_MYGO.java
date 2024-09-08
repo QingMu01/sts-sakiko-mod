@@ -45,7 +45,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
         this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);
 
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * (Math.max(this.magicNumber, this.baseMagicNumber)));
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * this.block);
         this.initializeDescription();
     }
 
