@@ -33,12 +33,6 @@ public class OjyousamaPower extends AbstractPower {
         this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
-//    @Override
-//    public void atStartOfTurnPostDraw() {
-//        this.flash();
-//        this.addToBot(new DrawCardAction(this.owner, this.amount));
-//    }
-
     @Override
     public void onInitialApplication() {
         if (this.amount + AbstractDungeon.player.gameHandSize > 10){

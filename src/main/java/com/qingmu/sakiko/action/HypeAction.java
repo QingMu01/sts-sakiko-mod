@@ -12,11 +12,11 @@ import com.qingmu.sakiko.powers.KirameiPower;
 
 public class HypeAction extends AbstractGameAction {
     public int damage;
-    private boolean freeToPlayOnce = false;
+    private boolean freeToPlayOnce;
     private DamageInfo.DamageType damageType;
     private AbstractPlayer p;
     private AbstractMonster m;
-    private int energyOnUse = -1;
+    private int energyOnUse;
 
     public HypeAction(AbstractPlayer p, AbstractMonster m, int damage, DamageInfo.DamageType damageType, boolean freeToPlayOnce, int energyOnUse) {
         this.damage = damage;

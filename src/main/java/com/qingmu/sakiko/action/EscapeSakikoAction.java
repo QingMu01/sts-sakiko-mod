@@ -8,9 +8,9 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 
 public class EscapeSakikoAction extends AbstractGameAction {
-    private boolean freeToPlayOnce = false;
+    private boolean freeToPlayOnce;
     private AbstractPlayer p;
-    private int energyOnUse = -1;
+    private int energyOnUse;
 
     public EscapeSakikoAction(AbstractPlayer p, int amount, boolean freeToPlayOnce, int energyOnUse) {
         this.p = p;

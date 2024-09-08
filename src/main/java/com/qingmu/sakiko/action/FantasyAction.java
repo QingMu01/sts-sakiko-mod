@@ -59,7 +59,6 @@ public class FantasyAction extends AbstractGameAction {
                     } else {
                         AbstractDungeon.effectList.add(new ShowCardAndAddToDiscardEffect(disCard, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
                     }
-                    disCard2 = null;
                 } else if (AbstractDungeon.player.hand.size() + this.amount <= 10) {
                     AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard, Settings.WIDTH / 2.0F - AbstractCard.IMG_WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
                     AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard2, Settings.WIDTH / 2.0F + AbstractCard.IMG_WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
@@ -82,7 +81,7 @@ public class FantasyAction extends AbstractGameAction {
         ArrayList<AbstractCard> derp = new ArrayList<>();
         while (derp.size() != 3) {
             boolean dupe = false;
-            AbstractCard tmp = null;
+            AbstractCard tmp;
             if (type == null) {
                 tmp = AbstractDungeon.returnTrulyRandomCardInCombat();
             } else {
