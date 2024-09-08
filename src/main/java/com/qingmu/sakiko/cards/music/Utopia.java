@@ -5,7 +5,9 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Utopia extends AbstractMusic {
 
@@ -16,7 +18,6 @@ public class Utopia extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
@@ -24,17 +25,25 @@ public class Utopia extends AbstractMusic {
     public Utopia() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.enchanted = 2;
-        this.baseDamage = 4;
+        this.baseDamage = 6;
+        this.baseMagicNumber = 4;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeDamage(this.baseDamage);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(2);
+        }
+    }
+
+    @Override
+    public void applyPowers() {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
+        super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
 

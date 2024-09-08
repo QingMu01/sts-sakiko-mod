@@ -24,7 +24,6 @@ public class Haruhikage_Rana extends AbstractMusic {
 
     public Haruhikage_Rana() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 999;
     }
 
     @Override

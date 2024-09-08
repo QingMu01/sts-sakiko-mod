@@ -2,7 +2,6 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.PlayTopCardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -23,13 +22,10 @@ public class Expose_RAS extends AbstractMusic {
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.NONE;
 
-    private int count = 0;
-
     public Expose_RAS() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 3;
-        this.baseMagicNumber = 3;
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
+        this.baseMagicNumber = 4;
     }
 
     @Override
@@ -38,35 +34,23 @@ public class Expose_RAS extends AbstractMusic {
         this.initializeDescription();
     }
 
-    @Override
-    public void triggerInBufferPlayCard(AbstractCard card) {
-        this.count++;
-        if (this.count >= (this.baseMagicNumber < 0 ? this.baseMagicNumber : this.magicNumber)) {
-            this.amount++;
-            this.count = 0;
-        }
-    }
-
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
+            this.upgradeMagicNumber(-1);
         }
     }
 
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+    }
 
     @Override
     public void play() {
-        if (this.upgraded) {
-            this.addToTop(new AbstractGameAction() {
-                public void update() {
-                    addToBot(new PlayTopCardAction(
-                            (AbstractDungeon.getCurrRoom()).monsters.getRandomMonster(null, true, AbstractDungeon.cardRandomRng), false));
-                    this.isDone = true;
-                }
-            });
-        }
         for (int i = 0; i < this.amount; i++) {
             this.addToTop(new AbstractGameAction() {
                 public void update() {

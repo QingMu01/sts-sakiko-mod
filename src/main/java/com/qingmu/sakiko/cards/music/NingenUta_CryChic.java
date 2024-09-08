@@ -22,17 +22,15 @@ public class NingenUta_CryChic extends AbstractMusic {
 
     public NingenUta_CryChic() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 2;
         this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
     }
 
     @Override

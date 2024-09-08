@@ -185,6 +185,13 @@
       "这个单位代替你受到心之壁的伤害。"
     ]
   },
+  "SakikoMod:KingOfTingPower": {
+    "NAME": "挺王之力",
+    "DESCRIPTIONS": [
+      "你获得 #y闪耀 的时候，额外获得 #b",
+      " 层。"
+    ]
+  },
   "SakikoMod:AnonDasuruPower": {
     "NAME": "爱堕",
     "DESCRIPTIONS": [

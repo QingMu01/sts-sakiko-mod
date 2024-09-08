@@ -24,23 +24,21 @@ public class ShuwarinDreamin_PP extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(CardTags.HEALING);
-        this.enchanted = 1;
         this.baseMagicNumber = 7;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(3);
+        }
     }
 
 
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new RepairPower(this.music_source, Math.max(this.magicNumber,this.baseMagicNumber))));
+                , new RepairPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
     }
 }

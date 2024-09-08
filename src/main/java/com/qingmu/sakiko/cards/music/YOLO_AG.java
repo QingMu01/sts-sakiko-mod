@@ -16,7 +16,6 @@ public class YOLO_AG extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
@@ -24,23 +23,21 @@ public class YOLO_AG extends AbstractMusic {
     public YOLO_AG() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.enchanted = 3;
         this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
     }
 
 
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new BufferPower(this.music_source, Math.max(this.magicNumber,this.baseMagicNumber))));
+                , new BufferPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
     }
 }

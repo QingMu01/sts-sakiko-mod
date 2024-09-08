@@ -16,7 +16,6 @@ public class Symbol_III extends AbstractMusic {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
-    private static final int COST = 1;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
@@ -25,22 +24,20 @@ public class Symbol_III extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(CardTags.HEALING);
-        this.enchanted = 1;
-        this.baseMagicNumber = 2;
+        this.baseMagicNumber = 4;
         this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(2);
+        }
     }
 
     @Override
     public void play() {
-        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber,this.baseMagicNumber)));
+        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber, this.baseMagicNumber)));
     }
 }

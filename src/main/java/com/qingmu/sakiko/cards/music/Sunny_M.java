@@ -4,7 +4,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.action.RandomRemoveDebuffAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Sunny_M extends AbstractMusic {
 
@@ -16,23 +18,32 @@ public class Sunny_M extends AbstractMusic {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Sunny_M() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 2;
         this.baseMagicNumber = 1;
         this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
+    }
+
+    @Override
+    public void applyPowers() {
+        this.isMagicNumberModified = false;
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
+        this.baseMagicNumber = realBaseMagicNumber;
+        this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
     }
 
 

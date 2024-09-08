@@ -23,17 +23,15 @@ public class AveMujica extends AbstractMusic {
     public AveMujica() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.enchanted = 4;
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
     }
 
 

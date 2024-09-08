@@ -23,17 +23,15 @@ public class Egao_HHW extends AbstractMusic {
     public Egao_HHW() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.enchanted = 1;
-        this.baseMagicNumber = 5;
+        this.baseMagicNumber = 10;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(5);
+        }
     }
 
     @Override

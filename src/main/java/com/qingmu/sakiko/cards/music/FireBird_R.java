@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.powers.FlameBarrierPower;
@@ -22,13 +21,10 @@ public class FireBird_R extends AbstractMusic {
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.NONE;
 
-    private int count = 0;
-
     public FireBird_R() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 3;
-        this.baseMagicNumber = 2;
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
+        this.baseMagicNumber = 2;
     }
 
     @Override
@@ -44,21 +40,14 @@ public class FireBird_R extends AbstractMusic {
         this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
         this.initializeDescription();
     }
-
     @Override
-    public void triggerInBufferPlayCard(AbstractCard card) {
-        this.count++;
-        if (this.count >= (Math.max(this.magicNumber,this.baseMagicNumber))) {
-            this.amount++;
-            this.count = 0;
-        }
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new FlameBarrierPower(this.music_source, this.amount)));
-
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 }

@@ -9,7 +9,9 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Daylight_M extends AbstractMusic {
 
@@ -26,20 +28,28 @@ public class Daylight_M extends AbstractMusic {
 
     public Daylight_M() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 1;
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 3;
         this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(2);
+        }
     }
 
+    @Override
+    public void applyPowers() {
+        this.isMagicNumberModified = false;
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
+        this.baseMagicNumber = realBaseMagicNumber;
+        this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
+    }
 
     @Override
     public void play() {

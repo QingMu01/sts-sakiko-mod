@@ -8,7 +8,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Mas_uerade extends AbstractMusic {
 
@@ -26,18 +28,26 @@ public class Mas_uerade extends AbstractMusic {
     public Mas_uerade() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.enchanted = 1;
         this.baseDamage = 6;
+        this.baseMagicNumber = 1;
         this.isMultiDamage = true;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeDamage(3 + this.timesUpgraded);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
+    }
+
+    @Override
+    public void applyPowers() {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
+        super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
 

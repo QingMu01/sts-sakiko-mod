@@ -9,7 +9,9 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.vfx.combat.GiantTextEffect;
 import com.megacrit.cardcrawl.vfx.combat.WeightyImpactEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.PowerHelper;
 
 public class ChoirSChoir extends AbstractMusic {
 
@@ -27,17 +29,24 @@ public class ChoirSChoir extends AbstractMusic {
     public ChoirSChoir() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.enchanted = 1;
         this.baseMagicNumber = 10;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(5);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded){
+            this.upgradeName();
+            this.upgradeMagicNumber(10);
+        }
+    }
+    @Override
+    public void applyPowers() {
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += realBaseMagicNumber + (PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * 5);
+        this.magicNumber = this.baseMagicNumber;
+        super.applyPowers();
+        this.baseMagicNumber = realBaseMagicNumber;
+        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
     }
 
 

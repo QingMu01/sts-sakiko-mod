@@ -21,22 +21,20 @@ public class Louder_R extends AbstractMusic {
 
     public Louder_R() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 2;
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
     }
 
     @Override
     public void upgrade() {
-        this.upgradeMagicNumber(1);
-        ++this.timesUpgraded;
-        this.upgraded = true;
-        this.name = NAME + "+" + this.timesUpgraded;
-        this.initializeTitle();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeMagicNumber(1);
+        }
     }
 
 
     @Override
     public void play() {
-        this.addToTop(new ExhaustAction(Math.max(this.magicNumber,this.baseMagicNumber), false, true, true));
+        this.addToTop(new ExhaustAction(Math.max(this.magicNumber, this.baseMagicNumber), false, true, true));
     }
 }

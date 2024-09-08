@@ -1,13 +1,11 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.evacipated.cardcrawl.mod.stslib.actions.common.StunMonsterAction;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Ship_HHW extends AbstractMusic {
@@ -26,7 +24,6 @@ public class Ship_HHW extends AbstractMusic {
 
     public Ship_HHW() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 8;
         this.exhaust = true;
     }
 
@@ -44,7 +41,6 @@ public class Ship_HHW extends AbstractMusic {
     public void play() {
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if (monster.type != AbstractMonster.EnemyType.BOSS || this.upgraded) {
-                this.addToTop(new ReducePowerAction(this.music_source, this.music_source, KokoroNoKabePower.POWER_ID, 5));
                 this.addToTop(new StunMonsterAction(monster, this.music_source, 1));
             }
         }

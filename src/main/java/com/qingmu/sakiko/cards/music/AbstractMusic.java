@@ -13,8 +13,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.qingmu.sakiko.action.MusicUpgradeAction;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -30,15 +28,14 @@ public abstract class AbstractMusic extends CustomCard {
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardType CARD_TYPE = SakikoEnum.CardTypeEnum.MUSIC;
 
-    protected int enchanted;
-
     public AbstractCreature music_source;
     public AbstractCreature music_target;
 
+    // 计数器
     public int amount = 0;
+    public int count = 0;
 
-    public boolean isPlayed = false;
-
+    // 打出时的回合数
     public int usedTurn = 0;
 
     public AbstractMusic(String id, String name, String img, String rawDescription, CardRarity rarity, CardTarget target) {
@@ -48,7 +45,6 @@ public abstract class AbstractMusic extends CustomCard {
     public AbstractMusic(String id, String name, String img, String rawDescription, CardColor color, CardRarity rarity, CardTarget target) {
         super(id, name, img, 0, rawDescription, CARD_TYPE, color, rarity, target);
         super.setBackgroundTexture(BG_SKILL_512, BG_SKILL_1024);
-        this.enchanted = -1;
     }
 
 
@@ -63,12 +59,6 @@ public abstract class AbstractMusic extends CustomCard {
         this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FeverReadyPower(AbstractDungeon.player, 1)));
     }
 
-    @Override
-    public void triggerWhenDrawn() {
-        if (this.enchanted > 0) {
-            this.addToBot(new MusicUpgradeAction(this, this.enchanted));
-        }
-    }
 
     @Override
     public void onChoseThisOption() {
@@ -83,31 +73,16 @@ public abstract class AbstractMusic extends CustomCard {
 
     // 存在待演奏区时，有卡牌被打出时触发的钩子
     public void triggerInBufferPlayCard(AbstractCard card) {
+        if (this.hasTag(SakikoEnum.CardTagEnum.COUNTER)) {
+            this.count++;
+            this.amount = this.calculateCardAmount(this.count, Math.min(this.magicNumber, this.baseMagicNumber));
+        }
     }
 
-    public void resetMusicCard() {
-        AbstractCard tmp = this.makeCopy();
-        this.baseBlock = tmp.baseBlock;
-        this.baseDamage = tmp.baseDamage;
-        this.baseMagicNumber = tmp.baseMagicNumber;
-        this.name = tmp.name;
-        this.upgraded = false;
-        this.timesUpgraded = 0;
-        this.amount = 0;
-        this.isPlayed = false;
-        this.resetAttributes();
-        this.initializeTitle();
+    public int calculateCardAmount(int count, int countdown) {
+        return count / countdown;
     }
 
-
-    public int getEnchanted() {
-        return this.enchanted;
-    }
-
-    @Override
-    public boolean canUpgrade() {
-        return AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT;
-    }
 
     @SpireOverride
     public void renderSkillPortrait(SpriteBatch sb, float x, float y) {

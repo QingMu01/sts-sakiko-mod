@@ -28,11 +28,17 @@ public class KirameiPower extends AbstractPower {
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = amount;
+        if (this.owner.hasPower(KingOfTingPower.POWER_ID)){
+            this.amount = amount + this.owner.getPower(KingOfTingPower.POWER_ID).amount;
+        }else {
+            this.amount = amount;
+        }
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();
     }
+
+
 
     @Override
     public void updateDescription() {
@@ -41,7 +47,12 @@ public class KirameiPower extends AbstractPower {
 
     @Override
     public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
+        if (this.owner.hasPower(KingOfTingPower.POWER_ID)){
+            this.amount += stackAmount + this.owner.getPower(KingOfTingPower.POWER_ID).amount;
+        }else {
+            this.amount += stackAmount;
+        }
+
         if (this.amount == 0) {
             this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }

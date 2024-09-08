@@ -26,7 +26,6 @@ public class Haruhikage_CryChic extends AbstractMusic {
 
     public Haruhikage_CryChic() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.enchanted = 999;
     }
 
     @Override
