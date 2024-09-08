@@ -1,12 +1,16 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -20,6 +24,8 @@ public class ClassicMusicianPower extends AbstractPower {
 
     private static final String path48 = "SakikoModResources/img/powers/ClassicMusicianPower48.png";
     private static final String path128 = "SakikoModResources/img/powers/ClassicMusicianPower84.png";
+
+    private int cardsDoubledThisTurn = 0;
 
     public ClassicMusicianPower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -39,9 +45,30 @@ public class ClassicMusicianPower extends AbstractPower {
     }
 
     @Override
-    public void onCardDraw(AbstractCard card) {
-        if (card instanceof AbstractMusic) {
-            this.addToBot(new DrawCardAction(this.owner, this.amount));
+    public void onUseCard(AbstractCard card, UseCardAction action) {
+        if (card instanceof AbstractMusic
+                && (!card.purgeOnUse && this.amount > 0
+                && AbstractDungeon.actionManager.cardsPlayedThisTurn.stream().filter(c -> c instanceof AbstractMusic)
+                .count() - this.cardsDoubledThisTurn <= this.amount)) {
+            ++this.cardsDoubledThisTurn;
+            this.flash();
+            AbstractMonster m = null;
+            if (action.target != null) {
+                m = (AbstractMonster)action.target;
+            }
+
+            AbstractCard tmp = card.makeSameInstanceOf();
+            AbstractDungeon.player.limbo.addToBottom(tmp);
+            tmp.current_x = card.current_x;
+            tmp.current_y = card.current_y;
+            tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
+            tmp.target_y = (float)Settings.HEIGHT / 2.0F;
+            if (m != null) {
+                tmp.calculateCardDamage(m);
+            }
+            tmp.purgeOnUse = true;
+            AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
         }
+
     }
 }

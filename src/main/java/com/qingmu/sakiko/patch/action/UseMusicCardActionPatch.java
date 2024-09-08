@@ -18,6 +18,8 @@ import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
 
+    public static int PLAY_LIMIT = 3;
+
     /*
     * 构建UseCardAction时，判断是否为MUSIC_POWER类型，如果是，则将卡牌类型改为POWER
     * 这样做可以触发遗物、能力等的钩子，使觉醒者的好奇、鸡煲的增幅等能力正确触发
@@ -58,7 +60,7 @@ public class UseMusicCardActionPatch {
                 ((AbstractMusic)___targetCard).applyAmount();
                 CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);
-                if (cardGroup.size() >= 4){
+                if (cardGroup.size() > PLAY_LIMIT){
                     AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));
                     AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(1));
                 }

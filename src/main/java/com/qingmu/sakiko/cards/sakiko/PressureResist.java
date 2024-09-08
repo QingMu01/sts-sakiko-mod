@@ -4,9 +4,11 @@ import basemod.abstracts.CustomCard;
 import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -44,12 +46,22 @@ public class PressureResist extends CustomCard {
             this.upgradeMagicNumber(1);
         }
     }
+    @Override
+    public void triggerOnGlowCheck() {
+        this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
+        for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (m.intent.name().contains("ATTACK")) {
+                this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
+                break;
+            }
+        }
+    }
 
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        if (m.intent == AbstractMonster.Intent.ATTACK || m.intent == AbstractMonster.Intent.ATTACK_BUFF || m.intent == AbstractMonster.Intent.ATTACK_DEBUFF || m.intent == AbstractMonster.Intent.ATTACK_DEFEND){
+        if (m.intent.name().contains("ATTACK")){
             this.addToBot(new AddTemporaryHPAction(p, p, Math.max(this.magicNumber,this.baseMagicNumber)));
         }
     }

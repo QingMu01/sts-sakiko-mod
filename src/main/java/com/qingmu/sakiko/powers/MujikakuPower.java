@@ -1,7 +1,7 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -10,12 +10,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.power.OnObliviousPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
 
-public class MujikakuPower extends AbstractPower {
+public class MujikakuPower extends AbstractPower implements OnObliviousPower {
 
     public static final String POWER_ID = ModNameHelper.make(MujikakuPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -39,13 +39,13 @@ public class MujikakuPower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
     @Override
-    public void onUseCard(AbstractCard card, UseCardAction action) {
+    public void onOblivious() {
         for (int i = 0; i < this.amount; i++) {
-            if (card instanceof AbstractMusic && !AbstractDungeon.player.hand.isEmpty()) {
+            if (!AbstractDungeon.player.hand.isEmpty()) {
                 flash();
                 ArrayList<AbstractCard> groupCopy = new ArrayList<>();
                 for (AbstractCard abstractCard : AbstractDungeon.player.hand.group) {
@@ -66,17 +66,24 @@ public class MujikakuPower extends AbstractPower {
                     c.setCostForTurn(0);
                 }
             }
-
         }
     }
 
 
     @Override
     public void stackPower(int stackAmount) {
+        this.amount += stackAmount;
+        if (this.amount > 10){
+            this.amount = 10;
+        }
     }
 
     @Override
     public void reducePower(int reduceAmount) {
+        this.amount -= reduceAmount;
+        if (this.amount <= 0){
+            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+        }
     }
 
 }

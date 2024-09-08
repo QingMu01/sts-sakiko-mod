@@ -11,7 +11,9 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
+import com.qingmu.sakiko.inteface.power.OnObliviousPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -26,6 +28,14 @@ public class ObliviousAction extends AbstractGameAction {
         this.amount = amount;
         this.p = p;
         this.duration = Settings.ACTION_DUR_FAST;
+
+        // 触发钩子
+        for (AbstractPower power : p.powers) {
+            if (power instanceof OnObliviousPower){
+                ((OnObliviousPower) power).onOblivious();
+            }
+        }
+
     }
 
     @Override

@@ -60,7 +60,7 @@
   "SakikoMod:BlockedPower": {
     "NAME": "拉黑",
     "DESCRIPTIONS": [
-      "这个目标无法造成伤害。"
+      "这个单位无法造成伤害。"
     ]
   },
   "SakikoMod:HedgehogPower": {
@@ -89,10 +89,10 @@
     ]
   },
   "SakikoMod:ClassicMusicianPower": {
-    "NAME": "古典乐派",
+    "NAME": "古典音乐家",
     "DESCRIPTIONS": [
-      "你抽到音乐牌时，在主抽牌堆抽 #b",
-      " 张牌。"
+      "你在每回合打出的前 #b",
+      " 张 #y音乐 牌将被打出两次。"
     ]
   },
   "SakikoMod:OverdrawPower": {
@@ -107,7 +107,8 @@
   "SakikoMod:MujikakuPower": {
     "NAME": "无自觉",
     "DESCRIPTIONS": [
-      "打出 #y音乐 牌时，手牌中随机牌的费用在本回合为0。"
+      "每次 #y忘却 时，手牌中随机 #b",
+      " 张牌的费用在本回合为0。"
     ]
   },
   "SakikoMod:OjyousamaPower": {
@@ -188,7 +189,7 @@
   "SakikoMod:KingOfTingPower": {
     "NAME": "挺王之力",
     "DESCRIPTIONS": [
-      "你获得 #y闪耀 的时候，额外获得 #b",
+      "你获得 #y闪耀 时，额外获得 #b",
       " 层。"
     ]
   },

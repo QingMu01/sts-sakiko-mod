@@ -42,9 +42,7 @@ public class LeaderPower extends AbstractPower {
     @Override
     public void atStartOfTurn() {
         int count = MemberHelper.getBandMemberCount();
-        for (int i = 0; i < this.amount; i++) {
-            this.addToBot(new LoseGoldAction(count * 2));
-        }
+        this.addToBot(new LoseGoldAction(count * 2 * this.amount));
     }
 
     @Override
