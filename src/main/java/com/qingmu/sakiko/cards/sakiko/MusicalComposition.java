@@ -35,13 +35,12 @@ public class MusicalComposition extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeBaseCost(0);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CompositionAction(this.upgraded));
+        this.addToBot(new CompositionAction());
     }
 }

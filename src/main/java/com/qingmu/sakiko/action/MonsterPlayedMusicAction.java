@@ -17,7 +17,6 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
     private boolean vfxDone = false;
 
     public MonsterPlayedMusicAction(AbstractMusic music,AbstractCreature source) {
-        music.isPlayed = true;
         this.music = music;
         this.source = source;
         this.target = music.music_target == null ? AbstractDungeon.player : music.music_target;

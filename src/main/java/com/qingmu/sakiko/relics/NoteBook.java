@@ -32,8 +32,7 @@ public class NoteBook extends CustomRelic {
     @Override
     public void atBattleStart() {
         this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KirameiPower(AbstractDungeon.player, 2)));
-        this.grayscale = true;
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KirameiPower(AbstractDungeon.player, 3)));
     }
 
     @Override

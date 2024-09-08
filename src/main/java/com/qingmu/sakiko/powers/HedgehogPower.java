@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@Deprecated
 public class HedgehogPower extends AbstractPower {
 
     public static final String POWER_ID = ModNameHelper.make(HedgehogPower.class.getSimpleName());

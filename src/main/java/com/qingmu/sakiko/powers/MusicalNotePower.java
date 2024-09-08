@@ -33,15 +33,21 @@ public class MusicalNotePower extends AbstractPower {
 
     private int limit = 24;
 
+    public static int LAST_APPLY = 0;
+
     public MusicalNotePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        if (AbstractDungeon.player.hasRelic(Speaker.ID))
+        if (AbstractDungeon.player.hasRelic(Speaker.ID)){
             this.amount = amount * 2;
-        else
+            LAST_APPLY = amount * 2;
+        }
+        else{
             this.amount = amount;
+            LAST_APPLY = amount * 2;
+        }
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
 
@@ -71,6 +77,7 @@ public class MusicalNotePower extends AbstractPower {
             this.limit = 24;
         }
         this.amount += stackAmount;
+        LAST_APPLY = this.amount;
         this.turn_count += stackAmount;
         if (this.amount > this.limit) {
             this.amount = this.limit;

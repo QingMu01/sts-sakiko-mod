@@ -2,6 +2,7 @@ package com.qingmu.sakiko;
 
 import basemod.AutoAdd;
 import basemod.BaseMod;
+import basemod.abstracts.CustomCard;
 import basemod.abstracts.CustomRelic;
 import basemod.eventUtil.AddEventParams;
 import basemod.interfaces.*;
@@ -76,7 +77,11 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
                 .setDefaultSeen(true)
-                .cards();
+                .any(CustomCard.class, (info, card) -> {
+                    if (card.getClass().getAnnotationsByType(Deprecated.class).length == 0){
+                        BaseMod.addCard(card);
+                    }
+                });
     }
 
     @Override

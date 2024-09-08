@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -48,6 +49,7 @@ public class InvasionEvent extends PhasedEvent {
                     .addRewards(true, room -> {
                         // 离开，提示获得成员
                         room.rewards.add(new RewardItem(50, false));
+                        room.rewards.add(new MusicCardReward(String.valueOf(AbstractDungeon.floorNum)));
                         room.rewards.add(new RewardItem(BaseMod.getCustomRelic(name.replace("Monster", ""))));
                     });
             // 成员战斗

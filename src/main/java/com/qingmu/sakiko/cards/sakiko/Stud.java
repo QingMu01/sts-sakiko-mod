@@ -11,6 +11,7 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
+@Deprecated
 public class Stud extends CustomCard {
 
     public static final String ID = ModNameHelper.make(Stud.class.getSimpleName());

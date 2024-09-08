@@ -36,8 +36,11 @@ public class LastStage extends CustomCard {
 
     @Override
     public void applyPowers() {
-        this.baseDamage = 10 + (this.exhaustCount * (Math.max(this.magicNumber,this.baseMagicNumber)));
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage = realBaseDamage + (this.exhaustCount * (Math.max(this.magicNumber,this.baseMagicNumber)));
         super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     @Override

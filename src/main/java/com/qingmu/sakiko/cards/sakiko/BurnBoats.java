@@ -1,11 +1,13 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.BurnBoatsAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -59,7 +61,18 @@ public class BurnBoats extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new BurnBoatsAction(this));
+        int powerAmount;
+        if (this.purgeOnUse) {
+            powerAmount = MusicalNotePower.LAST_APPLY;
+        } else {
+            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        }
+        for (int i = 0; i < (powerAmount / 2); i++) {
+            this.addToBot(new AttackDamageRandomEnemyAction(this, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        }
+        if (!this.purgeOnUse){
+            this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
+        }
     }
 
 }

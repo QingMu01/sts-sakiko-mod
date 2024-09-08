@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.ShowCardAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -27,12 +28,14 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
     private boolean vfxDone = false;
 
     public PlayerPlayedMusicAction(AbstractMusic music) {
-        music.isPlayed = true;
         this.music = music;
         this.source = music.music_source == null ? AbstractDungeon.player : music.music_source;
         this.target = music.music_target == null ? AbstractDungeon.getRandomMonster() : music.music_target;
         if (music.exhaustOnUseOnce || music.exhaust) {
             this.exhaustCard = true;
+        }
+        if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn){
+
         }
         // 调用钩子
         this.music.calculateCardDamage((AbstractMonster) this.target);
@@ -96,7 +99,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             else this.vfxDone = true;
         }
         this.music.play();
-        this.music.resetMusicCard();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
         if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
             AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));
@@ -126,12 +128,14 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             spoonProc = AbstractDungeon.cardRandomRng.randomBoolean();
         }
         if (this.exhaustCard && !spoonProc) {
+            this.music.triggerOnExhaust();
             queue.moveToExhaustPile(this.music);
             CardCrawlGame.dungeon.checkForPactAchievement();
         } else {
             if (spoonProc) {
                 AbstractDungeon.player.getRelic("Strange Spoon").flash();
             }
+            this.music.onMoveToDiscard();
             queue.moveToDiscardPile(this.music);
         }
         this.isDone = true;

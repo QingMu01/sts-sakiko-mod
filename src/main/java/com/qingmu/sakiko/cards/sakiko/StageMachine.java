@@ -1,11 +1,12 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.StageMachineAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -46,7 +47,13 @@ public class StageMachine extends CustomCard {
 
     @Override
     protected void applyPowersToBlock() {
-        this.baseBlock = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.magicNumber,this.baseMagicNumber);
+        int powerAmount;
+        if (this.purgeOnUse) {
+            powerAmount = MusicalNotePower.LAST_APPLY;
+        } else {
+            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        }
+        this.baseBlock = powerAmount * Math.max(this.magicNumber, this.baseMagicNumber);
         super.applyPowersToBlock();
         this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
         this.initializeDescription();
@@ -60,6 +67,9 @@ public class StageMachine extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new StageMachineAction(p, (Math.max(this.magicNumber,this.baseMagicNumber)), this.block));
+        this.addToBot(new GainBlockAction(p, this.block));
+        if (!this.purgeOnUse){
+            this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
+        }
     }
 }

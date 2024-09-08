@@ -76,7 +76,7 @@ public class MusicSlotItem {
     public void render(SpriteBatch sb, float x, float y) {
         this.update();
         if (this.music != null) {
-            if (!this.music.isPlayed && !this.hb.hovered) {
+            if (!this.hb.hovered) {
                 this.music.target_x = x;
                 this.music.target_y = y;
                 this.music.targetDrawScale = 0.275f;

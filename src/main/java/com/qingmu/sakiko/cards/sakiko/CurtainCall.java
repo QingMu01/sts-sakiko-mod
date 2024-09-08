@@ -46,10 +46,12 @@ public class CurtainCall extends CustomCard {
 
     @Override
     public void applyPowers() {
+        int realBaseDamage = this.baseDamage;
         int size = GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager).size();
-        this.baseDamage = 9 + (size * Math.max(this.magicNumber,this.baseMagicNumber));
-
+        this.baseDamage = realBaseDamage + (size * Math.max(this.magicNumber, this.baseMagicNumber));
         super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     @Override

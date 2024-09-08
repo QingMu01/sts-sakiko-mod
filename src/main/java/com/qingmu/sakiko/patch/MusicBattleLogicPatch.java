@@ -35,7 +35,8 @@ public class MusicBattleLogicPatch {
                 if (card instanceof AbstractMusic) {
                     MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).addToRandomSpot(card);
                     iterator.remove();
-                } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
+                    // 排除瓶装
+                } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT) && (!card.inBottleFlame && !card.inBottleLightning && !card.inBottleTornado)) {
                     __instance.discardPile.addToBottom(card);
                     iterator.remove();
                 }
@@ -44,9 +45,9 @@ public class MusicBattleLogicPatch {
     }
 
     /*
-    * 回合开始时，触发音乐牌效果
-    * 自带一个演奏位，每有两名队员，增加一个演奏位
-    * */
+     * 回合开始时，触发音乐牌效果
+     * 自带一个演奏位，每有两名队员，增加一个演奏位
+     * */
     @SpirePatch(clz = AbstractPlayer.class, method = "applyStartOfTurnPostDrawRelics")
     public static class PlayMusicLogic {
         public static void Postfix(AbstractPlayer __instance) {
