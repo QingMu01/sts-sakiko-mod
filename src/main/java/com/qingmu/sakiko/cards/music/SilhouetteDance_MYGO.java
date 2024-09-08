@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -27,7 +28,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     public SilhouetteDance_MYGO() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 3;
         this.baseDamage = 4;
     }
 
@@ -42,7 +43,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     @Override
     public void applyAmount() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
@@ -54,8 +55,17 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
         super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
+        super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
     }

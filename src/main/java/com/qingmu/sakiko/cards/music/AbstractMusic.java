@@ -83,6 +83,10 @@ public abstract class AbstractMusic extends CustomCard {
         return count / countdown;
     }
 
+    public void resetCount() {
+        this.count=0;
+        this.amount=0;
+    }
 
     @SpireOverride
     public void renderSkillPortrait(SpriteBatch sb, float x, float y) {

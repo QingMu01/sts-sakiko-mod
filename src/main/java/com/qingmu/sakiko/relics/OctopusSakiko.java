@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.relics;
 
 import basemod.abstracts.CustomRelic;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -23,27 +24,19 @@ public class OctopusSakiko extends CustomRelic implements OnPlayMusicRelic {
         super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER, LANDING_SOUND);
     }
 
-    private boolean isFirst = true;
     @Override
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
     }
 
-    @Override
-    public void atTurnStart() {
-        this.counter++;
-        this.isFirst = true;
-    }
 
     @Override
     public void onPlayMusicCard(AbstractMusic music) {
-        if (this.isFirst){
-            this.isFirst = false;
-            if (this.counter % 2 == 0) {
-                this.addToBot(new GainEnergyAction(1));
-            } else {
-                this.addToBot(new DrawCardAction(2));
-            }
+        if (GameActionManager.turn % 2 == 0) {
+            this.addToBot(new GainEnergyAction(1));
+        } else {
+            this.addToBot(new DrawCardAction(2));
         }
+
     }
 }

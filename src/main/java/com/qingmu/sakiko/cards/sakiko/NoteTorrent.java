@@ -28,7 +28,7 @@ public class NoteTorrent extends CustomCard {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
     private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
-    private static final int COST = 1;
+    private static final int COST = 2;
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
@@ -59,7 +59,7 @@ public class NoteTorrent extends CustomCard {
         return count;
     }
 
-
+    @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int powerAmount;
         if (this.purgeOnUse) {
@@ -95,7 +95,7 @@ public class NoteTorrent extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(3);
+            this.upgradeBaseCost(1);
         }
     }
 
@@ -104,7 +104,7 @@ public class NoteTorrent extends CustomCard {
         for (int i = 0; i < countCards(); i++) {
             this.addToBot(new DamageRandomEnemyAction(new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         }
-        if (!this.purgeOnUse){
+        if (!this.purgeOnUse) {
             this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
         }
     }

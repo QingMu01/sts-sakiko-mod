@@ -47,7 +47,7 @@ public class AntiReconnaissance extends CustomCard {
     public void triggerOnGlowCheck() {
         this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
         for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            if (m.intent.name().contains("ATTACK") || m.intent.name().contains("DEBUFF") || m.intent == AbstractMonster.Intent.MAGIC) {
+            if (m.intent.name().contains("ATTACK") || m.intent.name().contains("DEBUFF")) {
                 this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
                 break;
             }
@@ -58,7 +58,7 @@ public class AntiReconnaissance extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainBlockAction(p, p, this.block));
-        if (m.intent.name().contains("ATTACK") || m.intent.name().contains("DEBUFF") || m.intent == AbstractMonster.Intent.MAGIC) {
+        if (m.intent.name().contains("ATTACK") || m.intent.name().contains("DEBUFF")) {
             this.addToBot(new DrawCardAction(p, 1));
             this.addToBot(new GainEnergyAction(1));
         }

@@ -25,7 +25,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
     public Mayoiuta_MYGO() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
         this.baseBlock = 3;
     }
 
@@ -40,7 +40,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
     @Override
     public void applyAmount() {
         int realBaseBlock = this.baseBlock;
-        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 3;
         super.applyPowersToBlock();
         this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);
@@ -52,7 +52,7 @@ public class Mayoiuta_MYGO extends AbstractMusic {
     @Override
     public void applyPowersToBlock() {
         int realBaseBlock = this.baseBlock;
-        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 3;
         super.applyPowersToBlock();
         this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);

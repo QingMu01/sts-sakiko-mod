@@ -38,7 +38,7 @@ public class BlackBirthday extends AbstractMusic {
     @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += realBaseMagicNumber + PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         this.magicNumber = Math.min(this.baseMagicNumber, 10);
         super.applyPowers();
         this.baseMagicNumber = realBaseMagicNumber;

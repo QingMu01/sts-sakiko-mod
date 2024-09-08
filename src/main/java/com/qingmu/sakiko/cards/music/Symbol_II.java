@@ -27,7 +27,6 @@ public class Symbol_II extends AbstractMusic {
     public Symbol_II() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
         this.baseMagicNumber = 2;
     }
 
@@ -40,17 +39,27 @@ public class Symbol_II extends AbstractMusic {
     }
 
     @Override
+    public void applyAmount() {
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.magicNumber = Math.min((10 - AbstractDungeon.player.hand.size()), this.baseMagicNumber);
+        this.baseMagicNumber = realBaseMagicNumber;
+        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
+
+    }
+
+    @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         super.applyPowers();
-        this.magicNumber = Math.min(AbstractDungeon.player.gameHandSize, this.baseMagicNumber);
+        this.magicNumber = Math.min((10 - AbstractDungeon.player.hand.size()), this.baseMagicNumber);
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
     }
 
     @Override
     public void play() {
-        this.addToTop(new DrawCardAction(this.amount));
+        this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
     }
 }

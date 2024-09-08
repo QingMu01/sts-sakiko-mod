@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
@@ -50,6 +51,14 @@ public class Mas_uerade extends AbstractMusic {
         this.isDamageModified = (this.damage != this.baseDamage);
     }
 
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
+        super.calculateCardDamage(mo);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
+    }
 
     @Override
     public void play() {

@@ -24,7 +24,7 @@ public class RIOT_RAS extends AbstractMusic {
     public RIOT_RAS() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 3;
+        this.baseMagicNumber = 2;
     }
 
     @Override

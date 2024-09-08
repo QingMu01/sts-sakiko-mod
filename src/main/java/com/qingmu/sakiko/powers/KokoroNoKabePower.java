@@ -142,8 +142,8 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     public void stackDamageAmount(int stackAmount) {
         this.amount2 += stackAmount;
-        if (this.amount2 >= 10) {
-            this.amount2 = 10;
+        if (this.amount2 >= 999) {
+            this.amount2 = 999;
         }
         this.updateDescription();
     }

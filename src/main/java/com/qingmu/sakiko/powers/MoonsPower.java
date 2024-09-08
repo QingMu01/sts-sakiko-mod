@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -47,7 +46,7 @@ public class MoonsPower extends AbstractPower implements OnPlayMusicPower {
             this.flash();
             AbstractDungeon.effectList.add(new DoublePlayEffect(music));
             music.play();
-            this.addToTop(new ReducePowerAction(this.owner, this.owner, this, 1));
+            this.reducePower(1);
         }
     }
 

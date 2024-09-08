@@ -31,14 +31,14 @@ public class Boomerang extends CustomCard {
 
     public Boomerang() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 9;
+        this.baseDamage = 9;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(-3);
+            this.upgradeDamage(3);
         }
     }
 

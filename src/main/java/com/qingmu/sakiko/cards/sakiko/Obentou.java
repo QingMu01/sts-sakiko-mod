@@ -29,6 +29,8 @@ public class Obentou extends CustomCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
+    private int drawCount = 0;
+
     public Obentou() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseMagicNumber = 10;
@@ -42,6 +44,27 @@ public class Obentou extends CustomCard {
             this.upgradeMagicNumber(-3);
         }
     }
+
+    @Override
+    public void applyPowers() {
+        super.applyPowers();
+        if (this.drawCount > 1){
+            this.name = EXTENDED_DESCRIPTION[1];
+            int realBaseMagicNumber = this.baseMagicNumber;
+            this.baseMagicNumber -= 3;
+            this.magicNumber = this.baseMagicNumber;
+            super.applyPowers();
+            this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
+            this.baseMagicNumber = realBaseMagicNumber;
+            this.initializeTitle();
+        }
+    }
+
+    @Override
+    public void triggerWhenDrawn() {
+        this.drawCount++;
+    }
+
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];

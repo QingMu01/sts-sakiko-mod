@@ -4,6 +4,7 @@ import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Anon extends AbstractBandMember implements ClickableRelic {
@@ -26,12 +27,15 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
 
     @Override
     public void onRightClick() {
-        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && this.canUse){
-            if (this.counter > 0) {
-                this.flash();
-                this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 15));
-                this.counter--;
-            }
+        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT){
+            if (this.canUse){
+                if (this.counter > 0) {
+                    this.flash();
+                    this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 15));
+                    this.counter--;
+                }
+            }else {
+                AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, DESCRIPTIONS[1], true));            }
         }
     }
 

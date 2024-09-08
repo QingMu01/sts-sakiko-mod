@@ -25,12 +25,12 @@ public class Tomori extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new KirameiPower(AbstractDungeon.player,1)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new KirameiPower(AbstractDungeon.player,3)));
     }
 
     @Override
     public void removePower() {
-        this.addToBot(new ReducePowerAction(AbstractDungeon.player, AbstractDungeon.player, KirameiPower.POWER_ID, 1));
+        this.addToBot(new ReducePowerAction(AbstractDungeon.player, AbstractDungeon.player, KirameiPower.POWER_ID, 3));
     }
 
 }

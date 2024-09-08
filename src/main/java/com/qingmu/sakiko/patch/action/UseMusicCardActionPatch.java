@@ -56,6 +56,7 @@ public class UseMusicCardActionPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard){
             if (___targetCard instanceof AbstractMusic){
+                ((AbstractMusic)___targetCard).applyAmount();
                 ___targetCard.applyPowers();
                 ((AbstractMusic)___targetCard).applyAmount();
                 CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);

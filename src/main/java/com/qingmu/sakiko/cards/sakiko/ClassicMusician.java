@@ -31,6 +31,7 @@ public class ClassicMusician extends CustomCard {
     public ClassicMusician() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
+        this.baseMagicNumber = 1;
     }
 
     @Override
@@ -43,6 +44,6 @@ public class ClassicMusician extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new ClassicMusicianPower(p, 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new ClassicMusicianPower(p, Math.max(this.magicNumber, this.baseMagicNumber))));
     }
 }

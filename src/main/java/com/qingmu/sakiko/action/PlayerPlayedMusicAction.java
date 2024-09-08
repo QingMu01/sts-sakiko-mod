@@ -35,7 +35,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             this.exhaustCard = true;
         }
         if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn){
-
+            this.music.count = AbstractDungeon.actionManager.cardsPlayedThisTurn.size();
+            this.music.amount = this.music.calculateCardAmount(this.music.count,Math.max(this.music.baseMagicNumber, this.music.magicNumber));
         }
         // 调用钩子
         this.music.calculateCardDamage((AbstractMonster) this.target);
@@ -99,6 +100,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             else this.vfxDone = true;
         }
         this.music.play();
+        this.music.resetCount();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
         if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
             AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));

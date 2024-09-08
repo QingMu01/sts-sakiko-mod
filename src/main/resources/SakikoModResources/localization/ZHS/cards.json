@@ -44,7 +44,7 @@
   },
   "SakikoMod:StageMachine": {
     "NAME": "舞台装置",
-    "DESCRIPTION": "获得 sakikomod: !M! 倍的格挡。 NL 清空你的 *音符 。",
+    "DESCRIPTION": "获得 sakikomod:音符 !M! 倍的格挡。 NL 清空你的 *音符 。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得 !B! 点格挡）"
     ]
@@ -65,7 +65,7 @@
   },
   "SakikoMod:Overtime": {
     "NAME": "加班",
-    "DESCRIPTION": "获得 [E] 获得 2 层 sakikomod:过劳 。",
+    "DESCRIPTION": "获得 [E] 。获得 2 层 sakikomod:过劳 。",
     "UPGRADE_DESCRIPTION": "获得 [E] ,抽1张牌。获得 2 层 sakikomod:过劳 。"
   },
   "SakikoMod:CutOfMemory": {
@@ -74,7 +74,7 @@
   },
   "SakikoMod:BandGirlsExperience": {
     "NAME": "乐队少女心得",
-    "DESCRIPTION": "造成 !D! 伤害。 NL 造成超过 !M! 点未被格挡的伤害时，获得 1 sakikomod:闪耀 。"
+    "DESCRIPTION": "造成 !D! 点伤害，若本次攻击未被格挡则掠夺目标的 !M! 层 sakikomod:闪耀 。"
   },
   "SakikoMod:Minagoroshi": {
     "NAME": "皆杀",
@@ -305,7 +305,8 @@
     "NAME": "便当",
     "DESCRIPTION": "恢复 10 点生命值。失去 !M! 枚 *金币 。 NL *消耗 。",
     "EXTENDED_DESCRIPTION": [
-      "买不起便当desuwa..."
+      "买不起便当desuwa...",
+      "打折便当"
     ]
   },
   "SakikoMod:Disguise": {
@@ -414,7 +415,7 @@
   },
   "SakikoMod:Angles": {
     "NAME": "Angles",
-    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次。 NL （每层 sakikomod:闪耀 额外造成1次伤害）"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次。 NL （每3层 sakikomod:闪耀 额外造成1次伤害）"
   },
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
@@ -523,14 +524,14 @@
   },
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
-    "DESCRIPTION": " sakikomod:计数 1 NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *计数 层数次。每层 sakikomod:闪耀 增加1点伤害。",
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *计数 层数次。每4层 sakikomod:闪耀 增加1点伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成%d次）"
     ]
   },
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",
-    "DESCRIPTION": " sakikomod:计数 1 NL sakikomod:演奏 ：每层 *计数 获得!B!点格挡。每层 sakikomod:闪耀 增加1点格挡。",
+    "DESCRIPTION": " sakikomod:计数 !M! NL sakikomod:演奏 ：每层 *计数 获得!B!点格挡。每3层 sakikomod:闪耀 增加1点格挡。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得%d点）"
     ]

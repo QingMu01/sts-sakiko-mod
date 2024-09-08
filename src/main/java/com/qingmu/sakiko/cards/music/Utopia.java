@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -46,6 +47,14 @@ public class Utopia extends AbstractMusic {
         this.isDamageModified = (this.damage != this.baseDamage);
     }
 
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
+        super.calculateCardDamage(mo);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
+    }
 
     @Override
     public void play() {
