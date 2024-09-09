@@ -52,7 +52,9 @@ public class MusicBattleLogicPatch {
     public static class PlayMusicLogic {
         public static void Postfix(AbstractPlayer __instance) {
             int currCount = 1 + (MemberHelper.getBandMemberCount() / 2);
-            AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(currCount));
+            if (!MusicBattleFiledPatch.MusicQueue.musicQueue.get(__instance).isEmpty()){
+                AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(currCount));
+            }
         }
     }
 }

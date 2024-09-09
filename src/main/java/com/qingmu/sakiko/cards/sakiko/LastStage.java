@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -44,6 +45,15 @@ public class LastStage extends CustomCard {
     }
 
     @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage = realBaseDamage + (this.exhaustCount * (Math.max(this.magicNumber,this.baseMagicNumber)));
+        super.calculateCardDamage(mo);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
+    }
+
+    @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
@@ -54,5 +64,12 @@ public class LastStage extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new LastStageAction(p, m, this));
+    }
+
+    @Override
+    public AbstractCard makeSameInstanceOf() {
+        AbstractCard card = super.makeSameInstanceOf();
+        ((LastStage)card).exhaustCount = this.exhaustCount;
+        return card;
     }
 }

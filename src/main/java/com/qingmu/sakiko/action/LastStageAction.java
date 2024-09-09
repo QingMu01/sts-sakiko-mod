@@ -39,6 +39,8 @@ public class LastStageAction extends AbstractGameAction {
         if (this.duration == this.startDuration) {
             if (this.cardGroup.isEmpty()) {
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.source.dialogX, this.source.dialogY, 3.0F, uiStrings.TEXT[0], true));
+                this.card.applyPowers();
+                this.addToBot(new DamageAction(this.target, new DamageInfo(this.source, this.card.damage, this.card.damageTypeForTurn), AttackEffect.SLASH_HEAVY));
                 this.isDone = true;
             } else {
                 CardGroup temp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);

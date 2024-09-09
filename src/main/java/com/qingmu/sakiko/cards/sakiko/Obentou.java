@@ -2,6 +2,7 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.HealAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -75,5 +76,12 @@ public class Obentou extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new HealAction(p, p, 10));
         this.addToBot(new LoseGoldAction(Math.max(this.magicNumber,this.baseMagicNumber)));
+    }
+
+    @Override
+    public AbstractCard makeSameInstanceOf() {
+        AbstractCard card = super.makeSameInstanceOf();
+        ((Obentou)card).drawCount = this.drawCount;
+        return card;
     }
 }

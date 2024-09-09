@@ -39,6 +39,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             this.music.amount = this.music.calculateCardAmount(this.music.count,Math.max(this.music.baseMagicNumber, this.music.magicNumber));
         }
         // 调用钩子
+        this.music.applyAmount();
+        this.music.applyPowers();
         this.music.calculateCardDamage((AbstractMonster) this.target);
         for (AbstractPower power : AbstractDungeon.player.powers) {
             if (power instanceof OnPlayMusicPower) {
