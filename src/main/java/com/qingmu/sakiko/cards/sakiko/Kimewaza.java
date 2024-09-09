@@ -28,7 +28,6 @@ public class Kimewaza extends CustomCard {
 
     public Kimewaza() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 9;
         this.exhaust = true;
     }
 
@@ -36,7 +35,7 @@ public class Kimewaza extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(4);
+            this.upgradeBaseCost(1);
         }
     }
 

@@ -53,11 +53,15 @@ public class Denying extends CustomCard {
     }
 
     @Override
+    public void onMoveToDiscard() {
+        super.onMoveToDiscard();
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
         this.addToBot(new ActiveKabeAction());
-
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 }

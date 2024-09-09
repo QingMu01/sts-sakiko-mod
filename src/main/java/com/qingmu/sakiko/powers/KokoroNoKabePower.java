@@ -63,7 +63,7 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1] + this.amount2 + DESCRIPTIONS[2] + (this.limit - this.counter) + DESCRIPTIONS[3];
+        this.description = DESCRIPTIONS[0] + DESCRIPTIONS[1] + this.blockFromKabe + DESCRIPTIONS[2] + this.amount2 + DESCRIPTIONS[3] + (this.limit - this.counter) + DESCRIPTIONS[4];
     }
 
     @Override
@@ -75,17 +75,31 @@ public class KokoroNoKabePower extends TwoAmountPower {
         } else {
             this.blockFromKabe = 0;
         }
-        this.addToBot(new ActiveKabeAction());
+        this.updateDescription();
     }
 
     @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            this.addToBot(new ActiveKabeAction());
+        }
+    }
+
+    /*
+     * 被攻击后触发的钩子
+     * DamageInfo 攻击信息，存有伤害来源、类型、攻击伤害等信息
+     * damageAmount 计算完格挡后的伤害
+     * */
+    @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
         int currentBlock = this.owner.currentBlock;
-        // 如果剩余格挡高于从心之壁获得的格挡，则心之壁不造成伤害
-        if (this.amount2 == 0 || currentBlock >= this.blockFromKabe || this.blockFromKabe == 0) {
-            this.blockFromKabe -= damageAmount;
+        this.blockFromKabe -= info.output;
+        this.blockFromKabe = Math.max(this.blockFromKabe, 0);
+        if (this.amount2 == 0 || (currentBlock > this.blockFromKabe)) {
             return damageAmount;
         }
+
+        // 寻找背锅
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if (monster.hasPower(ScapegoatPower.POWER_ID)) {
                 this.addToTop(new LoseHPAction(monster, monster, this.amount2));

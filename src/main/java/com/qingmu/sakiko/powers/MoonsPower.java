@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.effect.DoublePlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
@@ -45,6 +46,9 @@ public class MoonsPower extends AbstractPower implements OnPlayMusicPower {
         if (this.amount > 0) {
             this.flash();
             AbstractDungeon.effectList.add(new DoublePlayEffect(music));
+            music.applyAmount();
+            music.applyPowers();
+            music.calculateCardDamage((AbstractMonster) music.music_target);
             music.play();
             this.reducePower(1);
         }

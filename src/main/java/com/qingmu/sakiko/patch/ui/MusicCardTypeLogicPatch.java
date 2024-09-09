@@ -26,7 +26,7 @@ public class MusicCardTypeLogicPatch {
     public static class GetCardBgAtlasPatch {
         public static SpireReturn<TextureAtlas.AtlasRegion> Prefix(AbstractCard __instance) {
             if (__instance instanceof AbstractMusic) {
-                return SpireReturn.Return(ImageMaster.CARD_SKILL_BG_SILHOUETTE);
+                return SpireReturn.Return(ImageMaster.CARD_SKILL_BG_GRAY);
             } else {
                 return SpireReturn.Continue();
             }

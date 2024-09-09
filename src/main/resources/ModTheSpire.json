@@ -2,10 +2,10 @@
   "modid": "sakikoMod",
   "name": "sakikoMod",
   "author_list": ["QingMu"],
-  "description": "丰川祥子为了承担别人一生而来到尖塔探寻永存者的真相",
+  "description": "添加了BangDream企划中，Ave Mujica乐队所属的角色——丰川祥子。",
   "version": "0.0.1",
   "sts_version": "12-22-2020",
   "mts_version": "3.30.3",
   "dependencies": ["basemod","stslib"],
-  "optional_dependencies": []
+  "optional_dependencies": ["AnonMod"]
 }

@@ -9,7 +9,7 @@
   },
   "SakikoMod:Professional": {
     "NAME": "职业素养",
-    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。 NL 获得 *心之壁 层数的格挡。"
+    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。 NL sakikomod:激活 你的心之壁。"
   },
   "SakikoMod:MusicalComposition": {
     "NAME": "音乐创作",
@@ -229,8 +229,8 @@
   },
   "SakikoMod:EscapeSakiko": {
     "NAME": "逃避",
-    "DESCRIPTION": "获得 X 3倍的 sakikomod:心之壁 。然后获得 *心之壁 层数的格挡。",
-    "UPGRADE_DESCRIPTION": "获得 (X+2) 3倍的 sakikomod:心之壁 。然后获得 *心之壁 层数的格挡。"
+    "DESCRIPTION": "获得 X 3倍的 sakikomod:心之壁 。 sakikomod:激活 你的心之壁。",
+    "UPGRADE_DESCRIPTION": "获得 (X+2) 3倍的 sakikomod:心之壁 。 sakikomod:激活 你的心之壁。"
   },
   "SakikoMod:ClassicMusician": {
     "NAME": "古典音乐家",
@@ -281,7 +281,7 @@
   },
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
-    "DESCRIPTION": "造成 !D! 点伤害，获得 sakikomod:心之壁 层数点 *格挡 。",
+    "DESCRIPTION": "造成 !D! 点伤害， sakikomod:激活 你的心之壁。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得 %d 点格挡。）"
     ]
@@ -386,7 +386,7 @@
   },
   "SakikoMod:Countermeasures": {
     "NAME": "反制",
-    "DESCRIPTION": "造成 !D! 点伤害，如果本次攻击造成的生命值损失高于目标将要造成的伤害，给予目标1层 sakikomod:拉黑 。"
+    "DESCRIPTION": "造成 !D! 点伤害，如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，给予目标1层 sakikomod:拉黑 。"
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",

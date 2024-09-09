@@ -39,7 +39,8 @@ public class YowaiwatashiAction extends AbstractGameAction {
                 int tmp = this.p.hand.size();
                 for (int i = 0; i < tmp; i++) {
                     AbstractCard c = this.p.hand.getTopCard();
-                    this.p.hand.moveToDiscardPile(c);
+                    this.p.hand.moveToExhaustPile(c);
+                    this.addToBot(new MakeTempCardInHandAction(new Remember()));
                 }
                 AbstractDungeon.player.hand.applyPowers();
                 tickDuration();

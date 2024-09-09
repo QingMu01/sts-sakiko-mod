@@ -46,6 +46,13 @@
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/1609158507/StsLib.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>anonmod</groupId>
+            <artifactId>anonmod</artifactId>
+            <version>0.8.3</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/3248151544/AnonMod.jar</systemPath>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>actlikeit</groupId>-->
 <!--            <artifactId>actlikeit</artifactId>-->

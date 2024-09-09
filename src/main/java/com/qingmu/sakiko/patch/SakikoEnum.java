@@ -59,6 +59,8 @@ public class SakikoEnum {
 
         @SpireEnum
         public static AbstractCard.CardTags AVE_MUJICA;
+        @SpireEnum
+        public static AbstractCard.CardTags ANON_MOD;
     }
 
     /*
