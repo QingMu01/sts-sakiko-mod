@@ -53,9 +53,6 @@ public class ChaosMonsterInfoPatch {
                     ___intentMultiAmt[0] = -1;
                     ___isMultiDmg[0] = false;
                 }
-                FakeMonsterInfo fakeMonsterInfo = new FakeMonsterInfo();
-                fakeMonsterInfo.init(__instance.currentHealth, __instance.maxHealth, __instance.currentBlock);
-                FakeMonsterInfoPatch.fakeMonsterInfo.set(__instance, fakeMonsterInfo);
             }
         }
 

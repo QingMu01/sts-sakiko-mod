@@ -29,7 +29,9 @@ public class KirameiPower extends AbstractPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         if (this.owner.hasPower(KingOfTingPower.POWER_ID)){
-            this.amount = amount + this.owner.getPower(KingOfTingPower.POWER_ID).amount;
+            AbstractPower power = this.owner.getPower(KingOfTingPower.POWER_ID);
+            power.flash();
+            this.amount = amount + power.amount;
         }else {
             this.amount = amount;
         }

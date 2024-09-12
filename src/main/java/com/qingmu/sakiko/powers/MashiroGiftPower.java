@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.patch.ui.ChaosMonsterInfoPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MashiroGiftPower extends AbstractPower {
@@ -42,6 +43,9 @@ public class MashiroGiftPower extends AbstractPower {
     public void onInitialApplication() {
         AbstractDungeon.getCurrRoom().monsters.monsters.forEach((monster -> {
             monster.createIntent();
+            ChaosMonsterInfoPatch.FakeMonsterInfo fakeMonsterInfo = new ChaosMonsterInfoPatch.FakeMonsterInfo();
+            fakeMonsterInfo.init(this.owner.currentHealth, this.owner.maxHealth, this.owner.currentBlock);
+            ChaosMonsterInfoPatch.FakeMonsterInfoPatch.fakeMonsterInfo.set(this.owner, fakeMonsterInfo);
             monster.healthBarUpdatedEvent();
         }));
     }
