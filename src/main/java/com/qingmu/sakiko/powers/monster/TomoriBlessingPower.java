@@ -1,14 +1,12 @@
 package com.qingmu.sakiko.powers.monster;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class TomoriBlessingPower extends AbstractPower {
@@ -45,17 +43,6 @@ public class TomoriBlessingPower extends AbstractPower {
         }
         if (this.amount >= 999) {
             this.amount = 999;
-        }
-    }
-
-    @Override
-    public void onApplyPower(AbstractPower power, AbstractCreature target, AbstractCreature source) {
-        if (power.ID.equals(KokoroNoKabePower.POWER_ID) && target == this.owner) {
-            int lastApply = ((KokoroNoKabePower) power).lastApply;
-            if (lastApply > 1) {
-                this.flash();
-                this.addToBot(new ReducePowerAction(this.owner, this.owner, KokoroNoKabePower.POWER_ID, (int) Math.floor(lastApply / 2.0d)));
-            }
         }
     }
 

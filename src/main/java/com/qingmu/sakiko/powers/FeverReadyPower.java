@@ -37,11 +37,18 @@ public class FeverReadyPower extends AbstractPower {
     }
 
     @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+        }
+    }
+
+    @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        if (this.amount >= 5){
+        if (this.amount >= 3) {
             this.flash();
-            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
+            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
             this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverPower(this.owner, 1)));
         }
     }
@@ -49,7 +56,7 @@ public class FeverReadyPower extends AbstractPower {
     @Override
     public void reducePower(int reduceAmount) {
         this.amount -= reduceAmount;
-        if (this.amount <= 0){
+        if (this.amount <= 0) {
             this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this.ID));
         }
     }

@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
 
@@ -36,14 +37,14 @@ public class MutsumiMonster extends AbstractMemberMonster {
     public void usePreBattleAction() {
         super.usePreBattleAction();
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.MUTSUMI_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.MUTSUMI_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override

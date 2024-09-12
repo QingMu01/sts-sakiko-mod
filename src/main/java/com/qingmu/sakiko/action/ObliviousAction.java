@@ -15,7 +15,6 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.inteface.power.OnObliviousPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousAction extends AbstractGameAction {
@@ -56,14 +55,6 @@ public class ObliviousAction extends AbstractGameAction {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, EnergyPanel.getCurrentEnergy(), true, true), true);
                     } else {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
-                    }
-                    if (!RemoveCardFiledPatch.remove_flag.get(card)) {
-                        if ((card.type != AbstractCard.CardType.POWER && !card.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) || !RemoveCardFiledPatch.remove_flag.get(card)) {
-                            groups.get(card).moveToExhaustPile(card);
-                        } else {
-                            AbstractDungeon.player.hand.removeCard(card);
-                            RemoveCardFiledPatch.remove_flag.set(card, false);
-                        }
                     }
                 }
             }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));

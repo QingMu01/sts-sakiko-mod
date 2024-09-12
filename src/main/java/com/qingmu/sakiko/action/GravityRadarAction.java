@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.action;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -8,12 +9,12 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.modifier.MoonLightModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class GravityRadarAction extends AbstractGameAction {
 
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("LastStageAction"));
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("SelectCard"));
 
     private CardGroup cardGroup;
     private int num;
@@ -37,13 +38,13 @@ public class GravityRadarAction extends AbstractGameAction {
                 }
                 temp.sortAlphabetically(true);
                 temp.sortByRarityPlusStatusCardType(false);
-                AbstractDungeon.gridSelectScreen.open(temp, this.num, true, uiStrings.TEXT[1]);
+                AbstractDungeon.gridSelectScreen.open(temp, this.num, true, String.format(uiStrings.TEXT[6], this.num));
                 this.tickDuration();
             }
         } else {
             if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
                 for (AbstractCard card : AbstractDungeon.gridSelectScreen.selectedCards){
-                    card.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
+                    CardModifierManager.addModifier(card, new MoonLightModifier());
                     cardGroup.moveToDiscardPile(card);
                 }
             }

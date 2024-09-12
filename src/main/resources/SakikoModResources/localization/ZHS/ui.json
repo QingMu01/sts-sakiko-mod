@@ -1,4 +1,11 @@
 {
+  "SakikoMod:Config": {
+    "TEXT": [
+      "语音音量",
+      "其他角色启用本Mod专属Boss（暂时没有！）",
+      "启用爱音Mod卡牌"
+    ]
+  },
   "SakikoMod:MusicDrawPilePanel": {
     "TEXT": [
       "我的歌单是 #r空的 。"
@@ -38,22 +45,47 @@
       "敌方将要演奏的音乐。"
     ]
   },
-  "SakikoMod:MusicLifeAction": {
+  "SakikoMod:SelectCard": {
     "TEXT": [
+      "我的抽牌堆是 #r空的 。",
+      "我的手中没有牌了。",
+      "我的弃牌堆是 #r空的 。",
+      "我的消耗堆是 #r空的 。",
       "我的歌单是 #r空的 。",
-      "选择任意张牌"
+      "选择任意张牌",
+      "选择%d张牌"
     ]
   },
-  "SakikoMod:LastStageAction": {
+  "SakikoMod:MoonLightModifier": {
     "TEXT": [
-      "我的歌单是 #r空的 。",
-      "选择任意张牌"
+      "%s NL sakikomod:白月光 "
     ]
   },
-  "SakikoMod:YowaiwatashiAction": {
+  "SakikoMod:RememberModifier": {
     "TEXT": [
-      "我的歌单是 #r空的 。",
-      "选择任意张牌"
+      "%s NL sakikomod:破碎的回忆  "
+    ]
+  },
+  "SakikoMod:ChaosInfo": {
+    "TEXT": [
+      "黑暗吟游诗人",
+      "黑暗之剑",
+      "漆黑的玫瑰人生",
+      "最强攻击魔法——EXPLOSION",
+      "无法超越的破灭——EXPLOSION",
+      "崩坏万象——EXPLOSION",
+      "不可视境界线",
+      "黑翼杰克斯原型Ⅱ"
+    ],
+    "EXTRA_TEXT": [
+      "一切的生命只不过是被困于永恒黑暗中甜蜜的奴隶。",
+      "狱炎的黑暗之剑将斩断你的隐形之法！",
+      "侵蚀心灵的重力共振...爱之迷宫恋之曲径你与我的魔导书，吾后背初生的羽翼伴随着漆黑的阴翳。血腥的玫瑰人生！",
+      "比黑色更黑，比黑暗更暗的漆黑，在此寄讬吾真红的金光吧！",
+      "觉醒之时的到来，荒谬教会的堕落章理，成为无形的扭曲而显现吧！",
+      "起舞吧，起舞吧，起舞吧！吾之力量本源之愿的崩坏，无人可及的崩坏，将天地万象焚烧殆尽，自深渊降临吧，这就是人类最强威力的攻击手段，这就是究级攻击魔法， Explosion！",
+      "爆裂吧，现实！粉碎吧，精神！Banishiment this world！",
+      "绽裂吧暗之扉！解放所现黑暗，将终焉的王之力贯彻虚空引路终世！"
     ]
   }
 }

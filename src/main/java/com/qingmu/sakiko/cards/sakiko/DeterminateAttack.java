@@ -4,7 +4,6 @@ import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -38,44 +37,23 @@ public class DeterminateAttack extends CustomCard {
     public DeterminateAttack() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-        this.baseDamage = 0;
-        this.baseMagicNumber = 1;
+        this.baseDamage = 9;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.upgradeDamage(4);
         }
     }
 
-    @Override
-    public void applyPowers() {
-        int powerAmount;
-        if (this.purgeOnUse) {
-            powerAmount = MusicalNotePower.LAST_APPLY;
-        } else {
-            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
-        }
-        this.baseDamage = powerAmount;
-        super.applyPowers();
-        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
-        this.initializeDescription();
-    }
-
-    @Override
-    public void onMoveToDiscard() {
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
-    }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        this.addToBot(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
-        if (!this.purgeOnUse){
-            this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
-        }
+        int needToDraw = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) / 2;
+        if (needToDraw > 0)
+            this.addToBot(new DrawCardAction(p, needToDraw));
     }
 }

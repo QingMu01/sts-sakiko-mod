@@ -1,19 +1,23 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.DrawMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.relics.Speaker;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MusicalNotePower extends AbstractPower {
+public class MusicalNotePower extends TwoAmountPower {
 
     public static final String POWER_ID = ModNameHelper.make(MusicalNotePower.class.getSimpleName());
 
@@ -27,26 +31,18 @@ public class MusicalNotePower extends AbstractPower {
 
     private static final String path128 = "SakikoModResources/img/powers/MusicalNote128.png";
 
-    private int turn_count = 0;
+    private int triggerProgress = 4;
 
-    private int drawTrigger = 4;
-
-    private int limit = 24;
-
-    public static int LAST_APPLY = 0;
 
     public MusicalNotePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        if (AbstractDungeon.player.hasRelic(Speaker.ID)){
+        if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
             this.amount = amount * 2;
-            LAST_APPLY = amount * 2;
-        }
-        else{
+        } else {
             this.amount = amount;
-            LAST_APPLY = amount * 2;
         }
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
@@ -56,47 +52,40 @@ public class MusicalNotePower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        if (this.drawTrigger - this.amount >= 0)
-            this.description = String.format(DESCRIPTIONS[0], this.drawTrigger, this.drawTrigger) + String.format(DESCRIPTIONS[1], this.drawTrigger - this.amount);
-        else
-            this.description = String.format(DESCRIPTIONS[0], this.drawTrigger, this.drawTrigger) + DESCRIPTIONS[2];
+        this.description = DESCRIPTIONS[0] + String.format(DESCRIPTIONS[1], this.triggerProgress - this.amount);
     }
 
     @Override
-    public void atStartOfTurn() {
-        this.turn_count = 0;
-        this.drawTrigger = 4;
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            this.amount = 0;
+            this.amount2 = 0;
+            this.triggerProgress = 4;
+        }
     }
 
     @Override
     public void stackPower(int stackAmount) {
+        int tmp;
         if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
             AbstractDungeon.player.getRelic(Speaker.ID).flash();
-            this.limit = 48;
+            tmp = stackAmount * 2;
         } else {
-            this.limit = 24;
+            tmp = stackAmount;
         }
-        this.amount += stackAmount;
-        LAST_APPLY = this.amount;
-        this.turn_count += stackAmount;
-        if (this.amount > this.limit) {
-            this.amount = this.limit;
-        }
-        if (this.amount >= this.drawTrigger) {
-            int count = (int) AbstractDungeon.player.discardPile.group.stream().filter(card -> card instanceof AbstractMusic).count() + MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).size();
-            int needToDraw = 0;
-            if (count > 0) {
-                do {
-                    this.reducePower(Math.min(this.drawTrigger, 12));
-                    this.drawTrigger += 4;
-                    needToDraw++;
-                } while (this.amount >= Math.min(this.drawTrigger, 12));
-                if (count > needToDraw) {
-                    this.addToBot(new DrawMusicAction(needToDraw));
-                } else {
-                    this.addToBot(new DrawMusicAction(count));
-                }
-            }
+        this.amount += tmp;
+        Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
+        MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + tmp);
+
+        if (this.amount >= this.triggerProgress) {
+            do {
+                this.amount2++;
+                this.reducePower(this.triggerProgress);
+                this.triggerProgress += 4;
+                Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
+                MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
+            } while (this.amount >= this.triggerProgress);
+            this.handleProgress();
         }
     }
 
@@ -108,7 +97,35 @@ public class MusicalNotePower extends AbstractPower {
         }
     }
 
-    public int getTurnCount() {
-        return this.turn_count;
+    public static int getTurnCount() {
+        return MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(AbstractDungeon.player);
+    }
+
+    public static int getCombatCount() {
+        return MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(AbstractDungeon.player);
+    }
+
+    public void handleProgress() {
+        if (this.amount2 >= 1) {
+            this.flash();
+            long count = AbstractDungeon.player.discardPile.group.stream().filter(e -> e instanceof AbstractMusic).count();
+            if (count > 0 || !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.owner).isEmpty())
+                this.addToBot(new DrawMusicAction());
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverReadyPower(this.owner, 1)));
+        }
+        if (this.amount2 >= 2) {
+            this.addToBot(new DrawCardAction(1));
+        }
+        if (this.amount2 >= 3) {
+            this.addToBot(new GainEnergyAction(1));
+        }
+    }
+
+    public PowerTip getInfoTip() {
+        PowerTip powerTip = new PowerTip();
+        powerTip.img = this.region128.getTexture();
+        powerTip.header = DESCRIPTIONS[2];
+        powerTip.body = DESCRIPTIONS[3] + DESCRIPTIONS[4] + DESCRIPTIONS[5];
+        return powerTip;
     }
 }

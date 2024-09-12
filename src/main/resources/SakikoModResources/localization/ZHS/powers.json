@@ -2,9 +2,12 @@
   "SakikoMod:MusicalNotePower": {
     "NAME": "音符",
     "DESCRIPTIONS": [
-      "每获得 #b%d 层音符，从歌单抽一张 #y音乐 牌，然后失去 #b%d 层音符。",
-      " NL （再获得%d层即可抽牌）",
-      " NL （你的牌堆中没有可供抽取的音乐牌）"
+      "积累音符能获得 #y乐章 奖励。",
+      " NL 下一次形成乐章还差 #b%d 层音符。",
+      "乐章奖励",
+      "1.从歌单中抽一张牌。",
+      " NL 2.从抽牌堆抽一张牌。",
+      " NL 3.获得 [E] 。"
     ]
   },
   "SakikoMod:KirameiPower": {
@@ -26,7 +29,8 @@
   "SakikoMod:FeverPower": {
     "NAME": "Fever",
     "DESCRIPTIONS": [
-      "你打出的下一张 #y非音乐牌 无视耗能，且打出两次。"
+      "你可以免费打出 #b",
+      " 张 #y非音乐牌 。"
     ]
   },
   "SakikoMod:LoseEnergizedPower": {
@@ -79,7 +83,7 @@
   "SakikoMod:FeverReadyPower": {
     "NAME": "准备中",
     "DESCRIPTIONS": [
-      "当你有 #b5 层 #y准备中 时，进入 #yFever 。"
+      "当你有 #b3 层 #y准备中 时，进入 #yFever 。 NL #y准备中 会在回合结束时清空。"
     ]
   },
   "SakikoMod:SekaikanPower": {
@@ -192,6 +196,12 @@
     "DESCRIPTIONS": [
       "你获得 #y闪耀 时，额外获得 #b",
       " 层。"
+    ]
+  },
+  "SakikoMod:MashiroGiftPower": {
+    "NAME": "仓田前辈的赠礼",
+    "DESCRIPTIONS": [
+      "你现在无法看见敌人真实的意图与属性。回合开始时下降一层。"
     ]
   },
   "SakikoMod:AnonDasuruPower": {

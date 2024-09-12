@@ -14,13 +14,12 @@ public class ActiveKabeAction extends AbstractGameAction {
     @Override
     public void update() {
         int powerAmount = PowerHelper.getPowerAmount(KokoroNoKabePower.POWER_ID);
-        if (powerAmount == 0){
+        if (powerAmount == 0) {
             this.isDone = true;
             return;
         }
         KokoroNoKabePower power = (KokoroNoKabePower) AbstractDungeon.player.getPower(KokoroNoKabePower.POWER_ID);
-        power.blockFromKabe += powerAmount;
-        power.updateDescription();
+        power.stackBlockFromKabe(powerAmount);
         this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, powerAmount));
         this.isDone = true;
     }

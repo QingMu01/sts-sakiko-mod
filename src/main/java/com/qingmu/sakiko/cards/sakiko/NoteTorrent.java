@@ -3,7 +3,6 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -11,6 +10,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.ResetMusicalNoteAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -38,8 +38,8 @@ public class NoteTorrent extends CustomCard {
     public NoteTorrent() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-        this.exhaust = true;
         this.baseDamage = 0;
+        this.baseMagicNumber = 3;
     }
 
     public static int countCards() {
@@ -61,32 +61,20 @@ public class NoteTorrent extends CustomCard {
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        int powerAmount;
-        if (this.purgeOnUse) {
-            powerAmount = MusicalNotePower.LAST_APPLY;
-        } else {
-            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
-        }
-
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += powerAmount;
+        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     public void applyPowers() {
-        int powerAmount;
-        if (this.purgeOnUse) {
-            powerAmount = MusicalNotePower.LAST_APPLY;
-        } else {
-            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
-        }
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += powerAmount;
+        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
+
         this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], countCards());
         this.initializeDescription();
     }
@@ -95,7 +83,7 @@ public class NoteTorrent extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);
+            this.upgradeMagicNumber(1);
         }
     }
 
@@ -104,8 +92,6 @@ public class NoteTorrent extends CustomCard {
         for (int i = 0; i < countCards(); i++) {
             this.addToBot(new DamageRandomEnemyAction(new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         }
-        if (!this.purgeOnUse) {
-            this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
-        }
+        this.addToBot(new ResetMusicalNoteAction());
     }
 }

@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.patch.filed.GameActionManagerFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -47,7 +47,7 @@ public class CurtainCall extends CustomCard {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        int size = GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager).size();
+        int size = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
         this.baseDamage = realBaseDamage + (size * Math.max(this.magicNumber, this.baseMagicNumber));
         super.applyPowers();
         this.baseDamage = realBaseDamage;

@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -59,7 +58,6 @@ public class AntiReconnaissance extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainBlockAction(p, p, this.block));
         if (m.intent.name().contains("ATTACK") || m.intent.name().contains("DEBUFF")) {
-            this.addToBot(new DrawCardAction(p, 1));
             this.addToBot(new GainEnergyAction(1));
         }
     }

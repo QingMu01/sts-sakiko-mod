@@ -7,14 +7,12 @@ import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.FeverReadyPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import power.musicStart;
 import power.songs;
@@ -65,8 +63,6 @@ public class AnonMusicCardPatch {
         public void use(AbstractPlayer p, AbstractMonster m) {
             this.anonCard.use(p, m);
             this.usedTurn = GameActionManager.turn;
-            this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FeverReadyPower(AbstractDungeon.player, 1)));
-
         }
 
         @Override

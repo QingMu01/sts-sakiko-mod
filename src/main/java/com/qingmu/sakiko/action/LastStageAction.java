@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class LastStageAction extends AbstractGameAction {
 
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("LastStageAction"));
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("SelectCard"));
 
     private LastStage card;
     private CardGroup cardGroup;
@@ -38,7 +38,7 @@ public class LastStageAction extends AbstractGameAction {
     public void update() {
         if (this.duration == this.startDuration) {
             if (this.cardGroup.isEmpty()) {
-                AbstractDungeon.effectList.add(new ThoughtBubble(this.source.dialogX, this.source.dialogY, 3.0F, uiStrings.TEXT[0], true));
+                AbstractDungeon.effectList.add(new ThoughtBubble(this.source.dialogX, this.source.dialogY, 3.0F, uiStrings.TEXT[4], true));
                 this.card.applyPowers();
                 this.addToBot(new DamageAction(this.target, new DamageInfo(this.source, this.card.damage, this.card.damageTypeForTurn), AttackEffect.SLASH_HEAVY));
                 this.isDone = true;
@@ -49,7 +49,7 @@ public class LastStageAction extends AbstractGameAction {
                 }
                 temp.sortAlphabetically(true);
                 temp.sortByRarityPlusStatusCardType(false);
-                AbstractDungeon.gridSelectScreen.open(temp, 999, true, uiStrings.TEXT[1]);
+                AbstractDungeon.gridSelectScreen.open(temp, 999, true, uiStrings.TEXT[5]);
                 this.tickDuration();
             }
         } else {

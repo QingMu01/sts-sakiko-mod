@@ -12,7 +12,7 @@ import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicLifeAction extends AbstractGameAction {
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("LastStageAction"));
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("SelectCard"));
 
     private CardGroup cardGroup;
 
@@ -27,7 +27,7 @@ public class MusicLifeAction extends AbstractGameAction {
     public void update() {
         if (this.duration == this.startDuration) {
             if (this.cardGroup.isEmpty()) {
-                AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, uiStrings.TEXT[0], true));
+                AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, uiStrings.TEXT[4], true));
                 this.isDone = true;
             } else {
                 CardGroup temp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
@@ -36,7 +36,7 @@ public class MusicLifeAction extends AbstractGameAction {
                 }
                 temp.sortAlphabetically(true);
                 temp.sortByRarityPlusStatusCardType(false);
-                AbstractDungeon.gridSelectScreen.open(temp, this.amount, true, uiStrings.TEXT[1]);
+                AbstractDungeon.gridSelectScreen.open(temp, this.amount, true, String.format(uiStrings.TEXT[6], this.amount));
                 this.tickDuration();
             }
         } else {

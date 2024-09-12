@@ -3,11 +3,11 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.AttackDamageRandomEnemyAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.ResetMusicalNoteAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -35,7 +35,7 @@ public class BurnBoats extends CustomCard {
     public BurnBoats() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-        this.baseDamage = 2;
+        this.baseDamage = 4;
     }
 
     @Override
@@ -47,32 +47,11 @@ public class BurnBoats extends CustomCard {
     }
 
     @Override
-    public void applyPowers() {
-        super.applyPowers();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID));
-        this.initializeDescription();
-    }
-
-    @Override
-    public void onMoveToDiscard() {
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
-    }
-
-    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int powerAmount;
-        if (this.purgeOnUse) {
-            powerAmount = MusicalNotePower.LAST_APPLY;
-        } else {
-            powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
-        }
-        for (int i = 0; i < (powerAmount / 2); i++) {
+        int powerAmount = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID);
+        for (int i = 0; i < powerAmount; i++) {
             this.addToBot(new AttackDamageRandomEnemyAction(this, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }
-        if (!this.purgeOnUse){
-            this.addToBot(new RemoveSpecificPowerAction(p, p, MusicalNotePower.POWER_ID));
-        }
+        this.addToBot(new ResetMusicalNoteAction());
     }
-
 }

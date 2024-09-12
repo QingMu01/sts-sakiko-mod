@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.action;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.ShowCardAction;
@@ -17,8 +18,8 @@ import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
 import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.inteface.relic.OnPlayMusicRelic;
+import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.GameActionManagerFiledPatch;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class PlayerPlayedMusicAction extends AbstractGameAction {
@@ -34,9 +35,9 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         if (music.exhaustOnUseOnce || music.exhaust) {
             this.exhaustCard = true;
         }
-        if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn){
+        if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn) {
             this.music.count = AbstractDungeon.actionManager.cardsPlayedThisTurn.size();
-            this.music.amount = this.music.calculateCardAmount(this.music.count,Math.max(this.music.baseMagicNumber, this.music.magicNumber));
+            this.music.amount = this.music.calculateCardAmount(this.music.count, Math.max(this.music.baseMagicNumber, this.music.magicNumber));
         }
         // 调用钩子
         this.music.applyAmount();
@@ -87,8 +88,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
 
         // 添加记录
-        GameActionManagerFiledPatch.musicPlayedThisCombat.get(AbstractDungeon.actionManager).add(this.music);
-        GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager).add(this.music);
+        MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
+        MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
     }
 
     @Override
@@ -104,6 +105,32 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         this.music.play();
         this.music.resetCount();
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+
+        // 处理回忆赋予的移除
+        if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {
+            if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
+                AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));
+                if (Settings.FAST_MODE) {
+                    AbstractDungeon.actionManager.addToTop(new WaitAction(0.1F));
+                } else {
+                    AbstractDungeon.actionManager.addToTop(new WaitAction(0.7F));
+                }
+                queue.empower(this.music);
+                this.isDone = true;
+                AbstractDungeon.player.hand.applyPowers();
+                AbstractDungeon.player.hand.glowCheck();
+                AbstractDungeon.player.cardInUse = null;
+            } else {
+                AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
+                queue.removeCard(this.music);
+                AbstractDungeon.player.limbo.removeCard(this.music);
+                AbstractDungeon.player.cardInUse = null;
+                this.isDone = true;
+            }
+            CardModifierManager.removeModifiersById(this.music, RememberModifier.ID, false);
+            return;
+        }
+
         if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
             AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));
             if (Settings.FAST_MODE) {

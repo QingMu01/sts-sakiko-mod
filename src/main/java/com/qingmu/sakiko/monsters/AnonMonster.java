@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.combat.SmallLaserEffect;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.powers.monster.AnonDasuruPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
@@ -33,14 +34,14 @@ public class AnonMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.ANON_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.ANON_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.ANON_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.ANON_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
@@ -51,7 +52,7 @@ public class AnonMonster extends AbstractMemberMonster {
                 break;
             }
             case 1: {
-                CardCrawlGame.sound.play(SoundHelper.ANON_LAUGH.name());
+                CardCrawlGame.sound.playV(SoundHelper.ANON_LAUGH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
                 this.addToBot(new HealAction(this, this, this.maxHealth / 2));
                 break;
             }
@@ -63,7 +64,7 @@ public class AnonMonster extends AbstractMemberMonster {
                 } else {
                     this.addToBot(new VFXAction(new SmallLaserEffect(AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, this.hb.cX, this.hb.cY), 0.3F));
                 }
-                CardCrawlGame.sound.play(SoundHelper.ANON_YEAH.name());
+                CardCrawlGame.sound.playV(SoundHelper.ANON_YEAH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
                 this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new AnonDasuruPower(AbstractDungeon.player, this, 1)));
                 break;
             }

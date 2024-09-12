@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.action;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -9,8 +10,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
+import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.RemoveCardFiledPatch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,6 +50,7 @@ public class RememberAction extends AbstractGameAction {
                 }
                 AbstractCard abstractCard = this.p.exhaustPile.getTopCard();
                 abstractCard.unfadeOut();
+                CardModifierManager.addModifier(abstractCard,new RememberModifier());
                 this.p.hand.addToHand(abstractCard);
                 if (AbstractDungeon.player.hasPower("Corruption") && abstractCard.type == AbstractCard.CardType.SKILL)
                     abstractCard.setCostForTurn(-9);
@@ -84,7 +86,7 @@ public class RememberAction extends AbstractGameAction {
         }
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
             for (AbstractCard c : AbstractDungeon.gridSelectScreen.selectedCards) {
-                RemoveCardFiledPatch.remove_flag.set(c, true);
+                CardModifierManager.addModifier(c,new RememberModifier());
                 this.p.hand.addToHand(c);
                 if (AbstractDungeon.player.hasPower("Corruption") && c.type == AbstractCard.CardType.SKILL)
                     c.setCostForTurn(-9);

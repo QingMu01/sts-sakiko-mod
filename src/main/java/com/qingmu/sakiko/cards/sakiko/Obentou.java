@@ -31,6 +31,7 @@ public class Obentou extends CustomCard {
     private static final CardTarget TARGET = CardTarget.SELF;
 
     private int drawCount = 0;
+    private boolean isDiscount = false;
 
     public Obentou() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
@@ -49,15 +50,12 @@ public class Obentou extends CustomCard {
     @Override
     public void applyPowers() {
         super.applyPowers();
-        if (this.drawCount > 1){
+        if (this.drawCount > 1 && !this.isDiscount) {
+            this.isDiscount = true;
             this.name = EXTENDED_DESCRIPTION[1];
-            int realBaseMagicNumber = this.baseMagicNumber;
-            this.baseMagicNumber -= 3;
-            this.magicNumber = this.baseMagicNumber;
-            super.applyPowers();
-            this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
-            this.baseMagicNumber = realBaseMagicNumber;
+            this.upgradeMagicNumber(-3);
             this.initializeTitle();
+            this.initializeDescription();
         }
     }
 
@@ -69,19 +67,19 @@ public class Obentou extends CustomCard {
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return (p.gold > (Math.max(this.magicNumber,this.baseMagicNumber)) || this.purgeOnUse);
+        return (p.gold > (Math.max(this.magicNumber, this.baseMagicNumber)) || this.purgeOnUse);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new HealAction(p, p, 10));
-        this.addToBot(new LoseGoldAction(Math.max(this.magicNumber,this.baseMagicNumber)));
+        this.addToBot(new LoseGoldAction(Math.max(this.magicNumber, this.baseMagicNumber)));
     }
 
     @Override
     public AbstractCard makeSameInstanceOf() {
         AbstractCard card = super.makeSameInstanceOf();
-        ((Obentou)card).drawCount = this.drawCount;
+        ((Obentou) card).drawCount = this.drawCount;
         return card;
     }
 }

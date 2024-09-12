@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.action;
 
+import basemod.cardmods.ExhaustMod;
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
@@ -49,8 +51,8 @@ public class FantasyAction extends AbstractGameAction {
                     disCard.setCostForTurn(0);
                     disCard2.setCostForTurn(0);
                 }
-                disCard.exhaust = true;
-                disCard2.exhaust = true;
+                CardModifierManager.addModifier(disCard,new ExhaustMod());
+                CardModifierManager.addModifier(disCard2,new ExhaustMod());
                 disCard.current_x = -1000.0F * Settings.xScale;
                 disCard2.current_x = -1000.0F * Settings.xScale + AbstractCard.IMG_HEIGHT_S;
                 if (this.amount == 1) {

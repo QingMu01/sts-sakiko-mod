@@ -1,7 +1,6 @@
 package com.qingmu.sakiko;
 
-import basemod.AutoAdd;
-import basemod.BaseMod;
+import basemod.*;
 import basemod.abstracts.CustomCard;
 import basemod.abstracts.CustomRelic;
 import basemod.eventUtil.AddEventParams;
@@ -9,12 +8,16 @@ import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import com.megacrit.cardcrawl.rewards.RewardSave;
@@ -26,8 +29,13 @@ import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
+import com.qingmu.sakiko.utils.ModNameHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -37,7 +45,7 @@ import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CAR
 public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber, StartGameSubscriber,
         EditCharactersSubscriber, EditStringsSubscriber,
         EditKeywordsSubscriber, PostInitializeSubscriber {
-
+    public static final Logger logger = LogManager.getLogger(SakikoModCore.class.getName());
     // 人物选择界面按钮的图片
     private static final String MY_CHARACTER_BUTTON = "SakikoModResources/img/characters/sakiko/Character_Button.png";
     // 人物选择界面的立绘
@@ -61,6 +69,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     // 小尺寸的能量图标（战斗中，牌堆预览）
     private static final String ENERGY_ORB = "SakikoModResources/img/characters/sakiko/cost_orb.png";
 
+    public static SpireConfig SAKIKO_CONFIG;
+
     public static final Color SAKIKO_COLOR = new Color(119.0F / 255.0F, 153.0F / 255.0F, 204.0F / 255.0F, 1.0F);
 
     public SakikoModCore() {
@@ -70,6 +80,16 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     public static void initialize() {
         new SakikoModCore();
+        try {
+            // 设置默认值
+            Properties defaults = new Properties();
+            defaults.setProperty("enableAnonCard", Boolean.toString(false));
+            defaults.setProperty("enableBoss", Boolean.toString(false));
+            defaults.setProperty("modSound", Float.toString(1.00f));
+            SAKIKO_CONFIG = new SpireConfig("SakikoMod", "Common", defaults);
+        } catch (IOException var2) {
+            logger.error(var2);
+        }
     }
 
     @Override
@@ -78,7 +98,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .packageFilter("com.qingmu.sakiko.cards")
                 .setDefaultSeen(true)
                 .any(CustomCard.class, (info, card) -> {
-                    if (card.getClass().getAnnotationsByType(Deprecated.class).length == 0){
+                    if (card.getClass().getAnnotationsByType(Deprecated.class).length == 0) {
                         BaseMod.addCard(card);
                     }
                 });
@@ -139,6 +159,38 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receivePostInitialize() {
+        UIStrings config = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("Config"));
+        // config页面
+        ModPanel modPanel = new ModPanel();
+        modPanel.addUIElement(new ModMinMaxSlider(config.TEXT[0], 500.0f, 720.0f, 0, 1, SAKIKO_CONFIG.getFloat("modSound"), null, modPanel, (slider) -> {
+            SAKIKO_CONFIG.setFloat("modSound", slider.getValue());
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }));
+        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[1], 390.0f, 630.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableBoss"), modPanel, (modLabel) -> {}, (modToggleButton) -> {
+            SAKIKO_CONFIG.setBool("enableBoss", modToggleButton.enabled);
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }));
+        if (Loader.isModLoaded("AnonMod")) {
+            modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableAnonCard"), modPanel, (modLabel) -> {}, (modToggleButton) -> {
+                SAKIKO_CONFIG.setBool("enableAnonCard", modToggleButton.enabled);
+                try {
+                    SAKIKO_CONFIG.save();
+                } catch (IOException e) {
+                    logger.error(e);
+                }
+            }));
+        }
+        BaseMod.registerModBadge(new Texture("sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
+
+
         // 添加成员入侵事件
         BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
                 .spawnCondition(() -> false).bonusCondition(() -> false)

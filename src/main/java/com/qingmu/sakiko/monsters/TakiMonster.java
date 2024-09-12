@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.powers.monster.TakiInferiorityPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
@@ -37,14 +38,14 @@ public class TakiMonster extends AbstractMemberMonster {
     public void usePreBattleAction() {
         super.usePreBattleAction();
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.TAKI_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.TAKI_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.TAKI_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.TAKI_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override

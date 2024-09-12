@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.powers.monster.SoyoConstrictedPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
@@ -57,14 +58,14 @@ public class SoyoMonster extends AbstractMemberMonster {
     public void usePreBattleAction() {
         super.usePreBattleAction();
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.SOYO_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.SOYO_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.SOYO_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.SOYO_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
@@ -73,7 +74,7 @@ public class SoyoMonster extends AbstractMemberMonster {
             case 0: {
                 this.addToBot(new AnimateJumpAction(this));
                 this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new SoyoConstrictedPower(AbstractDungeon.player, this, this.powerful)));
-                CardCrawlGame.sound.play(SoundHelper.SOYO_MAGIC.name());
+                CardCrawlGame.sound.playV(SoundHelper.SOYO_MAGIC.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
                 break;
             }
             case 1: {

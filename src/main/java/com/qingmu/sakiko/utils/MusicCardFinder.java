@@ -3,6 +3,7 @@ package com.qingmu.sakiko.utils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardPoolsFiledPatch;
@@ -31,7 +32,13 @@ public class MusicCardFinder {
                 }
             }
             if (card instanceof AbstractMusic) {
-                retVal.add(card);
+                if (card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD)){
+                    if (SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")){
+                        retVal.add(card);
+                    }
+                }else {
+                    retVal.add(card);
+                }
             }
         }
         ArrayList<AbstractCard> retVal2 = new ArrayList<>();
@@ -56,6 +63,9 @@ public class MusicCardFinder {
             if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
                 list.add(c);
             }
+        }
+        if (!SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")){
+            list.removeIf(card -> card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD));
         }
         return list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
     }

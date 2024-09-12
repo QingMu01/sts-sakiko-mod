@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
-import com.qingmu.sakiko.patch.filed.GameActionManagerFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -54,7 +54,7 @@ public class Climax extends CustomCard implements OnPlayMusicCard {
 
     public void triggerWhenDrawn() {
         int count = 0;
-        for (AbstractCard c : GameActionManagerFiledPatch.musicPlayedThisTurn.get(AbstractDungeon.actionManager)) {
+        for (AbstractCard c : MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player)) {
             if (c instanceof AbstractMusic) {
                 ++count;
             }

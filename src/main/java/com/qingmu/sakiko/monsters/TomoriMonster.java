@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.SoundHelper;
@@ -38,14 +39,14 @@ public class TomoriMonster extends AbstractMemberMonster {
     public void usePreBattleAction() {
         super.usePreBattleAction();
         AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.TOMORI_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.TOMORI_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.TOMORI_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.TOMORI_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class TomoriMonster extends AbstractMemberMonster {
             case 0: {
                 this.addToBot(new AnimateJumpAction(this));
                 this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new TomoriBlessingPower(AbstractDungeon.player, 1)));
-                CardCrawlGame.sound.play(SoundHelper.TOMORI_MAGIC.name());
+                CardCrawlGame.sound.playV(SoundHelper.TOMORI_MAGIC.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
                 break;
             }
             case 1: {

@@ -38,24 +38,15 @@ public class KokoroNoKabePower extends TwoAmountPower {
     public int limit = 10;
     public int lastApply;
 
-    public int blockFromKabe = 0;
+    private int blockFromKabe = 0;
 
     public KokoroNoKabePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = amount;
-        this.counter = amount;
-        if (this.counter >= this.limit) {
-            do {
-                this.stackDamageAmount(1);
-                this.counter -= this.limit;
-                this.limit += 5;
-            } while (this.counter >= this.limit);
-            this.counter = Math.max(this.counter, 0);
-        }
-        this.lastApply = amount;
+        this.amount = 0;
+        this.stackPower(amount);
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();
@@ -92,50 +83,57 @@ public class KokoroNoKabePower extends TwoAmountPower {
      * */
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        int currentBlock = this.owner.currentBlock;
-        this.blockFromKabe -= info.output;
-        this.blockFromKabe = Math.max(this.blockFromKabe, 0);
-        if (this.amount2 == 0 || (currentBlock > this.blockFromKabe)) {
-            return damageAmount;
-        }
-
-        // 寻找背锅
-        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            if (monster.hasPower(ScapegoatPower.POWER_ID)) {
-                this.addToTop(new LoseHPAction(monster, monster, this.amount2));
+        if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner) {
+            // 计算不属于心之壁的格挡
+            int currentBlock = this.owner.currentBlock + info.output - this.blockFromKabe;
+            // 如果不造成伤害 或不属于心之壁的格挡能完全防御本次攻击则直接返回
+            if (this.amount2 == 0 || info.output <= currentBlock) {
                 return damageAmount;
+            } else {
+                // 计算使用了多少心之壁格挡
+                this.blockFromKabe -= info.output - currentBlock;
             }
-        }
-        // 计算归宿减伤
-        int buffed;
-        int reduceDamage = 0;
-        AbstractPower ibasyo = this.owner.getPower(IbasyoPower.POWER_ID);
-        if (ibasyo != null) {
-            ibasyo.flash();
-            reduceDamage += ibasyo.amount;
-        }
-        // 计算祝福减伤
-        AbstractPower blessing = this.owner.getPower(TomoriBlessingPower.POWER_ID);
-        if (blessing != null) {
-            blessing.flash();
-            reduceDamage += blessing.amount;
-        }
-        buffed = this.amount2 - reduceDamage;
-        if (buffed > 0) {
-            if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner) {
+            // 寻找背锅
+            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                if (monster.hasPower(ScapegoatPower.POWER_ID)) {
+                    this.addToTop(new LoseHPAction(monster, monster, this.amount2));
+                    return damageAmount;
+                }
+            }
+            // 计算归宿减伤
+            int buffed;
+            int reduceDamage = 0;
+            AbstractPower ibasyo = this.owner.getPower(IbasyoPower.POWER_ID);
+            if (ibasyo != null) {
+                ibasyo.flash();
+                reduceDamage += ibasyo.amount;
+            }
+            // 计算祝福减伤
+            AbstractPower blessing = this.owner.getPower(TomoriBlessingPower.POWER_ID);
+            if (blessing != null) {
+                blessing.flash();
+                reduceDamage += blessing.amount;
+            }
+            buffed = this.amount2 - reduceDamage;
+            if (buffed > 0) {
                 this.flash();
                 this.addToTop(new LoseHPAction(this.owner, this.owner, buffed));
             }
         }
-        this.blockFromKabe -= damageAmount;
         return damageAmount;
     }
 
     @Override
     public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
-        this.counter += stackAmount;
-        this.lastApply = stackAmount;
+        int tmp;
+        if (this.owner.hasPower(TomoriBlessingPower.POWER_ID)){
+            tmp = stackAmount / 2;
+        }else {
+            tmp = stackAmount;
+        }
+        this.amount += tmp;
+        this.counter += tmp;
+        this.lastApply = tmp;
         // 每10层心之壁层，增加1心之壁伤害
         if (this.counter >= this.limit) {
             do {
@@ -180,7 +178,11 @@ public class KokoroNoKabePower extends TwoAmountPower {
         if (this.amount2 <= 0) {
             this.amount2 = 0;
         }
+    }
 
+    public void stackBlockFromKabe(int blockFromKabe) {
+        this.blockFromKabe += blockFromKabe;
+        this.updateDescription();
     }
 
 

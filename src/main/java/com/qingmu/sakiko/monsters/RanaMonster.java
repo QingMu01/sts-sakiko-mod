@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
 import com.qingmu.sakiko.cards.monster.Haruhikage_Rana;
@@ -52,7 +53,7 @@ public class RanaMonster extends AbstractMemberMonster {
     public void usePreBattleAction() {
         super.usePreBattleAction();
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.play(SoundHelper.RANA_INIT.name());
+        CardCrawlGame.sound.playV(SoundHelper.RANA_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
         CardCrawlGame.music.precacheTempBgm(MusicHelper.HARUHIKAGE.name());
         obtainMusic();
     }
@@ -66,7 +67,7 @@ public class RanaMonster extends AbstractMemberMonster {
             currRoom.mugged = true;
             currRoom.addStolenGoldToRewards((pafeCount * powerful) - (pafeCount * 10));
         }
-        CardCrawlGame.sound.play(SoundHelper.RANA_DEATH.name());
+        CardCrawlGame.sound.playV(SoundHelper.RANA_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
         CardCrawlGame.music.fadeOutTempBGM();
     }
 
@@ -94,7 +95,7 @@ public class RanaMonster extends AbstractMemberMonster {
             }
             case 3: {
                 this.addToBot(new AnimateSlowAttackAction(this));
-                CardCrawlGame.sound.play(SoundHelper.RANA_MAGIC.name());
+                CardCrawlGame.sound.playV(SoundHelper.RANA_MAGIC.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
                 this.addToBot(new DamageAction(AbstractDungeon.player, this.damage.get(0), powerful));
                 this.addToBot(new HealAction(this, this, 10));
                 pafeCount++;

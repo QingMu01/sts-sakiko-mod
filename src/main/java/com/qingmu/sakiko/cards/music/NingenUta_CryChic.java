@@ -22,6 +22,7 @@ public class NingenUta_CryChic extends AbstractMusic {
 
     public NingenUta_CryChic() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        this.exhaust = true;
         this.baseMagicNumber = 1;
     }
 

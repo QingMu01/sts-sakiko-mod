@@ -1,13 +1,11 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.abstracts.CustomCard;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.action.CreateOfWorldAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -34,32 +32,30 @@ public class CreateOfWorld extends CustomCard {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseBlock = 8;
-        this.isMultiDamage = true;
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBlock(6);
+            this.upgradeBlock(3);
+            this.upgradeMagicNumber(1);
         }
     }
+
     @Override
-    public void applyPowersToBlock(){
+    public void applyPowersToBlock() {
+        int realBaseBlock = this.baseBlock;
+        this.baseBlock += MusicalNotePower.getCombatCount() * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowersToBlock();
-        int count = 0;
-        AbstractPower power = AbstractDungeon.player.getPower(MusicalNotePower.POWER_ID);
-        if (power != null)
-            count = ((MusicalNotePower)power).getTurnCount();
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], count);
-        this.initializeDescription();
+        this.baseBlock = realBaseBlock;
+        this.isBlockModified = (this.block != this.baseBlock);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CreateOfWorldAction(p, this.block));
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
+        this.addToBot(new GainBlockAction(p, p, this.block));
     }
 
 }

@@ -38,21 +38,23 @@ public class Noise extends CustomCard {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
         this.baseDamage = 0;
+        this.baseMagicNumber = 4;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(0);
+            this.upgradeMagicNumber(2);
         }
     }
 
     @Override
     public void applyPowers() {
-        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        this.baseDamage = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowers();
         this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
+        this.initializeDescription();
     }
 
     @Override

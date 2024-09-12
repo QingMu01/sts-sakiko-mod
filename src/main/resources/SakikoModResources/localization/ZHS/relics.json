@@ -24,7 +24,7 @@
     "NAME": "便携音响",
     "FLAVOR": "这个用来听歌真不错desuwa！",
     "DESCRIPTIONS": [
-      "你获取的 #y音符 数量与上限值翻倍"
+      "你获取的 #y音符 数量翻倍。"
     ]
   },
   "SakikoMod:NoteBook": {

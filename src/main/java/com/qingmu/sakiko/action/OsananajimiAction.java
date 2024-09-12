@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.action;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -9,7 +10,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.modifier.MoonLightModifier;
 
 public class OsananajimiAction extends AbstractGameAction {
 
@@ -77,7 +78,7 @@ public class OsananajimiAction extends AbstractGameAction {
         }
         if (!AbstractDungeon.handCardSelectScreen.wereCardsRetrieved) {
             for (AbstractCard c : AbstractDungeon.handCardSelectScreen.selectedCards.group) {
-                c.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
+                CardModifierManager.addModifier(c, new MoonLightModifier());
                 this.p.hand.moveToDiscardPile(c);
                 c.triggerOnManualDiscard();
                 GameActionManager.incrementDiscard(this.endTurn);
