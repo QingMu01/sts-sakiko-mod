@@ -44,7 +44,7 @@ public class MusicalNotePower extends TwoAmountPower {
         } else {
             this.amount = amount;
         }
-        if (!owner.hasPower(POWER_ID)){
+        if (!owner.hasPower(POWER_ID)) {
             Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
             MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + amount);
             if (this.amount >= this.triggerProgress) {
@@ -86,9 +86,10 @@ public class MusicalNotePower extends TwoAmountPower {
 
         if (this.amount >= this.triggerProgress) {
             do {
+                this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverReadyPower(this.owner, 1)));
                 this.amount2++;
                 this.reducePower(this.triggerProgress);
-                this.triggerProgress += 4;
+                this.triggerProgress = Math.min(12, this.triggerProgress + 4);
                 Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
                 MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
             } while (this.amount >= this.triggerProgress);
@@ -117,7 +118,6 @@ public class MusicalNotePower extends TwoAmountPower {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(e -> e instanceof AbstractMusic).count();
             if (count > 0 || !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.owner).isEmpty())
                 this.addToBot(new DrawMusicAction());
-            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverReadyPower(this.owner, 1)));
         }
         if (this.amount2 >= 2) {
             this.addToBot(new DrawCardAction(1));

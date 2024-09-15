@@ -3,7 +3,7 @@
     "NAME": "钢琴模型",
     "FLAVOR": "仿造某人曾使用过的钢琴而制造的模型。在其一侧刻有“TGW”字样的图案。",
     "DESCRIPTIONS": [
-      "你每打出 1 张牌，获得 2 层 #y音符 。"
+      "你每打出 1 张非音乐牌，获得 2 层 #y音符 。"
     ]
   },
   "SakikoMod:DoubleKeyboard": {

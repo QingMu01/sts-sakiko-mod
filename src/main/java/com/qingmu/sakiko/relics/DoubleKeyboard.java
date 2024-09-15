@@ -68,6 +68,12 @@ public class DoubleKeyboard extends CustomRelic {
     }
 
     @Override
+    public void onVictory() {
+        this.lastCard = null;
+        ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.NORMAL;
+    }
+
+    @Override
     public void atBattleStart() {
         this.lastCard = null;
     }
