@@ -51,7 +51,7 @@ public abstract class AbstractMusic extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.music_source = p == null ? AbstractDungeon.player : p;
+        this.music_source = p;
         this.music_target = m == null ? AbstractDungeon.getRandomMonster() : m;
         this.usedTurn = GameActionManager.turn;
     }

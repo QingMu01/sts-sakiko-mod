@@ -5,7 +5,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.audio.MainMusic;
 import com.megacrit.cardcrawl.audio.TempMusic;
-import com.qingmu.sakiko.utils.MusicHelper;
+import com.qingmu.sakiko.constant.MusicHelper;
 
 @SpirePatch(clz = TempMusic.class, method = "getSong")
 public class MusicMasterPatch {

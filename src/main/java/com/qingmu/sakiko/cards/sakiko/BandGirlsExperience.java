@@ -4,13 +4,11 @@ import basemod.abstracts.CustomCard;
 import com.evacipated.cardcrawl.mod.stslib.actions.common.DamageCallbackAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -35,7 +33,7 @@ public class BandGirlsExperience extends CustomCard {
     public BandGirlsExperience() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = 9;
-        this.baseMagicNumber = 3;
+        this.baseMagicNumber = 1;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class BandGirlsExperience extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(4);
-            this.upgradeMagicNumber(2);
+            this.upgradeMagicNumber(1);
         }
     }
 
@@ -51,13 +49,7 @@ public class BandGirlsExperience extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY, (damageAmount) -> {
             if (damageAmount > 0) {
-                this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, Math.max(this.magicNumber,this.baseMagicNumber))));
-                for (AbstractPower power : m.powers) {
-                    if (power instanceof KirameiPower) {
-                        this.addToBot(new ReducePowerAction(m, m, power, Math.max(this.magicNumber,this.baseMagicNumber)));
-                        break;
-                    }
-                }
+                this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, Math.max(this.magicNumber, this.baseMagicNumber))));
             }
         }));
     }

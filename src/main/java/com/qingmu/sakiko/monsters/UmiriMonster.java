@@ -13,8 +13,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.SakikoModCore;
+import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.SoundHelper;
 
 public class UmiriMonster extends AbstractMemberMonster {
 

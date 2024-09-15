@@ -66,6 +66,8 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.block * this.amount));
+        int needAddBlock = this.block * this.amount;
+        if (needAddBlock > 0)
+            this.addToTop(new GainBlockAction(this.music_source, this.music_source, needAddBlock));
     }
 }

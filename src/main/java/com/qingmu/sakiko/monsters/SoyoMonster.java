@@ -14,9 +14,9 @@ import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.qingmu.sakiko.SakikoModCore;
+import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.powers.monster.SoyoConstrictedPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.SoundHelper;
 
 public class SoyoMonster extends AbstractMemberMonster {
 

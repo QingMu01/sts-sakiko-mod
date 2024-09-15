@@ -4,6 +4,7 @@ import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.ShowCardAction;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -30,8 +31,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     public PlayerPlayedMusicAction(AbstractMusic music) {
         this.music = music;
-        this.source = music.music_source == null ? AbstractDungeon.player : music.music_source;
-        this.target = music.music_target == null ? AbstractDungeon.getRandomMonster() : music.music_target;
+        this.source = music.music_source;
+        this.target = music.music_target;
         if (music.exhaustOnUseOnce || music.exhaust) {
             this.exhaustCard = true;
         }
@@ -46,6 +47,12 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         for (AbstractPower power : AbstractDungeon.player.powers) {
             if (power instanceof OnPlayMusicPower) {
                 ((OnPlayMusicPower) power).onPlayMusicCard(music);
+            }
+            // 处理音乐牌吃钢笔尖等buff但是不消耗的问题
+            if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_ATTACK)) {
+                this.music.type = AbstractCard.CardType.ATTACK;
+                power.onUseCard(music, new UseCardAction(this.music));
+                this.music.type = SakikoEnum.CardTypeEnum.MUSIC;
             }
         }
         for (AbstractRelic relic : AbstractDungeon.player.relics) {

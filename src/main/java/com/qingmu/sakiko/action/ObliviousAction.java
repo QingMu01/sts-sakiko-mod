@@ -56,6 +56,7 @@ public class ObliviousAction extends AbstractGameAction {
                     } else {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
                     }
+                    groups.get(card).moveToExhaustPile(card);
                 }
             }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
             this.tickDuration();

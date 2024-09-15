@@ -35,6 +35,7 @@ public class Sekaikan extends CustomCard {
     @Override
     public void upgrade() {
         if (!this.upgraded) {
+            this.upgradeName();
             this.upgradeBaseCost(2);
         }
     }

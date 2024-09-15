@@ -58,12 +58,20 @@
   },
   "SakikoMod:MoonLightModifier": {
     "TEXT": [
-      "%s NL sakikomod:白月光 "
+      "%s NL 临时： sakikomod:白月光 ",
+      "临时： sakikomod:白月光"
     ]
   },
   "SakikoMod:RememberModifier": {
     "TEXT": [
-      "%s NL sakikomod:破碎的回忆  "
+      "%s NL 临时： sakikomod:破碎的回忆  ",
+      "临时： sakikomod:破碎的回忆"
+    ]
+  },
+  "SakikoMod:OptionExhaustModifier": {
+    "TEXT": [
+      "%s NL 临时： *消耗  ",
+      "临时： *消耗"
     ]
   },
   "SakikoMod:ChaosInfo": {

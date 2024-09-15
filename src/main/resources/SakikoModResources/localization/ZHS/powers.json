@@ -1,13 +1,14 @@
 {
   "SakikoMod:MusicalNotePower": {
-    "NAME": "音符",
+    "NAME": "音符与乐章",
     "DESCRIPTIONS": [
-      "积累音符能获得 #y乐章 奖励。",
-      " NL 下一次形成乐章还差 #b%d 层音符。",
-      "乐章奖励",
-      "1.从歌单中抽一张牌。",
-      " NL 2.从抽牌堆抽一张牌。",
-      " NL 3.获得 [E] 。"
+      "每积累一定量的音符可将其转变为 #y乐章 ，获得 #y筹备 且触发额外效果。",
+      " NL 下次获得乐章还差 #b%d 层音符。",
+      "乐章特效",
+      "当乐章数大于等于需求数时，可获得以下效果：",
+      " NL 1层：从歌单中抽一张牌。",
+      " NL 2层：从抽牌堆抽一张牌。",
+      " NL 3层：获得 [E] 。"
     ]
   },
   "SakikoMod:KirameiPower": {
@@ -30,7 +31,7 @@
     "NAME": "Fever",
     "DESCRIPTIONS": [
       "你可以免费打出 #b",
-      " 张 #y非音乐牌 。"
+      " 张牌 。"
     ]
   },
   "SakikoMod:LoseEnergizedPower": {
@@ -81,9 +82,9 @@
     ]
   },
   "SakikoMod:FeverReadyPower": {
-    "NAME": "准备中",
+    "NAME": "筹备",
     "DESCRIPTIONS": [
-      "当你有 #b3 层 #y准备中 时，进入 #yFever 。 NL #y准备中 会在回合结束时清空。"
+      "当你有 #b3 层 #y筹备 时，进入 #yFever 。 NL #y筹备 会在回合结束时清空。"
     ]
   },
   "SakikoMod:SekaikanPower": {
@@ -194,7 +195,7 @@
   "SakikoMod:KingOfTingPower": {
     "NAME": "挺王之力",
     "DESCRIPTIONS": [
-      "你获得 #y闪耀 时，额外获得 #b",
+      "你每回合首次获得 #y闪耀 时，额外获得 #b",
       " 层。"
     ]
   },

@@ -52,7 +52,7 @@ public class DeterminateAttack extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        int needToDraw = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) / 2;
+        int needToDraw = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
         if (needToDraw > 0)
             this.addToBot(new DrawCardAction(p, needToDraw));
     }

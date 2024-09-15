@@ -32,6 +32,7 @@ public class Leader extends CustomCard {
 
     public Leader() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        this.baseMagicNumber = 2;
     }
 
     @Override
@@ -46,7 +47,8 @@ public class Leader extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, MemberHelper.getBandMemberCount() * 2)));
+        int canGotKiramei = MemberHelper.getBandMemberCount() * Math.max(this.magicNumber, this.baseMagicNumber);
+        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, canGotKiramei)));
         this.addToBot(new ApplyPowerAction(p, p, new LeaderPower(p, 1)));
     }
 }

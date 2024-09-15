@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -35,14 +37,16 @@ public class BoomerangPower extends TwoAmountPower {
     }
 
     public float atDamageGive(float damage, DamageInfo.DamageType type) {
-        float tmp = damage;
-        if (type == DamageInfo.DamageType.NORMAL && this.amount2 > 0){
-            tmp *= 2.0f;
-            this.amount2--;
-        }
-        return tmp;
+        return (type == DamageInfo.DamageType.NORMAL && this.amount2 > 0) ? damage * 2.0f : damage;
     }
 
+    @Override
+    public void onUseCard(AbstractCard card, UseCardAction action) {
+        if (card.type == AbstractCard.CardType.ATTACK) {
+            this.amount2--;
+            this.updateDescription();
+        }
+    }
 
     @Override
     public void updateDescription() {
@@ -51,10 +55,10 @@ public class BoomerangPower extends TwoAmountPower {
 
     @Override
     public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer){
+        if (isPlayer) {
             this.flash();
-            this.addToBot(new DamageAction(this.owner,new DamageInfo(this.owner,this.amount, DamageInfo.DamageType.NORMAL)));
-            this.addToBot(new RemoveSpecificPowerAction(this.owner,this.owner,this));
+            this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.NORMAL)));
+            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
     }
 }

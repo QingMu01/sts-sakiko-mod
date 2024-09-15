@@ -35,6 +35,8 @@ public class MusicCardFinder {
                 if (card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD)){
                     if (SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")){
                         retVal.add(card);
+                    }else {
+                        i--;
                     }
                 }else {
                     retVal.add(card);

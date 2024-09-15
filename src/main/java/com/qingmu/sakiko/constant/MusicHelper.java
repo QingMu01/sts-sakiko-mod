@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.utils;
+package com.qingmu.sakiko.constant;
 
 public enum MusicHelper {
 

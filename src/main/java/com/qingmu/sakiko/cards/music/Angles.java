@@ -25,6 +25,7 @@ public class Angles extends AbstractMusic {
     public Angles() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.baseMagicNumber = 2;
         this.baseDamage = 4;
     }

@@ -48,7 +48,7 @@ public class BurnBoats extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int powerAmount = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID);
+        int powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
         for (int i = 0; i < powerAmount; i++) {
             this.addToBot(new AttackDamageRandomEnemyAction(this, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         }

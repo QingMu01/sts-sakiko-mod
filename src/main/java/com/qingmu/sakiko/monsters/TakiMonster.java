@@ -12,9 +12,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.qingmu.sakiko.SakikoModCore;
+import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.powers.monster.TakiInferiorityPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.SoundHelper;
 
 public class TakiMonster extends AbstractMemberMonster {
 

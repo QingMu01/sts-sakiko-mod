@@ -31,7 +31,7 @@ public class MusicalNotePower extends TwoAmountPower {
 
     private static final String path128 = "SakikoModResources/img/powers/MusicalNote128.png";
 
-    private int triggerProgress = 4;
+    public int triggerProgress = 4;
 
 
     public MusicalNotePower(AbstractCreature owner, int amount) {
@@ -43,6 +43,20 @@ public class MusicalNotePower extends TwoAmountPower {
             this.amount = amount * 2;
         } else {
             this.amount = amount;
+        }
+        if (!owner.hasPower(POWER_ID)){
+            Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
+            MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + amount);
+            if (this.amount >= this.triggerProgress) {
+                do {
+                    this.amount2++;
+                    this.reducePower(this.triggerProgress);
+                    this.triggerProgress += 4;
+                    Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
+                    MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
+                } while (this.amount >= this.triggerProgress);
+                this.handleProgress();
+            }
         }
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
@@ -66,16 +80,9 @@ public class MusicalNotePower extends TwoAmountPower {
 
     @Override
     public void stackPower(int stackAmount) {
-        int tmp;
-        if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
-            AbstractDungeon.player.getRelic(Speaker.ID).flash();
-            tmp = stackAmount * 2;
-        } else {
-            tmp = stackAmount;
-        }
-        this.amount += tmp;
+        this.amount += stackAmount;
         Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
-        MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + tmp);
+        MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + stackAmount);
 
         if (this.amount >= this.triggerProgress) {
             do {
@@ -107,7 +114,6 @@ public class MusicalNotePower extends TwoAmountPower {
 
     public void handleProgress() {
         if (this.amount2 >= 1) {
-            this.flash();
             long count = AbstractDungeon.player.discardPile.group.stream().filter(e -> e instanceof AbstractMusic).count();
             if (count > 0 || !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.owner).isEmpty())
                 this.addToBot(new DrawMusicAction());
@@ -125,7 +131,7 @@ public class MusicalNotePower extends TwoAmountPower {
         PowerTip powerTip = new PowerTip();
         powerTip.img = this.region128.getTexture();
         powerTip.header = DESCRIPTIONS[2];
-        powerTip.body = DESCRIPTIONS[3] + DESCRIPTIONS[4] + DESCRIPTIONS[5];
+        powerTip.body = DESCRIPTIONS[3] + DESCRIPTIONS[4] + DESCRIPTIONS[5] + DESCRIPTIONS[6];
         return powerTip;
     }
 }

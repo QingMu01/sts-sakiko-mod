@@ -6,10 +6,12 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.CompositionAction;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
+@SakikoModEnable(enable = false)
 public class MusicalComposition extends CustomCard {
 
     public static final String ID = ModNameHelper.make(MusicalComposition.class.getSimpleName());

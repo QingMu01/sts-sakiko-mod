@@ -10,9 +10,9 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.combat.SmallLaserEffect;
 import com.qingmu.sakiko.SakikoModCore;
+import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.powers.monster.AnonDasuruPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.SoundHelper;
 
 public class AnonMonster extends AbstractMemberMonster {
 

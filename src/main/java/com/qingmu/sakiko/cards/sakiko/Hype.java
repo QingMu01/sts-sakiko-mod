@@ -28,7 +28,8 @@ public class Hype extends CustomCard {
 
     public Hype() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 6;
+        this.baseDamage = 5;
+        this.isMultiDamage = true;
     }
 
     @Override
@@ -41,6 +42,6 @@ public class Hype extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new HypeAction(p, m, this.damage, this.damageTypeForTurn, this.freeToPlayOnce, this.energyOnUse));
+        this.addToBot(new HypeAction(p, this.multiDamage, this.damageTypeForTurn, this.freeToPlayOnce, this.energyOnUse));
     }
 }

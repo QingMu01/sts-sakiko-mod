@@ -82,7 +82,7 @@ public class UseMusicCardActionPatch {
 
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> RemoveCardPatch(UseCardAction __instance, AbstractCard ___targetCard) {
-            if (CardModifierManager.hasModifier(___targetCard, RememberModifier.ID)) {
+            if (CardModifierManager.hasModifier(___targetCard, RememberModifier.ID) && !(___targetCard instanceof AbstractMusic)) {
                 if (___targetCard.type == AbstractCard.CardType.POWER) {
                     AbstractDungeon.player.hand.empower(___targetCard);
                 } else {

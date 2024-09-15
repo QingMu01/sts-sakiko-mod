@@ -41,13 +41,13 @@ public class StageMachine extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(2);
+            this.upgradeBaseCost(0);
         }
     }
 
     @Override
     protected void applyPowersToBlock() {
-        int powerAmount = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID);
+        int powerAmount = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
         this.baseBlock = powerAmount * Math.max(this.magicNumber, this.baseMagicNumber);
         super.applyPowersToBlock();
         this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];

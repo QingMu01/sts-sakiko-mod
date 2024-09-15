@@ -3,7 +3,7 @@
     "NAME": "钢琴模型",
     "FLAVOR": "仿造某人曾使用过的钢琴而制造的模型。在其一侧刻有“TGW”字样的图案。",
     "DESCRIPTIONS": [
-      "你每打出 1 张非音乐牌，获得 2 层音符。"
+      "你每打出 1 张牌，获得 2 层 #y音符 。"
     ]
   },
   "SakikoMod:DoubleKeyboard": {
@@ -45,56 +45,56 @@
     "NAME": "睦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "若叶睦能力的象征，战斗开始时，获得 1 层 #y力量 。"
+      "若叶睦能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Nyamuchi": {
     "NAME": "若麦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "祐天寺若麦能力的象征，战斗开始时，获得 1 层 #y敏捷 。"
+      "祐天寺若麦能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Uika": {
     "NAME": "初华的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "三角初华能力的象征，战斗开始时获得 1 层 #y归宿"
+      "三角初华能力的象征，战斗开始时获得 #b2 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Umiri": {
     "NAME": "海铃的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "八幡海铃能力的象征，拾取时获得 #b100 枚 #y金币 。"
+      "八幡海铃能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Tomori": {
     "NAME": "灯的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "高松灯能力的象征，战斗开始时，获得 3 层 #y闪耀 。"
+      "高松灯能力的象征，战斗开始时获得 #b2 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Taki": {
     "NAME": "立希的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "椎名立希能力的象征，回合开始时，获得 2 层 #y活力 。"
+      "椎名立希能力的象征，战斗开始时获得 #b5 层 #y心之壁 。"
     ]
   },
   "SakikoMod:Soyo": {
     "NAME": "素世的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "长崎素世能力的象征，战斗开始时，获得 5 层 #y心之壁 。"
+      "长崎素世能力的象征，战斗开始时获得 #b5 层 #y心之壁 。"
     ]
   },
   "SakikoMod:Rana": {
     "NAME": "乐奈的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "要乐奈能力的象征，战斗开始后的第一首音乐，获得 #y双重演奏 。"
+      "要乐奈能力的象征，战斗开始时获得 #b1 层 #y双月 。"
     ]
   },
   "SakikoMod:Anon": {
@@ -102,7 +102,7 @@
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "千早爱音能力的象征，每前进15次，恢复一层充能。 NL 在战斗中右键本遗物消耗一层充能，恢复 #g15 点生命值。",
-      "爱音已经被 @切割@ 了 desuwa"
+      "爱音已经被 @#r切割@ 了 desuwa"
     ]
   }
 }

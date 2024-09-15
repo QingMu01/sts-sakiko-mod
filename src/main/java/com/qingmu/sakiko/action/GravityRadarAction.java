@@ -29,7 +29,7 @@ public class GravityRadarAction extends AbstractGameAction {
     public void update() {
         if (this.duration == this.startDuration) {
             if (this.cardGroup.isEmpty()) {
-                AbstractDungeon.effectList.add(new ThoughtBubble(this.source.dialogX, this.source.dialogY, 3.0F, uiStrings.TEXT[0], true));
+                AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, uiStrings.TEXT[0], true));
                 this.isDone = true;
             } else {
                 CardGroup temp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);

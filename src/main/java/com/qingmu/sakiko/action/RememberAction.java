@@ -55,8 +55,8 @@ public class RememberAction extends AbstractGameAction {
                 if (AbstractDungeon.player.hasPower("Corruption") && abstractCard.type == AbstractCard.CardType.SKILL)
                     abstractCard.setCostForTurn(-9);
                 this.p.exhaustPile.removeCard(abstractCard);
-                if (this.upgrade && abstractCard.canUpgrade())
-                    abstractCard.upgrade();
+                if (this.upgrade)
+                    abstractCard.setCostForTurn(-9);
                 abstractCard.unhover();
                 abstractCard.fadingOut = false;
                 this.isDone = true;
@@ -91,8 +91,8 @@ public class RememberAction extends AbstractGameAction {
                 if (AbstractDungeon.player.hasPower("Corruption") && c.type == AbstractCard.CardType.SKILL)
                     c.setCostForTurn(-9);
                 this.p.exhaustPile.removeCard(c);
-                if (this.upgrade && c.canUpgrade())
-                    c.upgrade();
+                if (this.upgrade)
+                    c.setCostForTurn(-9);
                 c.unhover();
             }
             AbstractDungeon.gridSelectScreen.selectedCards.clear();

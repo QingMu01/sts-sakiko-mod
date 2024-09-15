@@ -55,7 +55,7 @@ public class InvasionEvent extends PhasedEvent {
             // 成员战斗
             registerPhase("MemberFight_" + name, combatPhase);
             transitionKey("MemberFight_" + name);
-        }));
+        }, BaseMod.getCustomRelic(name.replace("Monster", ""))));
         return textPhase;
     }
 

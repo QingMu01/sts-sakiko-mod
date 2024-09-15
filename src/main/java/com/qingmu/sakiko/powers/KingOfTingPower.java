@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -18,6 +19,7 @@ public class KingOfTingPower extends AbstractPower {
     private static final String path48 = "SakikoModResources/img/powers/KingOfTingPower48.png";
     private static final String path128 = "SakikoModResources/img/powers/KingOfTingPower128.png";
 
+    private int kirameiCount = 0;
     public KingOfTingPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
@@ -28,6 +30,20 @@ public class KingOfTingPower extends AbstractPower {
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
 
         this.updateDescription();
+    }
+
+    @Override
+    public void atStartOfTurn() {
+        this.kirameiCount = 0;
+    }
+
+    @Override
+    public void onApplyPower(AbstractPower power, AbstractCreature target, AbstractCreature source) {
+        if (power.ID.equals(KirameiPower.POWER_ID) && this.kirameiCount == 0){
+            this.kirameiCount++;
+            this.flash();
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new KirameiPower(this.owner, this.amount)));
+        }
     }
 
     @Override

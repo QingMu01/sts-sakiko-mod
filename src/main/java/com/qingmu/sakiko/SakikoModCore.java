@@ -24,6 +24,7 @@ import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.events.InvasionEvent;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.*;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.rewards.MusicCardReward;
@@ -96,10 +97,17 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveEditCards() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
-                .setDefaultSeen(true)
+                .setDefaultSeen(false)
                 .any(CustomCard.class, (info, card) -> {
-                    if (card.getClass().getAnnotationsByType(Deprecated.class).length == 0) {
-                        BaseMod.addCard(card);
+                    if (!card.getClass().isAnnotationPresent(Deprecated.class)) {
+                        if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
+                            SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);
+                            if (annotation.enable()) {
+                                BaseMod.addCard(card);
+                            }
+                        } else {
+                            BaseMod.addCard(card);
+                        }
                     }
                 });
     }
@@ -109,10 +117,23 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.relics")
                 .any(CustomRelic.class, (info, relic) -> {
-                    BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                    UnlockTracker.markRelicAsSeen(relic.relicId);
-                    if (info.seen) {
-                        UnlockTracker.markRelicAsSeen(relic.relicId);
+                    if (!relic.getClass().isAnnotationPresent(Deprecated.class)) {
+                        if (relic.getClass().isAnnotationPresent(SakikoModEnable.class)) {
+                            SakikoModEnable annotation = relic.getClass().getAnnotation(SakikoModEnable.class);
+                            if (annotation.enable()) {
+                                BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
+                                UnlockTracker.markRelicAsSeen(relic.relicId);
+                                if (info.seen) {
+                                    UnlockTracker.markRelicAsSeen(relic.relicId);
+                                }
+                            }
+                        } else {
+                            BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
+                            UnlockTracker.markRelicAsSeen(relic.relicId);
+                            if (info.seen) {
+                                UnlockTracker.markRelicAsSeen(relic.relicId);
+                            }
+                        }
                     }
                 });
     }
@@ -170,7 +191,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 logger.error(e);
             }
         }));
-        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[1], 390.0f, 630.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableBoss"), modPanel, (modLabel) -> {}, (modToggleButton) -> {
+        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[1], 390.0f, 630.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableBoss"), modPanel, (modLabel) -> {
+        }, (modToggleButton) -> {
             SAKIKO_CONFIG.setBool("enableBoss", modToggleButton.enabled);
             try {
                 SAKIKO_CONFIG.save();
@@ -179,7 +201,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             }
         }));
         if (Loader.isModLoaded("AnonMod")) {
-            modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableAnonCard"), modPanel, (modLabel) -> {}, (modToggleButton) -> {
+            modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableAnonCard"), modPanel, (modLabel) -> {
+            }, (modToggleButton) -> {
                 SAKIKO_CONFIG.setBool("enableAnonCard", modToggleButton.enabled);
                 try {
                     SAKIKO_CONFIG.save();
@@ -188,7 +211,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 }
             }));
         }
-        BaseMod.registerModBadge(new Texture("sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
+        BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
 
 
         // 添加成员入侵事件
@@ -224,7 +247,6 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TakiMonster.ID, 0));
         BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(SoyoMonster.ID, 0));
         BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(RanaMonster.ID, 0));
-
         // 添加成员入侵事件概率
         BaseMod.addSaveField("chance", new InvasionChangeSaved());
     }
@@ -235,5 +257,6 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
         }
     }
+
 }
 

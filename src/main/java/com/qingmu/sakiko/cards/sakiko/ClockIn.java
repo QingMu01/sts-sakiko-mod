@@ -30,7 +30,7 @@ public class ClockIn extends CustomCard {
 
     public ClockIn() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 2;
+        this.baseMagicNumber = 1;
     }
 
     @Override

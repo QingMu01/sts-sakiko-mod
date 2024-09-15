@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.utils;
+package com.qingmu.sakiko.constant;
 
 public enum SoundHelper {
     ANON_INIT("SakikoModResources/sounds/anon_init.ogg"), // 千早爱音desu

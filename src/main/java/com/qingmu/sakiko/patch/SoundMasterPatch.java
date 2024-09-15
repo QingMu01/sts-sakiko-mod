@@ -4,7 +4,7 @@ import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.audio.Sfx;
 import com.megacrit.cardcrawl.audio.SoundMaster;
-import com.qingmu.sakiko.utils.SoundHelper;
+import com.qingmu.sakiko.constant.SoundHelper;
 
 import java.util.HashMap;
 

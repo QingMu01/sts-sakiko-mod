@@ -6,6 +6,9 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.qingmu.sakiko.constant.CardTypeColorHelper;
+import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.patch.ui.ComposeMovementPatch;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -34,6 +37,34 @@ public class DoubleKeyboard extends CustomRelic {
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 6)));
         }
         this.lastCard = card;
+        switch (this.lastCard.type){
+            case ATTACK:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.ATTACK;
+                break;
+            }
+            case SKILL:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.SKILL;
+                break;
+            }
+            case POWER:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.POWER;
+                break;
+            }
+            case CURSE:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.CURSE;
+                break;
+            }
+            case STATUS:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.STATUS;
+                break;
+            }
+            default:{
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.NORMAL;
+            }
+            if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
+                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.MUSIC;
+            }
+        }
     }
 
     @Override

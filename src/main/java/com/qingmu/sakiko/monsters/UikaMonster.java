@@ -16,8 +16,8 @@ import com.megacrit.cardcrawl.powers.FrailPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 import com.qingmu.sakiko.SakikoModCore;
+import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.SoundHelper;
 
 public class UikaMonster extends AbstractMemberMonster {
 

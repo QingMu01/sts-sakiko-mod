@@ -53,6 +53,8 @@ public class SakikoEnum {
         @SpireEnum
         public static AbstractCard.CardTags MUSIC_POWER;
         @SpireEnum
+        public static AbstractCard.CardTags MUSIC_ATTACK;
+        @SpireEnum
         public static AbstractCard.CardTags COUNTER;
         @SpireEnum
         public static AbstractCard.CardTags MUSICAL_NOTE;

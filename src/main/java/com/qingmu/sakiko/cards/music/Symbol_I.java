@@ -43,7 +43,7 @@ public class Symbol_I extends AbstractMusic {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
                 , new StrengthPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
         int powerAmount = PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        if (powerAmount >= 0) {
+        if (powerAmount > 0) {
             this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new StrengthPower(this.music_source, powerAmount)));
             this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new LoseStrengthPower(this.music_source, powerAmount)));
         }

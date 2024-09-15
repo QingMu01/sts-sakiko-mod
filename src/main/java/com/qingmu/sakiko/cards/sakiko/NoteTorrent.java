@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.ResetMusicalNoteAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -62,7 +61,7 @@ public class NoteTorrent extends CustomCard {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
+        this.baseDamage += PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
@@ -70,7 +69,7 @@ public class NoteTorrent extends CustomCard {
 
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
+        this.baseDamage += PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
@@ -92,6 +91,5 @@ public class NoteTorrent extends CustomCard {
         for (int i = 0; i < countCards(); i++) {
             this.addToBot(new DamageRandomEnemyAction(new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         }
-        this.addToBot(new ResetMusicalNoteAction());
     }
 }

@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.MoonsPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import power.musicStart;
 import power.songs;
@@ -71,7 +72,13 @@ public class AnonMusicCardPatch {
                 @Override
                 public void update() {
                     new musicStart(AbstractDungeon.player).musicEffect(AbstractDungeon.player, 0);
-                    songs.SongsList[0] = "";
+                    if (!AbstractDungeon.player.hasPower(MoonsPower.POWER_ID)) {
+                        songs.SongsList[0] = "";
+                    }else {
+                        if (AbstractDungeon.player.getPower(MoonsPower.POWER_ID).amount <= 0){
+                            songs.SongsList[0] = "";
+                        }
+                    }
                     for (int i = 1; i < songs.SongsList.length; i++) {
                         songs.SongsList[i - 1] = songs.SongsList[i];
                     }

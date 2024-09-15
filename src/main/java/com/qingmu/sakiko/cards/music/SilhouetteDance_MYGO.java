@@ -28,6 +28,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     public SilhouetteDance_MYGO() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.baseMagicNumber = 3;
         this.baseDamage = 4;
     }

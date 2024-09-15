@@ -1,8 +1,13 @@
 package com.qingmu.sakiko.relics.menbers;
 
 import basemod.AutoAdd;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 @AutoAdd.Seen
@@ -13,6 +18,8 @@ public class Umiri extends AbstractBandMember {
 
     public Umiri() {
         super(ID, IMG_PATH);
+        PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(KirameiPower.POWER_ID);
+        this.tips.add(new PowerTip(powerStrings.NAME, powerStrings.DESCRIPTIONS[0]));
     }
 
     @Override
@@ -21,14 +28,13 @@ public class Umiri extends AbstractBandMember {
     }
 
     @Override
-    public void onEquip() {
+    public void atBattleStart() {
         this.flash();
-        CardCrawlGame.sound.play("GOLD_GAIN");
-        AbstractDungeon.player.gainGold(100);
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new KirameiPower(AbstractDungeon.player,1)));
     }
 
     @Override
     public void removePower() {
-
+        this.addToBot(new ReducePowerAction(AbstractDungeon.player, AbstractDungeon.player, KirameiPower.POWER_ID, 1));
     }
 }

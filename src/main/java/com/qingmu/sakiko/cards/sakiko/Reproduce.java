@@ -31,21 +31,21 @@ public class Reproduce extends CustomCard {
 
     public Reproduce() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 3;
+        this.baseMagicNumber = 2;
+        this.exhaust = true;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(2);
+            this.upgradeMagicNumber(1);
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ReproduceAction(p, (Math.max(this.magicNumber,this.baseMagicNumber))));
-
+        this.addToBot(new ReproduceAction(p, (Math.max(this.magicNumber, this.baseMagicNumber))));
     }
 
     @Override

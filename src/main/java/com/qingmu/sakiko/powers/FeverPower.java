@@ -42,7 +42,7 @@ public class FeverPower extends AbstractPower {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (!(card instanceof AbstractMusic) && !card.purgeOnUse && this.amount > 0) {
+        if (!(card instanceof AbstractMusic) && !card.purgeOnUse && this.amount > 0 && card.costForTurn > 0) {
             this.flash();
             this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
         }

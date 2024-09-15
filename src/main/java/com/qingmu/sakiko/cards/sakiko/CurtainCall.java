@@ -32,7 +32,7 @@ public class CurtainCall extends CustomCard {
 
     public CurtainCall() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 9;
+        this.baseDamage = 5;
         this.baseMagicNumber = 4;
     }
 
@@ -40,7 +40,7 @@ public class CurtainCall extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(2);
+            this.upgradeBaseCost(0);
         }
     }
 
@@ -48,10 +48,21 @@ public class CurtainCall extends CustomCard {
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
         int size = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
-        this.baseDamage = realBaseDamage + (size * Math.max(this.magicNumber, this.baseMagicNumber));
+        this.baseDamage += (size * Math.max(this.magicNumber, this.baseMagicNumber));
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        int size = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
+        this.baseDamage += (size * Math.max(this.magicNumber, this.baseMagicNumber));
+        super.calculateCardDamage(mo);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
+
     }
 
     @Override

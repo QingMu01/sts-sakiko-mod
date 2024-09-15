@@ -2,7 +2,10 @@ package com.qingmu.sakiko.relics.menbers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.qingmu.sakiko.powers.MoonsPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -13,6 +16,9 @@ public class Rana extends AbstractBandMember {
 
     public Rana() {
         super(ID, IMG_PATH);
+        PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(MoonsPower.POWER_ID);
+        this.tips.add(new PowerTip(powerStrings.NAME, powerStrings.DESCRIPTIONS[0] + 1 + powerStrings.DESCRIPTIONS[1]));
+
     }
 
     @Override

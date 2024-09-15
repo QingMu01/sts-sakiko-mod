@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.cards.sakiko.MusicalComposition;
+import com.qingmu.sakiko.cards.sakiko.Elements;
 import com.qingmu.sakiko.relics.ClassicPiano;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -78,7 +78,7 @@ public class TogawaSakiko extends CustomPlayer {
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Professional"));
-        decks.add(ModNameHelper.make("MusicalComposition"));
+        decks.add(ModNameHelper.make("Elements"));
         return decks;
     }
 
@@ -123,7 +123,7 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return new MusicalComposition();
+        return new Elements();
     }
 
     @Override

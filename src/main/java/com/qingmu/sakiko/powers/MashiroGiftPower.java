@@ -45,7 +45,7 @@ public class MashiroGiftPower extends AbstractPower {
             monster.createIntent();
             ChaosMonsterInfoPatch.FakeMonsterInfo fakeMonsterInfo = new ChaosMonsterInfoPatch.FakeMonsterInfo();
             fakeMonsterInfo.init(this.owner.currentHealth, this.owner.maxHealth, this.owner.currentBlock);
-            ChaosMonsterInfoPatch.FakeMonsterInfoPatch.fakeMonsterInfo.set(this.owner, fakeMonsterInfo);
+            ChaosMonsterInfoPatch.FakeMonsterInfoPatch.fakeMonsterInfo.set(monster, fakeMonsterInfo);
             monster.healthBarUpdatedEvent();
         }));
     }

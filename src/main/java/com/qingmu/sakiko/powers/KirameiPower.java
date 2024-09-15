@@ -28,13 +28,7 @@ public class KirameiPower extends AbstractPower {
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        if (this.owner.hasPower(KingOfTingPower.POWER_ID)){
-            AbstractPower power = this.owner.getPower(KingOfTingPower.POWER_ID);
-            power.flash();
-            this.amount = amount + power.amount;
-        }else {
-            this.amount = amount;
-        }
+        this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();

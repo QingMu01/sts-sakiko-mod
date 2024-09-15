@@ -29,8 +29,8 @@ public class ForgetAll extends CustomCard {
 
     public ForgetAll() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.isEthereal = true;
         this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
+        this.exhaust = true;
     }
 
     @Override
