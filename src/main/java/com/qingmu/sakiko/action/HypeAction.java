@@ -42,7 +42,7 @@ public class HypeAction extends AbstractGameAction {
             this.p.getRelic("Chemical X").flash();
         }
 
-        effect += PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID);
+        effect += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID);
 
         if (effect > 0) {
             for(int i = 0; i < effect; ++i) {

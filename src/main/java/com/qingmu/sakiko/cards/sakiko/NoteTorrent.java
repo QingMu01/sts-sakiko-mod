@@ -61,7 +61,7 @@ public class NoteTorrent extends CustomCard {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
+        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
@@ -69,7 +69,7 @@ public class NoteTorrent extends CustomCard {
 
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
+        this.baseDamage += PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);

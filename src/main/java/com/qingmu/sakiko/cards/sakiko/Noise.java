@@ -51,7 +51,7 @@ public class Noise extends CustomCard {
 
     @Override
     public void applyPowers() {
-        this.baseDamage = PowerHelper.getPowerAmount(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
+        this.baseDamage = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID) * Math.max(this.baseMagicNumber, this.magicNumber);
         super.applyPowers();
         this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
         this.initializeDescription();
