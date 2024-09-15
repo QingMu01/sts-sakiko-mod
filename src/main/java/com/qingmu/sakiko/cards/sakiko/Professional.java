@@ -20,6 +20,7 @@ public class Professional extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.SKILL;
@@ -29,21 +30,23 @@ public class Professional extends CustomCard {
 
     public Professional() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 5;
-        this.baseBlock = 0;
+        this.baseMagicNumber = 6;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(3);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p,p,new KokoroNoKabePower(p, (Math.max(this.magicNumber,this.baseMagicNumber)))));
-        this.addToBot(new ActiveKabeAction());
+        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, (Math.max(this.magicNumber, this.baseMagicNumber)))));
+        if (this.upgraded) {
+            this.addToBot(new ActiveKabeAction());
+        }
     }
 }

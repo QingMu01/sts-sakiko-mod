@@ -44,6 +44,6 @@ public class EscapeSakiko extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new EscapeSakikoAction(p, Math.max(this.magicNumber,this.baseMagicNumber), this.freeToPlayOnce, this.energyOnUse));
+        this.addToBot(new EscapeSakikoAction(p, this.freeToPlayOnce, this.energyOnUse, this.upgraded));
     }
 }

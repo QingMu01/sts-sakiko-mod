@@ -9,7 +9,8 @@
   },
   "SakikoMod:Professional": {
     "NAME": "职业素养",
-    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。 NL sakikomod:激活 你的心之壁。"
+    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。",
+    "UPGRADE_DESCRIPTION" : "获得 !M! 层 sakikomod:心之壁 。 NL sakikomod:激活 你的心之壁。"
   },
   "SakikoMod:MusicalComposition": {
     "NAME": "音乐创作",
@@ -219,8 +220,8 @@
   },
   "SakikoMod:EscapeSakiko": {
     "NAME": "逃避",
-    "DESCRIPTION": "获得 X 3倍的 sakikomod:心之壁 。 sakikomod:激活 你的心之壁。",
-    "UPGRADE_DESCRIPTION": "获得 (X+2) 3倍的 sakikomod:心之壁 。 sakikomod:激活 你的心之壁。"
+    "DESCRIPTION": "获得X3倍的 sakikomod:心之壁 。",
+    "UPGRADE_DESCRIPTION": "获得X3倍的 sakikomod:心之壁 。 NL sakikomod:激活 你的心之壁。"
   },
   "SakikoMod:ClassicMusician": {
     "NAME": "古典音乐家",
@@ -264,14 +265,11 @@
   },
   "SakikoMod:PassTheBuck": {
     "NAME": "甩锅",
-    "DESCRIPTION": "造成 !D! 点伤害，接下来 !M! 个回合 sakikomod:心之壁 对你造成的伤害将由目标来承受。"
+    "DESCRIPTION": "造成 !D! 点伤害，接下来 !M! 个回合 sakikomod:心之壁 对你造成的伤害将由目标来承受。 NL 消耗 。"
   },
   "SakikoMod:Denying": {
     "NAME": "嘴硬",
-    "DESCRIPTION": "造成 !D! 点伤害， sakikomod:激活 你的心之壁。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （获得 %d 点 格挡 。）"
-    ]
+    "DESCRIPTION": "造成 !D! 点伤害， sakikomod:激活 你的心之壁。"
   },
   "SakikoMod:TakeoverLife": {
     "NAME": "人生收购",

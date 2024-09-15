@@ -11,15 +11,15 @@ public class EscapeSakikoAction extends AbstractGameAction {
     private boolean freeToPlayOnce;
     private AbstractPlayer p;
     private int energyOnUse;
+    private boolean isUpgrade;
 
-    public EscapeSakikoAction(AbstractPlayer p, int amount, boolean freeToPlayOnce, int energyOnUse) {
+    public EscapeSakikoAction(AbstractPlayer p, boolean freeToPlayOnce, int energyOnUse,boolean isUpgrade) {
         this.p = p;
-        this.amount = amount;
         this.freeToPlayOnce = freeToPlayOnce;
         this.duration = Settings.ACTION_DUR_XFAST;
         this.actionType = ActionType.SPECIAL;
         this.energyOnUse = energyOnUse;
-
+        this.isUpgrade = isUpgrade;
     }
 
     @Override
@@ -33,15 +33,15 @@ public class EscapeSakikoAction extends AbstractGameAction {
             effect += 2;
             this.p.getRelic("Chemical X").flash();
         }
-        effect += this.amount;
         if (effect > 0) {
             this.addToBot(new ApplyPowerAction(this.p, this.p, new KokoroNoKabePower(this.p, effect * 3)));
             if (!this.freeToPlayOnce) {
                 this.p.energy.use(EnergyPanel.totalCount);
             }
         }
-        this.addToBot(new ActiveKabeAction());
+        if (this.isUpgrade){
+            this.addToBot(new ActiveKabeAction());
+        }
         this.isDone = true;
-
     }
 }

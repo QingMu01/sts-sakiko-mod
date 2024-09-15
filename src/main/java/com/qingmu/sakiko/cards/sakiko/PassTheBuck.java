@@ -33,7 +33,8 @@ public class PassTheBuck extends CustomCard {
     public PassTheBuck() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = 9;
-        this.baseMagicNumber = 2;
+        this.baseMagicNumber = 3;
+        this.exhaust = true;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class PassTheBuck extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(3);
-            this.upgradeMagicNumber(1);
+            this.upgradeMagicNumber(2);
         }
     }
 
