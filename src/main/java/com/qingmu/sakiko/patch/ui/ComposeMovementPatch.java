@@ -21,7 +21,6 @@ public class ComposeMovementPatch {
     private static final float HEALTH_BAR_OFFSET_Y = 230.0F * Settings.scale;
     private static final float HEALTH_TEXT_OFFSET_Y = 10.0F * Settings.scale;
 
-    public static CardTypeColorHelper LAST_USED_CARD_TYPE = CardTypeColorHelper.NORMAL;
 
     public static void Postfix(AbstractCreature __instance, SpriteBatch sb, Color ___hbTextColor, float ___hbYOffset) {
         if (__instance.isPlayer && __instance.hasPower(MusicalNotePower.POWER_ID)) {
@@ -31,9 +30,13 @@ public class ComposeMovementPatch {
             int currentAmount = power.amount;
             int maxAmount = power.triggerProgress;
             renderMusicalNoteBg(sb, x, y, maxAmount, currentAmount, __instance);
-            renderMusicalNoteBar(sb, x, y, (__instance.hb.width * ((float) currentAmount / (float) maxAmount)), currentAmount);
-            if (((AbstractPlayer) __instance).hasRelic(DoubleKeyboard.ID))
-                FontHelper.renderFontCentered(sb, FontHelper.healthInfoFont, LAST_USED_CARD_TYPE.name(), __instance.hb.cX, y + HEALTH_BAR_OFFSET_Y + (HEALTH_TEXT_OFFSET_Y + 30.0F) * Settings.scale, ___hbTextColor);
+            if (((AbstractPlayer) __instance).hasRelic(DoubleKeyboard.ID)) {
+                DoubleKeyboard relic = (DoubleKeyboard) ((AbstractPlayer) __instance).getRelic(DoubleKeyboard.ID);
+                FontHelper.renderFontCentered(sb, FontHelper.healthInfoFont, relic.getCardTypeColor().name(), __instance.hb.cX, y + HEALTH_BAR_OFFSET_Y + (HEALTH_TEXT_OFFSET_Y + 30.0F) * Settings.scale, ___hbTextColor);
+                renderMusicalNoteBarWithColor(sb, x, y, (__instance.hb.width * ((float) currentAmount / (float) maxAmount)), currentAmount, relic.getCardTypeColor().getColor());
+            } else {
+                renderMusicalNoteBar(sb, x, y, (__instance.hb.width * ((float) currentAmount / (float) maxAmount)), currentAmount);
+            }
             FontHelper.renderFontCentered(sb, FontHelper.healthInfoFont, currentAmount + "/" + maxAmount, __instance.hb.cX, y + HEALTH_BAR_OFFSET_Y + HEALTH_TEXT_OFFSET_Y * Settings.scale, ___hbTextColor);
         }
     }
@@ -52,12 +55,20 @@ public class ComposeMovementPatch {
     }
 
     private static void renderMusicalNoteBar(SpriteBatch sb, float x, float y, float targetHealthBarWidth, int currentAmount) {
-        sb.setColor(LAST_USED_CARD_TYPE.getColor());
+        sb.setColor(CardTypeColorHelper.NORMAL.getColor());
         if (currentAmount > 0) {
             sb.draw(ImageMaster.HEALTH_BAR_L, x - HEALTH_BAR_HEIGHT, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
         }
         sb.draw(ImageMaster.HEALTH_BAR_B, x, y + HEALTH_BAR_OFFSET_Y, targetHealthBarWidth, HEALTH_BAR_HEIGHT);
         sb.draw(ImageMaster.HEALTH_BAR_R, x + targetHealthBarWidth, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+    }
 
+    private static void renderMusicalNoteBarWithColor(SpriteBatch sb, float x, float y, float targetHealthBarWidth, int currentAmount, Color color) {
+        sb.setColor(color);
+        if (currentAmount > 0) {
+            sb.draw(ImageMaster.HEALTH_BAR_L, x - HEALTH_BAR_HEIGHT, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
+        }
+        sb.draw(ImageMaster.HEALTH_BAR_B, x, y + HEALTH_BAR_OFFSET_Y, targetHealthBarWidth, HEALTH_BAR_HEIGHT);
+        sb.draw(ImageMaster.HEALTH_BAR_R, x + targetHealthBarWidth, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
     }
 }

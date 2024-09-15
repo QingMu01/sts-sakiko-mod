@@ -8,7 +8,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.constant.CardTypeColorHelper;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.ui.ComposeMovementPatch;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -19,63 +18,34 @@ public class DoubleKeyboard extends CustomRelic {
     private static final RelicTier RELIC_TIER = RelicTier.BOSS;
     private static final LandingSound LANDING_SOUND = LandingSound.FLAT;
 
-    private AbstractCard lastCard = null;
 
     public DoubleKeyboard() {
         super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER, LANDING_SOUND);
     }
 
+    private CardTypeColorHelper cardTypeColor = CardTypeColorHelper.NORMAL;
     @Override
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
     }
 
     @Override
+    public void atBattleStart() {
+        this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 0)));
+    }
+
+    @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (this.lastCard != null && this.lastCard.type == card.type){
+        if (cardTypeColor == testCardType(card)){
             this.flash();
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 6)));
         }
-        this.lastCard = card;
-        switch (this.lastCard.type){
-            case ATTACK:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.ATTACK;
-                break;
-            }
-            case SKILL:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.SKILL;
-                break;
-            }
-            case POWER:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.POWER;
-                break;
-            }
-            case CURSE:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.CURSE;
-                break;
-            }
-            case STATUS:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.STATUS;
-                break;
-            }
-            default:{
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.NORMAL;
-            }
-            if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
-                ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.MUSIC;
-            }
-        }
+        setLastCardType(card);
     }
 
     @Override
     public void onVictory() {
-        this.lastCard = null;
-        ComposeMovementPatch.LAST_USED_CARD_TYPE = CardTypeColorHelper.NORMAL;
-    }
-
-    @Override
-    public void atBattleStart() {
-        this.lastCard = null;
+        this.cardTypeColor = CardTypeColorHelper.NORMAL;
     }
 
     @Override
@@ -87,5 +57,65 @@ public class DoubleKeyboard extends CustomRelic {
     public void obtain() {
         this.instantObtain(AbstractDungeon.player,0,true);
         this.flash();
+    }
+
+    public void setLastCardType(AbstractCard card){
+        switch (card.type){
+            case ATTACK:{
+                this.cardTypeColor = CardTypeColorHelper.ATTACK;
+                break;
+            }
+            case SKILL:{
+                this.cardTypeColor = CardTypeColorHelper.SKILL;
+                break;
+            }
+            case POWER:{
+                this.cardTypeColor = CardTypeColorHelper.POWER;
+                break;
+            }
+            case CURSE:{
+                this.cardTypeColor = CardTypeColorHelper.CURSE;
+                break;
+            }
+            case STATUS:{
+                this.cardTypeColor = CardTypeColorHelper.STATUS;
+                break;
+            }
+            default:{
+                this.cardTypeColor = CardTypeColorHelper.NORMAL;
+            }
+        }
+        if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
+            this.cardTypeColor = CardTypeColorHelper.MUSIC;
+        }
+    }
+    public CardTypeColorHelper testCardType(AbstractCard card){
+        if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
+            return CardTypeColorHelper.MUSIC;
+        }
+        switch (card.type){
+            case ATTACK:{
+                return CardTypeColorHelper.ATTACK;
+            }
+            case SKILL:{
+                return CardTypeColorHelper.SKILL;
+            }
+            case POWER:{
+                return CardTypeColorHelper.POWER;
+            }
+            case CURSE:{
+                return CardTypeColorHelper.CURSE;
+            }
+            case STATUS:{
+                return CardTypeColorHelper.STATUS;
+            }
+            default:{
+                return CardTypeColorHelper.NORMAL;
+            }
+        }
+    }
+
+    public CardTypeColorHelper getCardTypeColor() {
+        return this.cardTypeColor;
     }
 }
