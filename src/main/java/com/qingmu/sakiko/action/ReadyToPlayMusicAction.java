@@ -1,10 +1,12 @@
 package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class ReadyToPlayMusicAction extends AbstractGameAction {
@@ -36,7 +38,15 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
 
         AbstractMusic music =(AbstractMusic)  this.queue.getNCardFromTop(this.queue.size() - 1 - this.count);
         if (this.source.isPlayer) {
-            this.addToBot(new PlayerPlayedMusicAction(music));
+            if (music.hasTag(SakikoEnum.CardTagEnum.ENCORE) && music.usedTurn == GameActionManager.turn){
+                this.queue.removeCard(music);
+                this.queue.addToTop(music);
+                if (this.queue.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)).count() < this.queue.size()){
+                    this.addToBot(new ReadyToPlayMusicAction(1));
+                }
+            }else {
+                this.addToBot(new PlayerPlayedMusicAction(music));
+            }
         } else {
             this.addToBot(new MonsterPlayedMusicAction(music, this.source));
         }

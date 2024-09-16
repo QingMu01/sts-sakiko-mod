@@ -8,11 +8,12 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.BlurPower;
 import com.megacrit.cardcrawl.powers.EquilibriumPower;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-@Deprecated
+@SakikoModEnable(enable = false)
 public class Risk extends CustomCard {
 
     public static final String ID = ModNameHelper.make(Risk.class.getSimpleName());

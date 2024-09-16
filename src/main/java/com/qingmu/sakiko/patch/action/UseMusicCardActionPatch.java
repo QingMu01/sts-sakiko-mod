@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.FakeUseCardAction;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
@@ -42,8 +43,9 @@ public class UseMusicCardActionPatch {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
             for (AbstractCard music : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
-                ((AbstractMusic) music).triggerInBufferPlayCard(card[0]);
-                ((AbstractMusic) music).applyAmount();
+                if (!(__instance instanceof FakeUseCardAction)){
+                    ((AbstractMusic) music).triggerInBufferUsedCard(card[0]);
+                }
             }
 
         }
@@ -57,9 +59,7 @@ public class UseMusicCardActionPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if (___targetCard instanceof AbstractMusic) {
-                ((AbstractMusic) ___targetCard).applyAmount();
                 ___targetCard.applyPowers();
-                ((AbstractMusic) ___targetCard).applyAmount();
                 CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);
                 if (cardGroup.size() > PLAY_LIMIT) {

@@ -13,7 +13,9 @@ public class ResetMusicalNoteAction extends AbstractGameAction {
             return;
         }
         MusicalNotePower power = (MusicalNotePower) AbstractDungeon.player.getPower(MusicalNotePower.POWER_ID);
-        power.atEndOfTurn(true);
+        power.amount = 0;
+        power.amount2 = 0;
+        power.triggerProgress = 4;
         this.isDone = true;
     }
 }

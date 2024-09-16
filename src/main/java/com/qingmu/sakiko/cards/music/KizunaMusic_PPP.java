@@ -18,45 +18,37 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public KizunaMusic_PPP() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
-        this.baseBlock = 0;
-        this.baseMagicNumber = 3;
+        this.baseBlock = 4;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(2);
+            this.upgradeBlock(2);
         }
     }
 
     @Override
     protected void applyPowersToBlock() {
-        this.baseBlock = Math.max(this.magicNumber, this.baseMagicNumber) * MemberHelper.getBandMemberCount();
+        int realBaseBlock = this.baseBlock;
         this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         super.applyPowersToBlock();
+        this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);
-
-        this.rawDescription = DESCRIPTION + EXTENDED_DESCRIPTION[0];
-        this.initializeDescription();
-    }
-
-    @Override
-    public void onMoveToDiscard() {
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 
     @Override
     public void play() {
-        this.addToTop(new GainBlockAction(this.music_source, this.music_source
-                , this.block));
+        int bandMemberCount = MemberHelper.getBandMemberCount();
+        for (int i = 0; i < bandMemberCount; i++) {
+            this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.block,true));
+        }
     }
 }

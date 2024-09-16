@@ -4,7 +4,6 @@ import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.utility.ShowCardAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -16,7 +15,6 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
 import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
 import com.qingmu.sakiko.inteface.relic.OnPlayMusicRelic;
 import com.qingmu.sakiko.modifier.RememberModifier;
@@ -37,62 +35,40 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             this.exhaustCard = true;
         }
         if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn) {
-            this.music.count = AbstractDungeon.actionManager.cardsPlayedThisTurn.size();
-            this.music.amount = this.music.calculateCardAmount(this.music.count, Math.max(this.music.baseMagicNumber, this.music.magicNumber));
+            this.music.amount = AbstractDungeon.actionManager.cardsPlayedThisTurn.size();
         }
         // 调用钩子
-        this.music.applyAmount();
         this.music.applyPowers();
         this.music.calculateCardDamage((AbstractMonster) this.target);
         for (AbstractPower power : AbstractDungeon.player.powers) {
             if (power instanceof OnPlayMusicPower) {
-                ((OnPlayMusicPower) power).onPlayMusicCard(music);
+                ((OnPlayMusicPower) power).onPlayMusicCard(this.music);
             }
             // 处理音乐牌吃钢笔尖等buff但是不消耗的问题
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_ATTACK)) {
                 this.music.type = AbstractCard.CardType.ATTACK;
-                power.onUseCard(music, new UseCardAction(this.music));
+                power.onUseCard(this.music, new FakeUseCardAction(this.music, this.target));
                 this.music.type = SakikoEnum.CardTypeEnum.MUSIC;
             }
         }
         for (AbstractRelic relic : AbstractDungeon.player.relics) {
             if (relic instanceof OnPlayMusicRelic) {
-                ((OnPlayMusicRelic) relic).onPlayMusicCard(music);
+                ((OnPlayMusicRelic) relic).onPlayMusicCard(this.music);
             }
         }
-        for (AbstractCard card : AbstractDungeon.player.drawPile.group) {
-            if (card instanceof OnPlayMusicCard) {
-                ((OnPlayMusicCard) card).onPlayMusicCard(music);
-            }
-        }
-        for (AbstractCard card : AbstractDungeon.player.hand.group) {
-            if (card instanceof OnPlayMusicCard) {
-                ((OnPlayMusicCard) card).onPlayMusicCard(music);
-            }
-        }
-        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
-            if (card instanceof OnPlayMusicCard) {
-                ((OnPlayMusicCard) card).onPlayMusicCard(music);
-            }
-        }
-        for (AbstractCard card : AbstractDungeon.player.exhaustPile.group) {
-            if (card instanceof OnPlayMusicCard) {
-                ((OnPlayMusicCard) card).onPlayMusicCard(music);
-            }
-        }
-        for (AbstractCard card : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
-            if (card instanceof OnPlayMusicCard) {
-                ((OnPlayMusicCard) card).onPlayMusicCard(music);
+        for (AbstractCard card : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group){
+            if (card instanceof AbstractMusic){
+                ((AbstractMusic) card).triggerInBufferPlayedMusic(this.music);
             }
         }
 
-        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            for (AbstractPower power : monster.powers) {
-                if (power instanceof OnPlayMusicPower) {
-                    ((OnPlayMusicPower) power).onPlayMusicCard(music);
+            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                for (AbstractPower power : monster.powers) {
+                    if (power instanceof OnPlayMusicPower) {
+                        ((OnPlayMusicPower) power).onPlayMusicCard(this.music);
+                    }
                 }
             }
-        }
 
         // 添加记录
         MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);

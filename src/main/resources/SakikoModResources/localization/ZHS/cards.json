@@ -135,7 +135,7 @@
   },
   "SakikoMod:NoteTorrent": {
     "NAME": "音符洪流",
-    "DESCRIPTION": "对随机敌人造成 sakikomod:乐章 层数 !M! 倍点伤害。组中每有一张 sakikomod:音符 相关的牌，额外造成一次伤害。",
+    "DESCRIPTION": "对随机敌人造成 sakikomod:乐章 层数 !M! 倍点伤害。组中每有一张 sakikomod:音符 或 sakikomod:乐章 相关的牌，额外造成一次伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成 !D! 点伤害%d次）"
     ]
@@ -351,7 +351,7 @@
   },
   "SakikoMod:Hype": {
     "NAME": "炒作",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害X次。每有一层 sakikomod:乐章 ，造成一次额外伤害。"
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害X次。每有一层 sakikomod:乐章 ，造成一次额外伤害。 NL 重置你的 sakikomod:音符 与 sakikomod:乐章 。"
   },
   "SakikoMod:UntouchableMemories": {
     "NAME": "无法触及的回忆",
@@ -359,7 +359,8 @@
   },
   "SakikoMod:GravityRadar": {
     "NAME": "重力雷达",
-    "DESCRIPTION": " 固有 NL 从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 消耗 。"
+    "DESCRIPTION": "从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 消耗 。",
+    "UPGRADE_DESCRIPTION": " 固有 NL 从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 消耗 。"
   },
   "SakikoMod:MakeKingOfTingEX": {
     "NAME": "挺王制成EX",
@@ -375,11 +376,13 @@
   },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
-    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。 NL （每层 sakikomod:闪耀 使你在 *本回合 额外获得1点力量）"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。",
+    "UPGRADE_DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。 NL 每层 sakikomod:闪耀 使你在 *本回合 额外获得1点力量。"
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
-    "DESCRIPTION": " sakikomod:演奏 ：抽取 !M! 张牌。 NL （每层 sakikomod:闪耀 额外抽取一张牌）"
+    "DESCRIPTION": " sakikomod:演奏 ：抽取 !M! 张牌。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：抽牌直到手牌将手牌抽满。"
   },
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
@@ -387,12 +390,13 @@
   },
   "SakikoMod:Symbol_IV": {
     "NAME": "Symbol IV:Earth",
-    "DESCRIPTION": "sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 敏捷。 NL （每层 sakikomod:闪耀 使你在 *本回合 额外获得1点敏捷）"
+    "DESCRIPTION": "sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 敏捷 。",
+    "UPGRADE_DESCRIPTION": "sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 敏捷 。 NL 每层 sakikomod:闪耀 使你在 *本回合 额外获得1点敏捷。"
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
     "DESCRIPTION": " sakikomod:演奏 ：将你的能量翻倍 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：获得 [E]，然后将你的能量翻倍 。"
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：获得 [E] ，然后将你的能量翻倍 。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
@@ -404,7 +408,8 @@
   },
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
-    "DESCRIPTION": " sakikomod:演奏 ：随机 !M! 张手牌在本场战斗中升级。 NL （每层 sakikomod:闪耀 额外升级一张）"
+    "DESCRIPTION": " sakikomod:演奏 ：随机 !M! 张手牌在本场战斗中 升级 。每层 sakikomod:闪耀 额外升级一张。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：随机 !M! 张手牌在本场战斗中 升级 。每层 sakikomod:闪耀 额外升级一张。 NL 超出手牌的部分随机分配到歌单与抽牌堆。"
   },
   "SakikoMod:ChoirSChoir": {
     "NAME": "Choir 'S' Choir",
@@ -437,10 +442,7 @@
   },
   "SakikoMod:KizunaMusic_PPP": {
     "NAME": "Kizuna Music",
-    "DESCRIPTION": " sakikomod:演奏 :每有一位乐队成员，获得 !M! 格挡 。 NL （每层 sakikomod:闪耀 使你额外获得1点 格挡 ）",
-    "EXTENDED_DESCRIPTION": [
-      " NL （当前获得 !B!  格挡 ）"
-    ]
+    "DESCRIPTION": " sakikomod:演奏 :每有一位乐队成员，获得 !B! 格挡 。 NL 每层 sakikomod:闪耀 使你额外获得1点 格挡 。"
   },
   "SakikoMod:StarBeat_PPP": {
     "NAME": "星之鼓动",
@@ -448,11 +450,15 @@
   },
   "SakikoMod:HeyDay_AG": {
     "NAME": "Hey-Day随想曲",
-    "DESCRIPTION": " sakikomod:演奏 ：使目标失去 !M! 点力量。 NL 消耗 。 NL （每层 sakikomod:闪耀 使目标在 *本回合 失去1点力量）"
+    "DESCRIPTION": " sakikomod:演奏 ：使目标失去 !M! 点 力量 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：使目标失去 !M! 点 力量 。每层 sakikomod:闪耀 使目标在 *本回合 失去1点力量。 NL 消耗 。"
   },
   "SakikoMod:YOLO_AG": {
     "NAME": "Y.O.L.O.",
-    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 层 缓冲 。"
+    "DESCRIPTION": " sakikomod:音乐能力 ，sakikomod:安可曲 NL sakikomod:演奏 ：获得 sakikomod:热度 数层 缓冲 ，获得的缓冲不会超过 !M! 层。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （当前获得%d层）"
+    ]
   },
   "SakikoMod:Louder_R": {
     "NAME": "Louder",
@@ -460,7 +466,8 @@
   },
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：获得 *热度 数的 火焰屏障 。",
+    "DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
@@ -471,14 +478,15 @@
   },
   "SakikoMod:A2Z_PP": {
     "NAME": "天下统一 A to Z",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：获得 *热度 数的 真言 。",
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：获得 *热度 数的 真言 ，不会超过 !M! 层。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
   },
   "SakikoMod:Egao_HHW": {
     "NAME": "笑容管弦乐",
-    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：战斗结束后，获得 !M! 枚 金币 。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：战斗结束后，获得 !M! 枚 金币 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：战斗结束后，获得 !M! 枚金币。 NL 每2层 sakikomod:闪耀 额外获得1金币。"
   },
   "SakikoMod:Ship_HHW": {
     "NAME": "豪华！豪爽！？幽灵客轮！",
@@ -487,38 +495,42 @@
   },
   "SakikoMod:Daylight_M": {
     "NAME": "Daylight",
-    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得 !M! 层 虚弱 和 !M! 层 易伤 。 NL 消耗 。 NL （每层 sakikomod:闪耀 使敌人额外获得1层虚弱和易伤）"
+    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得 !M! 层 虚弱 和 易伤 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得 !M! 层 虚弱 和 易伤 。 NL 每层 sakikomod:闪耀 使敌人额外获得1层虚弱和易伤 NL 消耗 。"
+
   },
   "SakikoMod:Sunny_M": {
     "NAME": "有所依靠的Sunny,Sunny",
-    "DESCRIPTION": " sakikomod:演奏 ：随机清除 !M! 个负面状态。 NL 消耗 。 NL （每层 sakikomod:闪耀 额外清除1个负面状态。）"
+    "DESCRIPTION": " sakikomod:演奏 ：随机清除 !M! 个负面状态。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：随机清除 !M! 个负面状态。每层 sakikomod:闪耀 额外清除1个负面状态。 NL 消耗 。"
   },
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：获得 *热度 数的 活力 。",
+    "DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 *热度 数的 活力 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 *热度 数的 活力 。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
   },
   "SakikoMod:Expose_RAS": {
     "NAME": "EXPOSE 'Burn out!!!'",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：打出 *热度 数张抽牌堆顶部的牌。",
+    "DESCRIPTION": " sakikomod:演奏 sakikomod:预热 ：打出 *热度 数张抽牌堆顶部的牌。",
     "EXTENDED_DESCRIPTION": [
       " NL （打出%d张）"
     ]
   },
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *热度 层数次。每4层 sakikomod:闪耀 增加1点伤害。",
+    "DESCRIPTION": "sakikomod:预热 NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *热度 数次。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成%d次）"
     ]
   },
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",
-    "DESCRIPTION": " sakikomod:预热 !M! NL sakikomod:演奏 ：每点 *热度 获得!B!点 格挡 。每3层 sakikomod:闪耀 增加1点 格挡 。",
+    "DESCRIPTION": "sakikomod:预热 NL sakikomod:演奏 ：获得 !B! 点 格挡 *热度 数次。",
     "EXTENDED_DESCRIPTION": [
-      " NL （获得%d点）"
+      " NL （获得%d次）"
     ]
   },
   "SakikoMod:Remember": {

@@ -86,6 +86,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             Properties defaults = new Properties();
             defaults.setProperty("enableAnonCard", Boolean.toString(false));
             defaults.setProperty("enableBoss", Boolean.toString(false));
+            defaults.setProperty("enableDeprecated", Boolean.toString(false));
             defaults.setProperty("modSound", Float.toString(1.00f));
             SAKIKO_CONFIG = new SpireConfig("SakikoMod", "Common", defaults);
         } catch (IOException var2) {
@@ -99,15 +100,13 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .packageFilter("com.qingmu.sakiko.cards")
                 .setDefaultSeen(false)
                 .any(CustomCard.class, (info, card) -> {
-                    if (!card.getClass().isAnnotationPresent(Deprecated.class)) {
-                        if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
-                            SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);
-                            if (annotation.enable()) {
-                                BaseMod.addCard(card);
-                            }
-                        } else {
+                    if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
+                        SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);
+                        if (annotation.enable() || SAKIKO_CONFIG.getBool("enableDeprecated")) {
                             BaseMod.addCard(card);
                         }
+                    } else {
+                        BaseMod.addCard(card);
                     }
                 });
     }
@@ -117,24 +116,21 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.relics")
                 .any(CustomRelic.class, (info, relic) -> {
-                    if (!relic.getClass().isAnnotationPresent(Deprecated.class)) {
-                        if (relic.getClass().isAnnotationPresent(SakikoModEnable.class)) {
-                            SakikoModEnable annotation = relic.getClass().getAnnotation(SakikoModEnable.class);
-                            if (annotation.enable()) {
-                                BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                                UnlockTracker.markRelicAsSeen(relic.relicId);
-                                if (info.seen) {
-                                    UnlockTracker.markRelicAsSeen(relic.relicId);
-                                }
-                            }
-                        } else {
+                    if (relic.getClass().isAnnotationPresent(SakikoModEnable.class)) {
+                        SakikoModEnable annotation = relic.getClass().getAnnotation(SakikoModEnable.class);
+                        if (annotation.enable() || SAKIKO_CONFIG.getBool("enableDeprecated")) {
                             BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                            UnlockTracker.markRelicAsSeen(relic.relicId);
                             if (info.seen) {
                                 UnlockTracker.markRelicAsSeen(relic.relicId);
                             }
                         }
+                    } else {
+                        BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
+                        if (info.seen) {
+                            UnlockTracker.markRelicAsSeen(relic.relicId);
+                        }
                     }
+
                 });
     }
 
@@ -191,17 +187,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 logger.error(e);
             }
         }));
-        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[1], 390.0f, 630.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableBoss"), modPanel, (modLabel) -> {
-        }, (modToggleButton) -> {
-            SAKIKO_CONFIG.setBool("enableBoss", modToggleButton.enabled);
-            try {
-                SAKIKO_CONFIG.save();
-            } catch (IOException e) {
-                logger.error(e);
-            }
-        }));
         if (Loader.isModLoaded("AnonMod")) {
-            modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableAnonCard"), modPanel, (modLabel) -> {
+            modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[3], 1000.0f, 700.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableAnonCard"), modPanel, (modLabel) -> {
             }, (modToggleButton) -> {
                 SAKIKO_CONFIG.setBool("enableAnonCard", modToggleButton.enabled);
                 try {
@@ -211,6 +198,24 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 }
             }));
         }
+        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[1], 390.0f, 630.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableBoss"), modPanel, (modLabel) -> {
+        }, (modToggleButton) -> {
+            SAKIKO_CONFIG.setBool("enableBoss", modToggleButton.enabled);
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }));
+        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableDeprecated"), modPanel, (modLabel) -> {
+        }, (modToggleButton) -> {
+            SAKIKO_CONFIG.setBool("enableDeprecated", modToggleButton.enabled);
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }));
         BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
 
 

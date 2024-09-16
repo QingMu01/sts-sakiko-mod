@@ -25,21 +25,23 @@ public class Expose_RAS extends AbstractMusic {
     public Expose_RAS() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 4;
+        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+        this.baseMagicNumber = 2;
     }
 
     @Override
     public void applyAmount() {
+        this.amount = Math.min(this.amount, Math.max(this.baseMagicNumber, this.magicNumber));
+
         this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
         this.initializeDescription();
     }
-
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(-1);
+            this.upgradeMagicNumber(2);
         }
     }
 

@@ -58,6 +58,7 @@ public class HypeAction extends AbstractGameAction {
             if (!this.freeToPlayOnce) {
                 this.p.energy.use(EnergyPanel.totalCount);
             }
+            this.addToBot(new ResetMusicalNoteAction());
         }
 
         this.isDone = true;

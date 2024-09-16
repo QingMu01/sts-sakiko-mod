@@ -19,6 +19,8 @@ public class Symbol_IV extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
+
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
@@ -35,7 +37,8 @@ public class Symbol_IV extends AbstractMusic {
     public void upgrade() {
         if (!this.upgraded){
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
@@ -44,7 +47,7 @@ public class Symbol_IV extends AbstractMusic {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
                 , new DexterityPower(this.music_source, Math.max(this.magicNumber,this.baseMagicNumber))));
         int powerAmount = PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        if (powerAmount > 0){
+        if (powerAmount > 0 && this.upgraded){
             this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new DexterityPower(this.music_source, powerAmount)));
             this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new LoseDexterityPower(this.music_source, powerAmount)));
         }

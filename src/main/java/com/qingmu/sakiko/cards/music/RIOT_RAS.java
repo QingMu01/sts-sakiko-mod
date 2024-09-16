@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.powers.watcher.VigorPower;
@@ -16,6 +17,7 @@ public class RIOT_RAS extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
@@ -24,26 +26,35 @@ public class RIOT_RAS extends AbstractMusic {
     public RIOT_RAS() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 2;
+        this.exhaust = true;
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(-1);
+            this.exhaust = false;
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
-    public void applyAmount() {
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
-        this.initializeDescription();
+    public void triggerInBufferUsedCard(AbstractCard card) {
+        this.amount++;
     }
 
     @Override
+    public void applyAmount() {
+        this.rawDescription = (this.upgraded ? UPGRADE_DESCRIPTION : DESCRIPTION) + String.format(EXTENDED_DESCRIPTION[0], this.amount);
+        this.initializeDescription();
+    }
+
+
+    @Override
     public void onMoveToDiscard() {
-        this.rawDescription = DESCRIPTION;
+        this.rawDescription = (this.upgraded ? UPGRADE_DESCRIPTION : DESCRIPTION);
         this.initializeDescription();
     }
 

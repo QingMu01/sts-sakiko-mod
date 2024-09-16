@@ -57,6 +57,8 @@ public class SakikoEnum {
         @SpireEnum
         public static AbstractCard.CardTags COUNTER;
         @SpireEnum
+        public static AbstractCard.CardTags ENCORE;
+        @SpireEnum
         public static AbstractCard.CardTags MUSICAL_NOTE;
         @SpireEnum
         public static AbstractCard.CardTags REMEMBERED_FLAG;

@@ -36,7 +36,7 @@ public class CompositionAction extends AbstractGameAction {
                     break;
                 }
             }
-            if (!dupe && !tmp.hasTag(SakikoEnum.CardTagEnum.COUNTER)) {
+            if (!dupe) {
                 AbstractCard card = tmp.makeCopy();
                 card.purgeOnUse = true;
                 derp.add(card);

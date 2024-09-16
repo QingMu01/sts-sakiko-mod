@@ -2,14 +2,12 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class SilhouetteDance_MYGO extends AbstractMusic {
 
@@ -29,7 +27,6 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
-        this.baseMagicNumber = 3;
         this.baseDamage = 4;
     }
 
@@ -42,34 +39,16 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     }
 
     @Override
-    public void applyAmount() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+    public void triggerInBufferUsedCard(AbstractCard card) {
+        this.amount++;
+    }
 
+    @Override
+    public void applyAmount() {
         this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
         this.initializeDescription();
     }
 
-    @Override
-    public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 4;
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
 
     @Override
     public void onMoveToDiscard() {

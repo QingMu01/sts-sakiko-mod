@@ -1,13 +1,11 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.unique.ExpertiseAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Symbol_II extends AbstractMusic {
 
@@ -18,6 +16,7 @@ public class Symbol_II extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
@@ -27,39 +26,24 @@ public class Symbol_II extends AbstractMusic {
     public Symbol_II() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.baseMagicNumber = 2;
+        this.baseMagicNumber = 3;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
-    public void applyAmount() {
-        int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        this.magicNumber = Math.min((10 - AbstractDungeon.player.hand.size()), this.baseMagicNumber);
-        this.baseMagicNumber = realBaseMagicNumber;
-        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
-
-    }
-
-    @Override
-    public void applyPowers() {
-        int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        super.applyPowers();
-        this.magicNumber = Math.min((10 - AbstractDungeon.player.hand.size()), this.baseMagicNumber);
-        this.baseMagicNumber = realBaseMagicNumber;
-        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
-    }
-
-    @Override
     public void play() {
-        this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
+        if (this.upgraded) {
+            this.addToTop(new ExpertiseAction(this.music_source, 10));
+        } else {
+            this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
+        }
     }
 }

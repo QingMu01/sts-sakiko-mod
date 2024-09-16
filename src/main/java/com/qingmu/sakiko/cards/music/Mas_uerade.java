@@ -31,7 +31,7 @@ public class Mas_uerade extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.baseDamage = 6;
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
         this.isMultiDamage = true;
     }
 

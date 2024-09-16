@@ -1,12 +1,11 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Mayoiuta_MYGO extends AbstractMusic {
 
@@ -25,37 +24,27 @@ public class Mayoiuta_MYGO extends AbstractMusic {
     public Mayoiuta_MYGO() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-        this.baseMagicNumber = 2;
-        this.baseBlock = 3;
+        this.baseBlock = 2;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBlock(2);
+            this.upgradeBlock(1);
         }
     }
 
     @Override
     public void applyAmount() {
-        int realBaseBlock = this.baseBlock;
-        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 3;
-        super.applyPowersToBlock();
-        this.baseBlock = realBaseBlock;
-        this.isBlockModified = (this.block != this.baseBlock);
-
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount * this.block);
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
         this.initializeDescription();
     }
 
+
     @Override
-    public void applyPowersToBlock() {
-        int realBaseBlock = this.baseBlock;
-        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 3;
-        super.applyPowersToBlock();
-        this.baseBlock = realBaseBlock;
-        this.isBlockModified = (this.block != this.baseBlock);
+    public void triggerInBufferUsedCard(AbstractCard card) {
+        this.amount++;
     }
 
     @Override
@@ -66,8 +55,8 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void play() {
-        int needAddBlock = this.block * this.amount;
-        if (needAddBlock > 0)
-            this.addToTop(new GainBlockAction(this.music_source, this.music_source, needAddBlock));
+        for (int i = 0; i < this.amount; i++) {
+            this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.block,true));
+        }
     }
 }

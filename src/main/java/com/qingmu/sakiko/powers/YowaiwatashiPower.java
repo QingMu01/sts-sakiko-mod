@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-@Deprecated
 public class YowaiwatashiPower extends AbstractPower {
     public static final String POWER_ID = ModNameHelper.make(YowaiwatashiPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);

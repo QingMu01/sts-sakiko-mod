@@ -1,8 +1,8 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.UpgradeRandomCardAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.qingmu.sakiko.action.BlackBirthdayAction;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -17,6 +17,7 @@ public class BlackBirthday extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
@@ -24,33 +25,36 @@ public class BlackBirthday extends AbstractMusic {
     public BlackBirthday() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.baseMagicNumber = 1;
+        this.baseMagicNumber = 2;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
     @Override
-    public void applyPowers() {
+    public void applyAmount() {
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        this.magicNumber = Math.min(this.baseMagicNumber, 10);
         super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
     }
 
     @Override
+    public void applyPowers() {
+        this.applyAmount();
+    }
+
+    @Override
     public void play() {
-        int count = Math.max(this.magicNumber, this.baseMagicNumber);
-        for (int i = 0; i < count; i++) {
-            this.addToBot(new UpgradeRandomCardAction());
-        }
+        this.addToBot(new BlackBirthdayAction(Math.max(this.baseMagicNumber, this.magicNumber), this.upgraded));
     }
 
 }

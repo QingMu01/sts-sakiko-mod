@@ -31,7 +31,6 @@ public abstract class AbstractMusic extends CustomCard {
 
     // 计数器
     public int amount = 0;
-    public int count = 0;
 
     // 打出时的回合数
     public int usedTurn = 0;
@@ -69,19 +68,10 @@ public abstract class AbstractMusic extends CustomCard {
     }
 
     // 存在待演奏区时，有卡牌被打出时触发的钩子
-    public void triggerInBufferPlayCard(AbstractCard card) {
-        if (this.hasTag(SakikoEnum.CardTagEnum.COUNTER)) {
-            this.count++;
-            this.amount = this.calculateCardAmount(this.count, Math.min(this.magicNumber, this.baseMagicNumber));
-        }
-    }
+    public void triggerInBufferUsedCard(AbstractCard card) {}
 
-    public int calculateCardAmount(int count, int countdown) {
-        return count / countdown;
-    }
-
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {}
     public void resetCount() {
-        this.count=0;
         this.amount=0;
     }
 

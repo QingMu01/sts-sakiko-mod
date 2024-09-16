@@ -22,6 +22,7 @@ public class Daylight_M extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
@@ -36,7 +37,8 @@ public class Daylight_M extends AbstractMusic {
     public void upgrade() {
         if (!this.upgraded){
             this.upgradeName();
-            this.upgradeMagicNumber(2);
+            this.rawDescription = UPGRADE_DESCRIPTION;
+            this.initializeDescription();
         }
     }
 
@@ -46,7 +48,11 @@ public class Daylight_M extends AbstractMusic {
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         super.applyPowers();
-        this.magicNumber = this.baseMagicNumber;
+        if (this.upgraded){
+            this.magicNumber = this.baseMagicNumber;
+        }else {
+            this.magicNumber = realBaseMagicNumber;
+        }
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
     }

@@ -16,6 +16,7 @@ public class YOLO_AG extends AbstractMusic {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
+    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
@@ -23,17 +24,38 @@ public class YOLO_AG extends AbstractMusic {
     public YOLO_AG() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.baseMagicNumber = 1;
+        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
+        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+        this.baseMagicNumber = 3;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(1);
+            this.upgradeMagicNumber(3);
         }
     }
 
+    @Override
+    public void applyAmount() {
+        this.amount = Math.min(this.amount, Math.max(this.baseMagicNumber, this.magicNumber));
+
+        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
+    }
+
+
+    @Override
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+        this.amount++;
+    }
 
     @Override
     public void play() {

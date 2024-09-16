@@ -3,22 +3,18 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.ReduceCostForTurnAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.card.OnPlayMusicCard;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Climax extends CustomCard implements OnPlayMusicCard {
+public class Climax extends CustomCard {
 
     public static final String ID = ModNameHelper.make(Climax.class.getSimpleName());
 
@@ -48,18 +44,15 @@ public class Climax extends CustomCard implements OnPlayMusicCard {
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
-        this.setCostForTurn(this.costForTurn - 1);
+    public void applyPowers() {
+        int count = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
+        this.setCostForTurn(this.cost - count);
     }
 
-    public void triggerWhenDrawn() {
-        int count = 0;
-        for (AbstractCard c : MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player)) {
-            if (c instanceof AbstractMusic) {
-                ++count;
-            }
-        }
-        this.addToBot(new ReduceCostForTurnAction(this, count));
+    @Override
+    public void atTurnStart() {
+        this.resetAttributes();
+        this.applyPowers();
     }
 
     @Override

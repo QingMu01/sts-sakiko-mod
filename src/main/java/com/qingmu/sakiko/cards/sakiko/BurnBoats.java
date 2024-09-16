@@ -24,7 +24,6 @@ public class BurnBoats extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.ATTACK;
@@ -42,7 +41,7 @@ public class BurnBoats extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(2);
+            this.upgradeBaseCost(0);
         }
     }
 

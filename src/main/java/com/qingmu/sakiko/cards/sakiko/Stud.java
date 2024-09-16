@@ -7,11 +7,12 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.StudAction;
 import com.qingmu.sakiko.cards.tmpcard.Fantasy;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-@Deprecated
+@SakikoModEnable(enable = false)
 public class Stud extends CustomCard {
 
     public static final String ID = ModNameHelper.make(Stud.class.getSimpleName());

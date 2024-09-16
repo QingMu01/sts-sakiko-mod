@@ -31,7 +31,7 @@ public class MusicalNotePower extends TwoAmountPower {
 
     private static final String path128 = "SakikoModResources/img/powers/MusicalNote128.png";
 
-    public int triggerProgress = 4;
+    public int triggerProgress = 2;
 
 
     public MusicalNotePower(AbstractCreature owner, int amount) {
@@ -40,7 +40,7 @@ public class MusicalNotePower extends TwoAmountPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
-            this.amount = amount * 2;
+            this.amount = amount + (amount / 2);
         } else {
             this.amount = amount;
         }
@@ -89,7 +89,7 @@ public class MusicalNotePower extends TwoAmountPower {
                 this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverReadyPower(this.owner, 1)));
                 this.amount2++;
                 this.reducePower(this.triggerProgress);
-                this.triggerProgress = Math.min(12, this.triggerProgress + 4);
+                this.triggerProgress = Math.min(12, this.triggerProgress + 2);
                 Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
                 MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
             } while (this.amount >= this.triggerProgress);

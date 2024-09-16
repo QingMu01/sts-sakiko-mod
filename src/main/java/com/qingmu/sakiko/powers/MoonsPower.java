@@ -46,7 +46,6 @@ public class MoonsPower extends AbstractPower implements OnPlayMusicPower {
         if (this.amount > 0) {
             this.flash();
             AbstractDungeon.effectList.add(new DoublePlayEffect(music));
-            music.applyAmount();
             music.applyPowers();
             music.calculateCardDamage((AbstractMonster) music.music_target);
             music.play();

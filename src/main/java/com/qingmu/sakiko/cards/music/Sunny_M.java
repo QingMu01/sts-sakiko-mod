@@ -41,7 +41,11 @@ public class Sunny_M extends AbstractMusic {
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         super.applyPowers();
-        this.magicNumber = this.baseMagicNumber;
+        if(this.upgraded){
+            this.magicNumber = this.baseMagicNumber;
+        }else {
+            this.magicNumber = realBaseMagicNumber;
+        }
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.baseMagicNumber != this.magicNumber);
     }
