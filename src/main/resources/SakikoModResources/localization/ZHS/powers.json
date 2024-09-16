@@ -205,6 +205,12 @@
       "你现在无法看见敌人真实的意图与属性。回合开始时下降一层。"
     ]
   },
+  "SakikoMod:MusicDreamPower": {
+    "NAME": "音乐梦",
+    "DESCRIPTIONS": [
+      "你的 #y乐章 不会在回合结束后被清除。"
+    ]
+  },
   "SakikoMod:AnonDasuruPower": {
     "NAME": "爱堕",
     "DESCRIPTIONS": [

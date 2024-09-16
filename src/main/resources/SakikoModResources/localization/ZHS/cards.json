@@ -374,6 +374,10 @@
     "NAME": "反制",
     "DESCRIPTION": "造成 !D! 点伤害，如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，给予目标1层 sakikomod:拉黑 。"
   },
+  "SakikoMod:MusicDream": {
+    "NAME": "音乐梦",
+    "DESCRIPTION": " sakikomod:白月光 NL 你的 sakikomod:乐章 不会在回合结束后被清除。"
+  },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
     "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：获得 !M! 力量。",

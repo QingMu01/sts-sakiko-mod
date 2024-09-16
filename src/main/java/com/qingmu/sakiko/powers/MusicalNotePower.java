@@ -73,7 +73,8 @@ public class MusicalNotePower extends TwoAmountPower {
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
             this.amount = 0;
-            this.amount2 = 0;
+            if (!this.owner.hasPower(MusicDreamPower.POWER_ID))
+                this.amount2 = 0;
             this.triggerProgress = 4;
         }
     }
