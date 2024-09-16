@@ -34,6 +34,7 @@ public class GameActionManagerPatch {
             MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
 
             MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(AbstractDungeon.player, 0);
+            MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(AbstractDungeon.player, 0);
         }
     }
 }

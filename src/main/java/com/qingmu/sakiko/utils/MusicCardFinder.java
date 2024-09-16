@@ -79,7 +79,7 @@ public class MusicCardFinder {
     }
 
     private static AbstractCard.CardRarity getCardRarityFallback(int roll) {
-        return roll < 10 ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+        return roll < 20 ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     }
 
     private static AbstractCard getCard(AbstractCard.CardRarity rarity) {

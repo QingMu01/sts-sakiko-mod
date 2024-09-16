@@ -1,14 +1,8 @@
 package com.qingmu.sakiko.relics.menbers;
 
-import basemod.ReflectionHacks;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.mod.stslib.relics.ClickableRelic;
 import com.megacrit.cardcrawl.actions.common.HealAction;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -17,8 +11,6 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
 
     public static final String ID = ModNameHelper.make(Anon.class.getSimpleName());
     private static final String IMG_PATH = "SakikoModResources/img/relics/members/anon_relic.png";
-
-    public int amount;
 
     public Anon() {
         super(ID, IMG_PATH);
@@ -60,19 +52,5 @@ public class Anon extends AbstractBandMember implements ClickableRelic {
     @Override
     public void removePower() {
         this.canUse = false;
-    }
-
-    @Override
-    public void renderCounter(SpriteBatch sb, boolean inTopPanel) {
-        super.renderCounter(sb, inTopPanel);
-        if (this.amount >= 0) {
-            if (inTopPanel) {
-                float offsetX = ReflectionHacks.getPrivateStatic(AbstractRelic.class, "offsetX");
-                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.amount), offsetX + this.currentX + 30.0F * Settings.scale, this.currentY + 20.0F * Settings.scale, Color.WHITE);
-            } else {
-                FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.amount), this.currentX + 30.0F * Settings.scale, this.currentY + 20.0F * Settings.scale, Color.WHITE);
-            }
-        }
-
     }
 }

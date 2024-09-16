@@ -1,12 +1,14 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class Speaker extends CustomRelic {
+public class Speaker extends AbstractSakikoRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(Speaker.class.getSimpleName());
@@ -19,11 +21,34 @@ public class Speaker extends CustomRelic {
 
     public Speaker() {
         super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER, LANDING_SOUND);
+        this.counter = 1;
+        this.amount = 0;
     }
 
     @Override
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
+    }
+
+    @Override
+    public void atBattleStart() {
+        if (this.counter > 0) {
+            this.counter--;
+            this.flash();
+            this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 18)));
+        }
+    }
+
+    @Override
+    public void onPlayMusicCard(AbstractMusic music) {
+        this.amount++;
+        if (amount >= 20) {
+            this.counter++;
+            if (this.counter > 1) {
+                this.counter = 1;
+            }
+            this.amount = 0;
+        }
     }
 
     @Override

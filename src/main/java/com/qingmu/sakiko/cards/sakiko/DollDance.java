@@ -33,16 +33,17 @@ public class DollDance extends CustomCard {
 
     public DollDance() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = 12;
+        this.baseDamage = 9;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeDamage(4);
+            this.upgradeDamage(3);
         }
     }
+
     @Override
     public void applyPowers() {
         super.applyPowers();
@@ -60,7 +61,7 @@ public class DollDance extends CustomCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         int count = PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        for (int i = 0; i < (count+1); i++)
+        for (int i = 0; i < count; i++)
             this.addToBot(new DamageRandomEnemyAction(new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY));
     }
 

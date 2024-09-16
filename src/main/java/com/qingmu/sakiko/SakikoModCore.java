@@ -18,6 +18,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.Prefs;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import com.megacrit.cardcrawl.rewards.RewardSave;
@@ -87,6 +88,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             defaults.setProperty("enableAnonCard", Boolean.toString(false));
             defaults.setProperty("enableBoss", Boolean.toString(false));
             defaults.setProperty("enableDeprecated", Boolean.toString(false));
+            defaults.setProperty("ascensionUnlock", Boolean.toString(false));
             defaults.setProperty("modSound", Float.toString(1.00f));
             SAKIKO_CONFIG = new SpireConfig("SakikoMod", "Common", defaults);
         } catch (IOException var2) {
@@ -176,6 +178,42 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receivePostInitialize() {
+        // 注册配置UI
+        this.registerConfigUI();
+        // 注册成员收集
+        this.registerMemberCollect();
+        // 设置解锁进阶
+        this.unlockedAscension();
+        // 添加音乐堆预览页面
+        BaseMod.addCustomScreen(new MusicDrawPileViewScreen());
+        // 注册音乐牌奖励
+        BaseMod.registerCustomReward(SakikoEnum.RewardType.MUSIC_TYPE,
+                (rewardSave) -> new MusicCardReward(rewardSave.id),
+                (customReward) -> new RewardSave(customReward.type.toString(), ((MusicCardReward) customReward).id));
+
+    }
+
+    @Override
+    public void receiveStartGame() {
+        if (AbstractDungeon.floorNum == 0) {
+            ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
+        }
+    }
+
+    public void unlockedAscension(){
+        if (SAKIKO_CONFIG.getBool("ascensionUnlock")){
+            BaseMod.getModdedCharacters().forEach(character -> {
+                if (character instanceof TogawaSakiko){
+                    Prefs prefs = character.getPrefs();
+                    prefs.putInteger("ASCENSION_LEVEL", 20);
+                    prefs.putInteger("LAST_ASCENSION_LEVEL", 20);
+                    prefs.flush();
+                }
+            });
+        }
+    }
+
+    public void registerConfigUI(){
         UIStrings config = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("Config"));
         // config页面
         ModPanel modPanel = new ModPanel();
@@ -216,22 +254,23 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 logger.error(e);
             }
         }));
+        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[4], 390.0f, 470.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("ascensionUnlock"), modPanel, (modLabel) -> {
+        }, (modToggleButton) -> {
+            SAKIKO_CONFIG.setBool("ascensionUnlock", modToggleButton.enabled);
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        }));
         BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
+    }
 
-
+    public void registerMemberCollect(){
         // 添加成员入侵事件
         BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
                 .spawnCondition(() -> false).bonusCondition(() -> false)
                 .endsWithRewardsUI(true).create());
-
-        // 添加音乐堆预览页面
-        BaseMod.addCustomScreen(new MusicDrawPileViewScreen());
-
-        // 注册音乐牌奖励
-        BaseMod.registerCustomReward(SakikoEnum.RewardType.MUSIC_TYPE,
-                (rewardSave) -> new MusicCardReward(rewardSave.id),
-                (customReward) -> new RewardSave(customReward.type.toString(), ((MusicCardReward) customReward).id));
-
         // 添加乐队成员
         BaseMod.addMonster(UikaMonster.ID, UikaMonster.ID, () -> new UikaMonster(0.0F, 0.0F));
         BaseMod.addMonster(MutsumiMonster.ID, MutsumiMonster.ID, () -> new MutsumiMonster(0.0F, 0.0F));
@@ -255,13 +294,5 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         // 添加成员入侵事件概率
         BaseMod.addSaveField("chance", new InvasionChangeSaved());
     }
-
-    @Override
-    public void receiveStartGame() {
-        if (AbstractDungeon.floorNum == 0) {
-            ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
-        }
-    }
-
 }
 

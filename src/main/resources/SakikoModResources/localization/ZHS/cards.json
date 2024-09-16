@@ -116,7 +116,7 @@
   },
   "SakikoMod:Spotlight": {
     "NAME": "镭射灯",
-    "DESCRIPTION": "造成 !D! 点伤害，给予 !M! 层*虚弱 。"
+    "DESCRIPTION": "造成 !D! 点伤害，给予 !M! 层 虚弱 。"
   },
   "SakikoMod:Sekaikan": {
     "NAME": "世界观",
@@ -225,7 +225,9 @@
   },
   "SakikoMod:ClassicMusician": {
     "NAME": "古典音乐家",
-    "DESCRIPTION": "你在每回合打出的前 !M! 张 sakikomod:音乐 牌将被打出两次。 NL 虚无 。"
+    "DESCRIPTION": "你在每回合打出的前 !M! 张 sakikomod:音乐 牌将被打出两次。 NL 虚无 。",
+    "UPGRADE_DESCRIPTION": "你在每回合打出的前 !M! 张 sakikomod:音乐 牌将被打出两次。"
+
   },
   "SakikoMod:GushingOverBandGirls": {
     "NAME": "憧憬成为乐队少女",
@@ -470,8 +472,8 @@
   },
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
-    "DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。",
+    "DESCRIPTION": " sakikomod:暖场曲 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:暖场曲 NL sakikomod:演奏 ：获得 sakikomod:热度 数的 火焰屏障 。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
@@ -510,8 +512,8 @@
   },
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
-    "DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 *热度 数的 活力 。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:预热 NL sakikomod:演奏 ：获得 *热度 数的 活力 。",
+    "DESCRIPTION": " sakikomod:暖场曲 NL sakikomod:演奏 ：获得 *热度 数的 活力 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:暖场曲 NL sakikomod:演奏 ：获得 *热度 数的 活力 。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
@@ -525,14 +527,14 @@
   },
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
-    "DESCRIPTION": "sakikomod:预热 NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *热度 数次。",
+    "DESCRIPTION": "sakikomod:暖场曲 NL sakikomod:演奏 ：对随机目标造成 !D! 点伤害 *热度 数次。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成%d次）"
     ]
   },
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",
-    "DESCRIPTION": "sakikomod:预热 NL sakikomod:演奏 ：获得 !B! 点 格挡 *热度 数次。",
+    "DESCRIPTION": "sakikomod:暖场曲 NL sakikomod:演奏 ：获得 !B! 点 格挡 *热度 数次。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得%d次）"
     ]

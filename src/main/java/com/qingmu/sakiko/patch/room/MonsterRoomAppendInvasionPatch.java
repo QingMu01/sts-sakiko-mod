@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class MonsterRoomAppendInvasionPatch {
 
     // 未触发时增加的概率
-    public static Float upgradeChance = 0.25f;
+    public static Float upgradeChance = 0.4f;
     public static InvasionChangeSaved invasion = (InvasionChangeSaved) BaseMod.getSaveFields().get("chance");
 
     /*

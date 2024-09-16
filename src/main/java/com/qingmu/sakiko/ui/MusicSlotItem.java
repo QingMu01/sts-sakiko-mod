@@ -79,12 +79,12 @@ public class MusicSlotItem {
             if (!this.hb.hovered) {
                 this.music.target_x = x;
                 this.music.target_y = y;
-                this.music.targetDrawScale = 0.275f;
+                this.music.targetDrawScale = 0.27f;
             }
             this.music.render(sb);
             this.renderAmount(sb, x, y);
         }
-        sb.draw(this.isMusicNull, x - (this.isMusicNull.getWidth() / 2.0f), y - (this.isMusicNull.getHeight() / 2.0f));
+        sb.draw(this.isMusicNull, x - (this.isMusicNull.getWidth() / 2.0f) * Settings.scale, y - (this.isMusicNull.getHeight() / 2.0f) * Settings.scale, this.isMusicNull.getWidth() * Settings.scale, this.isMusicNull.getHeight() * Settings.scale);
         this.hb.render(sb);
         this.hb.move(x, y);
         if (this.hb.hovered) {
@@ -95,8 +95,8 @@ public class MusicSlotItem {
     public void renderAmount(SpriteBatch sb, float x, float y) {
         if (this.amount > 0) {
             FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.amount)
-                    , (x + (this.isMusicNull.getWidth() / 2.0f)) * Settings.scale - 5.0f
-                    , (y - (this.isMusicNull.getHeight() / 2.0f)) * Settings.scale + 20.0f, Color.WHITE);
+                    , x + ((this.isMusicNull.getWidth() / 2.0f) * Settings.scale)
+                    , y - ((this.isMusicNull.getHeight() / 2.0f) - 20.0f) * Settings.scale, Color.WHITE);
         }
     }
 

@@ -14,7 +14,6 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.qingmu.sakiko.action.DrawMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.relics.Speaker;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicalNotePower extends TwoAmountPower {
@@ -39,11 +38,7 @@ public class MusicalNotePower extends TwoAmountPower {
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        if (AbstractDungeon.player.hasRelic(Speaker.ID)) {
-            this.amount = amount + (amount / 2);
-        } else {
-            this.amount = amount;
-        }
+        this.amount = amount;
         if (!owner.hasPower(POWER_ID)) {
             Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
             MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + amount);
@@ -51,7 +46,7 @@ public class MusicalNotePower extends TwoAmountPower {
                 do {
                     this.amount2++;
                     this.reducePower(this.triggerProgress);
-                    this.triggerProgress += 4;
+                    this.triggerProgress = Math.min(12, this.triggerProgress + 2);
                     Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
                     MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
                 } while (this.amount >= this.triggerProgress);

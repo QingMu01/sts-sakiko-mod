@@ -24,7 +24,7 @@ public class Hype extends CustomCard {
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.ENEMY;
+    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
 
     public Hype() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
