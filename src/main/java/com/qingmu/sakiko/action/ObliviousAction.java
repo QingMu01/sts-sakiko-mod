@@ -2,6 +2,7 @@ package com.qingmu.sakiko.action;
 
 import com.evacipated.cardcrawl.mod.stslib.actions.common.MultiGroupSelectAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -15,27 +16,33 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.inteface.power.OnObliviousPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousAction extends AbstractGameAction {
 
     private final AbstractPlayer p;
+    private boolean genKiramei;
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("ObliviousAction"));
 
-    public ObliviousAction(AbstractPlayer p, int amount) {
+    public ObliviousAction(AbstractPlayer p, int amount, boolean genKiramei) {
         this.amount = amount;
         this.p = p;
         this.duration = Settings.ACTION_DUR_FAST;
-
+        this.genKiramei = genKiramei;
         // 触发钩子
         for (AbstractPower power : p.powers) {
-            if (power instanceof OnObliviousPower){
+            if (power instanceof OnObliviousPower) {
                 ((OnObliviousPower) power).onOblivious();
             }
         }
-
     }
+
+    public ObliviousAction(AbstractPlayer p, int amount) {
+        this(p, amount, false);
+    }
+
 
     @Override
     public void update() {
@@ -57,6 +64,9 @@ public class ObliviousAction extends AbstractGameAction {
                         AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
                     }
                     groups.get(card).moveToExhaustPile(card);
+                    if (this.genKiramei) {
+                        this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, card.cost)));
+                    }
                 }
             }, this.amount, true, (card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS)), CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
             this.tickDuration();

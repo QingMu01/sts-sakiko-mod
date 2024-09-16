@@ -27,6 +27,7 @@ public class Utopia extends AbstractMusic {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
+        this.dontTriggerOnUseCard = true;
         this.baseDamage = 6;
         this.baseMagicNumber = 4;
     }

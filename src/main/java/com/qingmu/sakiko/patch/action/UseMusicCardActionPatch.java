@@ -49,6 +49,23 @@ public class UseMusicCardActionPatch {
             }
 
         }
+
+        @SpireInsertPatch(locator = Locator.class)
+        public static SpireReturn<Void> insert(UseCardAction __instance){
+            if (__instance instanceof FakeUseCardAction){
+                return SpireReturn.Return();
+            }else {
+                return SpireReturn.Continue();
+            }
+        }
+
+        public static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.FieldAccessMatcher(AbstractCard.class, "dontTriggerOnUseCard");
+                return LineFinder.findInOrder(ctBehavior, matcher);
+            }
+        }
     }
 
     /*

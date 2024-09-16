@@ -31,7 +31,7 @@ public class MusicalNotePower extends TwoAmountPower {
 
     private static final String path128 = "SakikoModResources/img/powers/MusicalNote128.png";
 
-    public int triggerProgress = 2;
+    public int triggerProgress = 4;
 
 
     public MusicalNotePower(AbstractCreature owner, int amount) {
@@ -73,8 +73,12 @@ public class MusicalNotePower extends TwoAmountPower {
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
             this.amount = 0;
-            if (!this.owner.hasPower(MusicDreamPower.POWER_ID))
+            if (!this.owner.hasPower(MusicDreamPower.POWER_ID)){
                 this.amount2 = 0;
+            }else {
+                this.owner.getPower(MusicDreamPower.POWER_ID).flash();
+            }
+
             this.triggerProgress = 4;
         }
     }

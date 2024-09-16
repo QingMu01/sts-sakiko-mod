@@ -35,7 +35,7 @@ public class ClassicPiano extends CustomRelic implements ClickableRelic {
         PowerStrings fever = CardCrawlGame.languagePack.getPowerStrings(FeverPower.POWER_ID);
         this.tips.add(new PowerTip(musicalNote.NAME, musicalNote.DESCRIPTIONS[0]));
         this.tips.add(new PowerTip(feverReady.NAME, feverReady.DESCRIPTIONS[0]));
-        this.tips.add(new PowerTip(fever.NAME, fever.DESCRIPTIONS[0]));
+        this.tips.add(new PowerTip(fever.NAME, fever.DESCRIPTIONS[0] + 1 + fever.DESCRIPTIONS[1]));
 
     }
 
@@ -46,7 +46,7 @@ public class ClassicPiano extends CustomRelic implements ClickableRelic {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (!(card instanceof AbstractMusic)){
+        if (!(card instanceof AbstractMusic)) {
             this.flash();
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 2)));
         }

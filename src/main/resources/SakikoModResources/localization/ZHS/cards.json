@@ -73,7 +73,7 @@
   },
   "SakikoMod:CutOfMemory": {
     "NAME": "斩断过去",
-    "DESCRIPTION": "获得 !M! 层 sakikomod:心之壁 。 NL sakikomod:忘却 1。"
+    "DESCRIPTION": " sakikomod:忘却 1，获得被忘却牌费用的 sakikomod:闪耀 。 NL 消耗 。"
   },
   "SakikoMod:BandGirlsExperience": {
     "NAME": "乐队少女心得",
@@ -408,7 +408,7 @@
   },
   "SakikoMod:Angles": {
     "NAME": "Angles",
-    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次。 NL （每3层 sakikomod:闪耀 额外造成1次伤害）"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次。 NL （每层 sakikomod:闪耀 额外造成1次伤害）"
   },
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
@@ -459,7 +459,7 @@
   },
   "SakikoMod:YOLO_AG": {
     "NAME": "Y.O.L.O.",
-    "DESCRIPTION": " sakikomod:音乐能力 ，sakikomod:安可曲 NL sakikomod:演奏 ：获得 sakikomod:热度 数层 缓冲 ，获得的缓冲不会超过 !M! 层。",
+    "DESCRIPTION": " sakikomod:音乐能力 ， sakikomod:安可曲 NL sakikomod:演奏 ：获得 sakikomod:热度 数层 缓冲 ，获得的缓冲不会超过 !M! 层。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前获得%d层）"
     ]
@@ -518,7 +518,7 @@
   },
   "SakikoMod:Expose_RAS": {
     "NAME": "EXPOSE 'Burn out!!!'",
-    "DESCRIPTION": " sakikomod:演奏 sakikomod:预热 ：打出 *热度 数张抽牌堆顶部的牌。",
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：打出 *热度 数张抽牌堆顶部的牌，不会超过 !M! 张。",
     "EXTENDED_DESCRIPTION": [
       " NL （打出%d张）"
     ]

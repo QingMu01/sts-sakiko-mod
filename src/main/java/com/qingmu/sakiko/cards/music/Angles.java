@@ -28,6 +28,7 @@ public class Angles extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.baseMagicNumber = 2;
         this.baseDamage = 4;
+        this.dontTriggerOnUseCard = true;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Angles extends AbstractMusic {
     @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) / 3;
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
         this.magicNumber = this.baseMagicNumber;
         super.applyPowers();
         this.baseMagicNumber = realBaseMagicNumber;

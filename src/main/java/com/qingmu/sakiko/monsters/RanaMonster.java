@@ -108,6 +108,14 @@ public class RanaMonster extends AbstractMemberMonster {
     @Override
     protected void getMove(int i) {
         boolean isEmpty = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty();
+        if(AbstractDungeon.player.hasPower(Haruhikage_Rana.ID)){
+            if (i<50){
+                this.setMove((byte) 0, Intent.ATTACK, this.damage.get(0).base);
+            }else {
+                this.setMove(MOVES[2], (byte) 2, Intent.BUFF);
+            }
+            return;
+        }
         if (isEmpty) {
             if (AbstractDungeon.monsterRng.randomBoolean()) {
                 this.obtainMusic();
