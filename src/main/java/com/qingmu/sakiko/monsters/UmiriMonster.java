@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
@@ -27,6 +28,9 @@ public class UmiriMonster extends AbstractMemberMonster {
 
     public UmiriMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        this.damage.add(new DamageInfo(this, this.baseAttack));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override

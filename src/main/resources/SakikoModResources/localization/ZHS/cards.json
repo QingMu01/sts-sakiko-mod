@@ -205,8 +205,7 @@
   "SakikoMod:Encore": {
     "NAME": "安可",
     "FLAVOR": "这不是我们爱音的live回合吗？下次用记得标明出处。",
-    "DESCRIPTION": "在本回合结束后，额外获得一回合。新回合你只会恢复1 [E] ，抽 3 张牌。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": "在本回合结束后，额外获得一回合。新回合你只会恢复1 [E] ，抽 3 张牌。"
+    "DESCRIPTION": "在本回合结束后，额外获得一回合。新回合你只会恢复1 [E] ，抽 3 张牌。 NL 消耗 。"
   },
   "SakikoMod:Bansoukou": {
     "NAME": "企鹅创口贴",

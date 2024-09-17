@@ -5,8 +5,11 @@ import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.Exordium;
+import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.SakikoModCore;
@@ -28,20 +31,30 @@ public class NyamuchiMonster extends AbstractMemberMonster {
 
     public NyamuchiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        if (AbstractDungeon.id.equals(Exordium.ID)) {
+            this.baseSlash = Math.min(this.baseSlash, 12);
+        }
+        if (AbstractDungeon.id.equals(TheCity.ID)){
+            this.baseSlash = Math.min(this.baseSlash, 15);
+        }
+
+        this.damage.add(new DamageInfo(this, this.baseAttack));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
         this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
         this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_DEATH.name(),2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override

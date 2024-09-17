@@ -62,6 +62,7 @@ public class Elements extends CustomCard {
 
     @Override
     public void triggerOnExhaust() {
+        this.pickup.clear();
         this.pickup.addAll(MUSIC_LIST);
         CardModifierManager.removeModifiersById(this, OptionExhaustModifier.ID,false);
     }

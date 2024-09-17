@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
@@ -32,6 +33,10 @@ public class TomoriMonster extends AbstractMemberMonster {
         this.baseAttack--;
         this.baseMulti--;
         this.baseSlash -= 2;
+
+        this.damage.add(new DamageInfo(this, this.baseAttack));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
 
     }
 

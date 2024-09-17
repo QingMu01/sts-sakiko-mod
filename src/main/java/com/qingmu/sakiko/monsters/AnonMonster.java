@@ -3,6 +3,7 @@ package com.qingmu.sakiko.monsters;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.animations.*;
 import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -29,6 +30,9 @@ public class AnonMonster extends AbstractMemberMonster {
 
     public AnonMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        this.damage.add(new DamageInfo(this, this.baseAttack));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override

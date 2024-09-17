@@ -24,7 +24,6 @@ public class InvasionEvent extends PhasedEvent {
     private static final String IMG_PATH = "SakikoModResources/img/event/bg00949.png";
 
     private final Map<String, Integer> optionMember = MemberHelper.getMember(4);
-    private boolean isEscaped = false;
 
     public InvasionEvent() {
         super(ID, NAME, IMG_PATH);
@@ -44,7 +43,7 @@ public class InvasionEvent extends PhasedEvent {
 
     private TextPhase getMemberSelectPhase() {
         TextPhase textPhase = new TextPhase(DESCRIPTIONS[1]);
-        optionMember.forEach((name, index) -> textPhase.addOption(OPTIONS[index + 3], (e) -> {
+        optionMember.forEach((name, index) -> textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> {
             CombatPhase combatPhase = new CombatPhase(MemberHelper.memberList.get(index))
                     .addRewards(true, room -> {
                         // 离开，提示获得成员
@@ -55,14 +54,7 @@ public class InvasionEvent extends PhasedEvent {
             // 成员战斗
             registerPhase("MemberFight_" + name, combatPhase);
             transitionKey("MemberFight_" + name);
-        }, BaseMod.getCustomRelic(name.replace("Monster", ""))));
+        }));
         return textPhase;
-    }
-
-    private void endOfEvent() {
-        if (!AbstractDungeon.monsterList.isEmpty()) {
-            AbstractDungeon.monsterList.remove(0);
-        }
-        openMap();
     }
 }

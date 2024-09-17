@@ -30,11 +30,13 @@ public class GameActionManagerPatch {
     public static class clearPatch {
         // 进入下一个房间前执行的操作，清空本场战斗保留的数据
         public static void Postfix(GameActionManager __instance) {
-            MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
-            MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
+            try {
+                MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
+                MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
 
-            MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(AbstractDungeon.player, 0);
-            MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(AbstractDungeon.player, 0);
+                MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(AbstractDungeon.player, 0);
+                MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(AbstractDungeon.player, 0);
+            }catch (NullPointerException ignored){}
         }
     }
 }

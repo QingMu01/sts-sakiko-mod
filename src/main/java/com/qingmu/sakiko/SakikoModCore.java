@@ -205,6 +205,11 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             BaseMod.getModdedCharacters().forEach(character -> {
                 if (character instanceof TogawaSakiko){
                     Prefs prefs = character.getPrefs();
+                    int winCount = prefs.getInteger("WIN_COUNT", 0);
+                    if (winCount <= 0){
+                        prefs.putInteger("WIN_COUNT", 1);
+                    }
+                    prefs.putBoolean("ASCEND_0",true);
                     prefs.putInteger("ASCENSION_LEVEL", 20);
                     prefs.putInteger("LAST_ASCENSION_LEVEL", 20);
                     prefs.flush();
@@ -245,7 +250,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 logger.error(e);
             }
         }));
-        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableDeprecated"), modPanel, (modLabel) -> {
+        ModLabeledToggleButton enableDeprecated = new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableDeprecated"), modPanel, (modLabel) -> {
         }, (modToggleButton) -> {
             SAKIKO_CONFIG.setBool("enableDeprecated", modToggleButton.enabled);
             try {
@@ -253,8 +258,10 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             } catch (IOException e) {
                 logger.error(e);
             }
-        }));
-        modPanel.addUIElement(new ModLabeledToggleButton(config.TEXT[4], 390.0f, 470.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("ascensionUnlock"), modPanel, (modLabel) -> {
+        });
+        enableDeprecated.tooltip = config.EXTRA_TEXT[0];
+        modPanel.addUIElement(enableDeprecated);
+        ModLabeledToggleButton ascensionUnlock = new ModLabeledToggleButton(config.TEXT[4], 390.0f, 470.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("ascensionUnlock"), modPanel, (modLabel) -> {
         }, (modToggleButton) -> {
             SAKIKO_CONFIG.setBool("ascensionUnlock", modToggleButton.enabled);
             try {
@@ -262,7 +269,9 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             } catch (IOException e) {
                 logger.error(e);
             }
-        }));
+        });
+        ascensionUnlock.tooltip = config.EXTRA_TEXT[1];
+        modPanel.addUIElement(ascensionUnlock);
         BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
     }
 

@@ -36,11 +36,11 @@ public class DoubleKeyboard extends CustomRelic {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (cardTypeColor == testCardType(card)){
+        if (cardTypeColor == getCardType(card)){
             this.flash();
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 6)));
         }
-        setLastCardType(card);
+        this.cardTypeColor = getCardType(card);
     }
 
     @Override
@@ -59,37 +59,7 @@ public class DoubleKeyboard extends CustomRelic {
         this.flash();
     }
 
-    public void setLastCardType(AbstractCard card){
-        switch (card.type){
-            case ATTACK:{
-                this.cardTypeColor = CardTypeColorHelper.ATTACK;
-                break;
-            }
-            case SKILL:{
-                this.cardTypeColor = CardTypeColorHelper.SKILL;
-                break;
-            }
-            case POWER:{
-                this.cardTypeColor = CardTypeColorHelper.POWER;
-                break;
-            }
-            case CURSE:{
-                this.cardTypeColor = CardTypeColorHelper.CURSE;
-                break;
-            }
-            case STATUS:{
-                this.cardTypeColor = CardTypeColorHelper.STATUS;
-                break;
-            }
-            default:{
-                this.cardTypeColor = CardTypeColorHelper.NORMAL;
-            }
-        }
-        if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
-            this.cardTypeColor = CardTypeColorHelper.MUSIC;
-        }
-    }
-    public CardTypeColorHelper testCardType(AbstractCard card){
+    public CardTypeColorHelper getCardType(AbstractCard card){
         if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
             return CardTypeColorHelper.MUSIC;
         }

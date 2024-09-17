@@ -3,7 +3,6 @@ package com.qingmu.sakiko.monsters;
 import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.dungeons.TheBeyond;
@@ -66,11 +65,6 @@ public abstract class AbstractMemberMonster extends CustomMonster {
         this.baseAttack = AbstractDungeon.monsterHpRng.random(this.baseAttack - 1, this.baseAttack + 1);
         this.baseSlash = AbstractDungeon.monsterHpRng.random(this.baseSlash - 2, this.baseSlash + 2);
         this.baseBlock = AbstractDungeon.monsterHpRng.random(this.baseBlock, this.baseBlock + 2);
-
-        this.damage.add(new DamageInfo(this, this.baseAttack));
-        this.damage.add(new DamageInfo(this, this.baseSlash));
-        this.damage.add(new DamageInfo(this, this.baseMulti));
-
     }
 
     protected void obtainMusic() {

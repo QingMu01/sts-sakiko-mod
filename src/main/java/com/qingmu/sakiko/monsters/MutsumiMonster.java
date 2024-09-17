@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.status.Slimed;
 import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -31,6 +32,9 @@ public class MutsumiMonster extends AbstractMemberMonster {
 
     public MutsumiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        this.damage.add(new DamageInfo(this, this.baseAttack));
+        this.damage.add(new DamageInfo(this, this.baseSlash));
+        this.damage.add(new DamageInfo(this, this.baseMulti));
     }
 
     @Override
