@@ -11,10 +11,10 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.effect.DoublePlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
+import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MoonsPower extends AbstractPower implements OnPlayMusicPower {
+public class MoonsPower extends AbstractPower implements TriggerOnPlayMusicPower {
 
     public static final String POWER_ID = ModNameHelper.make(MoonsPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);

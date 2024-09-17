@@ -6,10 +6,10 @@ import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.relic.OnPlayMusicRelic;
+import com.qingmu.sakiko.inteface.relic.TriggerOnPlayMusicRelic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class OctopusSakiko extends CustomRelic implements OnPlayMusicRelic {
+public class OctopusSakiko extends CustomRelic implements TriggerOnPlayMusicRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(OctopusSakiko.class.getSimpleName());

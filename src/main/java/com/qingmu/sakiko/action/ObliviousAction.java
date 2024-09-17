@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-import com.qingmu.sakiko.inteface.power.OnObliviousPower;
+import com.qingmu.sakiko.inteface.power.TriggerOnObliviousPower;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -33,8 +33,8 @@ public class ObliviousAction extends AbstractGameAction {
         this.genKiramei = genKiramei;
         // 触发钩子
         for (AbstractPower power : p.powers) {
-            if (power instanceof OnObliviousPower) {
-                ((OnObliviousPower) power).onOblivious();
+            if (power instanceof TriggerOnObliviousPower) {
+                ((TriggerOnObliviousPower) power).onOblivious();
             }
         }
     }

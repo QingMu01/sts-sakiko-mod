@@ -9,12 +9,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.inteface.card.TriggerOnPlayMusicCard;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Climax extends CustomCard {
+public class Climax extends CustomCard implements TriggerOnPlayMusicCard {
 
     public static final String ID = ModNameHelper.make(Climax.class.getSimpleName());
 
@@ -42,11 +44,13 @@ public class Climax extends CustomCard {
             this.upgradeDamage(9);
         }
     }
+    public void triggerWhenDrawn() {
+        this.setCostForTurn(this.cost - MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size());
+    }
 
     @Override
-    public void applyPowers() {
-        int count = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
-        this.setCostForTurn(this.cost - count);
+    public void triggerOnPlayMusic(AbstractMusic music) {
+        this.setCostForTurn(this.cost - MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size());
     }
 
     @Override
@@ -59,4 +63,5 @@ public class Climax extends CustomCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
     }
+
 }

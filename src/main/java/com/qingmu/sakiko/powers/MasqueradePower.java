@@ -11,10 +11,10 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
+import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MasqueradePower extends AbstractPower implements OnPlayMusicPower {
+public class MasqueradePower extends AbstractPower implements TriggerOnPlayMusicPower {
 
     public static final String POWER_ID = ModNameHelper.make(MasqueradePower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);

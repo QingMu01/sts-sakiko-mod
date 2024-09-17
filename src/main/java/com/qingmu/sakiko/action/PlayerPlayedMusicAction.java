@@ -15,8 +15,9 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
-import com.qingmu.sakiko.inteface.relic.OnPlayMusicRelic;
+import com.qingmu.sakiko.inteface.card.TriggerOnPlayMusicCard;
+import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
+import com.qingmu.sakiko.inteface.relic.TriggerOnPlayMusicRelic;
 import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -40,9 +41,10 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         // 调用钩子
         this.music.applyPowers();
         this.music.calculateCardDamage((AbstractMonster) this.target);
+        // 能力钩子 演奏时触发
         for (AbstractPower power : AbstractDungeon.player.powers) {
-            if (power instanceof OnPlayMusicPower) {
-                ((OnPlayMusicPower) power).onPlayMusicCard(this.music);
+            if (power instanceof TriggerOnPlayMusicPower) {
+                ((TriggerOnPlayMusicPower) power).onPlayMusicCard(this.music);
             }
             // 处理音乐牌吃钢笔尖等buff但是不消耗的问题
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_ATTACK)) {
@@ -51,24 +53,49 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 this.music.type = SakikoEnum.CardTypeEnum.MUSIC;
             }
         }
+        // 遗物钩子 演奏时触发
         for (AbstractRelic relic : AbstractDungeon.player.relics) {
-            if (relic instanceof OnPlayMusicRelic) {
-                ((OnPlayMusicRelic) relic).onPlayMusicCard(this.music);
+            if (relic instanceof TriggerOnPlayMusicRelic) {
+                ((TriggerOnPlayMusicRelic) relic).onPlayMusicCard(this.music);
             }
         }
-        for (AbstractCard card : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group){
-            if (card instanceof AbstractMusic){
+        // 待演奏区钩子 演奏时触发
+        for (AbstractCard card : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
+            if (card instanceof AbstractMusic) {
                 ((AbstractMusic) card).triggerInBufferPlayedMusic(this.music);
             }
         }
 
-            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-                for (AbstractPower power : monster.powers) {
-                    if (power instanceof OnPlayMusicPower) {
-                        ((OnPlayMusicPower) power).onPlayMusicCard(this.music);
-                    }
+        // 全是普通牌钩子 演奏时触发
+        for (AbstractCard card : AbstractDungeon.player.drawPile.group) {
+            if (card instanceof TriggerOnPlayMusicCard){
+                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.hand.group) {
+            if (card instanceof TriggerOnPlayMusicCard){
+                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+            if (card instanceof TriggerOnPlayMusicCard){
+                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            }
+        }
+        for (AbstractCard card : AbstractDungeon.player.exhaustPile.group) {
+            if (card instanceof TriggerOnPlayMusicCard){
+                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            }
+        }
+
+        // 使怪物也能监听演奏
+        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            for (AbstractPower power : monster.powers) {
+                if (power instanceof TriggerOnPlayMusicPower) {
+                    ((TriggerOnPlayMusicPower) power).onPlayMusicCard(this.music);
                 }
             }
+        }
 
         // 添加记录
         MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);

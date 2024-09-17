@@ -10,12 +10,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.inteface.power.OnObliviousPower;
+import com.qingmu.sakiko.inteface.power.TriggerOnObliviousPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
 
-public class MujikakuPower extends AbstractPower implements OnObliviousPower {
+public class MujikakuPower extends AbstractPower implements TriggerOnObliviousPower {
 
     public static final String POWER_ID = ModNameHelper.make(MujikakuPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);

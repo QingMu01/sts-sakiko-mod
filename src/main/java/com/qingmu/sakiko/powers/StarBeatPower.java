@@ -8,10 +8,10 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.OnPlayMusicPower;
+import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class StarBeatPower extends AbstractPower implements OnPlayMusicPower {
+public class StarBeatPower extends AbstractPower implements TriggerOnPlayMusicPower {
     public static final String POWER_ID = ModNameHelper.make(StarBeatPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
