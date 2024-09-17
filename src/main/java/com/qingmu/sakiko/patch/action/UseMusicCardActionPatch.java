@@ -43,7 +43,7 @@ public class UseMusicCardActionPatch {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
             for (AbstractCard music : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
-                if (!(__instance instanceof FakeUseCardAction)){
+                if (!(__instance instanceof FakeUseCardAction) && AbstractDungeon.player.hand.group.stream().allMatch(c -> c.canPlay(card[0]))) {
                     ((AbstractMusic) music).triggerInBufferUsedCard(card[0]);
                 }
             }
@@ -51,10 +51,10 @@ public class UseMusicCardActionPatch {
         }
 
         @SpireInsertPatch(locator = Locator.class)
-        public static SpireReturn<Void> insert(UseCardAction __instance){
-            if (__instance instanceof FakeUseCardAction){
+        public static SpireReturn<Void> insert(UseCardAction __instance) {
+            if (__instance instanceof FakeUseCardAction) {
                 return SpireReturn.Return();
-            }else {
+            } else {
                 return SpireReturn.Continue();
             }
         }
@@ -75,7 +75,7 @@ public class UseMusicCardActionPatch {
     public static class MusicCardUpdatePatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
-            if (___targetCard instanceof AbstractMusic) {
+            if (___targetCard instanceof AbstractMusic && (AbstractDungeon.player.hand.group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
                 ___targetCard.applyPowers();
                 CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);

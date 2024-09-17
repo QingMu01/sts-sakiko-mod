@@ -60,6 +60,6 @@ public class YOLO_AG extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new BufferPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
+                , new BufferPower(this.music_source, this.amount)));
     }
 }

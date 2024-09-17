@@ -2,6 +2,7 @@ package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -47,6 +48,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
             }else {
                 this.addToBot(new PlayerPlayedMusicAction(music));
             }
+            this.addToBot(new UnlimboAction(music));
         } else {
             this.addToBot(new MonsterPlayedMusicAction(music, this.source));
         }

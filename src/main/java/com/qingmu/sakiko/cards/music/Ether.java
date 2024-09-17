@@ -38,10 +38,10 @@ public class Ether extends AbstractMusic {
     @Override
     public void play() {
         if (this.upgraded) {
-            this.addToTop(new DoubleEnergyAction());
             this.addToTop(new GainEnergyAction(1));
-        } else {
             this.addToTop(new DoubleEnergyAction());
+        } else {
+            this.addToTop(new GainEnergyAction(1));
         }
 
     }

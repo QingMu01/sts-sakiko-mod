@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.unique.ExpertiseAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -17,7 +16,6 @@ public class Symbol_II extends AbstractMusic {
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
     private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
-    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
@@ -26,24 +24,19 @@ public class Symbol_II extends AbstractMusic {
     public Symbol_II() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.baseMagicNumber = 3;
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeMagicNumber(2);
         }
     }
 
     @Override
     public void play() {
-        if (this.upgraded) {
-            this.addToTop(new ExpertiseAction(this.music_source, 10));
-        } else {
-            this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
-        }
+        this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
     }
 }

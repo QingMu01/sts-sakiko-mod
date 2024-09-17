@@ -386,8 +386,7 @@
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
-    "DESCRIPTION": " sakikomod:演奏 ：抽取 !M! 张牌。",
-    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：抽牌直到手牌将手牌抽满。"
+    "DESCRIPTION": " sakikomod:演奏 ：抽取 !M! 张牌。"
   },
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
@@ -400,7 +399,7 @@
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
-    "DESCRIPTION": " sakikomod:演奏 ：将你的能量翻倍 。",
+    "DESCRIPTION": " sakikomod:演奏 ：获得 [E] 。",
     "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：获得 [E] ，然后将你的能量翻倍 。"
   },
   "SakikoMod:AveMujica": {

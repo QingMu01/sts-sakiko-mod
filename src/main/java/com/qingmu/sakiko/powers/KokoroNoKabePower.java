@@ -36,7 +36,6 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     public int counter = 0;
     public int limit = 10;
-    public int lastApply;
 
     private int blockFromKabe = 0;
 
@@ -46,7 +45,11 @@ public class KokoroNoKabePower extends TwoAmountPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = 0;
-        this.stackPower(amount);
+        if (this.owner.hasPower(TomoriBlessingPower.POWER_ID)) {
+            this.stackPower(amount / 2);
+        } else {
+            this.stackPower(amount);
+        }
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
         this.updateDescription();
@@ -125,15 +128,8 @@ public class KokoroNoKabePower extends TwoAmountPower {
 
     @Override
     public void stackPower(int stackAmount) {
-        int tmp;
-        if (this.owner.hasPower(TomoriBlessingPower.POWER_ID)){
-            tmp = stackAmount / 2;
-        }else {
-            tmp = stackAmount;
-        }
-        this.amount += tmp;
-        this.counter += tmp;
-        this.lastApply = tmp;
+        this.amount += stackAmount;
+        this.counter += stackAmount;
         // 每10层心之壁层，增加1心之壁伤害
         if (this.counter >= this.limit) {
             do {

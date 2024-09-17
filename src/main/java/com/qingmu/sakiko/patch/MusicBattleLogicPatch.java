@@ -33,7 +33,7 @@ public class MusicBattleLogicPatch {
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 if (card instanceof AbstractMusic) {
-                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).addToRandomSpot(card);
+                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).addToTop(card);
                     iterator.remove();
                     // 排除瓶装
                 } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT) && (!card.inBottleFlame && !card.inBottleLightning && !card.inBottleTornado)) {
@@ -41,6 +41,7 @@ public class MusicBattleLogicPatch {
                     iterator.remove();
                 }
             }
+            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).shuffle();
         }
     }
 
