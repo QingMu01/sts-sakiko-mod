@@ -37,6 +37,6 @@ public class Symbol_II extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber)));
+        this.addToTop(new DrawCardAction(Math.max(this.magicNumber, this.baseMagicNumber) + this.extraNumber));
     }
 }

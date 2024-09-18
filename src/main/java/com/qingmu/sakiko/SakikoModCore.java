@@ -4,6 +4,7 @@ import basemod.*;
 import basemod.abstracts.CustomCard;
 import basemod.abstracts.CustomRelic;
 import basemod.eventUtil.AddEventParams;
+import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -16,7 +17,10 @@ import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.TheBeyond;
+import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
+import com.megacrit.cardcrawl.events.exordium.Sssserpent;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Prefs;
 import com.megacrit.cardcrawl.localization.*;
@@ -24,7 +28,10 @@ import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.events.DilapidatedCorridorEvent;
+import com.qingmu.sakiko.events.FatherEvent;
 import com.qingmu.sakiko.events.InvasionEvent;
+import com.qingmu.sakiko.events.SoyoEvent;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.*;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -191,6 +198,24 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 (rewardSave) -> new MusicCardReward(rewardSave.id),
                 (customReward) -> new RewardSave(customReward.type.toString(), ((MusicCardReward) customReward).id));
 
+        // 注册1层事件
+        BaseMod.addEvent(new AddEventParams.Builder(SoyoEvent.ID, SoyoEvent.class)
+                .playerClass(QINGMU_SAKIKO)
+                .eventType(EventUtils.EventType.OVERRIDE)
+                .overrideEvent(Sssserpent.ID)
+                .create());
+        // 注册2层事件
+        BaseMod.addEvent(new AddEventParams.Builder(FatherEvent.ID, FatherEvent.class)
+                .playerClass(QINGMU_SAKIKO)
+                .dungeonID(TheCity.ID)
+                .eventType(EventUtils.EventType.NORMAL)
+                .create());
+        // 注册3层事件
+        BaseMod.addEvent(new AddEventParams.Builder(DilapidatedCorridorEvent.ID, DilapidatedCorridorEvent.class)
+                .playerClass(QINGMU_SAKIKO)
+                .dungeonID(TheBeyond.ID)
+                .eventType(EventUtils.EventType.NORMAL)
+                .create());
     }
 
     @Override
@@ -200,16 +225,16 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         }
     }
 
-    public void unlockedAscension(){
-        if (SAKIKO_CONFIG.getBool("ascensionUnlock")){
+    public void unlockedAscension() {
+        if (SAKIKO_CONFIG.getBool("ascensionUnlock")) {
             BaseMod.getModdedCharacters().forEach(character -> {
-                if (character instanceof TogawaSakiko){
+                if (character instanceof TogawaSakiko) {
                     Prefs prefs = character.getPrefs();
                     int winCount = prefs.getInteger("WIN_COUNT", 0);
-                    if (winCount <= 0){
+                    if (winCount <= 0) {
                         prefs.putInteger("WIN_COUNT", 1);
                     }
-                    prefs.putBoolean("ASCEND_0",true);
+                    prefs.putBoolean("ASCEND_0", true);
                     prefs.putInteger("ASCENSION_LEVEL", 20);
                     prefs.putInteger("LAST_ASCENSION_LEVEL", 20);
                     prefs.flush();
@@ -218,7 +243,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         }
     }
 
-    public void registerConfigUI(){
+    public void registerConfigUI() {
         UIStrings config = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("Config"));
         // config页面
         ModPanel modPanel = new ModPanel();
@@ -275,7 +300,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
     }
 
-    public void registerMemberCollect(){
+    public void registerMemberCollect() {
         // 添加成员入侵事件
         BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
                 .spawnCondition(() -> false).bonusCondition(() -> false)

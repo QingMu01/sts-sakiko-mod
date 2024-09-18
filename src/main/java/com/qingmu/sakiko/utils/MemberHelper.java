@@ -42,7 +42,7 @@ public class MemberHelper {
     public static Map<String, Integer> getMember(int count) {
         Map<String, Integer> tmp = new HashMap<>();
             do {
-                int i = AbstractDungeon.monsterRng.random(0, memberList.size() - 1);
+                int i = AbstractDungeon.eventRng.random(0, memberList.size() - 1);
                 String s = memberList.get(i);
                 if (!AbstractDungeon.player.hasRelic(s.replace("Monster","")))
                     tmp.put(s,i);

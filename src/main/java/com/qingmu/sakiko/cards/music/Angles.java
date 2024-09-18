@@ -43,7 +43,7 @@ public class Angles extends AbstractMusic {
     @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
+        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) + this.extraNumber;
         this.magicNumber = this.baseMagicNumber;
         super.applyPowers();
         this.baseMagicNumber = realBaseMagicNumber;

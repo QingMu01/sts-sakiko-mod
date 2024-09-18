@@ -41,7 +41,7 @@ public class ChoirSChoir extends AbstractMusic {
     }
     @Override
     public void applyPowers() {
-        int realBaseMagicNumber = this.baseMagicNumber;
+        int realBaseMagicNumber = this.baseMagicNumber + this.extraNumber;
         this.baseMagicNumber += realBaseMagicNumber + (PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * 5);
         this.magicNumber = this.baseMagicNumber;
         super.applyPowers();

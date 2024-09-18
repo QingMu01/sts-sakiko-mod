@@ -37,7 +37,7 @@ public class StarBeatPower extends AbstractPower implements TriggerOnPlayMusicPo
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
         this.flash();
         this.addToBot(new DrawCardAction(this.owner, this.amount));
     }

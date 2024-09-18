@@ -38,7 +38,7 @@ public class TakiInferiorityPower extends AbstractPower implements TriggerOnPlay
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
         this.flash();
         this.addToBot(new ApplyPowerAction(this.owner, this.owner, new StrengthPower(this.owner, this.amount)));
     }

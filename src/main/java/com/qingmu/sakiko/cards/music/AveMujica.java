@@ -28,7 +28,7 @@ public class AveMujica extends AbstractMusic {
 
     @Override
     public void upgrade() {
-        if (!this.upgraded){
+        if (!this.upgraded) {
             this.upgradeName();
             this.upgradeMagicNumber(1);
         }
@@ -38,6 +38,6 @@ public class AveMujica extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new AddTemporaryHPAction(this.music_source, this.music_source
-                , (this.magicNumber <= 0 ? this.baseMagicNumber : this.magicNumber) * MemberHelper.getBandMemberCount()));
+                , ((this.magicNumber <= 0 ? this.baseMagicNumber : this.magicNumber) * MemberHelper.getBandMemberCount()) + this.extraNumber));
     }
 }

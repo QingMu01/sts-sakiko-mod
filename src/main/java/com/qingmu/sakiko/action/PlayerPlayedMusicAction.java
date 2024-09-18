@@ -44,7 +44,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         // 能力钩子 演奏时触发
         for (AbstractPower power : AbstractDungeon.player.powers) {
             if (power instanceof TriggerOnPlayMusicPower) {
-                ((TriggerOnPlayMusicPower) power).onPlayMusicCard(this.music);
+                ((TriggerOnPlayMusicPower) power).triggerOnPlayMusicCard(this.music);
             }
             // 处理音乐牌吃钢笔尖等buff但是不消耗的问题
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_ATTACK)) {
@@ -56,7 +56,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         // 遗物钩子 演奏时触发
         for (AbstractRelic relic : AbstractDungeon.player.relics) {
             if (relic instanceof TriggerOnPlayMusicRelic) {
-                ((TriggerOnPlayMusicRelic) relic).onPlayMusicCard(this.music);
+                ((TriggerOnPlayMusicRelic) relic).triggerOnPlayMusicCard(this.music);
             }
         }
         // 待演奏区钩子 演奏时触发
@@ -92,7 +92,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
             for (AbstractPower power : monster.powers) {
                 if (power instanceof TriggerOnPlayMusicPower) {
-                    ((TriggerOnPlayMusicPower) power).onPlayMusicCard(this.music);
+                    ((TriggerOnPlayMusicPower) power).triggerOnPlayMusicCard(this.music);
                 }
             }
         }

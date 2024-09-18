@@ -40,7 +40,7 @@ public class NingyouPower extends AbstractPower implements TriggerOnPlayMusicPow
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
         this.flash();
         this.addToBot(new AddTemporaryHPAction(this.owner, this.owner, this.amount));
     }

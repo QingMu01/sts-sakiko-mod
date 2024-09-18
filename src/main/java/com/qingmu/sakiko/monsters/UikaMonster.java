@@ -31,6 +31,7 @@ public class UikaMonster extends AbstractMemberMonster {
 
     public UikaMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        super.setDefaultAttribute();
         this.powerful = 1;
         if (AbstractDungeon.ascensionLevel >= 18) {
             this.powerful = 2;

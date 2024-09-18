@@ -38,6 +38,6 @@ public class Symbol_III extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber, this.baseMagicNumber)));
+        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber, this.baseMagicNumber) + this.extraNumber));
     }
 }

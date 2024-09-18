@@ -28,6 +28,7 @@ public class UmiriMonster extends AbstractMemberMonster {
 
     public UmiriMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        super.setDefaultAttribute();
         this.damage.add(new DamageInfo(this, this.baseAttack));
         this.damage.add(new DamageInfo(this, this.baseSlash));
         this.damage.add(new DamageInfo(this, this.baseMulti));

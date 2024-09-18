@@ -43,7 +43,7 @@ public class MujikakuPower extends AbstractPower implements TriggerOnObliviousPo
     }
 
     @Override
-    public void onOblivious() {
+    public void triggerOnOblivious() {
         for (int i = 0; i < this.amount; i++) {
             if (!AbstractDungeon.player.hand.isEmpty()) {
                 flash();

@@ -30,6 +30,7 @@ public class AnonMonster extends AbstractMemberMonster {
 
     public AnonMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        super.setDefaultAttribute();
         this.damage.add(new DamageInfo(this, this.baseAttack));
         this.damage.add(new DamageInfo(this, this.baseSlash));
         this.damage.add(new DamageInfo(this, this.baseMulti));

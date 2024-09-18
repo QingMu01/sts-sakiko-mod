@@ -40,7 +40,7 @@ public class Speaker extends AbstractSakikoRelic {
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
         this.amount++;
         if (amount >= 20) {
             this.counter++;

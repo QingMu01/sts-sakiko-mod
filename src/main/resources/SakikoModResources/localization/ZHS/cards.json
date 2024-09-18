@@ -43,7 +43,7 @@
   },
   "SakikoMod:WeaknessBreak": {
     "NAME": "弱点突破",
-    "DESCRIPTION": "造成 !D! 点伤害, NL 攻击 易伤 的敌人会给予其 !M! 层 虚弱。"
+    "DESCRIPTION": "造成 !D! 点伤害, NL 攻击 易伤 的敌人会向其施加 !M! 层 虚弱。"
   },
   "SakikoMod:StageMachine": {
     "NAME": "舞台装置",
@@ -61,7 +61,7 @@
   },
   "SakikoMod:Noise": {
     "NAME": "噪音",
-    "DESCRIPTION": "造成 sakikomod:乐章 层数 !M! 倍点伤害。若本次攻击未被格挡，则给予2层易伤。",
+    "DESCRIPTION": "造成 sakikomod:乐章 层数 !M! 倍点伤害。若本次攻击未被格挡，则施加2层易伤。",
     "EXTENDED_DESCRIPTION": [
       " NL （造成 !D! 点伤害）"
     ]
@@ -116,7 +116,7 @@
   },
   "SakikoMod:Spotlight": {
     "NAME": "镭射灯",
-    "DESCRIPTION": "造成 !D! 点伤害，给予 !M! 层 虚弱 。"
+    "DESCRIPTION": "造成 !D! 点伤害，施加 !M! 层 虚弱 。"
   },
   "SakikoMod:Sekaikan": {
     "NAME": "世界观",
@@ -146,7 +146,7 @@
   },
   "SakikoMod:KeypointEntry": {
     "NAME": "关键切入点",
-    "DESCRIPTION": "造成 !D! 点伤害。如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，给予目标 !M! 层 易伤 。"
+    "DESCRIPTION": "造成 !D! 点伤害。如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，对目标施加 !M! 层 易伤 。"
   },
   "SakikoMod:CurtainCall": {
     "NAME": "谢幕",
@@ -373,7 +373,7 @@
   },
   "SakikoMod:Countermeasures": {
     "NAME": "反制",
-    "DESCRIPTION": "造成 !D! 点伤害，如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，给予目标1层 sakikomod:拉黑 。"
+    "DESCRIPTION": "造成 !D! 点伤害，如果本次攻击造成的未被格挡的伤害高于目标将要造成的伤害，对目标施加1层 sakikomod:拉黑 。"
   },
   "SakikoMod:MusicDream": {
     "NAME": "音乐梦",
@@ -499,8 +499,8 @@
   },
   "SakikoMod:Daylight_M": {
     "NAME": "Daylight",
-    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得 !M! 层 虚弱 和 易伤 。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：使所有敌人获得 !M! 层 虚弱 和 易伤 。 NL 每层 sakikomod:闪耀 使敌人额外获得1层虚弱和易伤 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：向所有敌人施加 !M! 层 虚弱 和 易伤 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：向所有敌人施加 !M! 层 虚弱 和 易伤 。 NL 每层 sakikomod:闪耀 使敌人额外获得1层虚弱和易伤 NL 消耗 。"
 
   },
   "SakikoMod:Sunny_M": {
@@ -569,5 +569,9 @@
   "SakikoMod:Haruhikage_Rana": {
     "NAME": "乐奈的春日影",
     "DESCRIPTION": " sakikomod:演奏 ：跳过玩家两个回合。"
+  },
+  "SakikoMod:SoyoCurse": {
+    "NAME": "长崎素世的挽留",
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时向所有单位施加 缠绕 。"
   }
 }

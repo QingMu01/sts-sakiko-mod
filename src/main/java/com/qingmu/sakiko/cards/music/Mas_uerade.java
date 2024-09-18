@@ -46,7 +46,7 @@ public class Mas_uerade extends AbstractMusic {
 
     @Override
     public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
+        int realBaseDamage = this.baseDamage + this.extraNumber;
         this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
         super.applyPowers();
         this.baseDamage = realBaseDamage;
@@ -55,7 +55,7 @@ public class Mas_uerade extends AbstractMusic {
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
+        int realBaseDamage = this.baseDamage + this.extraNumber;
         this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;

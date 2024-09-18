@@ -22,6 +22,34 @@ public abstract class AbstractMemberMonster extends CustomMonster {
 
     public AbstractMemberMonster(String name, String id, String img, float x, float y) {
         super(name, id, 100, 0.0F, 0.0F, 200.0F, 220.0F, img, x, y);
+    }
+
+    protected void obtainMusic() {
+    }
+
+
+    @Override
+    public void update() {
+        super.update();
+        if (this.canPlayMusic) {
+            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this);
+            if (cardGroup.isEmpty()) {
+                this.musicSlotItem.removeMusic();
+            } else {
+                this.musicSlotItem.setMusic((AbstractMusic) cardGroup.getTopCard());
+            }
+        }
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        super.render(sb);
+        if (this.canPlayMusic) {
+            musicSlotItem.render(sb, this.hb.cX, this.hb.cY + 300.0f);
+        }
+    }
+
+    protected void setDefaultAttribute() {
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.baseAttack += 2; // 10
@@ -66,30 +94,4 @@ public abstract class AbstractMemberMonster extends CustomMonster {
         this.baseSlash = AbstractDungeon.monsterHpRng.random(this.baseSlash - 2, this.baseSlash + 2);
         this.baseBlock = AbstractDungeon.monsterHpRng.random(this.baseBlock, this.baseBlock + 2);
     }
-
-    protected void obtainMusic() {
-    }
-
-
-    @Override
-    public void update() {
-        super.update();
-        if (this.canPlayMusic) {
-            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this);
-            if (cardGroup.isEmpty()) {
-                this.musicSlotItem.removeMusic();
-            } else {
-                this.musicSlotItem.setMusic((AbstractMusic) cardGroup.getTopCard());
-            }
-        }
-    }
-
-    @Override
-    public void render(SpriteBatch sb) {
-        super.render(sb);
-        if (this.canPlayMusic) {
-            musicSlotItem.render(sb, this.hb.cX, this.hb.cY + 300.0f);
-        }
-    }
-
 }

@@ -29,6 +29,9 @@ public abstract class AbstractMusic extends CustomCard {
     public AbstractCreature music_source;
     public AbstractCreature music_target;
 
+    // 额外加成
+    public int extraNumber = 0;
+
     // 计数器
     public int amount = 0;
 

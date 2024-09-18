@@ -42,7 +42,7 @@ public class MoonsPower extends AbstractPower implements TriggerOnPlayMusicPower
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
         if (this.amount > 0) {
             this.flash();
             AbstractDungeon.effectList.add(new DoublePlayEffect(music));

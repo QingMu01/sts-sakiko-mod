@@ -49,7 +49,7 @@
         <dependency>
             <groupId>anonmod</groupId>
             <artifactId>anonmod</artifactId>
-            <version>0.8.3</version>
+            <version>0.8.52</version>
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/3248151544/AnonMod.jar</systemPath>
         </dependency>

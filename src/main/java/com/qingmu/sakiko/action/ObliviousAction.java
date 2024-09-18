@@ -34,7 +34,7 @@ public class ObliviousAction extends AbstractGameAction {
         // 触发钩子
         for (AbstractPower power : p.powers) {
             if (power instanceof TriggerOnObliviousPower) {
-                ((TriggerOnObliviousPower) power).onOblivious();
+                ((TriggerOnObliviousPower) power).triggerOnOblivious();
             }
         }
     }

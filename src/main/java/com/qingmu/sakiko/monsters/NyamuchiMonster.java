@@ -31,13 +31,13 @@ public class NyamuchiMonster extends AbstractMemberMonster {
 
     public NyamuchiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        super.setDefaultAttribute();
         if (AbstractDungeon.id.equals(Exordium.ID)) {
             this.baseSlash = Math.min(this.baseSlash, 12);
         }
         if (AbstractDungeon.id.equals(TheCity.ID)){
             this.baseSlash = Math.min(this.baseSlash, 15);
         }
-
         this.damage.add(new DamageInfo(this, this.baseAttack));
         this.damage.add(new DamageInfo(this, this.baseSlash));
         this.damage.add(new DamageInfo(this, this.baseMulti));

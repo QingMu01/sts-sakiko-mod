@@ -40,6 +40,7 @@ public class RanaMonster extends AbstractMemberMonster {
     public RanaMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
         this.canPlayMusic = true;
+        super.setDefaultAttribute();
         // 进阶3 强化伤害
         if (AbstractDungeon.ascensionLevel >= 3) {
             this.powerful = 15;

@@ -22,7 +22,7 @@
   },
   "SakikoMod:Speaker": {
     "NAME": "便携音响",
-    "FLAVOR": "这个用来听歌真不错desuwa！",
+    "FLAVOR": "",
     "DESCRIPTIONS": [
       "战斗开始时，消耗1点充能来触发一轮 #y乐章 的特效。每20次 #y演奏 恢复1层充能，最多持有1层充能。"
     ]
@@ -35,10 +35,17 @@
     ]
   },
   "SakikoMod:OctopusSakiko": {
-    "NAME": "戴面具的章鱼",
-    "FLAVOR": "名为章鱼的人偶？为什么和我这么像desuwa！",
+    "NAME": "翻面章鱼",
+    "FLAVOR": "为什么都说这个玩偶像我desuwa！",
     "DESCRIPTIONS": [
-      "奇数回合的 #y首次演奏 使你抽 #b2 张牌。偶数回合的 #y首次演奏 使你获得 [E] 。"
+      "奇数回合的首次 #y演奏 使你抽 #b2 张牌。偶数回合的首次 #y演奏 使你获得 [E] 。"
+    ]
+  },
+  "SakikoMod:AncientMask": {
+    "NAME": "古老面具",
+    "FLAVOR": "不要破坏AveMujica的世界观desuwa!",
+    "DESCRIPTIONS": [
+      "战斗开始时，获得 #g5 点 #y临时生命 。"
     ]
   },
   "SakikoMod:Mutsumi": {
@@ -104,5 +111,41 @@
       "千早爱音能力的象征，每前进15次，恢复一层充能。 NL 在战斗中右键本遗物消耗一层充能，恢复 #g15 点生命值。",
       "爱音已经被 @#r切割@ 了 desuwa"
     ]
+  },
+  "SakikoMod:Band_AVEMUJICA": {
+    "NAME": "Ave Mujica",
+    "FLAVOR": "欢迎来到，Ave Mujica的世界。",
+    "DESCRIPTIONS": [
+      "你 #y演奏 的所有AveMujica所属的音乐，生效时获得 #b1 点数值加成。"
+    ]
+  },
+  "SakikoMod:Band_CRYCHIC": {
+    "NAME": "CryChic",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "占位"
+    ]
+  },
+  "SakikoMod:Combination_ANSK": {
+    "NAME": "双人组合：爱祥",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "占位"
+    ]
+  },
+  "SakikoMod:Combination_TMSK": {
+    "NAME": "双人组合：灯祥",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "占位"
+    ]
+  },
+  "SakikoMod:Combination_UKSK": {
+    "NAME": "双人组合：初祥",
+    "FLAVOR": "",
+    "DESCRIPTIONS": [
+      "占位"
+    ]
   }
+
 }

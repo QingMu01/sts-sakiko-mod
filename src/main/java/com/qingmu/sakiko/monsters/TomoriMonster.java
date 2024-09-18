@@ -29,7 +29,7 @@ public class TomoriMonster extends AbstractMemberMonster {
 
     public TomoriMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
-
+        super.setDefaultAttribute();
         this.baseAttack--;
         this.baseMulti--;
         this.baseSlash -= 2;

@@ -54,7 +54,7 @@ public class BlackBirthday extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToBot(new BlackBirthdayAction(Math.max(this.baseMagicNumber, this.magicNumber), this.upgraded));
+        this.addToBot(new BlackBirthdayAction(Math.max(this.baseMagicNumber, this.magicNumber) + this.extraNumber, this.upgraded));
     }
 
 }

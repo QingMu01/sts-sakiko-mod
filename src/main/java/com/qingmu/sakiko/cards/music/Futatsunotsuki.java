@@ -37,6 +37,6 @@ public class Futatsunotsuki extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new MoonsPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
+        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new MoonsPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber)+this.extraNumber)));
     }
 }

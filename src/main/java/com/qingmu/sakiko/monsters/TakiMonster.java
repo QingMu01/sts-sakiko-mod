@@ -28,6 +28,7 @@ public class TakiMonster extends AbstractMemberMonster {
 
     public TakiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        super.setDefaultAttribute();
         this.powerful = 1;
         // 进阶18 强化
         if (AbstractDungeon.ascensionLevel >= 18) {

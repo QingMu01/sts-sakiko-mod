@@ -33,7 +33,7 @@ public abstract class AbstractSakikoRelic extends CustomRelic implements Trigger
     }
 
     @Override
-    public void onPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
 
     }
 }

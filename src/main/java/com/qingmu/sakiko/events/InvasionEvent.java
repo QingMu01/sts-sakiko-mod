@@ -21,7 +21,7 @@ public class InvasionEvent extends PhasedEvent {
     private static final String NAME = eventStrings.NAME;
     private static final String[] DESCRIPTIONS = eventStrings.DESCRIPTIONS;
     private static final String[] OPTIONS = eventStrings.OPTIONS;
-    private static final String IMG_PATH = "SakikoModResources/img/event/bg00949.png";
+    private static final String IMG_PATH = "SakikoModResources/img/event/bg00098.png";
 
     private final Map<String, Integer> optionMember = MemberHelper.getMember(4);
 
