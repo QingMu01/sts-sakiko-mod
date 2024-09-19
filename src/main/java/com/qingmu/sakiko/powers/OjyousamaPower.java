@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.powers;
 
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -33,20 +34,12 @@ public class OjyousamaPower extends AbstractPower {
         this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
-    @Override
-    public void onInitialApplication() {
-        if (this.amount + AbstractDungeon.player.gameHandSize > 10){
-            AbstractDungeon.player.gameHandSize = 10;
-        }else {
-            AbstractDungeon.player.gameHandSize += this.amount;
-        }
-    }
 
     @Override
-    public void onRemove() {
-        AbstractDungeon.player.gameHandSize = this.playerHandSize;
+    public void atStartOfTurnPostDraw() {
+        this.flash();
+        this.addToBot(new DrawCardAction(this.amount));
     }
-
 
     @Override
     public void stackPower(int stackAmount) {
@@ -54,8 +47,8 @@ public class OjyousamaPower extends AbstractPower {
         if (this.amount <= 0) {
             this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
-        if (this.amount >= 999) {
-            this.amount = 999;
+        if (this.amount >= 5) {
+            this.amount = 5;
         }
     }
 

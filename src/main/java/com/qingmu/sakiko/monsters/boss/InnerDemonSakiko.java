@@ -15,12 +15,7 @@ public class InnerDemonSakiko extends AbstractMemberMonster {
     // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
-    private enum phase {
-        START,
-        APART,
-        ANGRY,
-        AVEMUJICA
-    }
+    private int phase = 0;
 
     public InnerDemonSakiko(float x, float y) {
         super(NAME, ID, IMG, x, y);
@@ -28,12 +23,17 @@ public class InnerDemonSakiko extends AbstractMemberMonster {
 
     @Override
     public void usePreBattleAction() {
-        super.usePreBattleAction();
+
     }
 
     @Override
     public void die() {
-        super.die();
+        if (this.phase == 4) {
+            super.die();
+        } else {
+            this.setMove((byte) 0, Intent.UNKNOWN);
+            this.phase++;
+        }
     }
 
     @Override

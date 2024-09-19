@@ -46,7 +46,7 @@ public class FeverReadyPower extends AbstractPower {
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        if (this.amount >= 3) {
+        if (this.amount >= 4) {
             this.flash();
             this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
             this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverPower(this.owner, 1)));

@@ -10,8 +10,8 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiled;
 import com.qingmu.sakiko.ui.MusicDrawPilePanel;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -35,7 +35,7 @@ public class DrawMusicAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-        CardGroup drawMusicPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup drawMusicPile = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (AbstractDungeon.player.hasPower("No Draw")) {
             AbstractDungeon.player.getPower("No Draw").flash();
         } else if (AbstractDungeon.player.hand.size() + this.amount > 10) {
@@ -67,7 +67,7 @@ public class DrawMusicAction extends AbstractGameAction {
     }
 
     private void setCardPosition(AbstractCard c) {
-        MusicDrawPilePanel pilePanel = (MusicDrawPilePanel) MusicDrawPilePanelFiledPatch.musicDrawPile.get(AbstractDungeon.overlayMenu);
+        MusicDrawPilePanel pilePanel = (MusicDrawPilePanel) MusicDrawPilePanelFiled.musicDrawPile.get(AbstractDungeon.overlayMenu);
         c.current_x = pilePanel.getPanelX();
         c.current_y = pilePanel.getPanelY();
     }

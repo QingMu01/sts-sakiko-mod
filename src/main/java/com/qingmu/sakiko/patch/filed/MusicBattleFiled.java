@@ -10,7 +10,7 @@ import com.qingmu.sakiko.patch.SakikoEnum;
 
 import java.util.ArrayList;
 
-public class MusicBattleFiledPatch {
+public class MusicBattleFiled {
 
     @SpirePatch(clz = AbstractPlayer.class, method = SpirePatch.CLASS)
     public static class DrawMusicPile {

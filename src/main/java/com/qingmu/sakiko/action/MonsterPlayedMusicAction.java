@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 
 public class MonsterPlayedMusicAction extends AbstractGameAction {
 
@@ -34,7 +34,7 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
             else this.vfxDone = true;
         }
         this.music.play();
-        CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
+        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
         AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
         queue.removeCard(this.music);
         this.isDone = true;

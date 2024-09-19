@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.relics;
 
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -23,4 +24,8 @@ public class Combination_UKSK extends AbstractSakikoRelic{
         return this.DESCRIPTIONS[0];
     }
 
+    @Override
+    public void onVictory() {
+        AbstractDungeon.player.heal(AbstractDungeon.player.maxHealth);
+    }
 }

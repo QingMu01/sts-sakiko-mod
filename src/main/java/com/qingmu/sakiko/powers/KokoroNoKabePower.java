@@ -3,6 +3,7 @@ package com.qingmu.sakiko.powers;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -15,9 +16,11 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.BarricadePower;
 import com.megacrit.cardcrawl.powers.BlurPower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.Calipers;
 import com.qingmu.sakiko.action.ActiveKabeAction;
 import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
+import com.qingmu.sakiko.relics.Combination_TMSK;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class KokoroNoKabePower extends TwoAmountPower {
@@ -102,6 +105,13 @@ public class KokoroNoKabePower extends TwoAmountPower {
                     this.addToTop(new LoseHPAction(monster, monster, this.amount2));
                     return damageAmount;
                 }
+            }
+            // 免伤
+            if (this.owner.isPlayer && ((AbstractPlayer)this.owner).hasRelic(Combination_TMSK.ID)){
+                AbstractRelic relic = ((AbstractPlayer)this.owner).getRelic(Combination_TMSK.ID);
+                relic.flash();
+                this.addToBot(new RelicAboveCreatureAction(this.owner, relic));
+                return damageAmount;
             }
             // 计算归宿减伤
             int buffed;

@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -8,13 +7,14 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.powers.OverworkPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Resentment extends CustomCard {
+public class Resentment extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Resentment.class.getSimpleName());
 

@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 
 public class KimewazaAction extends AbstractGameAction {
 
@@ -21,10 +21,10 @@ public class KimewazaAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).isEmpty()) {
+        if (MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).isEmpty()) {
             this.isDone = true;
         } else {
-            CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+            CardGroup cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
             AbstractCard card = cardGroup.getTopCard();
             cardGroup.group.remove(card);
             AbstractDungeon.getCurrRoom().souls.remove(card);

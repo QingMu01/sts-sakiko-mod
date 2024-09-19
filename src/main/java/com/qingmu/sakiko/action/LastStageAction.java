@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.cards.sakiko.LastStage;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Random;
@@ -31,7 +31,7 @@ public class LastStageAction extends AbstractGameAction {
 
         this.card = card;
         this.duration = this.startDuration = Settings.ACTION_DUR_FAST;
-        this.cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        this.cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
     }
 
     @Override

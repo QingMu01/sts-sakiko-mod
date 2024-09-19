@@ -57,7 +57,7 @@ public class BoomerangPower extends TwoAmountPower {
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
             this.flash();
-            this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.NORMAL)));
+            this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.THORNS)));
             this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
     }

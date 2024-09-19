@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.MemberHelper;
 
 import java.util.Iterator;
@@ -23,8 +23,8 @@ public class MusicBattleLogicPatch {
          * */
 
         public static void Prefix(AbstractPlayer __instance) {
-            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).clear();
-            MusicBattleFiledPatch.MusicQueue.musicQueue.get(__instance).clear();
+            MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).clear();
+            MusicBattleFiled.MusicQueue.musicQueue.get(__instance).clear();
         }
 
         public static void Postfix(AbstractPlayer __instance) {
@@ -33,7 +33,7 @@ public class MusicBattleLogicPatch {
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 if (card instanceof AbstractMusic) {
-                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).addToTop(card);
+                    MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).addToTop(card);
                     iterator.remove();
                     // 排除瓶装
                 } else if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT) && (!card.inBottleFlame && !card.inBottleLightning && !card.inBottleTornado)) {
@@ -41,7 +41,7 @@ public class MusicBattleLogicPatch {
                     iterator.remove();
                 }
             }
-            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).shuffle();
+            MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).shuffle();
         }
     }
 
@@ -53,7 +53,7 @@ public class MusicBattleLogicPatch {
     public static class PlayMusicLogic {
         public static void Postfix(AbstractPlayer __instance) {
             int currCount = 1 + (MemberHelper.getBandMemberCount() / 2);
-            if (!MusicBattleFiledPatch.MusicQueue.musicQueue.get(__instance).isEmpty()){
+            if (!MusicBattleFiled.MusicQueue.musicQueue.get(__instance).isEmpty()){
                 AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(currCount));
             }
         }

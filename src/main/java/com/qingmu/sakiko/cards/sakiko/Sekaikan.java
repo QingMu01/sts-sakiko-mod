@@ -1,18 +1,18 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.cards.tmpcard.Story;
 import com.qingmu.sakiko.powers.SekaikanPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Sekaikan extends CustomCard {
+public class Sekaikan extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(Sekaikan.class.getSimpleName());
 
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);

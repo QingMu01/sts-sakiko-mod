@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.ui.panels.AbstractPanel;
 import com.qingmu.sakiko.ui.MusicDrawPilePanel;
 
 @SpirePatch(clz = OverlayMenu.class, method = SpirePatch.CLASS)
-public class MusicDrawPilePanelFiledPatch {
+public class MusicDrawPilePanelFiled {
     /*
     * 添加自定义的音乐抽牌堆UI
     * */

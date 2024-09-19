@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicLifeAction extends AbstractGameAction {
@@ -20,7 +20,7 @@ public class MusicLifeAction extends AbstractGameAction {
 
         this.amount = amount;
         this.duration = this.startDuration = Settings.ACTION_DUR_FAST;
-        this.cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        this.cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
     }
 
     @Override

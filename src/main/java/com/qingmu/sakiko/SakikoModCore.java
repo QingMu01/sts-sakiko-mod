@@ -139,7 +139,6 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                             UnlockTracker.markRelicAsSeen(relic.relicId);
                         }
                     }
-
                 });
     }
 

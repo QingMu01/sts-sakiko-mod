@@ -1,13 +1,12 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class Payslip extends CustomRelic {
+public class Payslip extends AbstractSakikoRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(Payslip.class.getSimpleName());

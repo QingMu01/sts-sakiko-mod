@@ -20,8 +20,8 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBar;
 import com.megacrit.cardcrawl.screens.mainMenu.ScrollBarListener;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -250,7 +250,7 @@ public class MusicDrawPileViewScreen extends CustomScreen implements ScrollBarLi
         AbstractDungeon.isScreenUp = true;
         AbstractDungeon.screen = curScreen();
         this.drawPileCopy.clear();
-        for (AbstractCard c : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
+        for (AbstractCard c : MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
             c.setAngle(0.0F, true);
             c.targetDrawScale = 0.75F;
             c.drawScale = 0.75F;
@@ -301,7 +301,7 @@ public class MusicDrawPileViewScreen extends CustomScreen implements ScrollBarLi
         if (!AbstractDungeon.player.hasRelic("Frozen Eye"))
             FontHelper.renderDeckViewTip(sb, BODY_INFO, 48.0F * Settings.scale, Settings.GOLD_COLOR);
         FontHelper.renderDeckViewTip(sb, HEADER_INFO, 96.0F * Settings.scale, Settings.CREAM_COLOR);
-        MusicDrawPilePanelFiledPatch.musicDrawPile.get(AbstractDungeon.overlayMenu).render(sb);
+        MusicDrawPilePanelFiled.musicDrawPile.get(AbstractDungeon.overlayMenu).render(sb);
     }
 
     @Override

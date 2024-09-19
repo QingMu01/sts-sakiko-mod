@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 
 public class ReadyToPlayMusicAction extends AbstractGameAction {
 
@@ -20,7 +20,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
     }
 
     public ReadyToPlayMusicAction(int amount, AbstractCreature source) {
-        this.queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
+        this.queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
         this.source = source;
         if (this.queue.isEmpty()) {
             this.amount = 0;

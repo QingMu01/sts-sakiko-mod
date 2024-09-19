@@ -1,15 +1,15 @@
 package com.qingmu.sakiko.cards.tmpcard;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.FantasyAction;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 
-public class Fantasy extends CustomCard {
+public class Fantasy extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Fantasy.class.getSimpleName());
 

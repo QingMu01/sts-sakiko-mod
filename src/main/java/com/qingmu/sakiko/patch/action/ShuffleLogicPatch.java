@@ -7,8 +7,8 @@ import com.megacrit.cardcrawl.actions.defect.ShuffleAllAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.patch.filed.ShuffleActionFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.ShuffleActionFiled;
 import javassist.CtBehavior;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ShuffleLogicPatch {
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
-                    ShuffleActionFiledPatch.ShuffleAllActionFiled.moon_light.get(__instance).add(card);
+                    ShuffleActionFiled.ShuffleAllActionFiled.moon_light.get(__instance).add(card);
                     iterator.remove();
                 }
             }
@@ -36,9 +36,9 @@ public class ShuffleLogicPatch {
 
         @SpireInsertPatch(locator = Locator2.class)
         public static void Insert2(ShuffleAllAction __instance) {
-            ArrayList<AbstractCard> cards = ShuffleActionFiledPatch.ShuffleAllActionFiled.moon_light.get(__instance);
+            ArrayList<AbstractCard> cards = ShuffleActionFiled.ShuffleAllActionFiled.moon_light.get(__instance);
             AbstractDungeon.player.discardPile.group.addAll(cards);
-            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
+            MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
             cards.clear();
         }
 
@@ -55,7 +55,7 @@ public class ShuffleLogicPatch {
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 if (card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
-                    ShuffleActionFiledPatch.EmptyDeckShuffleActionFiled.moon_light.get(__instance).add(card);
+                    ShuffleActionFiled.EmptyDeckShuffleActionFiled.moon_light.get(__instance).add(card);
                     iterator.remove();
                 }
             }
@@ -63,9 +63,9 @@ public class ShuffleLogicPatch {
 
         @SpireInsertPatch(locator = Locator3.class)
         public static void Insert2(EmptyDeckShuffleAction __instance) {
-            ArrayList<AbstractCard> cards = ShuffleActionFiledPatch.EmptyDeckShuffleActionFiled.moon_light.get(__instance);
+            ArrayList<AbstractCard> cards = ShuffleActionFiled.EmptyDeckShuffleActionFiled.moon_light.get(__instance);
             AbstractDungeon.player.discardPile.group.addAll(cards);
-            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
+            MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).shuffle(AbstractDungeon.shuffleRng);
             cards.clear();
         }
     }

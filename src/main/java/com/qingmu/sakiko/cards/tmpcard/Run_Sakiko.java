@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.tmpcard;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -10,10 +9,11 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.vfx.combat.SmokeBombEffect;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 
-public class Run_Sakiko extends CustomCard {
+public class Run_Sakiko extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Run_Sakiko.class.getSimpleName());
 

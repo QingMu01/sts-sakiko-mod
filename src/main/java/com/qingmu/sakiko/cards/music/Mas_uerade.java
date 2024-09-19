@@ -33,7 +33,6 @@ public class Mas_uerade extends AbstractMusic {
         this.baseDamage = 6;
         this.baseMagicNumber = 2;
         this.isMultiDamage = true;
-        this.dontTriggerOnUseCard = true;
     }
 
     @Override

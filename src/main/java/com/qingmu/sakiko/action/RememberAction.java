@@ -26,7 +26,6 @@ public class RememberAction extends AbstractGameAction {
     public RememberAction(boolean upgrade) {
         this.upgrade = upgrade;
         this.p = AbstractDungeon.player;
-        this.setValues(this.p, AbstractDungeon.player, this.amount);
         this.actionType = ActionType.CARD_MANIPULATION;
         this.duration = Settings.ACTION_DUR_FAST;
     }

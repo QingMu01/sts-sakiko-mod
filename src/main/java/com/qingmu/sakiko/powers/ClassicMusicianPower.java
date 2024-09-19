@@ -15,6 +15,10 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ClassicMusicianPower extends AbstractPower {
 
     public static final String POWER_ID = ModNameHelper.make(ClassicMusicianPower.class.getSimpleName());
@@ -25,7 +29,7 @@ public class ClassicMusicianPower extends AbstractPower {
     private static final String path48 = "SakikoModResources/img/powers/ClassicMusicianPower48.png";
     private static final String path128 = "SakikoModResources/img/powers/ClassicMusicianPower84.png";
 
-    private int cardsDoubledThisTurn = 0;
+    private List<AbstractMusic> usedMusicCardThisTurn;
 
     public ClassicMusicianPower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -35,6 +39,8 @@ public class ClassicMusicianPower extends AbstractPower {
         this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
+
+        this.usedMusicCardThisTurn = new ArrayList<>();
 
         this.updateDescription();
     }
@@ -46,29 +52,40 @@ public class ClassicMusicianPower extends AbstractPower {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (card instanceof AbstractMusic
-                && (!card.purgeOnUse && this.amount > 0
-                && AbstractDungeon.actionManager.cardsPlayedThisTurn.stream().filter(c -> c instanceof AbstractMusic)
-                .count() - this.cardsDoubledThisTurn <= this.amount)) {
-            ++this.cardsDoubledThisTurn;
-            this.flash();
-            AbstractMonster m = null;
-            if (action.target != null) {
-                m = (AbstractMonster)action.target;
-            }
+        if (card instanceof AbstractMusic && !card.purgeOnUse) {
+            this.usedMusicCardThisTurn.add((AbstractMusic) card);
+            if (this.usedMusicCardThisTurn.size() <= this.amount){
+                this.flash();
+                AbstractMonster m = null;
+                if (action.target != null) {
+                    m = (AbstractMonster)action.target;
+                }
 
-            AbstractCard tmp = card.makeSameInstanceOf();
-            AbstractDungeon.player.limbo.addToBottom(tmp);
-            tmp.current_x = card.current_x;
-            tmp.current_y = card.current_y;
-            tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
-            tmp.target_y = (float)Settings.HEIGHT / 2.0F;
-            if (m != null) {
-                tmp.calculateCardDamage(m);
+                AbstractCard tmp = card.makeSameInstanceOf();
+                AbstractDungeon.player.limbo.addToBottom(tmp);
+                tmp.current_x = card.current_x;
+                tmp.current_y = card.current_y;
+                tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
+                tmp.target_y = (float)Settings.HEIGHT / 2.0F;
+                if (m != null) {
+                    tmp.calculateCardDamage(m);
+                }
+                tmp.purgeOnUse = true;
+                AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
             }
-            tmp.purgeOnUse = true;
-            AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
         }
 
+    }
+
+    @Override
+    public void atStartOfTurn() {
+        this.usedMusicCardThisTurn.clear();
+    }
+
+    @Override
+    public void onInitialApplication() {
+        for (AbstractCard card : AbstractDungeon.actionManager.cardsPlayedThisTurn.stream().filter(card -> card instanceof AbstractMusic).collect(Collectors.toList())) {
+            this.usedMusicCardThisTurn.add((AbstractMusic) card);
+        }
     }
 }

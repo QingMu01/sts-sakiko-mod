@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.actions.defect.DoubleEnergyAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.patch.SakikoEnum;
@@ -24,25 +23,19 @@ public class Ether extends AbstractMusic {
     public Ether() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
+        this.baseMagicNumber = 1;
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeMagicNumber(1);
         }
     }
 
     @Override
     public void play() {
-        if (this.upgraded) {
-            this.addToTop(new GainEnergyAction(1 + this.extraNumber));
-            this.addToTop(new DoubleEnergyAction());
-        } else {
-            this.addToTop(new GainEnergyAction(1 + this.extraNumber));
-        }
-
+        this.addToTop(new GainEnergyAction(Math.max(this.baseMagicNumber, this.magicNumber) + this.extraNumber));
     }
 }

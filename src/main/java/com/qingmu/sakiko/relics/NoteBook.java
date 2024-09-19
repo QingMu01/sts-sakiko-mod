@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -9,7 +8,7 @@ import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class NoteBook extends CustomRelic {
+public class NoteBook extends AbstractSakikoRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(NoteBook.class.getSimpleName());

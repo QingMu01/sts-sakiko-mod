@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -11,7 +10,7 @@ import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class DoubleKeyboard extends CustomRelic {
+public class DoubleKeyboard extends AbstractSakikoRelic {
 
     public static final String ID = ModNameHelper.make(DoubleKeyboard.class.getSimpleName());
     private static final String IMG_PATH = "SakikoModResources/img/relics/DoubleKeyboard.png";
@@ -36,7 +35,7 @@ public class DoubleKeyboard extends CustomRelic {
 
     @Override
     public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (cardTypeColor == getCardType(card)){
+        if (!card.purgeOnUse && cardTypeColor == getCardType(card)){
             this.flash();
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 6)));
         }
@@ -60,6 +59,9 @@ public class DoubleKeyboard extends CustomRelic {
     }
 
     public CardTypeColorHelper getCardType(AbstractCard card){
+        if (card.purgeOnUse){
+            return this.cardTypeColor;
+        }
         if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
             return CardTypeColorHelper.MUSIC;
         }

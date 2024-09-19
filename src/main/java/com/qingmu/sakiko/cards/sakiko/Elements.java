@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -8,6 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ElementsAction;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.cards.music.*;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Elements extends CustomCard {
+public class Elements extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Elements.class.getSimpleName());
 

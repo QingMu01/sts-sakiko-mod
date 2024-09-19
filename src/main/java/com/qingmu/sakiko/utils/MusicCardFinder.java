@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.CardPoolsFiledPatch;
+import com.qingmu.sakiko.patch.filed.CardPoolsFiled;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,7 +51,7 @@ public class MusicCardFinder {
 
     public static AbstractCard returnTrulyRandomCardInCombat() {
         ArrayList<AbstractCard> list = new ArrayList<>();
-        Iterator<AbstractCard> var2 = CardPoolsFiledPatch.srcUncommonMusicPool.get(CardCrawlGame.dungeon).group.iterator();
+        Iterator<AbstractCard> var2 = CardPoolsFiled.srcUncommonMusicPool.get(CardCrawlGame.dungeon).group.iterator();
         AbstractCard c;
         while (var2.hasNext()) {
             c = var2.next();
@@ -59,7 +59,7 @@ public class MusicCardFinder {
                 list.add(c);
             }
         }
-        var2 = CardPoolsFiledPatch.srcRareMusicPool.get(CardCrawlGame.dungeon).group.iterator();
+        var2 = CardPoolsFiled.srcRareMusicPool.get(CardCrawlGame.dungeon).group.iterator();
         while (var2.hasNext()) {
             c = var2.next();
             if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
@@ -84,9 +84,9 @@ public class MusicCardFinder {
 
     private static AbstractCard getCard(AbstractCard.CardRarity rarity) {
         if (rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
-            return CardPoolsFiledPatch.uncommonMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
+            return CardPoolsFiled.uncommonMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
         } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
-            return CardPoolsFiledPatch.rareMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
+            return CardPoolsFiled.rareMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
         }
         return null;
     }

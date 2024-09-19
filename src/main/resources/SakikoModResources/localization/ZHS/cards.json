@@ -108,11 +108,11 @@
   },
   "SakikoMod:EndOfWorld": {
     "NAME": "AveMujica的灭世",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL 本场战斗中每收集1个 sakikomod:乐章 这张牌的伤害提高 !M! 。"
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL 本场战斗中每收集1个 sakikomod:乐章 ，这张牌的伤害提高 !M! 。"
   },
   "SakikoMod:CreateOfWorld": {
     "NAME": "AveMujica的创生",
-    "DESCRIPTION": "获得 !B! 点 格挡 。 NL 本场战斗中每收集1个 sakikomod:乐章 这张牌的格挡提高 !M! 。"
+    "DESCRIPTION": "获得 !B! 点 格挡 。 NL 本场战斗中每收集1个 sakikomod:乐章 ，这张牌的格挡提高 !M! 。"
   },
   "SakikoMod:Spotlight": {
     "NAME": "镭射灯",
@@ -399,8 +399,7 @@
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
-    "DESCRIPTION": " sakikomod:演奏 ：获得 [E] 。",
-    "UPGRADE_DESCRIPTION": " sakikomod:演奏 ：获得 [E] ，然后将你的能量翻倍 。"
+    "DESCRIPTION": " sakikomod:演奏 ：获得 !M! [E] 。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",

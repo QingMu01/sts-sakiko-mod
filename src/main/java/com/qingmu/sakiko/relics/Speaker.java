@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
@@ -35,6 +36,7 @@ public class Speaker extends AbstractSakikoRelic {
         if (this.counter > 0) {
             this.counter--;
             this.flash();
+            this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
             this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 18)));
         }
     }

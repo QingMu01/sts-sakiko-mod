@@ -1,12 +1,11 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
 import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class AncientMask extends CustomRelic {
+public class AncientMask extends AbstractSakikoRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(AncientMask.class.getSimpleName());

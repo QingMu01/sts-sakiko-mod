@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 
 public class BlackBirthdayAction extends AbstractGameAction {
 
@@ -41,7 +41,7 @@ public class BlackBirthdayAction extends AbstractGameAction {
                     return;
                 }
                 CardGroup drawPile = this.p.drawPile;
-                CardGroup drawMusicPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.p);
+                CardGroup drawMusicPile = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.p);
                 CardGroup cardGroup = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
                 for (AbstractCard card : drawPile.group) {
                     if (card.canUpgrade() && card.type != AbstractCard.CardType.STATUS) {

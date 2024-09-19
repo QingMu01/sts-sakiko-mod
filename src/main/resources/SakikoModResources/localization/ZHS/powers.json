@@ -2,7 +2,7 @@
   "SakikoMod:MusicalNotePower": {
     "NAME": "音符与乐章",
     "DESCRIPTIONS": [
-      "每积累一定量的音符可将其转变为 #y乐章 ，获得 #y筹备 且触发额外效果。",
+      "每积累一定量的音符可将其转变为 #y乐章 ，触发额外效果。",
       " NL 下次获得乐章还差 #b%d 层音符。",
       "乐章特效",
       "当乐章数大于等于需求数时，可获得以下效果：",
@@ -84,7 +84,7 @@
   "SakikoMod:FeverReadyPower": {
     "NAME": "筹备",
     "DESCRIPTIONS": [
-      "当你有 #b3 层 #y筹备 时，进入 #yFever 。 NL #y筹备 会在回合结束时清空。"
+      "当你有 #b4 层 #y筹备 时，进入 #yFever 。 NL #y筹备 会在回合结束时清空。"
     ]
   },
   "SakikoMod:SekaikanPower": {

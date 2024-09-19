@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.ui.MusicSlotItem;
 
 public abstract class AbstractMemberMonster extends CustomMonster {
@@ -32,7 +32,7 @@ public abstract class AbstractMemberMonster extends CustomMonster {
     public void update() {
         super.update();
         if (this.canPlayMusic) {
-            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this);
+            CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(this);
             if (cardGroup.isEmpty()) {
                 this.musicSlotItem.removeMusic();
             } else {

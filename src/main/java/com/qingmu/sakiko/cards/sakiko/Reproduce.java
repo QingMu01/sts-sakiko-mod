@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -8,12 +7,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReproduceAction;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class Reproduce extends CustomCard {
+public class Reproduce extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Reproduce.class.getSimpleName());
 
@@ -50,7 +50,7 @@ public class Reproduce extends CustomCard {
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         this.cantUseMessage = CARD_STRINGS.EXTENDED_DESCRIPTION[0];
         return !cardGroup.isEmpty();
     }

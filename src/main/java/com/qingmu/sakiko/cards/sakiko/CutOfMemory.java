@@ -1,17 +1,17 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ObliviousAction;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class CutOfMemory extends CustomCard {
+public class CutOfMemory extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(CutOfMemory.class.getSimpleName());
 
@@ -20,7 +20,7 @@ public class CutOfMemory extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
+    private static final int COST = 2;
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
@@ -37,7 +37,7 @@ public class CutOfMemory extends CustomCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(0);
+            this.upgradeBaseCost(1);
         }
     }
 

@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.relics;
 
-import basemod.abstracts.CustomRelic;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
@@ -9,10 +8,9 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.relic.TriggerOnPlayMusicRelic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class OctopusSakiko extends CustomRelic implements TriggerOnPlayMusicRelic {
+public class OctopusSakiko extends AbstractSakikoRelic {
 
     // 遗物ID
     public static final String ID = ModNameHelper.make(OctopusSakiko.class.getSimpleName());

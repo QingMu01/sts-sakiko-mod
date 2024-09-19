@@ -44,7 +44,7 @@ public class MasqueradePower extends AbstractPower implements TriggerOnPlayMusic
     @Override
     public void triggerOnPlayMusicCard(AbstractMusic music) {
         this.flash();
-        this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
 
     }
 

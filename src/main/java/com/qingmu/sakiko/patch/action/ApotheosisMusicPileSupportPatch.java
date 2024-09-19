@@ -4,7 +4,7 @@ import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.unique.ApotheosisAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import javassist.CtBehavior;
 
 @SpirePatch(clz = ApotheosisAction.class, method = "update")
@@ -15,7 +15,7 @@ public class ApotheosisMusicPileSupportPatch {
     * */
     @SpireInsertPatch(locator = Locator.class)
     public static void insert(ApotheosisAction __instance) {
-        for (AbstractCard card : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
+        for (AbstractCard card : MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).group) {
             if (card.canUpgrade()) {
                 card.upgrade();
                 card.applyPowers();

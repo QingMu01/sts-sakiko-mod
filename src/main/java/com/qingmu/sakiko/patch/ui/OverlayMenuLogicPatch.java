@@ -6,7 +6,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.core.OverlayMenu;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.characters.TogawaSakiko;
-import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiled;
 
 public class OverlayMenuLogicPatch {
     /*
@@ -18,7 +18,7 @@ public class OverlayMenuLogicPatch {
         @SpireInsertPatch(loc = 57)
         public static void patch(OverlayMenu __instance) {
             if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
-                MusicDrawPilePanelFiledPatch.musicDrawPile.get(__instance).updatePositions();
+                MusicDrawPilePanelFiled.musicDrawPile.get(__instance).updatePositions();
         }
     }
     @SpirePatch(clz = OverlayMenu.class, method = "showCombatPanels")
@@ -26,7 +26,7 @@ public class OverlayMenuLogicPatch {
         @SpireInsertPatch(loc = 104)
         public static void patch(OverlayMenu __instance) {
             if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
-                MusicDrawPilePanelFiledPatch.musicDrawPile.get(__instance).show();
+                MusicDrawPilePanelFiled.musicDrawPile.get(__instance).show();
         }
     }
     @SpirePatch(clz = OverlayMenu.class, method = "hideCombatPanels")
@@ -34,7 +34,7 @@ public class OverlayMenuLogicPatch {
         @SpireInsertPatch(loc = 120)
         public static void patch(OverlayMenu __instance) {
             if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
-                MusicDrawPilePanelFiledPatch.musicDrawPile.get(__instance).hide();
+                MusicDrawPilePanelFiled.musicDrawPile.get(__instance).hide();
         }
     }
 
@@ -43,7 +43,7 @@ public class OverlayMenuLogicPatch {
         @SpireInsertPatch(loc = 168)
         public static void patch(OverlayMenu __instance, SpriteBatch sb){
             if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
-                MusicDrawPilePanelFiledPatch.musicDrawPile.get(__instance).render(sb);
+                MusicDrawPilePanelFiled.musicDrawPile.get(__instance).render(sb);
         }
     }
 }

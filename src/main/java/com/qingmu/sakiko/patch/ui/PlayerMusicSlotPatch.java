@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.ui.MusicSlotItem;
 
 import java.util.LinkedList;
@@ -49,7 +49,7 @@ public class PlayerMusicSlotPatch {
         public static void Postfix(AbstractPlayer __instance) {
             if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
                 if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard")) {
-                    CardGroup musics = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+                    CardGroup musics = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
                     List<AbstractCard> printMusic = musics.group.subList(0, Math.min(musics.size(), 3));
                     while (MUSIC_SLOT_ITEMS.size() < 3) {
                         MUSIC_SLOT_ITEMS.add(new MusicSlotItem());

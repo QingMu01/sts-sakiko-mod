@@ -28,7 +28,6 @@ public class Angles extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.baseMagicNumber = 2;
         this.baseDamage = 4;
-        this.dontTriggerOnUseCard = true;
     }
 
     @Override

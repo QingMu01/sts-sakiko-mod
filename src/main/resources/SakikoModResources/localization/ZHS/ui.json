@@ -32,7 +32,9 @@
   },
   "SakikoMod:ObliviousAction": {
     "TEXT": [
-      "遗忘"
+      "遗忘",
+      "手牌",
+      "弃牌"
     ]
   },
   "SakikoMod:MusicCardReward": {

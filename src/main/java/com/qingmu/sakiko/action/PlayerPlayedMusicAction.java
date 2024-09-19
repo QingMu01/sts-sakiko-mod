@@ -14,13 +14,13 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.card.TriggerOnPlayMusicCard;
 import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
-import com.qingmu.sakiko.inteface.relic.TriggerOnPlayMusicRelic;
 import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 
 public class PlayerPlayedMusicAction extends AbstractGameAction {
 
@@ -32,7 +32,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         this.music = music;
         this.source = music.music_source;
         this.target = music.music_target;
-        if (music.exhaustOnUseOnce || music.exhaust) {
+        if (music.exhaustOnUseOnce || music.exhaust || music.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS_FLAG)) {
             this.exhaustCard = true;
         }
         if (this.music.hasTag(SakikoEnum.CardTagEnum.COUNTER) && this.music.usedTurn == GameActionManager.turn) {
@@ -55,12 +55,12 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
         // 遗物钩子 演奏时触发
         for (AbstractRelic relic : AbstractDungeon.player.relics) {
-            if (relic instanceof TriggerOnPlayMusicRelic) {
-                ((TriggerOnPlayMusicRelic) relic).triggerOnPlayMusicCard(this.music);
+            if (relic instanceof AbstractSakikoRelic) {
+                ((AbstractSakikoRelic) relic).triggerOnPlayMusicCard(this.music);
             }
         }
         // 待演奏区钩子 演奏时触发
-        for (AbstractCard card : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
+        for (AbstractCard card : MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
             if (card instanceof AbstractMusic) {
                 ((AbstractMusic) card).triggerInBufferPlayedMusic(this.music);
             }
@@ -68,23 +68,23 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
         // 全是普通牌钩子 演奏时触发
         for (AbstractCard card : AbstractDungeon.player.drawPile.group) {
-            if (card instanceof TriggerOnPlayMusicCard){
-                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            if (card instanceof AbstractSakikoCard){
+                ((AbstractSakikoCard) card).triggerOnPlayMusic(this.music);
             }
         }
         for (AbstractCard card : AbstractDungeon.player.hand.group) {
-            if (card instanceof TriggerOnPlayMusicCard){
-                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            if (card instanceof AbstractSakikoCard){
+                ((AbstractSakikoCard) card).triggerOnPlayMusic(this.music);
             }
         }
         for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
-            if (card instanceof TriggerOnPlayMusicCard){
-                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            if (card instanceof AbstractSakikoCard){
+                ((AbstractSakikoCard) card).triggerOnPlayMusic(this.music);
             }
         }
         for (AbstractCard card : AbstractDungeon.player.exhaustPile.group) {
-            if (card instanceof TriggerOnPlayMusicCard){
-                ((TriggerOnPlayMusicCard) card).triggerOnPlayMusic(this.music);
+            if (card instanceof AbstractSakikoCard){
+                ((AbstractSakikoCard) card).triggerOnPlayMusic(this.music);
             }
         }
 
@@ -98,8 +98,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
 
         // 添加记录
-        MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
-        MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
+        MusicBattleFiled.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
+        MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
         this.music.play();
         this.music.resetCount();
-        CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
 
         // 处理回忆赋予的移除
         if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {

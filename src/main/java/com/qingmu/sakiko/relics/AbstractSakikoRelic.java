@@ -9,9 +9,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.relic.TriggerOnPlayMusicRelic;
 
-public abstract class AbstractSakikoRelic extends CustomRelic implements TriggerOnPlayMusicRelic {
+public abstract class AbstractSakikoRelic extends CustomRelic {
 
     protected int amount = -1;
 
@@ -32,7 +31,6 @@ public abstract class AbstractSakikoRelic extends CustomRelic implements Trigger
         }
     }
 
-    @Override
     public void triggerOnPlayMusicCard(AbstractMusic music) {
 
     }

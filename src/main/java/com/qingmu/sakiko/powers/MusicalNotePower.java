@@ -2,7 +2,6 @@ package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.mod.stslib.powers.abstracts.TwoAmountPower;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -13,7 +12,7 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.qingmu.sakiko.action.DrawMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicalNotePower extends TwoAmountPower {
@@ -40,15 +39,15 @@ public class MusicalNotePower extends TwoAmountPower {
         this.type = PowerType.BUFF;
         this.amount = amount;
         if (!owner.hasPower(POWER_ID)) {
-            Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
-            MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + amount);
+            Integer musicalNoteThisTurn = MusicBattleFiled.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
+            MusicBattleFiled.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + amount);
             if (this.amount >= this.triggerProgress) {
                 do {
                     this.amount2++;
                     this.reducePower(this.triggerProgress);
                     this.triggerProgress = Math.min(12, this.triggerProgress + 2);
-                    Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
-                    MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
+                    Integer movementThisCombat = MusicBattleFiled.BattalInfoPatch.movementThisCombat.get(this.owner);
+                    MusicBattleFiled.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
                 } while (this.amount >= this.triggerProgress);
                 this.handleProgress();
             }
@@ -81,17 +80,16 @@ public class MusicalNotePower extends TwoAmountPower {
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        Integer musicalNoteThisTurn = MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
-        MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + stackAmount);
+        Integer musicalNoteThisTurn = MusicBattleFiled.BattalInfoPatch.musicalNoteThisTurn.get(this.owner);
+        MusicBattleFiled.BattalInfoPatch.musicalNoteThisTurn.set(this.owner, musicalNoteThisTurn + stackAmount);
 
         if (this.amount >= this.triggerProgress) {
             do {
-                this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverReadyPower(this.owner, 1)));
                 this.amount2++;
                 this.reducePower(this.triggerProgress);
                 this.triggerProgress = Math.min(12, this.triggerProgress + 2);
-                Integer movementThisCombat = MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(this.owner);
-                MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
+                Integer movementThisCombat = MusicBattleFiled.BattalInfoPatch.movementThisCombat.get(this.owner);
+                MusicBattleFiled.BattalInfoPatch.movementThisCombat.set(this.owner, movementThisCombat + 1);
             } while (this.amount >= this.triggerProgress);
             this.handleProgress();
         }
@@ -106,17 +104,17 @@ public class MusicalNotePower extends TwoAmountPower {
     }
 
     public static int getTurnCount() {
-        return MusicBattleFiledPatch.BattalInfoPatch.musicalNoteThisTurn.get(AbstractDungeon.player);
+        return MusicBattleFiled.BattalInfoPatch.musicalNoteThisTurn.get(AbstractDungeon.player);
     }
 
     public static int getCombatCount() {
-        return MusicBattleFiledPatch.BattalInfoPatch.movementThisCombat.get(AbstractDungeon.player);
+        return MusicBattleFiled.BattalInfoPatch.movementThisCombat.get(AbstractDungeon.player);
     }
 
     public void handleProgress() {
         if (this.amount2 >= 1) {
             long count = AbstractDungeon.player.discardPile.group.stream().filter(e -> e instanceof AbstractMusic).count();
-            if (count > 0 || !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.owner).isEmpty())
+            if (count > 0 || !MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.owner).isEmpty())
                 this.addToBot(new DrawMusicAction());
         }
         if (this.amount2 >= 2) {

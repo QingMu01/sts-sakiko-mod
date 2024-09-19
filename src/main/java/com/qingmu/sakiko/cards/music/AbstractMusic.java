@@ -1,24 +1,26 @@
 package com.qingmu.sakiko.cards.music;
 
-import basemod.abstracts.CustomCard;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.evacipated.cardcrawl.modthespire.lib.SpireOverride;
 import com.evacipated.cardcrawl.modthespire.lib.SpireSuper;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.powers.FeverReadyPower;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public abstract class AbstractMusic extends CustomCard {
+public abstract class AbstractMusic extends AbstractSakikoCard {
 
     private static final String BG_SKILL_512 = "SakikoModResources/img/512/bg_skill_512.png";
     private static final String BG_SKILL_1024 = "SakikoModResources/img/1024/bg_skill.png";
@@ -56,13 +58,14 @@ public abstract class AbstractMusic extends CustomCard {
         this.music_source = p;
         this.music_target = m == null ? AbstractDungeon.getRandomMonster() : m;
         this.usedTurn = GameActionManager.turn;
+        this.addToBot(new ApplyPowerAction(p, p, new FeverReadyPower(p, 1)));
     }
 
 
     @Override
     public void onChoseThisOption() {
         this.use(AbstractDungeon.player, null);
-        MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
+        MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
         this.addToBot(new ReadyToPlayMusicAction(1));
     }
 

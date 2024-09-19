@@ -16,10 +16,10 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
-import com.qingmu.sakiko.cards.monster.Haruhikage_Rana;
+import com.qingmu.sakiko.cards.music.monster.Haruhikage_Rana;
 import com.qingmu.sakiko.constant.MusicHelper;
 import com.qingmu.sakiko.constant.SoundHelper;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class RanaMonster extends AbstractMemberMonster {
@@ -112,7 +112,7 @@ public class RanaMonster extends AbstractMemberMonster {
 
     @Override
     protected void getMove(int i) {
-        boolean isEmpty = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty();
+        boolean isEmpty = MusicBattleFiled.MusicQueue.musicQueue.get(this).isEmpty();
         if(AbstractDungeon.player.hasPower(Haruhikage_Rana.ID)){
             if (i<50){
                 this.setMove((byte) 0, Intent.ATTACK, this.damage.get(0).base);

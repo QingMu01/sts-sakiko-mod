@@ -81,7 +81,7 @@ public class SoyoMonster extends AbstractMemberMonster {
             case 0: {
                 this.addToBot(new AnimateJumpAction(this));
                 this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this, new SoyoConstrictedPower(AbstractDungeon.player, this, this.powerful)));
-                if (Loader.isModLoaded("AnonMod")) {
+                if (Loader.isModLoaded("AnonMod") && SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
                     HeavyHelper.applyHeavy(this, this, 3);
                     HeavyHelper.applyHeavy(AbstractDungeon.player, this, 3);
                 }

@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -8,12 +7,13 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
-public class CurtainCall extends CustomCard {
+public class CurtainCall extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(CurtainCall.class.getSimpleName());
 
@@ -22,7 +22,7 @@ public class CurtainCall extends CustomCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
+
     private static final int COST = 1;
 
     private static final CardType TYPE = CardType.ATTACK;
@@ -47,7 +47,7 @@ public class CurtainCall extends CustomCard {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        int size = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
+        int size = MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
         this.baseDamage += (size * Math.max(this.magicNumber, this.baseMagicNumber));
         super.applyPowers();
         this.baseDamage = realBaseDamage;
@@ -57,7 +57,7 @@ public class CurtainCall extends CustomCard {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage;
-        int size = MusicBattleFiledPatch.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
+        int size = MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
         this.baseDamage += (size * Math.max(this.magicNumber, this.baseMagicNumber));
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;

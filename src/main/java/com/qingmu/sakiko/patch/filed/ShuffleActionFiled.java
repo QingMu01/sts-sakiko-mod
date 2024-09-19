@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 
 import java.util.ArrayList;
 
-public class ShuffleActionFiledPatch {
+public class ShuffleActionFiled {
 
     @SpirePatch(clz = ShuffleAllAction.class, method = SpirePatch.CLASS)
     public static class ShuffleAllActionFiled {

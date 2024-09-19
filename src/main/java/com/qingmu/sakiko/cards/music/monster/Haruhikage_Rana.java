@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.cards.monster;
+package com.qingmu.sakiko.cards.music.monster;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
