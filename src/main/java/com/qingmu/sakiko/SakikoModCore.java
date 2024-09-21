@@ -229,10 +229,10 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             BaseMod.getModdedCharacters().forEach(character -> {
                 if (character instanceof TogawaSakiko) {
                     Prefs prefs = character.getPrefs();
-                    int winCount = prefs.getInteger("WIN_COUNT", 0);
-                    if (winCount <= 0) {
+                    if (prefs.getInteger("WIN_COUNT", 0) <= 0) {
                         prefs.putInteger("WIN_COUNT", 1);
                     }
+                    prefs.putBoolean(character.chosenClass.name() + "_WIN", true);
                     prefs.putBoolean("ASCEND_0", true);
                     prefs.putInteger("ASCENSION_LEVEL", 20);
                     prefs.putInteger("LAST_ASCENSION_LEVEL", 20);
