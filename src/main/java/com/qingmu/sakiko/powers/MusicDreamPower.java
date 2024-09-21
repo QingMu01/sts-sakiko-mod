@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -19,12 +20,12 @@ public class MusicDreamPower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/ChuuniPower84.png";
 
 
-    public MusicDreamPower(AbstractCreature owner) {
+    public MusicDreamPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = -1;
+        this.amount = amount;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
 
@@ -33,7 +34,11 @@ public class MusicDreamPower extends AbstractPower {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+    }
+
+    public void trigger(int amount) {
+        this.addToBot(new ApplyPowerAction(this.owner, this.owner, new MusicalNotePower(this.owner, this.amount * amount)));
     }
 
 }

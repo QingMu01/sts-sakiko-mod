@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.LoseDexterityPower;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;

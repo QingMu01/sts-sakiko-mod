@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Band_AVEMUJICA extends AbstractSakikoRelic{

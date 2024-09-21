@@ -10,7 +10,7 @@ public abstract class AbstractBandMember extends AbstractSakikoRelic {
     private static final LandingSound LANDING_SOUND = LandingSound.FLAT;
 
     protected boolean canUse = true;
-
+    // TODO:加上队友关键词的说明
     public AbstractBandMember(String id, String img) {
         super(id, ImageMaster.loadImage(img), RELIC_TIER, LANDING_SOUND);
     }

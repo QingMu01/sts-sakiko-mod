@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.util.ArrayList;

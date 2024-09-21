@@ -11,7 +11,7 @@ import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.powers.HedgehogPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 @SakikoModEnable(enable = false)
 public class HedgehogSakiko extends AbstractSakikoCard {

@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.patch;
+package com.qingmu.sakiko.constant;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.cards.AbstractCard;

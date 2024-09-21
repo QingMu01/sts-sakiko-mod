@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Ship_HHW extends AbstractMusic {

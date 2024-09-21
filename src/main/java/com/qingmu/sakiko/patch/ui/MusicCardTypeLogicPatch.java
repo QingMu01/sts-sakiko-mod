@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.SingleCardViewPopup;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import javassist.CtBehavior;
 

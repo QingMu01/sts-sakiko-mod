@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.vfx.combat.GiantTextEffect;
 import com.megacrit.cardcrawl.vfx.combat.WeightyImpactEffect;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;

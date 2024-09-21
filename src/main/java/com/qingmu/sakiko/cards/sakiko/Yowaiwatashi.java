@@ -9,7 +9,7 @@ import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class Yowaiwatashi extends AbstractSakikoCard {
 
@@ -20,7 +20,7 @@ public class Yowaiwatashi extends AbstractSakikoCard {
 
     private static final String NAME = CARD_STRINGS.NAME;
     private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 0;
+    private static final int COST = 1;
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardColor COLOR = QINGMU_SAKIKO_CARD;

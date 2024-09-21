@@ -3,10 +3,8 @@ package com.qingmu.sakiko.cards.music;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.action.BlackBirthdayAction;
-import com.qingmu.sakiko.patch.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class BlackBirthday extends AbstractMusic {
 
@@ -25,7 +23,6 @@ public class BlackBirthday extends AbstractMusic {
     public BlackBirthday() {
         super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.baseMagicNumber = 2;
     }
 
     @Override
@@ -38,23 +35,13 @@ public class BlackBirthday extends AbstractMusic {
     }
 
     @Override
-    public void applyAmount() {
-        int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        super.applyPowers();
-        this.magicNumber = this.baseMagicNumber;
-        this.baseMagicNumber = realBaseMagicNumber;
-        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
-    }
-
-    @Override
     public void applyPowers() {
         this.applyAmount();
     }
 
     @Override
     public void play() {
-        this.addToBot(new BlackBirthdayAction(Math.max(this.baseMagicNumber, this.magicNumber) + this.extraNumber, this.upgraded));
+        this.addToBot(new BlackBirthdayAction(this.upgraded));
     }
 
 }

@@ -2,6 +2,7 @@ package com.qingmu.sakiko.characters;
 
 import basemod.abstracts.CustomPlayer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -10,7 +11,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.events.city.Vampires;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.qingmu.sakiko.SakikoModCore;
@@ -19,10 +22,9 @@ import com.qingmu.sakiko.relics.ClassicPiano;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class TogawaSakiko extends CustomPlayer {
     // 火堆的人物立绘（行动前）
@@ -49,13 +51,14 @@ public class TogawaSakiko extends CustomPlayer {
     private static final float[] LAYER_SPEED = new float[]{-40.0F, -32.0F, 20.0F, -20.0F, 2.0F};    // 人物的本地化文本，如卡牌的本地化文本一样，如何书写见下
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString("SakikoMod:TogawaSakiko");
 
-    // 歌单
-    private List<AbstractCard> musics;
+    private boolean isMask = false;
+    private Texture mask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko.png");
+    private Texture noMask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko_nomask.png");
 
     public TogawaSakiko(String name) {
         super(name, QINGMU_SAKIKO, ORB_TEXTURES, "SakikoModResources/img/ui/orb/vfx.png", LAYER_SPEED, null, null);
         this.initializeClass(
-                "SakikoModResources/img/characters/sakiko/TogawaSakiko.png", // 人物图片
+                "SakikoModResources/img/characters/sakiko/TogawaSakiko_nomask.png", // 人物图片
                 MY_CHARACTER_SHOULDER_2, MY_CHARACTER_SHOULDER_1,
                 CORPSE_IMAGE, // 人物死亡图像
                 this.getLoadout(),
@@ -173,10 +176,26 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public AbstractGameAction.AttackEffect[] getSpireHeartSlashEffect() {
-        return new AbstractGameAction.AttackEffect[]{AbstractGameAction.AttackEffect.SLASH_HEAVY, AbstractGameAction.AttackEffect.FIRE, AbstractGameAction.AttackEffect.SLASH_DIAGONAL, AbstractGameAction.AttackEffect.SLASH_HEAVY, AbstractGameAction.AttackEffect.FIRE, AbstractGameAction.AttackEffect.SLASH_DIAGONAL};    }
+        return new AbstractGameAction.AttackEffect[]{AbstractGameAction.AttackEffect.SLASH_HEAVY, AbstractGameAction.AttackEffect.FIRE, AbstractGameAction.AttackEffect.SLASH_DIAGONAL, AbstractGameAction.AttackEffect.SLASH_HEAVY, AbstractGameAction.AttackEffect.FIRE, AbstractGameAction.AttackEffect.SLASH_DIAGONAL};
+    }
 
     @Override
     public String getVampireText() {
         return Vampires.DESCRIPTIONS[1];
     }
+
+    @Override
+    public void update() {
+        if (this.hb.hovered && InputHelper.justClickedRight) {
+            if (this.isMask) {
+                img = noMask;
+                this.isMask = false;
+            } else {
+                img = mask;
+                this.isMask = true;
+            }
+        }
+        super.update();
+    }
+
 }

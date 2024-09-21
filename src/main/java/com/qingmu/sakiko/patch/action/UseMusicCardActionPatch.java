@@ -11,7 +11,7 @@ import com.qingmu.sakiko.action.FakeUseCardAction;
 import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import javassist.CtBehavior;
 

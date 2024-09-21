@@ -28,13 +28,13 @@ import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.events.DilapidatedCorridorEvent;
 import com.qingmu.sakiko.events.FatherEvent;
 import com.qingmu.sakiko.events.InvasionEvent;
 import com.qingmu.sakiko.events.SoyoEvent;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.*;
-import com.qingmu.sakiko.patch.SakikoEnum;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
@@ -46,8 +46,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 
 @SpireInitializer
@@ -186,11 +186,11 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receivePostInitialize() {
         // 注册配置UI
         this.registerConfigUI();
-        // 注册成员收集
+        // 注册成员收集事件
         this.registerMemberCollect();
         // 设置解锁进阶
         this.unlockedAscension();
-        // 添加音乐堆预览页面
+        // 添加歌单预览页面
         BaseMod.addCustomScreen(new MusicDrawPileViewScreen());
         // 注册音乐牌奖励
         BaseMod.registerCustomReward(SakikoEnum.RewardType.MUSIC_TYPE,

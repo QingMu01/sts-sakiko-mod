@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.MoonsPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import power.musicStart;
@@ -57,7 +57,7 @@ public class AnonMusicCardPatch {
             this.baseMagicNumber = this.anonCard.baseMagicNumber;
             this.setBackgroundTexture("img/pink/512/bg_skill.png", "img/pink/1024/bg_skill.png");
             this.setOrbTexture("img/UI/star.png", "img/UI/star_164.png");
-
+            this.miniTitle = "AnonMod";
         }
 
         @Override

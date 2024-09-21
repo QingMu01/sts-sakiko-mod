@@ -13,7 +13,7 @@ import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 @SakikoModEnable(enable = false)
 public class DriftApart extends AbstractSakikoCard {

@@ -11,7 +11,7 @@ import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class CurtainCall extends AbstractSakikoCard {
 
@@ -62,13 +62,16 @@ public class CurtainCall extends AbstractSakikoCard {
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
+    }
 
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
-        this.rawDescription = DESCRIPTION;
-        this.initializeDescription();
     }
 }

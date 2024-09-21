@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.DrawMusicAction;
 import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
@@ -67,13 +68,13 @@ public class MusicalNotePower extends TwoAmountPower {
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
             this.amount = 0;
-            if (!this.owner.hasPower(MusicDreamPower.POWER_ID)){
-                this.amount2 = 0;
-            }else {
-                this.owner.getPower(MusicDreamPower.POWER_ID).flash();
-            }
-
             this.triggerProgress = 4;
+            if (this.owner.hasPower(MusicDreamPower.POWER_ID)) {
+                AbstractPower power = this.owner.getPower(MusicDreamPower.POWER_ID);
+                ((MusicDreamPower) power).trigger(this.amount2);
+            }
+            this.amount2 = 0;
+
         }
     }
 

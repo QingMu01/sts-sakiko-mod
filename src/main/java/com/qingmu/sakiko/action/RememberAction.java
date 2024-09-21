@@ -10,8 +10,8 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.RememberModifier;
-import com.qingmu.sakiko.patch.SakikoEnum;
 
 import java.util.ArrayList;
 import java.util.Iterator;

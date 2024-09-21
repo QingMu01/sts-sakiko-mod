@@ -208,7 +208,8 @@
   "SakikoMod:MusicDreamPower": {
     "NAME": "音乐梦",
     "DESCRIPTIONS": [
-      "你的 #y乐章 不会在回合结束后被清除。"
+      "你每失去 #b1 层 #y乐章 ，获得 #b",
+      " 个 #y音符 。"
     ]
   },
   "SakikoMod:AnonDasuruPower": {

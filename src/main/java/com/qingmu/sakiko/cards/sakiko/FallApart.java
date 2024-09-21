@@ -12,7 +12,7 @@ import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.relics.menbers.AbstractBandMember;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class FallApart extends AbstractSakikoCard {
 

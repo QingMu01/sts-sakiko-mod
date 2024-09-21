@@ -8,12 +8,12 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ResetMusicalNoteAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.PowerHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class BurnBoats extends AbstractSakikoCard {
 
@@ -41,7 +41,7 @@ public class BurnBoats extends AbstractSakikoCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(0);
+            this.upgradeDamage(2);
         }
     }
 

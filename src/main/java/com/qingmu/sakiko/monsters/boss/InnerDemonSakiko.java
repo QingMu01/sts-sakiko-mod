@@ -19,6 +19,7 @@ public class InnerDemonSakiko extends AbstractMemberMonster {
 
     public InnerDemonSakiko(float x, float y) {
         super(NAME, ID, IMG, x, y);
+
     }
 
     @Override

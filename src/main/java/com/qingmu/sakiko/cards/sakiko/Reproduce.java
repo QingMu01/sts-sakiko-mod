@@ -11,7 +11,7 @@ import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class Reproduce extends AbstractSakikoCard {
 

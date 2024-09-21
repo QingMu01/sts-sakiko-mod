@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.powers.WeakPower;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.patch.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
+import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
 
 public class Spotlight extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(Spotlight.class.getSimpleName());

@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.cards.tmpcard.Confront_Sakiko;
 import com.qingmu.sakiko.cards.tmpcard.Run_Sakiko;
-import com.qingmu.sakiko.patch.SakikoEnum;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
