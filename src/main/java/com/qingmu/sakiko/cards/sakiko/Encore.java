@@ -4,33 +4,25 @@ import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.powers.EncorePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
-
 public class Encore extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(Encore.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Encore.png";
 
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 2;
-
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardRarity RARITY = CardRarity.RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Encore() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        super(ID, IMG_PATH, TYPE, RARITY, TARGET);
+        this.initBaseAttr(2, 0, 0, 0);
         this.exhaust = true;
+
         FlavorText.AbstractCardFlavorFields.boxColor.get(this).set(new Color(1.0F,136.0F / 255.0F,153.0F / 255.0F,1.0F));
         FlavorText.AbstractCardFlavorFields.textColor.get(this).set(new Color(1.0F,1.0F,1.0F,1.0F));
     }

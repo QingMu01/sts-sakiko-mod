@@ -10,21 +10,18 @@ public class Symbol_III extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(Symbol_III.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Symbol_III.png";
-
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Symbol_III() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        super(ID, IMG_PATH, RARITY, TARGET);
+        this.initBaseAttr(0, 0, 0, 4);
+
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(CardTags.HEALING);
-        this.baseMagicNumber = 4;
         this.exhaust = true;
     }
 
@@ -38,6 +35,6 @@ public class Symbol_III extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new HealAction(this.music_source, this.music_source, Math.max(this.magicNumber, this.baseMagicNumber) + this.extraNumber));
+        this.addToTop(new HealAction(this.music_source, this.music_source, this.magicNumber + this.extraNumber));
     }
 }

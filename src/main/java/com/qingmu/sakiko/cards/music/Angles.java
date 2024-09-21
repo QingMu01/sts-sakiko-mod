@@ -2,8 +2,6 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -13,21 +11,16 @@ public class Angles extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(Angles.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Angles.png";
-
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Angles() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        super(ID, IMG_PATH, RARITY, TARGET);
+        this.initBaseAttr(0, 4, 0, 2);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
-        this.baseMagicNumber = 2;
-        this.baseDamage = 4;
     }
 
     @Override
@@ -51,7 +44,7 @@ public class Angles extends AbstractMusic {
 
     @Override
     public void play() {
-        int count = Math.max(this.magicNumber, this.baseMagicNumber);
+        int count = this.magicNumber;
         for (int i = 0; i < count; i++) {
             this.addToTop(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType),true));
         }

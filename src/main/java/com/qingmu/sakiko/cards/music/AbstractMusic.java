@@ -40,15 +40,17 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
     // 打出时的回合数
     public int usedTurn = 0;
 
-    public AbstractMusic(String id, String name, String img, String rawDescription, CardRarity rarity, CardTarget target) {
-        this(id, name, img, rawDescription, COLOR, rarity, target);
-    }
 
-    public AbstractMusic(String id, String name, String img, String rawDescription, CardColor color, CardRarity rarity, CardTarget target) {
-        super(id, name, img, 0, rawDescription, CARD_TYPE, color, rarity, target);
+    public AbstractMusic(String id, String img, CardRarity rarity, CardTarget target) {
+        super(id, img, CARD_TYPE, rarity, target);
         super.setBackgroundTexture(BG_SKILL_512, BG_SKILL_1024);
     }
 
+    @Override
+    public void initializeDescription() {
+        super.initializeDescription();
+        this.keywords.add("sakikomod:" + CARD_TYPE.toString());
+    }
 
     // 实现的时候最好使用addToTop()方法，否则会导致所有被演奏卡牌的演奏动画播放完毕才生效
     public abstract void play();
@@ -64,9 +66,15 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
 
     @Override
     public void onChoseThisOption() {
-        this.use(AbstractDungeon.player, null);
+        this.use(AbstractDungeon.player, AbstractDungeon.getRandomMonster());
         MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
         this.addToBot(new ReadyToPlayMusicAction(1));
+    }
+
+    @Override
+    public void applyPowers() {
+        super.applyPowers();
+        this.applyAmount();
     }
 
     // 更新计数
@@ -74,11 +82,15 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
     }
 
     // 存在待演奏区时，有卡牌被打出时触发的钩子
-    public void triggerInBufferUsedCard(AbstractCard card) {}
+    public void triggerInBufferUsedCard(AbstractCard card) {
+    }
 
-    public void triggerInBufferPlayedMusic(AbstractMusic music) {}
+    // 存在待演奏区时，演奏时触发的钩子
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+    }
+
     public void resetCount() {
-        this.amount=0;
+        this.amount = 0;
     }
 
     @SpireOverride

@@ -1,8 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -11,19 +9,16 @@ public class StarBeat_PPP extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(StarBeat_PPP.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/StarBeat_PPP.png";
-
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public StarBeat_PPP() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        super(ID, IMG_PATH, RARITY, TARGET);
+        this.initBaseAttr(0, 0, 0, 3);
+
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.baseMagicNumber = 3;
     }
 
     @Override
@@ -38,6 +33,6 @@ public class StarBeat_PPP extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new KirameiPower(this.music_source, Math.max(this.magicNumber, this.baseMagicNumber))));
+                , new KirameiPower(this.music_source, this.magicNumber)));
     }
 }

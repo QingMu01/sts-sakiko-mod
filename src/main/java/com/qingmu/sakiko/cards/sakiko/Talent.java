@@ -16,22 +16,16 @@ import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_
 public class Talent extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(Talent.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Talent.png";
 
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final int COST = 1;
-
     private static final CardType TYPE = CardType.POWER;
-    private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Talent() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
+        super(ID, IMG_PATH, TYPE, RARITY, TARGET);
+        this.initBaseAttr(1, 0, 0, 2);
         this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-        this.baseMagicNumber = 2;
     }
 
     @Override
@@ -44,7 +38,7 @@ public class Talent extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new TalentPower(AbstractDungeon.player, Math.max(this.magicNumber, this.baseMagicNumber))));
+        this.addToBot(new ApplyPowerAction(p, p, new TalentPower(p, this.magicNumber)));
     }
 
 }

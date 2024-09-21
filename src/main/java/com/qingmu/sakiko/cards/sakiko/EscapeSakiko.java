@@ -8,8 +8,6 @@ import com.qingmu.sakiko.action.EscapeSakikoAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
-
 public class EscapeSakiko extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(EscapeSakiko.class.getSimpleName());
@@ -17,28 +15,20 @@ public class EscapeSakiko extends AbstractSakikoCard {
     private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/EscapeSakiko.png";
 
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
-    private static final int COST = -1;
-
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardColor COLOR = QINGMU_SAKIKO_CARD;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public EscapeSakiko() {
-        super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseMagicNumber = 0;
+        super(ID, IMG_PATH, TYPE, RARITY, TARGET);
+        this.initBaseAttr(-1, 0, 0, 0);
     }
 
     @Override
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeMagicNumber(2);
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeDescription();
         }
     }
 

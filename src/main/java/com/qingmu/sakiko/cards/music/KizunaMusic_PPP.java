@@ -1,8 +1,6 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.MemberHelper;
@@ -13,17 +11,13 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(KizunaMusic_PPP.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/KizunaMusic_PPP.png";
-
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public KizunaMusic_PPP() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        super(ID, IMG_PATH, RARITY, TARGET);
         this.baseBlock = 4;
     }
 

@@ -1,9 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.evacipated.cardcrawl.mod.stslib.actions.common.StunMonsterAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -12,18 +10,15 @@ public class Ship_HHW extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(Ship_HHW.class.getSimpleName());
 
-    private static final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Ship_HHW.png";
-
-    private static final String NAME = CARD_STRINGS.NAME;
-    private static final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
-    private static final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Ship_HHW() {
-        super(ID, NAME, IMG_PATH, DESCRIPTION, RARITY, TARGET);
+        super(ID, IMG_PATH, RARITY, TARGET);
+        this.initBaseAttr(0, 0, 0, 0);
+
         this.exhaust = true;
     }
 
@@ -31,8 +26,7 @@ public class Ship_HHW extends AbstractMusic {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.rawDescription = UPGRADE_DESCRIPTION;
-            this.initializeDescription();
+            this.upgradeDescription();
         }
 
     }

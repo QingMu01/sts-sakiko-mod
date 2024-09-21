@@ -45,19 +45,24 @@ public class AnonMusicCardPatch {
         private final AbstractCard anonCard;
 
         public AbstractAnonMusic(CustomCard anonCard) {
-            super(ModNameHelper.make(anonCard.cardID), anonCard.name, ReflectionHacks.getPrivateStatic(anonCard.getClass(), "IMG_PATH"), anonCard.rawDescription, anonCard.rarity == CardRarity.RARE ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON, anonCard.target);
-            this.portrait = anonCard.portrait;
-            this.jokePortrait = anonCard.jokePortrait;
+            super(ModNameHelper.make(anonCard.cardID), ReflectionHacks.getPrivateStatic(anonCard.getClass(), "IMG_PATH"), anonCard.rarity == CardRarity.RARE ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON, anonCard.target);
             this.anonCard = anonCard;
             this.tags.add(SakikoEnum.CardTagEnum.ANON_MOD);
+            this.name = anonCard.name;
+            this.originalName = anonCard.name;
+
+            this.rawDescription = anonCard.rawDescription;
+
             this.cost = this.anonCard.cost;
             this.costForTurn = this.anonCard.cost;
+
             this.baseBlock = this.anonCard.baseBlock;
             this.baseDamage = this.anonCard.baseDamage;
             this.baseMagicNumber = this.anonCard.baseMagicNumber;
             this.setBackgroundTexture("img/pink/512/bg_skill.png", "img/pink/1024/bg_skill.png");
             this.setOrbTexture("img/UI/star.png", "img/UI/star_164.png");
             this.miniTitle = "AnonMod";
+            this.initializeDescription();
         }
 
         @Override
@@ -95,7 +100,11 @@ public class AnonMusicCardPatch {
         public void upgrade() {
             if (!this.upgraded) {
                 this.anonCard.upgrade();
+
+                this.originalName = this.anonCard.name;
                 this.name = this.anonCard.name;
+                this.rawDescription = this.anonCard.rawDescription;
+
                 this.target = this.anonCard.target;
                 this.upgraded = this.anonCard.upgraded;
                 this.timesUpgraded = this.anonCard.timesUpgraded;
@@ -114,6 +123,7 @@ public class AnonMusicCardPatch {
                 this.misc = this.anonCard.misc;
                 this.freeToPlayOnce = this.anonCard.freeToPlayOnce;
             }
+            this.initializeDescription();
         }
 
         @Override

@@ -23,7 +23,7 @@
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
     "DESCRIPTION": "获得4层 sakikomod:音符 。",
-    "UPGRADE_DESCRIPTION": "每有一个乐队成员，额外获得2层 sakikomod:音符 。"
+    "UPGRADE_DESCRIPTION": "获得4层 sakikomod:音符 。每有一个乐队成员，额外获得2层 sakikomod:音符 。"
   },
   "SakikoMod:BurnBoats": {
     "NAME": "破釜沉舟",
@@ -337,10 +337,7 @@
   },
   "SakikoMod:Resentment": {
     "NAME": "打工人之怨念",
-    "DESCRIPTION": "造成 !D! 点伤害，然后获得2层 sakikomod:过劳 。你每有一层 *过劳 ，伤害增加 !M! 点。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （当前造成%d点伤害）"
-    ]
+    "DESCRIPTION": "造成 !D! 点伤害，然后获得2层 sakikomod:过劳 。你每有一层 *过劳 ，伤害增加 !M! 点。"
   },
   "SakikoMod:Arrange": {
     "NAME": "演奏设计",
