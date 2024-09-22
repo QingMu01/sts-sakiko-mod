@@ -13,13 +13,13 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 public class DoubleKeyboard extends AbstractSakikoRelic {
 
     public static final String ID = ModNameHelper.make(DoubleKeyboard.class.getSimpleName());
-    private static final String IMG_PATH = "SakikoModResources/img/relics/DoubleKeyboard.png";
-    private static final RelicTier RELIC_TIER = RelicTier.BOSS;
-    private static final LandingSound LANDING_SOUND = LandingSound.FLAT;
 
+    private static final String IMG_PATH = "SakikoModResources/img/relics/DoubleKeyboard.png";
+
+    private static final RelicTier RELIC_TIER = RelicTier.BOSS;
 
     public DoubleKeyboard() {
-        super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER, LANDING_SOUND);
+        super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER);
     }
 
     private CardTypeColorHelper cardTypeColor = CardTypeColorHelper.NORMAL;

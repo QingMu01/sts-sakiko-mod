@@ -19,13 +19,11 @@ public class OctopusSakiko extends AbstractSakikoRelic {
     private static final Texture TB = ImageMaster.loadImage("SakikoModResources/img/relics/sakiko_relicB.png");
     // 遗物类型
     private static final RelicTier RELIC_TIER = RelicTier.BOSS;
-    // 点击音效
-    private static final LandingSound LANDING_SOUND = LandingSound.FLAT;
 
     private boolean isFirst = true;
 
     public OctopusSakiko() {
-        super(ID, TA, RELIC_TIER, LANDING_SOUND);
+        super(ID, TA, RELIC_TIER);
     }
 
     @Override

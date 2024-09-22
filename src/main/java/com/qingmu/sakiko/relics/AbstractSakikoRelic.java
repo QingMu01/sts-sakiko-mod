@@ -14,8 +14,8 @@ public abstract class AbstractSakikoRelic extends CustomRelic {
 
     protected int amount = -1;
 
-    public AbstractSakikoRelic(String id, Texture texture, RelicTier tier, LandingSound sfx) {
-        super(id, texture, tier, sfx);
+    public AbstractSakikoRelic(String id, Texture texture, RelicTier tier) {
+        super(id, texture, tier, LandingSound.FLAT);
     }
 
     @Override

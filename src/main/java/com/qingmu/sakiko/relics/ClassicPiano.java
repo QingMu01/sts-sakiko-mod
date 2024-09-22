@@ -22,11 +22,9 @@ public class ClassicPiano extends AbstractSakikoRelic implements ClickableRelic 
     private static final String IMG_PATH = "SakikoModResources/img/relics/ClassicPiano.png";
     // 遗物类型
     private static final RelicTier RELIC_TIER = RelicTier.STARTER;
-    // 点击音效
-    private static final LandingSound LANDING_SOUND = LandingSound.FLAT;
 
     public ClassicPiano() {
-        super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER, LANDING_SOUND);
+        super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER);
         PowerStrings musicalNote = CardCrawlGame.languagePack.getPowerStrings(MusicalNotePower.POWER_ID);
         this.tips.add(new PowerTip(musicalNote.NAME, musicalNote.DESCRIPTIONS[0]));
 
