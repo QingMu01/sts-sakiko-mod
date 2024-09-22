@@ -34,6 +34,10 @@ public abstract class AbstractSakikoCard extends CustomCard {
         this.initializeDescription();
     }
 
+    public AbstractSakikoCard(String id, String img, AbstractCard.CardType type, CardColor color, CardRarity rarity, CardTarget target) {
+        this(id, "", img, -2, "", type, color, rarity, target);
+    }
+
     public AbstractSakikoCard(String id, String name, String img, int cost, String rawDescription, AbstractCard.CardType type, CardColor color, CardRarity rarity, CardTarget target) {
         super(id, name, img, cost, rawDescription, type, color, rarity, target);
     }

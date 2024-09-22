@@ -35,6 +35,6 @@ public class FearNoForgotten extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ObliviousAction(p, 1));
+        this.addToBot(new ObliviousAction(1));
     }
 }

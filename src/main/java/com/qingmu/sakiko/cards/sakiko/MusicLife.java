@@ -1,9 +1,11 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.MusicLifeAction;
+import com.qingmu.sakiko.action.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicLife extends AbstractSakikoCard {
@@ -33,6 +35,7 @@ public class MusicLife extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new MusicLifeAction(this.magicNumber));
+        this.addToBot(new CardSelectorAction(this.magicNumber, false, card -> CardGroup.CardGroupType.HAND, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE));
     }
+
 }

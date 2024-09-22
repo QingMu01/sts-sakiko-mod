@@ -1,8 +1,10 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.YowaiwatashiAction;
+import com.qingmu.sakiko.action.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.cards.tmpcard.Remember;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -33,6 +35,8 @@ public class Yowaiwatashi extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new YowaiwatashiAction(p, p, Math.max(this.magicNumber, this.baseMagicNumber)));
+        this.addToBot(new CardSelectorAction(this.magicNumber, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, action -> {
+            this.addToBot(new MakeTempCardInHandAction(new Remember(), action.selected.size()));
+        }, CardGroup.CardGroupType.HAND));
     }
 }

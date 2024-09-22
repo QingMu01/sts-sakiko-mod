@@ -47,7 +47,7 @@ public class Utopia extends AbstractMusic {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage + this.extraNumber;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * Math.max(this.magicNumber, this.baseMagicNumber);
+        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * this.magicNumber;
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);

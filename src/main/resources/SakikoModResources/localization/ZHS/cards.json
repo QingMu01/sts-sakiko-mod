@@ -54,10 +54,7 @@
   },
   "SakikoMod:Osananajimi": {
     "NAME": "青梅竹马的牵绊",
-    "DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。 NL 消耗 。",
-    "EXTENDED_DESCRIPTION": [
-      " 选择一张牌"
-    ]
+    "DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。 NL 消耗 。"
   },
   "SakikoMod:Noise": {
     "NAME": "噪音",
@@ -357,8 +354,8 @@
   },
   "SakikoMod:GravityRadar": {
     "NAME": "重力雷达",
-    "DESCRIPTION": "从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 消耗 。",
-    "UPGRADE_DESCRIPTION": " 固有 NL 从抽卡堆选择一张卡弃入弃牌堆，并使其变为白月光。 消耗 。"
+    "DESCRIPTION": "从抽卡堆选择 !M! 张卡弃入弃牌堆，并使其变为白月光。 消耗 。",
+    "UPGRADE_DESCRIPTION": " 固有 NL 从抽卡堆选择 !M! 张卡弃入弃牌堆，并使其变为白月光。 消耗 。"
   },
   "SakikoMod:MakeKingOfTingEX": {
     "NAME": "挺王制成EX",
@@ -600,6 +597,6 @@
   },
   "SakikoMod:SoyoCurse": {
     "NAME": "长崎素世的挽留",
-    "DESCRIPTION": " 不能被打出 。 NL 抽到时向所有单位施加 缠绕 。"
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时向所有单位施加5层 缠绕 。"
   }
 }

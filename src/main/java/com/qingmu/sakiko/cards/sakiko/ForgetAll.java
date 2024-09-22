@@ -34,6 +34,6 @@ public class ForgetAll extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ObliviousAction(p, 2));
+        this.addToBot(new ObliviousAction(2));
     }
 }

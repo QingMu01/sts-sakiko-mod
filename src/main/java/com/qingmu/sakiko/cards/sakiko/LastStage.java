@@ -1,10 +1,14 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.LastStageAction;
+import com.qingmu.sakiko.action.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class LastStage extends AbstractSakikoCard {
@@ -17,30 +21,11 @@ public class LastStage extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.RARE;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
-    public int exhaustCount = 0;
-
     public LastStage() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 10, 0, 6);
     }
 
-    @Override
-    public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage = realBaseDamage + (this.exhaustCount * this.magicNumber);
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage = realBaseDamage + (this.exhaustCount * this.magicNumber);
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
 
     @Override
     public void upgrade() {
@@ -52,13 +37,12 @@ public class LastStage extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new LastStageAction(p, m, this));
+        this.addToBot(new CardSelectorAction(999, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, endOfSelect -> {
+            this.baseDamage += endOfSelect.selected.size() * this.magicNumber;
+            this.calculateCardDamage(m);
+            this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY));
+        }, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE));
+
     }
 
-    @Override
-    public AbstractCard makeSameInstanceOf() {
-        AbstractCard card = super.makeSameInstanceOf();
-        ((LastStage)card).exhaustCount = this.exhaustCount;
-        return card;
-    }
 }

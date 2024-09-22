@@ -1,10 +1,13 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ObliviousAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class CutOfMemory extends AbstractSakikoCard {
@@ -34,6 +37,9 @@ public class CutOfMemory extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ObliviousAction(p, 1, true));
+        this.addToBot(new ObliviousAction(1, action -> {
+            AbstractCard card = action.selected.get(0);
+            this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, card.costForTurn)));
+        }));
     }
 }

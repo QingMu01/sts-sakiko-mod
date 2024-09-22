@@ -27,7 +27,7 @@ public class ElementsAction extends AbstractGameAction {
     @Override
     public void update() {
         if (this.duration == Settings.ACTION_DUR_FAST) {
-            AbstractDungeon.cardRewardScreen.customCombatOpen(elements.pickup, String.format(uiStrings.TEXT[6], 1), true);
+            AbstractDungeon.cardRewardScreen.customCombatOpen(elements.pickup, String.format(uiStrings.EXTRA_TEXT[2], 1), true);
             this.tickDuration();
         } else {
             if (!this.retrieveCard) {

@@ -36,6 +36,6 @@ public class UntouchableMemories extends AbstractSakikoCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
-        this.addToBot(new ObliviousAction(p,1));
+        this.addToBot(new ObliviousAction(1));
     }
 }
