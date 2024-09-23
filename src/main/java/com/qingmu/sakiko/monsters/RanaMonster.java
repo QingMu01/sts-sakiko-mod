@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.action.ReadyToPlayMusicAction;
+import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
 import com.qingmu.sakiko.cards.music.monster.Haruhikage_Rana;
 import com.qingmu.sakiko.constant.MusicHelper;

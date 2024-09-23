@@ -1,8 +1,15 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
+import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.HypeAction;
+import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
+import com.megacrit.cardcrawl.vfx.combat.WhirlwindEffect;
+import com.qingmu.sakiko.action.ResetMusicalNoteAction;
+import com.qingmu.sakiko.action.common.XAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -32,6 +39,17 @@ public class Hype extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new HypeAction(p, this.multiDamage, this.damageTypeForTurn, this.freeToPlayOnce, this.energyOnUse));
+        this.addToBot(new XAction(p, this.freeToPlayOnce, this.energyOnUse,effect->{
+            for(int i = 0; i < effect; ++i) {
+                if (i == 0) {
+                    this.addToBot(new SFXAction("ATTACK_WHIRLWIND"));
+                    this.addToBot(new VFXAction(new WhirlwindEffect(), 0.0F));
+                }
+                this.addToBot(new SFXAction("ATTACK_HEAVY"));
+                this.addToBot(new VFXAction(p, new CleaveEffect(), 0.0F));
+                this.addToBot(new DamageAllEnemiesAction(p, this.multiDamage, this.damageType, AbstractGameAction.AttackEffect.NONE, true));
+            }
+            this.addToBot(new ResetMusicalNoteAction());
+        }));
     }
 }

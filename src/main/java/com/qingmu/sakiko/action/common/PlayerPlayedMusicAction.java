@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.action;
+package com.qingmu.sakiko.action.common;
 
 import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;

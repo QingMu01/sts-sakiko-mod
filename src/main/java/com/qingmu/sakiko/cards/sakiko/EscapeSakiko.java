@@ -1,11 +1,14 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.EscapeSakikoAction;
+import com.qingmu.sakiko.action.ActiveKabeAction;
+import com.qingmu.sakiko.action.common.XAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class EscapeSakiko extends AbstractSakikoCard {
@@ -34,6 +37,11 @@ public class EscapeSakiko extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new EscapeSakikoAction(p, this.freeToPlayOnce, this.energyOnUse, this.upgraded));
+        this.addToBot(new XAction(p, this.freeToPlayOnce, this.energyOnUse,effect->{
+            this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, effect * 3)));
+            if (this.upgraded){
+                this.addToBot(new ActiveKabeAction());
+            }
+        }));
     }
 }

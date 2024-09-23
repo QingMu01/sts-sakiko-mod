@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.action;
+package com.qingmu.sakiko.action.common;
 
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;

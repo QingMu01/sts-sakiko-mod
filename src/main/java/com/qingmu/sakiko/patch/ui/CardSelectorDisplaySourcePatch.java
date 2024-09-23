@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.qingmu.sakiko.action.CardSelectorAction;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.patch.filed.CardSelectToObliviousFiled;
 
 @SpirePatch(clz = AbstractCard.class, method = "render", paramtypez = {SpriteBatch.class})

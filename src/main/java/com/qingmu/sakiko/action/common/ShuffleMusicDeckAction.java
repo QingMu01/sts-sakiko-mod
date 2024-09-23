@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.action;
+package com.qingmu.sakiko.action.common;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -10,7 +10,6 @@ import com.qingmu.sakiko.cards.music.AbstractMusic;
 import java.util.Iterator;
 
 public class ShuffleMusicDeckAction extends AbstractGameAction {
-
 
     private boolean vfxDone = false;
     private int count = 0;
