@@ -20,16 +20,8 @@ public class ClassicMusician extends AbstractSakikoCard {
     public ClassicMusician() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(3, 0, 0, 1);
-        this.isEthereal = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDescription();
-            this.isEthereal = false;
-        }
+        this.setUpgradeAttr(3, 0, 0, 0);
+        this.setEthereal(true, false);
     }
 
     @Override

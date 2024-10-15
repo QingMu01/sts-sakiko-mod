@@ -2,7 +2,7 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.KimewazaAction;
+import com.qingmu.sakiko.action.common.AutoPlayPileCardAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -18,20 +18,13 @@ public class Kimewaza extends AbstractSakikoCard {
 
     public Kimewaza() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(3, 0, 0, 0);
-        this.exhaust = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(2);
-        }
+        this.initBaseAttr(4, 0, 0, 0);
+        this.setUpgradeAttr(3, 0, 0, 0);
+        this.setExhaust(true, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new KimewazaAction());
+        this.addToBot(new AutoPlayPileCardAction(999,false,true, AutoPlayPileCardAction.DrawPileType.MUSIC_PILE));
     }
 }

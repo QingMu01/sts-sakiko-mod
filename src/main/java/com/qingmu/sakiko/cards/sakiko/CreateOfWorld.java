@@ -1,14 +1,15 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.inteface.TriggerOnOblivion;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class CreateOfWorld extends AbstractSakikoCard {
+public class CreateOfWorld extends AbstractSakikoCard implements TriggerOnOblivion {
     public static final String ID = ModNameHelper.make(CreateOfWorld.class.getSimpleName());
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/CreateOfWorld.png";
@@ -19,26 +20,18 @@ public class CreateOfWorld extends AbstractSakikoCard {
 
     public CreateOfWorld() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 8, 1);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
+        this.initBaseAttr(2, 0, 13, 2);
+        this.setUpgradeAttr(2, 0, 0, 1);
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(3);
-            this.upgradeMagicNumber(1);
-        }
+    public void triggerOnPlayMusic(AbstractMusic music) {
+        this.baseBlock += this.magicNumber;
     }
 
     @Override
-    public void applyPowersToBlock() {
-        int realBaseBlock = this.baseBlock;
-        this.baseBlock += MusicalNotePower.getCombatCount() * this.magicNumber;
-        super.applyPowersToBlock();
-        this.baseBlock = realBaseBlock;
-        this.isBlockModified = (this.block != this.baseBlock);
+    public void triggerOnOblivion() {
+        this.addToBot(new MakeTempCardInDiscardAction(this.makeSameInstanceOf(), 1));
     }
 
     @Override

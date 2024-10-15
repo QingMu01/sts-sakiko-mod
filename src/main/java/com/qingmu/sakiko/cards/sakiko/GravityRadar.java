@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -22,24 +23,17 @@ public class GravityRadar extends AbstractSakikoCard {
     public GravityRadar() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.exhaust = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDescription();
-            this.isInnate = true;
-        }
+        this.setUpgradeAttr(0, 0, 0, 0);
+        this.setExhaust(true, true);
+        this.setInnate(true, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-//        this.addToBot(new GravityRadarAction(1));
-        this.addToBot(new CardSelectorAction(this.magicNumber, false, card -> {
-            CardModifierManager.addModifier(card, new MoonLightModifier());
-            return CardGroup.CardGroupType.DISCARD_PILE;
+        this.addToBot(new CardSelectorAction(this.magicNumber, false, card -> CardGroup.CardGroupType.DISCARD_PILE, action -> {
+            for (AbstractCard card : action.selected) {
+                CardModifierManager.addModifier(card, new MoonLightModifier());
+            }
         }, CardGroup.CardGroupType.DRAW_PILE));
     }
 

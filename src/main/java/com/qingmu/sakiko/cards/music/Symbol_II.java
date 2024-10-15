@@ -1,9 +1,12 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.CardStrings;
+import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.modifier.SymbolAirModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Symbol_II extends AbstractMusic {
@@ -18,21 +21,18 @@ public class Symbol_II extends AbstractMusic {
 
     public Symbol_II() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 1);
-
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(2);
-        }
+        this.initMusicAttr(1, 0, 1, 1);
     }
 
     @Override
     public void play() {
-        this.addToTop(new DrawCardAction(this.magicNumber + this.extraNumber));
+        int magicNumber = this.magicNumber;
+        int musicNumber = this.musicNumber;
+        this.addToTop(new CardSelectorAction(1, false, card -> null, action -> {
+            for (AbstractCard card : action.selected) {
+                CardModifierManager.addModifier(card, new SymbolAirModifier(magicNumber, musicNumber));
+            }
+        }, CardGroup.CardGroupType.HAND));
     }
 }

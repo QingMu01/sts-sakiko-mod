@@ -11,18 +11,20 @@ public class GrievousNewsAction extends AbstractGameAction {
 
     private AbstractPlayer player;
 
-    public GrievousNewsAction(AbstractPlayer player, int amount) {
+    public GrievousNewsAction(AbstractPlayer player) {
         this.player = player;
-        this.amount = amount;
     }
 
     @Override
     public void update() {
+        int count = 0;
         for (AbstractCard c : DrawCardAction.drawnCards) {
             if (c.type == AbstractCard.CardType.CURSE || c.type == AbstractCard.CardType.STATUS) {
-                this.addToTop(new ApplyPowerAction(this.player, this.player, new KokoroNoKabePower(this.player, this.amount)));
-                break;
+                count++;
             }
+        }
+        if (count > 0) {
+            this.addToBot(new ApplyPowerAction(player, player, new KokoroNoKabePower(player, count), count));
         }
         this.isDone = true;
     }

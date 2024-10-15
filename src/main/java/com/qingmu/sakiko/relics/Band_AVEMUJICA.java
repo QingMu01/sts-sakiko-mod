@@ -1,13 +1,12 @@
 package com.qingmu.sakiko.relics;
 
-import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class Band_AVEMUJICA extends AbstractSakikoRelic{
+public class Band_AVEMUJICA extends AbstractSakikoRelic implements ModifiedMusicNumber {
     // 遗物ID
     public static final String ID = ModNameHelper.make(Band_AVEMUJICA.class.getSimpleName());
     // 图片路径
@@ -25,11 +24,7 @@ public class Band_AVEMUJICA extends AbstractSakikoRelic{
     }
 
     @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
-        if (music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA)){
-            music.extraNumber = 1;
-            this.flash();
-            this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-        }
+    public float modifyMusicNumber(AbstractMusic music, float musicNumber) {
+        return music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? ++musicNumber : musicNumber;
     }
 }

@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.cards.tmpcard.Story;
+import com.qingmu.sakiko.cards.colorless.Story;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SekaikanPower extends AbstractPower {

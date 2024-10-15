@@ -13,11 +13,10 @@ import com.megacrit.cardcrawl.events.city.Vampires;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
-import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
-import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.cards.sakiko.Elements;
+import com.qingmu.sakiko.cards.sakiko.TwoInOne;
+import com.qingmu.sakiko.constant.ColorHelp;
 import com.qingmu.sakiko.relics.ClassicPiano;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -51,9 +50,9 @@ public class TogawaSakiko extends CustomPlayer {
     private static final float[] LAYER_SPEED = new float[]{-40.0F, -32.0F, 20.0F, -20.0F, 2.0F};    // 人物的本地化文本，如卡牌的本地化文本一样，如何书写见下
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString("SakikoMod:TogawaSakiko");
 
-    private boolean isMask = false;
-    private Texture mask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko.png");
-    private Texture noMask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko_nomask.png");
+    private final Texture mask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko.png");
+    private final Texture noMask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko_nomask.png");
+
 
     public TogawaSakiko(String name) {
         super(name, QINGMU_SAKIKO, ORB_TEXTURES, "SakikoModResources/img/ui/orb/vfx.png", LAYER_SPEED, null, null);
@@ -81,7 +80,7 @@ public class TogawaSakiko extends CustomPlayer {
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Professional"));
-        decks.add(ModNameHelper.make("Elements"));
+        decks.add(ModNameHelper.make("TwoInOne"));
         return decks;
     }
 
@@ -121,17 +120,17 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public Color getCardRenderColor() {
-        return SakikoModCore.SAKIKO_COLOR;
+        return ColorHelp.SAKIKO_COLOR.cpy();
     }
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return new Elements();
+        return new TwoInOne();
     }
 
     @Override
     public Color getCardTrailColor() {
-        return SakikoModCore.SAKIKO_COLOR;
+        return ColorHelp.SAKIKO_COLOR.cpy();
     }
 
     @Override
@@ -171,7 +170,7 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public Color getSlashAttackColor() {
-        return SakikoModCore.SAKIKO_COLOR;
+        return ColorHelp.SAKIKO_COLOR.cpy();
     }
 
     @Override
@@ -184,18 +183,11 @@ public class TogawaSakiko extends CustomPlayer {
         return Vampires.DESCRIPTIONS[1];
     }
 
-    @Override
-    public void update() {
-        if (this.hb.hovered && InputHelper.justClickedRight) {
-            if (this.isMask) {
-                img = noMask;
-                this.isMask = false;
-            } else {
-                img = mask;
-                this.isMask = true;
-            }
+    public void switchMask(boolean isMask) {
+        if (isMask) {
+            img = mask;
+        } else {
+            img = noMask;
         }
-        super.update();
     }
-
 }

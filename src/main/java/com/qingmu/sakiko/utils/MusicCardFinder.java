@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardPoolsFiled;
 
@@ -32,13 +32,13 @@ public class MusicCardFinder {
                 }
             }
             if (card instanceof AbstractMusic) {
-                if (card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD)){
-                    if (SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")){
+                if (card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD)) {
+                    if (SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
                         retVal.add(card);
-                    }else {
+                    } else {
                         i--;
                     }
-                }else {
+                } else {
                     retVal.add(card);
                 }
             }
@@ -66,7 +66,7 @@ public class MusicCardFinder {
                 list.add(c);
             }
         }
-        if (!SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")){
+        if (!SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
             list.removeIf(card -> card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD));
         }
         return list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
@@ -74,7 +74,6 @@ public class MusicCardFinder {
 
     private static AbstractCard.CardRarity rollRarity() {
         int roll = AbstractDungeon.cardRng.random(99);
-        roll += AbstractDungeon.cardBlizzRandomizer;
         return getCardRarityFallback(roll);
     }
 

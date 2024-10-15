@@ -1,13 +1,10 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.qingmu.sakiko.cards.tmpcard.Confront_Sakiko;
-import com.qingmu.sakiko.cards.tmpcard.Run_Sakiko;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.powers.HaruhikagePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
-
-import java.util.ArrayList;
 
 public class Haruhikage_CryChic extends AbstractMusic {
 
@@ -16,31 +13,18 @@ public class Haruhikage_CryChic extends AbstractMusic {
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Haruhikage_CryChic.png";
 
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardTarget TARGET = CardTarget.SELF;
 
     public Haruhikage_CryChic() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 0);
-    }
+        this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-        }
-    }
-
-    @Override
-    public boolean canUpgrade() {
-        return false;
+        this.initMusicAttr(3, 1);
     }
 
     @Override
     public void play() {
-        ArrayList<AbstractCard> list = new ArrayList<>();
-        list.add(new Run_Sakiko());
-        list.add(new Confront_Sakiko());
-        this.addToTop(new ChooseOneAction(list));
+        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new HaruhikagePower(this.m_source, this.musicNumber)));
     }
 }

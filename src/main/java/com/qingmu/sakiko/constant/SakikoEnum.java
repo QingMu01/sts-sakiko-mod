@@ -10,8 +10,8 @@ import com.megacrit.cardcrawl.rewards.RewardItem;
 public class SakikoEnum {
 
     /*
-    * 本mod人物与卡牌枚举
-    * */
+     * 本mod人物与卡牌枚举
+     * */
     public static class CharacterEnum {
         @SpireEnum
         public static AbstractPlayer.PlayerClass QINGMU_SAKIKO;
@@ -22,16 +22,16 @@ public class SakikoEnum {
     }
 
     /*
-    * 新增卡牌种类 音乐
-    * */
+     * 新增卡牌种类 音乐
+     * */
     public static class CardTypeEnum {
         @SpireEnum
         public static AbstractCard.CardType MUSIC;
     }
 
     /*
-    * 新增稀有度，音乐基础、音乐普通、音乐罕见、音乐稀有
-    * */
+     * 新增稀有度，音乐基础、音乐普通、音乐罕见、音乐稀有
+     * */
     public static class CardRarityEnum {
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_UNCOMMON;
@@ -40,9 +40,10 @@ public class SakikoEnum {
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_SPECIAL;
     }
+
     /*
-    * 本mod的特殊牌标记
-    * */
+     * 本mod的特殊牌标记
+     * */
     public static class CardTagEnum {
         @SpireEnum
         public static AbstractCard.CardTags REMEMBER;
@@ -55,25 +56,24 @@ public class SakikoEnum {
         @SpireEnum
         public static AbstractCard.CardTags MUSIC_ATTACK;
         @SpireEnum
-        public static AbstractCard.CardTags COUNTER;
-        @SpireEnum
         public static AbstractCard.CardTags ENCORE;
-        @SpireEnum
-        public static AbstractCard.CardTags MUSICAL_NOTE;
-        @SpireEnum
-        public static AbstractCard.CardTags REMEMBERED_FLAG;
-        @SpireEnum
-        public static AbstractCard.CardTags OBLIVIOUS_FLAG;
 
         @SpireEnum
         public static AbstractCard.CardTags AVE_MUJICA;
         @SpireEnum
         public static AbstractCard.CardTags ANON_MOD;
+
+        @SpireEnum
+        public static AbstractCard.CardTags REMOVE_FLAG;
+        @SpireEnum
+        public static AbstractCard.CardTags OBLIVIOUS_FLAG;
+        @SpireEnum
+        public static AbstractCard.CardTags IMMEDIATELY_FLAG;
     }
 
     /*
-    * 音乐抽牌堆类型
-    * */
+     * 音乐抽牌堆类型
+     * */
     public static class CardGroupEnum {
         @SpireEnum
         public static CardGroup.CardGroupType DRAW_MUSIC_PILE;
@@ -82,8 +82,8 @@ public class SakikoEnum {
     }
 
     /*
-    * 奖励类型
-    * */
+     * 奖励类型
+     * */
     public static class RewardType {
         @SpireEnum
         public static RewardItem.RewardType MUSIC_TYPE;

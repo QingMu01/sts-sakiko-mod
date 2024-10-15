@@ -23,16 +23,8 @@ public class LastStage extends AbstractSakikoCard {
 
     public LastStage() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 10, 0, 6);
-    }
-
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(3);
-        }
+        this.initBaseAttr(1, 10, 0, 4);
+        this.setUpgradeAttr(1, 0, 0, 3);
     }
 
     @Override

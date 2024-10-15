@@ -9,13 +9,13 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
-import com.qingmu.sakiko.patch.filed.CardSelectToObliviousFiled;
+import com.qingmu.sakiko.patch.filed.CardSelectorFiled;
 
 @SpirePatch(clz = AbstractCard.class, method = "render", paramtypez = {SpriteBatch.class})
 public class CardSelectorDisplaySourcePatch {
 
     public static void Postfix(AbstractCard __instance, SpriteBatch sb) {
-        CardGroup.CardGroupType location = CardSelectToObliviousFiled.location.get(__instance);
+        CardGroup.CardGroupType location = CardSelectorFiled.location.get(__instance);
         String source = CardSelectorAction.getTargetName(location);
 
         float offsetY = -420.0F * Settings.scale * __instance.drawScale / 2.0F;
@@ -27,6 +27,5 @@ public class CardSelectorDisplaySourcePatch {
         color.a = __instance.transparency;
         FontHelper.renderRotatedText(sb, FontHelper.cardTitleFont, source, __instance.current_x, __instance.current_y, 0.0F, offsetY, __instance.angle, true, color);
         fontData.setScale(originalScale);
-
     }
 }

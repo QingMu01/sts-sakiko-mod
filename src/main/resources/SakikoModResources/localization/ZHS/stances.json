@@ -1,0 +1,28 @@
+{
+  "SakikoMod:CreatorStance": {
+    "NAME": "创作者",
+    "DESCRIPTION": [
+      "进入这个 #y姿态 时，从 #y歌单 抽 #b2 张牌。"
+    ]
+  },
+  "SakikoMod:PlayerStance": {
+    "NAME": "演奏者",
+    "DESCRIPTION": [
+      "进入这个 #y姿态 时，触发 #y待演奏区 所有音乐牌的 #y演奏 效果，你的音乐牌打出时立刻 #y演奏 。回合结束时，自动离开这个姿态。"
+    ]
+  },
+  "SakikoMod:FeverStance": {
+    "NAME": "心流：狂热",
+    "DESCRIPTION": [
+      "你的音乐牌打出时立刻 #y演奏 ，且发挥 #b2 倍的效果。回合开始时自动离开这个 #y姿态 。"
+    ]
+  },
+  "SakikoMod:ObliviousStance": {
+    "NAME": "心流：假面",
+    "DESCRIPTION": [
+      "回合结束时，获得新回合。新回合结束时，如果 #y演奏 的次数小于7，则退出这个 #y姿态 。",
+      "如今正是 #r@复权@ 之时！",
+      "堕入 #r~遗忘~ 的深渊吧..."
+    ]
+  }
+}

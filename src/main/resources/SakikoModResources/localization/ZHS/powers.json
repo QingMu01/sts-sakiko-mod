@@ -1,30 +1,27 @@
 {
-  "SakikoMod:MusicalNotePower": {
-    "NAME": "音符与乐章",
+  "SakikoMod:KokoroNoKabePower": {
+    "NAME": "心之壁",
     "DESCRIPTIONS": [
-      "每积累一定量的音符可将其转变为 #y乐章 ，触发额外效果。",
-      " NL 下次获得乐章还差 #b%d 层音符。",
-      "乐章特效",
-      "当乐章数大于等于需求数时，可获得以下效果：",
-      " NL 1层：从歌单中抽一张牌。",
-      " NL 2层：从抽牌堆抽一张牌。",
-      " NL 3层：获得 [E] 。"
+      "回合结束时 #y激活 心之壁获得格挡，然后失去一半层数。 NL 受到攻击时，额外损失 #r",
+      " 点生命值。"
+    ]
+  },
+  "SakikoMod:FeverReadyPower": {
+    "NAME": "筹备",
+    "DESCRIPTIONS": [
+      "当你有 #b4 层 #y筹备 时，进入 #yFever 。 NL #y筹备 会在回合结束时清空。"
     ]
   },
   "SakikoMod:KirameiPower": {
     "NAME": "闪耀",
     "DESCRIPTIONS": [
-      "强化部分卡牌的效果。"
+      "强化 #y音乐 牌的效果。"
     ]
   },
-  "SakikoMod:KokoroNoKabePower": {
-    "NAME": "心之壁",
+  "SakikoMod:FukkenPower": {
+    "NAME": "复权",
     "DESCRIPTIONS": [
-      "回合结束时 #y激活 心之壁获得格挡。",
-      "使用这些格挡（已提供： #b",
-      " ）会使你失去 #r",
-      " 点生命值。 NL （再获得 #b",
-      " 层，心之壁的伤害提高 #r1 点。）"
+      "强化AveMujica所属的 #y音乐 牌的效果。"
     ]
   },
   "SakikoMod:FeverPower": {
@@ -34,25 +31,10 @@
       " 张牌 。"
     ]
   },
-  "SakikoMod:LoseEnergizedPower": {
-    "NAME": "能量减少",
+  "SakikoMod:MeteorMoonPower": {
+    "NAME": "堕月",
     "DESCRIPTIONS": [
-      "回合开始时，失去 #r",
-      " 点能量"
-    ]
-  },
-  "SakikoMod:IbasyoPower": {
-    "NAME": "归宿",
-    "DESCRIPTIONS": [
-      "心之壁对你造成的伤害减少 #r",
-      " 点。"
-    ]
-  },
-  "SakikoMod:TalentPower": {
-    "NAME": "才华横溢",
-    "DESCRIPTIONS": [
-      "除回合开始抽牌外，每抽 #b1 张牌，获得 #b",
-      " 层音符。"
+      "你退出 #y心流：假面 时，对场上所有单位造成你当前生命值的伤害。"
     ]
   },
   "SakikoMod:BoomerangPower": {
@@ -63,35 +45,56 @@
       " 次攻击造成双倍伤害。"
     ]
   },
+  "SakikoMod:ZekkouchouPower": {
+    "NAME": "绝好调",
+    "DESCRIPTIONS": [
+      "你的下一次演奏发挥两倍效果。"
+    ]
+  },
   "SakikoMod:BlockedPower": {
     "NAME": "拉黑",
     "DESCRIPTIONS": [
       "这个单位无法造成伤害。"
     ]
   },
-  "SakikoMod:HedgehogPower": {
-    "NAME": "刺猬小祥",
+  "SakikoMod:FallApartPower": {
+    "NAME": "分崩离析",
     "DESCRIPTIONS": [
-      "你受到攻击时，对目标造成你心之壁层数的伤害。"
+      "你的队友数量视为 #r0 。"
     ]
   },
-  "SakikoMod:EncorePower": {
-    "NAME": "安可",
+  "SakikoMod:DebutPower": {
+    "NAME": "首次登台",
     "DESCRIPTIONS": [
-      "在本回合结束后，额外获得一回合。"
+      "本回合，你打出的音乐牌将被立刻 #y演奏 。"
     ]
   },
-  "SakikoMod:FeverReadyPower": {
-    "NAME": "筹备",
+  "SakikoMod:LeaderPower": {
+    "NAME": "领袖",
     "DESCRIPTIONS": [
-      "当你有 #b4 层 #y筹备 时，进入 #yFever 。 NL #y筹备 会在回合结束时清空。"
+      "回合开始时，演奏待演奏区的前 #b",
+      " 张音乐牌。"
     ]
   },
-  "SakikoMod:SekaikanPower": {
-    "NAME": "世界观",
+  "SakikoMod:MasqueradePower": {
+    "NAME": "假面舞会",
     "DESCRIPTIONS": [
-      "回合开始时，将 #b",
-      " 张 #y剧情 加入手牌。"
+      "你改变 #y姿态 时，从歌单打出 #b",
+      " 张牌。"
+    ]
+  },
+  "SakikoMod:KingOfTingPower": {
+    "NAME": "挺王之力",
+    "DESCRIPTIONS": [
+      "你进入 #y演奏者 时，获得 #b",
+      " 点 #y闪耀 。"
+    ]
+  },
+  "SakikoMod:MujikakuPower": {
+    "NAME": "无自觉",
+    "DESCRIPTIONS": [
+      "每当有一张牌被 #y消耗 时，恢复 #g",
+      " 点生命值。"
     ]
   },
   "SakikoMod:ClassicMusicianPower": {
@@ -101,61 +104,72 @@
       " 张 #y音乐 牌将被打出两次。"
     ]
   },
-  "SakikoMod:OverdrawPower": {
-    "NAME": "透支身体",
+  "SakikoMod:TalentPower": {
+    "NAME": "才华横溢",
     "DESCRIPTIONS": [
-      "回合开始时，获得 #b",
-      " 能量，抽 #b",
-      " 张牌。获得 #b",
-      " 层 #y过劳 。"
+      "你的心流槽不会在回合结束时清空。"
     ]
   },
-  "SakikoMod:MujikakuPower": {
-    "NAME": "无自觉",
+  "SakikoMod:FormerGloryPower": {
+    "NAME": "昔日荣光",
     "DESCRIPTIONS": [
-      "每次 #y忘却 时，手牌中随机 #b",
-      " 张牌的费用在本回合为0。"
+      "每次 #y演奏 时，对随机敌人造成 #r",
+      " 点伤害。"
     ]
   },
-  "SakikoMod:OjyousamaPower": {
-    "NAME": "修养",
+  "SakikoMod:HolyHymnPower": {
+    "NAME": "神圣高杰的赞美之歌",
     "DESCRIPTIONS": [
-      "回合开始时，额外抽 #b",
+      "你每次转换 #y姿态 时，获得 #b ",
+      " 层 #y复权 。"
+    ]
+  },
+  "SakikoMod:SekaikanPower": {
+    "NAME": "世界观",
+    "DESCRIPTIONS": [
+      "回合开始时，将 #b",
+      " 张 #y剧情 加入手牌。"
+    ]
+  },
+  "SakikoMod:BurningBirthPower": {
+    "NAME": "烈火重生",
+    "DESCRIPTIONS": [
+      "当你抽到无法被打出的牌时，失去 #r1 点生命值，将其消耗，然后抽 #b",
       " 张牌。"
     ]
   },
-  "SakikoMod:YowaiwatashiPower": {
-    "NAME": "软弱",
+  "SakikoMod:VoidOrderPower": {
+    "NAME": "弃入虚空的秩序",
     "DESCRIPTIONS": [
-      "回合开始时，将 #b",
-      " 张 #y回忆 加入手牌。"
+      "回合结束时，保留最多 #b",
+      " 张牌，将其费用随机化。"
     ]
   },
-  "SakikoMod:StarBeatPower": {
-    "NAME": "星之鼓动",
+  "SakikoMod:NobilityPower": {
+    "NAME": "贵族品性",
     "DESCRIPTIONS": [
-      "打出一次音乐牌时，抽 #b",
+      "每次 #y演奏 时，抽 #b",
       " 张牌。"
     ]
   },
-  "SakikoMod:LeaderPower": {
-    "NAME": "领袖",
+  "SakikoMod:StiffPower": {
+    "NAME": "僵硬",
     "DESCRIPTIONS": [
-      "回合开始时，失去金币。"
+      "你的非 #y音乐 牌，造成的伤害与获得格挡减少到 #r",
+      " %。"
     ]
   },
-  "SakikoMod:MasqueradePower": {
-    "NAME": "假面舞会",
+  "SakikoMod:DollPower": {
+    "NAME": "人偶",
     "DESCRIPTIONS": [
-      "打出音乐牌时，对随机敌人造成 #r",
-      " 点伤害。。"
+      "你的 #y音乐 牌在 #y演奏 时，获得 #b",
+      " 倍效果增强。"
     ]
   },
-  "SakikoMod:ChuuniPower": {
-    "NAME": "中二",
+  "SakikoMod:EncorePower": {
+    "NAME": "安可",
     "DESCRIPTIONS": [
-      "回合开始时，将 #b",
-      " 张 #y幻想 加入手牌。"
+      "在本回合结束后，额外获得一回合。"
     ]
   },
   "SakikoMod:NingyouPower": {
@@ -163,13 +177,6 @@
     "DESCRIPTIONS": [
       "打出音乐牌时，获得 #g",
       " 点 #y临时生命 。"
-    ]
-  },
-  "SakikoMod:OverworkPower": {
-    "NAME": "过劳",
-    "DESCRIPTIONS": [
-      "若你有八层以上的 #y过劳 ，结束当前回合，然后获得 #y5 枚 #y金币 的赔偿金。 NL 过劳会在回合结束时下降1层。当前回合未出牌则下降一半层数。 NL 距离结束回合还有 #r",
-      " 层。"
     ]
   },
   "SakikoMod:HelloHappyPower": {
@@ -186,30 +193,10 @@
       " 次 #y演奏 生效两次。"
     ]
   },
-  "SakikoMod:ScapegoatPower": {
-    "NAME": "背锅侠",
-    "DESCRIPTIONS": [
-      "这个单位代替你受到心之壁的伤害。"
-    ]
-  },
-  "SakikoMod:KingOfTingPower": {
-    "NAME": "挺王之力",
-    "DESCRIPTIONS": [
-      "你每回合首次获得 #y闪耀 时，额外获得 #b",
-      " 层。"
-    ]
-  },
   "SakikoMod:MashiroGiftPower": {
     "NAME": "仓田前辈的赠礼",
     "DESCRIPTIONS": [
       "你现在无法看见敌人真实的意图与属性。回合开始时下降一层。"
-    ]
-  },
-  "SakikoMod:MusicDreamPower": {
-    "NAME": "音乐梦",
-    "DESCRIPTIONS": [
-      "你每失去 #b1 层 #y乐章 ，获得 #b",
-      " 个 #y音符 。"
     ]
   },
   "SakikoMod:AnonDasuruPower": {
@@ -220,9 +207,23 @@
     ]
   },
   "SakikoMod:RanaHaruhikagePower": {
-    "NAME": "春日影",
+    "NAME": "乐奈的春日影",
     "DESCRIPTIONS": [
       "你感觉自己控制不住地想要逃跑。"
+    ]
+  },
+  "SakikoMod:HaruhikagePower": {
+    "NAME": "春日影",
+    "DESCRIPTIONS": [
+      "接下来 #b",
+      " 个回合，你的 #y心之壁 层数不再会因为激活而下降。"
+    ]
+  },
+  "SakikoMod:NingenUtaPower": {
+    "NAME": "想要成为人类之歌",
+    "DESCRIPTIONS": [
+      "你获得增益状态时，额外获得 #b",
+      " 层。"
     ]
   },
   "SakikoMod:SoyoConstrictedPower": {

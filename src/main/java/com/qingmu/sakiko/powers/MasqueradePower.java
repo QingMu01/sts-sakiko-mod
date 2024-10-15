@@ -1,20 +1,17 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
+import com.megacrit.cardcrawl.stances.AbstractStance;
+import com.qingmu.sakiko.action.common.AutoPlayPileCardAction;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MasqueradePower extends AbstractPower implements TriggerOnPlayMusicPower {
+public class MasqueradePower extends AbstractPower {
 
     public static final String POWER_ID = ModNameHelper.make(MasqueradePower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -42,19 +39,13 @@ public class MasqueradePower extends AbstractPower implements TriggerOnPlayMusic
     }
 
     @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
-        this.flash();
-        this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-
+    public void onChangeStance(AbstractStance oldStance, AbstractStance newStance) {
+        this.addToBot(new AutoPlayPileCardAction(this.amount, true, false, AutoPlayPileCardAction.DrawPileType.MUSIC_PILE));
     }
-
 
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
         if (this.amount >= 999) {
             this.amount = 999;
         }

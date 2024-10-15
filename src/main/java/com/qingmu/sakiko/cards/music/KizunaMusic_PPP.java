@@ -1,11 +1,11 @@
 package com.qingmu.sakiko.cards.music;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class KizunaMusic_PPP extends AbstractMusic {
 
@@ -18,31 +18,24 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     public KizunaMusic_PPP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.baseBlock = 4;
+        this.initMusicAttr(3, 1, 1, 0);
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(2);
-        }
-    }
-
-    @Override
-    protected void applyPowersToBlock() {
-        int realBaseBlock = this.baseBlock;
-        this.baseBlock += PowerHelper.getPowerAmount(KirameiPower.POWER_ID);
-        super.applyPowersToBlock();
-        this.baseBlock = realBaseBlock;
-        this.isBlockModified = (this.block != this.baseBlock);
+    public void applyPowers() {
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += MemberHelper.getBandMemberCount();
+        super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
+        this.baseMagicNumber = realBaseMagicNumber;
     }
 
     @Override
     public void play() {
-        int bandMemberCount = MemberHelper.getBandMemberCount();
-        for (int i = 0; i < bandMemberCount; i++) {
-            this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.block,true));
+        AbstractGameAction[] actions = new AbstractGameAction[this.magicNumber];
+        for (int i = 0; i < actions.length; i++) {
+            actions[i] = new GainBlockAction(this.m_source, this.m_source, this.musicNumber);
         }
+        this.submitActionsToTop(actions);
     }
 }

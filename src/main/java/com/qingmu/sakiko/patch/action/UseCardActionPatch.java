@@ -9,8 +9,7 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
 
@@ -39,7 +38,7 @@ public class UseCardActionPatch {
     @SpirePatch(clz = UseCardAction.class, method = SpirePatch.CONSTRUCTOR, paramtypez = {AbstractCard.class, AbstractCreature.class})
     public static class ExhaustCardPatch {
         public static void Postfix(UseCardAction __instance, AbstractCard card, AbstractCreature target) {
-            if (card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS_FLAG)) {
+            if (CardModifierManager.hasModifier(card, ObliviousModifier.ID) && !(card instanceof AbstractMusic)) {
                 __instance.exhaustCard = true;
                 CardModifierManager.removeModifiersById(card, ObliviousModifier.ID, false);
             }

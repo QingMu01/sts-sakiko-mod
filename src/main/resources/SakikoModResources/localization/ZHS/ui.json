@@ -36,16 +36,6 @@
       "选择一张音乐牌"
     ]
   },
-  "SakikoMod:MusicSlot": {
-    "TEXT": [
-      "待演奏区",
-      "回合开始时，演奏其中的音乐。每拥有两名队友，额外演奏一首。",
-      " NL 当前歌单： NL ",
-      "当前暂无等待演奏的音乐。",
-      "敌方待演奏区",
-      "敌方将要演奏的音乐。"
-    ]
-  },
   "SakikoMod:SelectCard": {
     "TEXT": [
       "抽牌堆",
@@ -59,24 +49,6 @@
       "目标牌堆 #r未指定 。",
       "选择 %d 张牌",
       "选择任意张牌"
-    ]
-  },
-  "SakikoMod:MoonLightModifier": {
-    "TEXT": [
-      "%s NL 临时： sakikomod:白月光 ",
-      "临时： sakikomod:白月光"
-    ]
-  },
-  "SakikoMod:RememberModifier": {
-    "TEXT": [
-      "%s NL 临时： sakikomod:破碎的回忆  ",
-      "临时： sakikomod:破碎的回忆"
-    ]
-  },
-  "SakikoMod:OptionExhaustModifier": {
-    "TEXT": [
-      "%s NL 临时： *消耗  ",
-      "临时： *消耗"
     ]
   },
   "SakikoMod:ChaosInfo": {

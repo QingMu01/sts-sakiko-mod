@@ -1,11 +1,11 @@
 package com.qingmu.sakiko.relics.menbers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.qingmu.sakiko.powers.FukkenPower;
 import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -29,11 +29,6 @@ public class Mutsumi extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KirameiPower(AbstractDungeon.player, 1)));
-    }
-
-    @Override
-    public void removePower() {
-        this.addToBot(new ReducePowerAction(AbstractDungeon.player, AbstractDungeon.player, KirameiPower.POWER_ID, 1));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new FukkenPower(AbstractDungeon.player, 1),1));
     }
 }

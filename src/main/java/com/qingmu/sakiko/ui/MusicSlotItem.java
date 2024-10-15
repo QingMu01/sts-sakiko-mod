@@ -12,32 +12,34 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
-import com.megacrit.cardcrawl.localization.UIStrings;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.patch.ui.PlayerMusicSlotPatch;
-import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicSlotItem {
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MusicSlot"));
+    private static final TutorialStrings uiStrings = CardCrawlGame.languagePack.getTutorialString(ModNameHelper.make("MusicSlot"));
+
+    private static final Texture MUSIC_SLOT_IMG = ImageMaster.loadImage("SakikoModResources/img/ui/music_slot.png");
 
     private AbstractMusic music;
-    private final Texture isMusicNull;
     private int amount;
     private final Hitbox hb;
 
-    private String hitBody = uiStrings.TEXT[1] + uiStrings.TEXT[2];
+    private final String hitBody = uiStrings.TEXT[1] + uiStrings.TEXT[2];
     private String musicListString = "";
 
-    private AbstractCreature owner;
+    private final AbstractCreature owner;
+
+    public boolean updateLocation;
 
     public MusicSlotItem(AbstractCreature owner) {
         this.music = null;
-        this.isMusicNull = ImageMaster.loadImage("SakikoModResources/img/ui/music_slot.png");
         this.amount = 0;
         this.hb = new Hitbox(PlayerMusicSlotPatch.MUSIC_SLOT_WIDTH, PlayerMusicSlotPatch.MUSIC_SLOT_HEIGHT);
         this.owner = owner;
+        this.updateLocation = true;
     }
 
     public MusicSlotItem() {
@@ -53,6 +55,10 @@ public class MusicSlotItem {
                 this.music.target_x = Settings.WIDTH / 2.0f;
                 this.music.target_y = Settings.HEIGHT / 2.0f;
                 this.music.targetDrawScale = 1.0f;
+            } else if (this.updateLocation) {
+                this.music.target_x = this.hb.cX;
+                this.music.target_y = this.hb.cY;
+                this.music.targetDrawScale = 0.27f;
             }
         }
         if (this.owner.isPlayer) {
@@ -61,12 +67,8 @@ public class MusicSlotItem {
                 this.musicListString = uiStrings.TEXT[3];
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
-                int playCount = 1 + (MemberHelper.getBandMemberCount() / 2);
                 for (int i = 0; i < cardGroup.group.size(); i++) {
-                    if (i < playCount) {
-                        stringBuilder.append(" #y");
-                    }
-                    stringBuilder.append(i + 1).append(".").append(cardGroup.group.get(i).name.replace(" ", "")).append(" NL ");
+                    stringBuilder.append(i + 1).append(".").append(cardGroup.group.get(i).name).append(" NL ");
                 }
                 this.musicListString = stringBuilder.toString();
             }
@@ -74,17 +76,11 @@ public class MusicSlotItem {
     }
 
     public void render(SpriteBatch sb, float x, float y) {
-        this.update();
         if (this.music != null) {
-            if (!this.hb.hovered) {
-                this.music.target_x = x;
-                this.music.target_y = y;
-                this.music.targetDrawScale = 0.27f;
-            }
             this.music.render(sb);
             this.renderAmount(sb, x, y);
         }
-        sb.draw(this.isMusicNull, x - (this.isMusicNull.getWidth() / 2.0f) * Settings.scale, y - (this.isMusicNull.getHeight() / 2.0f) * Settings.scale, this.isMusicNull.getWidth() * Settings.scale, this.isMusicNull.getHeight() * Settings.scale);
+        sb.draw(MUSIC_SLOT_IMG, x - (MUSIC_SLOT_IMG.getWidth() / 2.0f) * Settings.scale, y - (MUSIC_SLOT_IMG.getHeight() / 2.0f) * Settings.scale, MUSIC_SLOT_IMG.getWidth() * Settings.scale, MUSIC_SLOT_IMG.getHeight() * Settings.scale);
         this.hb.render(sb);
         this.hb.move(x, y);
         if (this.hb.hovered) {
@@ -95,8 +91,8 @@ public class MusicSlotItem {
     public void renderAmount(SpriteBatch sb, float x, float y) {
         if (this.amount > 0) {
             FontHelper.renderFontRightTopAligned(sb, FontHelper.topPanelInfoFont, Integer.toString(this.amount)
-                    , x + ((this.isMusicNull.getWidth() / 2.0f) * Settings.scale)
-                    , y - ((this.isMusicNull.getHeight() / 2.0f) - 20.0f) * Settings.scale, Color.WHITE);
+                    , x + ((MUSIC_SLOT_IMG.getWidth() / 2.0f) * Settings.scale)
+                    , y - ((MUSIC_SLOT_IMG.getHeight() / 2.0f) - 20.0f) * Settings.scale, Color.WHITE);
         }
     }
 
@@ -110,10 +106,7 @@ public class MusicSlotItem {
     }
 
     public void setMusic(AbstractMusic music) {
+        this.updateLocation = true;
         this.music = music;
-    }
-
-    public void removeMusic() {
-        this.music = null;
     }
 }

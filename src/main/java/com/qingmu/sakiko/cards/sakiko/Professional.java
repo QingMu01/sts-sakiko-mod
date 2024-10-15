@@ -19,22 +19,15 @@ public class Professional extends AbstractSakikoCard {
 
     public Professional() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 6);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDescription();
-        }
+        this.initBaseAttr(1, 0, 0, 8);
+        this.setUpgradeAttr(1, 0, 0, 0);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber), this.magicNumber));
         if (this.upgraded) {
-            this.addToBot(new ActiveKabeAction());
+            this.addToBot(new ActiveKabeAction(p));
         }
     }
 }

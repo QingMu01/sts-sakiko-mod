@@ -3,18 +3,17 @@ package com.qingmu.sakiko.modifier;
 import basemod.abstracts.AbstractCardModifier;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MoonLightModifier extends AbstractCardModifier {
     public static String ID = ModNameHelper.make(MoonLightModifier.class.getSimpleName());
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ID);
+    private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        if (rawDescription.contains(uiStrings.TEXT[1])) return rawDescription;
-        return String.format(uiStrings.TEXT[0], rawDescription);
+        return rawDescription + " NL " + TUTORIAL_STRING.TEXT[0];
     }
 
     @Override
@@ -25,7 +24,6 @@ public class MoonLightModifier extends AbstractCardModifier {
     @Override
     public void onRemove(AbstractCard card) {
         card.tags.remove(SakikoEnum.CardTagEnum.MOONLIGHT);
-        card.rawDescription = card.rawDescription.replace(uiStrings.TEXT[0], "");
     }
 
     @Override

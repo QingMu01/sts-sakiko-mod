@@ -19,17 +19,11 @@ public class Defend_Sakiko extends AbstractSakikoCard {
     public Defend_Sakiko() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 5, 0);
+        this.setUpgradeAttr(1, 0, 3, 0);
+
         this.tags.add(CardTags.STARTER_DEFEND);
-
     }
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(3);
-        }
-    }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {

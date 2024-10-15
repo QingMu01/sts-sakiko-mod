@@ -1,8 +1,15 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.curses.AscendersBane;
+import com.megacrit.cardcrawl.cards.curses.CurseOfTheBell;
+import com.megacrit.cardcrawl.cards.curses.Necronomicurse;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.utils.MemberHelper;
+import com.qingmu.sakiko.modifier.AveMujicaModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class AveMujica extends AbstractMusic {
@@ -16,22 +23,19 @@ public class AveMujica extends AbstractMusic {
 
     public AveMujica() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 2);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-    }
+        this.tags.add(CardTags.HEALING);
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.initMusicAttr(1, 1);
+        this.setExhaust(true, true);
     }
-
 
     @Override
     public void play() {
-        this.addToTop(new AddTemporaryHPAction(this.music_source, this.music_source
-                , (this.magicNumber * MemberHelper.getBandMemberCount()) + this.extraNumber));
+        this.addToTop(new CardSelectorAction(this.musicNumber, false, card -> !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, action -> {
+            for (AbstractCard card : action.selected) {
+                CardModifierManager.addModifier(card, new AveMujicaModifier());
+            }
+        }, CardGroup.CardGroupType.HAND));
     }
 }

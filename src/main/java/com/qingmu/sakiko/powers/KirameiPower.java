@@ -7,9 +7,11 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class KirameiPower extends AbstractPower {
+public class KirameiPower extends AbstractPower implements ModifiedMusicNumber {
 
     public static final String POWER_ID = ModNameHelper.make(KirameiPower.class.getSimpleName());
 
@@ -34,24 +36,19 @@ public class KirameiPower extends AbstractPower {
         this.updateDescription();
     }
 
-
-
     @Override
     public void updateDescription() {
         this.description = DESCRIPTIONS[0];
     }
 
     @Override
-    public void stackPower(int stackAmount) {
-        if (this.owner.hasPower(KingOfTingPower.POWER_ID)){
-            this.amount += stackAmount + this.owner.getPower(KingOfTingPower.POWER_ID).amount;
-        }else {
-            this.amount += stackAmount;
-        }
+    public float modifyMusicNumber(AbstractMusic music, float musicNumber) {
+        return musicNumber + this.amount;
+    }
 
-        if (this.amount == 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
+    @Override
+    public void stackPower(int stackAmount) {
+        this.amount += stackAmount;
         if (this.amount >= 999) {
             this.amount = 999;
         }

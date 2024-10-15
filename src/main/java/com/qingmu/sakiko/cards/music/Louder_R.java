@@ -1,7 +1,13 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ExhaustAction;
+import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Louder_R extends AbstractMusic {
@@ -15,20 +21,16 @@ public class Louder_R extends AbstractMusic {
 
     public Louder_R() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 2);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.initMusicAttr(1, 1);
     }
 
 
     @Override
     public void play() {
-        this.addToTop(new ExhaustAction(this.magicNumber, false, true, true));
+        this.submitActionsToTop(new CardSelectorAction(AbstractDungeon.player, this.musicNumber, true, card -> true, card -> null, action -> {
+            for (AbstractCard card : action.selected) {
+                CardModifierManager.addModifier(card, new LouderModifier());
+            }
+        }, CardGroup.CardGroupType.DRAW_PILE, CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));
     }
 }

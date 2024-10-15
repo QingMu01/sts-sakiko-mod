@@ -1,9 +1,16 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.cards.choose.ChooseBlue;
+import com.qingmu.sakiko.cards.choose.ChooseGreen;
+import com.qingmu.sakiko.cards.choose.ChoosePurple;
+import com.qingmu.sakiko.cards.choose.ChooseRed;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Mayoiuta_MYGO extends AbstractMusic {
 
@@ -16,34 +23,11 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     public Mayoiuta_MYGO() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 3, 0);
-
-        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(1);
-        }
-    }
-
-    @Override
-    public void applyAmount() {
-        this.appendDescription(this.amount);
-    }
-
-
-    @Override
-    public void triggerInBufferUsedCard(AbstractCard card) {
-        this.amount++;
+        this.initMusicAttr(2, 1, new ChooseRed(), new ChooseGreen(), new ChooseBlue(), new ChoosePurple());
     }
 
     @Override
     public void play() {
-        for (int i = 0; i < this.amount; i++) {
-            this.addToTop(new GainBlockAction(this.music_source, this.music_source, this.block,true));
-        }
+        this.addToTop(new ChooseOneAction(new ArrayList<>(Arrays.asList(new ChooseRed(this.musicNumber), new ChooseGreen(this.musicNumber), new ChooseBlue(this.musicNumber), new ChoosePurple(this.musicNumber)))));
     }
 }

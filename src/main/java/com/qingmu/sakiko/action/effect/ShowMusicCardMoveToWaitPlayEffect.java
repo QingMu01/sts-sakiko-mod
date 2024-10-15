@@ -3,7 +3,7 @@ package com.qingmu.sakiko.action.effect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.patch.ui.PlayerMusicSlotPatch;
 
 /*

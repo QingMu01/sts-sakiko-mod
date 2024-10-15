@@ -6,6 +6,6 @@
   "version": "0.0.1",
   "sts_version": "12-22-2020",
   "mts_version": "3.30.3",
-  "dependencies": ["basemod","stslib"],
+  "dependencies": ["basemod"],
   "optional_dependencies": ["AnonMod"]
 }

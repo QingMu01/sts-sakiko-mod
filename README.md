@@ -21,7 +21,7 @@
 
 1.  准备好本模组的Jar包
 2.  将其放入游戏根目录，mods文件夹中，如果没有，请自行新建
-3.  下载前置mod：ModTheSpire、BaseMod、STSLib
+3.  下载前置mod：ModTheSpire、BaseMod
 4.  通过ModTheSpire启动游戏
 
 #### 特别感谢

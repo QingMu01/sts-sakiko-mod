@@ -2,13 +2,17 @@ package com.qingmu.sakiko.action;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
+import com.megacrit.cardcrawl.core.AbstractCreature;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.powers.HaruhikagePower;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.PowerHelper;
 
 public class ActiveKabeAction extends AbstractGameAction {
 
-    public ActiveKabeAction() {
+    public ActiveKabeAction(AbstractCreature target) {
+        this.target = target;
     }
 
     @Override
@@ -18,9 +22,13 @@ public class ActiveKabeAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-        KokoroNoKabePower power = (KokoroNoKabePower) AbstractDungeon.player.getPower(KokoroNoKabePower.POWER_ID);
-        power.stackBlockFromKabe(powerAmount);
-        this.addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, powerAmount));
+        AbstractPower power = this.target.getPower(KokoroNoKabePower.POWER_ID);
+        this.addToBot(new GainBlockAction(this.target, this.target, powerAmount));
+        if (this.target.hasPower(HaruhikagePower.POWER_ID)) {
+            this.target.getPower(HaruhikagePower.POWER_ID).flash();
+        } else {
+            this.addToBot(new ReducePowerAction(this.target, this.target, power, powerAmount / 2));
+        }
         this.isDone = true;
     }
 }

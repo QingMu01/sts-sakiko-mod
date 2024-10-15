@@ -8,18 +8,22 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 
 public class MonsterPlayedMusicAction extends AbstractGameAction {
 
     private final AbstractMusic music;
+    private final AbstractSakikoMonster sakikoMonster;
     private boolean vfxDone = false;
 
-    public MonsterPlayedMusicAction(AbstractMusic music,AbstractCreature source) {
+    public MonsterPlayedMusicAction(AbstractMusic music, AbstractCreature source) {
         this.music = music;
         this.source = source;
-        this.target = music.music_target == null ? AbstractDungeon.player : music.music_target;
+        this.sakikoMonster = (AbstractSakikoMonster) source;
+        sakikoMonster.musicSlotItem.updateLocation = false;
+        this.target = music.m_source == null ? AbstractDungeon.player : music.m_source;
         this.addToBot(new AnimateJumpAction(this.source));
     }
 
@@ -31,12 +35,13 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
             this.music.targetDrawScale = 0.7F;
             this.music.hb.resize(AbstractCard.IMG_WIDTH_S, AbstractCard.IMG_HEIGHT_S);
             if (this.music.current_x > Settings.WIDTH / 2.0F) return;
-            else this.vfxDone = true;
+            this.vfxDone = true;
         }
         this.music.play();
-        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
         AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
+        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
         queue.removeCard(this.music);
+        sakikoMonster.musicSlotItem.updateLocation = true;
         this.isDone = true;
     }
 }

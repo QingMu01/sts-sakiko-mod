@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.RainingGoldEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
-import com.qingmu.sakiko.cards.tmpcard.SoyoCurse;
+import com.qingmu.sakiko.cards.curse.SoyoCurse;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SoyoEvent extends PhasedEvent {

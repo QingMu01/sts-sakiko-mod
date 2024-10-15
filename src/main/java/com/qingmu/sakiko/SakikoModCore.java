@@ -1,12 +1,11 @@
 package com.qingmu.sakiko;
 
 import basemod.*;
-import basemod.abstracts.CustomCard;
-import basemod.abstracts.CustomRelic;
 import basemod.eventUtil.AddEventParams;
 import basemod.eventUtil.EventUtils;
 import basemod.interfaces.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,12 +13,17 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.audio.MusicMaster;
+import com.megacrit.cardcrawl.audio.Sfx;
+import com.megacrit.cardcrawl.audio.SoundMaster;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
 import com.megacrit.cardcrawl.dungeons.TheEnding;
+import com.megacrit.cardcrawl.events.beyond.Falling;
 import com.megacrit.cardcrawl.events.exordium.Sssserpent;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Prefs;
@@ -27,14 +31,15 @@ import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.monsters.MonsterInfo;
 import com.megacrit.cardcrawl.rewards.RewardSave;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.constant.ColorHelp;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.events.DilapidatedCorridorEvent;
-import com.qingmu.sakiko.events.FatherEvent;
-import com.qingmu.sakiko.events.InvasionEvent;
-import com.qingmu.sakiko.events.SoyoEvent;
+import com.qingmu.sakiko.events.*;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
-import com.qingmu.sakiko.monsters.*;
+import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
@@ -44,6 +49,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Properties;
 
 import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
@@ -52,7 +58,7 @@ import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_
 
 @SpireInitializer
 public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber, StartGameSubscriber,
-        EditCharactersSubscriber, EditStringsSubscriber,
+        EditCharactersSubscriber, EditStringsSubscriber, OnCardUseSubscriber,
         EditKeywordsSubscriber, PostInitializeSubscriber {
     public static final Logger logger = LogManager.getLogger(SakikoModCore.class.getName());
     // 人物选择界面按钮的图片
@@ -80,7 +86,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     public static SpireConfig SAKIKO_CONFIG;
 
-    public static final Color SAKIKO_COLOR = new Color(119.0F / 255.0F, 153.0F / 255.0F, 204.0F / 255.0F, 1.0F);
+    private static final Color SAKIKO_COLOR = ColorHelp.SAKIKO_COLOR.cpy();
 
     public SakikoModCore() {
         BaseMod.subscribe(this);
@@ -94,7 +100,6 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             Properties defaults = new Properties();
             defaults.setProperty("enableAnonCard", Boolean.toString(false));
             defaults.setProperty("enableBoss", Boolean.toString(false));
-            defaults.setProperty("enableDeprecated", Boolean.toString(false));
             defaults.setProperty("ascensionUnlock", Boolean.toString(false));
             defaults.setProperty("modSound", Float.toString(1.00f));
             SAKIKO_CONFIG = new SpireConfig("SakikoMod", "Common", defaults);
@@ -108,26 +113,27 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
                 .setDefaultSeen(false)
-                .any(CustomCard.class, (info, card) -> {
+                .any(AbstractSakikoCard.class, (info, card) -> {
                     if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
                         SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);
-                        if (annotation.enable() || SAKIKO_CONFIG.getBool("enableDeprecated")) {
+                        if (annotation.enable()) {
                             BaseMod.addCard(card);
                         }
                     } else {
                         BaseMod.addCard(card);
                     }
                 });
+        BaseMod.addDynamicVariable(new AbstractMusic.MusicNumberVariable());
     }
 
     @Override
     public void receiveEditRelics() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.relics")
-                .any(CustomRelic.class, (info, relic) -> {
+                .any(AbstractSakikoRelic.class, (info, relic) -> {
                     if (relic.getClass().isAnnotationPresent(SakikoModEnable.class)) {
                         SakikoModEnable annotation = relic.getClass().getAnnotation(SakikoModEnable.class);
-                        if (annotation.enable() || SAKIKO_CONFIG.getBool("enableDeprecated")) {
+                        if (annotation.enable()) {
                             BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
                             if (info.seen) {
                                 UnlockTracker.markRelicAsSeen(relic.relicId);
@@ -180,6 +186,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.loadCustomStringsFile(TutorialStrings.class, "SakikoModResources/localization/" + lang + "/tutorial.json");
         BaseMod.loadCustomStringsFile(MonsterStrings.class, "SakikoModResources/localization/" + lang + "/monsters.json");
         BaseMod.loadCustomStringsFile(EventStrings.class, "SakikoModResources/localization/" + lang + "/events.json");
+        BaseMod.loadCustomStringsFile(StanceStrings.class, "SakikoModResources/localization/" + lang + "/stances.json");
     }
 
     @Override
@@ -215,12 +222,48 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .dungeonID(TheBeyond.ID)
                 .eventType(EventUtils.EventType.NORMAL)
                 .create());
+        // 注册所有层数通用事件
+        BaseMod.addEvent(new AddEventParams.Builder(AlbumSell.ID, AlbumSell.class)
+                .playerClass(QINGMU_SAKIKO)
+                .eventType(EventUtils.EventType.NORMAL)
+                .create());
+        // 重写坠落，使其支持音乐牌
+        BaseMod.addEvent(new AddEventParams.Builder(SakikoFalling.ID, SakikoFalling.class)
+                .playerClass(QINGMU_SAKIKO)
+                .eventType(EventUtils.EventType.OVERRIDE)
+                .overrideEvent(Falling.ID)
+                .create());
     }
 
     @Override
     public void receiveStartGame() {
         if (AbstractDungeon.floorNum == 0) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
+        }
+
+        // 尝试修复sl导致的音频丢失问题
+        CardCrawlGame.music.dispose();
+        HashMap<String, Sfx> map = ReflectionHacks.getPrivate(CardCrawlGame.sound, SoundMaster.class, "map");
+        for (Sfx sfx : map.values()) {
+            Sound sound = ReflectionHacks.getPrivate(sfx, Sfx.class, "sound");
+            if (sound != null) {
+                sound.dispose();
+            }
+        }
+        CardCrawlGame.sound = new SoundMaster();
+        CardCrawlGame.music = new MusicMaster();
+    }
+
+    @Override
+    public void receiveCardUsed(AbstractCard card) {
+        if (card instanceof AbstractSakikoCard) {
+            AbstractSakikoCard sakikoCard = (AbstractSakikoCard) card;
+            if (sakikoCard.upgraded) {
+                sakikoCard.rawDescription = sakikoCard.UPGRADE_DESCRIPTION == null ? sakikoCard.DESCRIPTION : sakikoCard.UPGRADE_DESCRIPTION.isEmpty() ? sakikoCard.DESCRIPTION : sakikoCard.UPGRADE_DESCRIPTION;
+            } else {
+                sakikoCard.rawDescription = sakikoCard.DESCRIPTION;
+            }
+            sakikoCard.initializeDescription();
         }
     }
 
@@ -229,8 +272,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             BaseMod.getModdedCharacters().forEach(character -> {
                 if (character instanceof TogawaSakiko) {
                     Prefs prefs = character.getPrefs();
-                    if (prefs.getInteger("WIN_COUNT", 0) <= 0) {
-                        prefs.putInteger("WIN_COUNT", 1);
+                    if (prefs.getInteger("WIN_COUNT", 0) < 20) {
+                        prefs.putInteger("WIN_COUNT", 20);
                     }
                     prefs.putBoolean(character.chosenClass.name() + "_WIN", true);
                     prefs.putBoolean("ASCEND_0", true);
@@ -274,6 +317,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 logger.error(e);
             }
         }));
+/*
         ModLabeledToggleButton enableDeprecated = new ModLabeledToggleButton(config.TEXT[2], 390.0f, 550.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableDeprecated"), modPanel, (modLabel) -> {
         }, (modToggleButton) -> {
             SAKIKO_CONFIG.setBool("enableDeprecated", modToggleButton.enabled);
@@ -285,6 +329,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         });
         enableDeprecated.tooltip = config.EXTRA_TEXT[0];
         modPanel.addUIElement(enableDeprecated);
+*/
         ModLabeledToggleButton ascensionUnlock = new ModLabeledToggleButton(config.TEXT[4], 390.0f, 470.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("ascensionUnlock"), modPanel, (modLabel) -> {
         }, (modToggleButton) -> {
             SAKIKO_CONFIG.setBool("ascensionUnlock", modToggleButton.enabled);
@@ -305,27 +350,28 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .spawnCondition(() -> false).bonusCondition(() -> false)
                 .endsWithRewardsUI(true).create());
         // 添加乐队成员
-        BaseMod.addMonster(UikaMonster.ID, UikaMonster.ID, () -> new UikaMonster(0.0F, 0.0F));
-        BaseMod.addMonster(MutsumiMonster.ID, MutsumiMonster.ID, () -> new MutsumiMonster(0.0F, 0.0F));
-        BaseMod.addMonster(NyamuchiMonster.ID, NyamuchiMonster.ID, () -> new NyamuchiMonster(0.0F, 0.0F));
-        BaseMod.addMonster(UmiriMonster.ID, UmiriMonster.ID, () -> new UmiriMonster(0.0F, 0.0F));
-        BaseMod.addMonster(TomoriMonster.ID, TomoriMonster.ID, () -> new TomoriMonster(0.0F, 0.0F));
-        BaseMod.addMonster(AnonMonster.ID, AnonMonster.ID, () -> new AnonMonster(0.0F, 0.0F));
-        BaseMod.addMonster(TakiMonster.ID, TakiMonster.ID, () -> new TakiMonster(0.0F, 0.0F));
-        BaseMod.addMonster(SoyoMonster.ID, SoyoMonster.ID, () -> new SoyoMonster(0.0F, 0.0F));
-        BaseMod.addMonster(RanaMonster.ID, RanaMonster.ID, () -> new RanaMonster(0.0F, 0.0F));
+        BaseMod.addMonster(UikaMonster.ID, UikaMonster.NAME, () -> new UikaMonster(0.0F, 0.0F));
+        BaseMod.addMonster(MutsumiMonster.ID, MutsumiMonster.NAME, () -> new MutsumiMonster(0.0F, 0.0F));
+        BaseMod.addMonster(NyamuchiMonster.ID, NyamuchiMonster.NAME, () -> new NyamuchiMonster(0.0F, 0.0F));
+        BaseMod.addMonster(UmiriMonster.ID, UmiriMonster.NAME, () -> new UmiriMonster(0.0F, 0.0F));
+        BaseMod.addMonster(TomoriMonster.ID, TomoriMonster.NAME, () -> new TomoriMonster(0.0F, 0.0F));
+        BaseMod.addMonster(AnonMonster.ID, AnonMonster.NAME, () -> new AnonMonster(0.0F, 0.0F));
+        BaseMod.addMonster(TakiMonster.ID, TakiMonster.NAME, () -> new TakiMonster(0.0F, 0.0F));
+        BaseMod.addMonster(SoyoMonster.ID, SoyoMonster.NAME, () -> new SoyoMonster(0.0F, 0.0F));
+        BaseMod.addMonster(RanaMonster.ID, RanaMonster.NAME, () -> new RanaMonster(0.0F, 0.0F));
         // 添加成员遭遇战
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UikaMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(MutsumiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(NyamuchiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UmiriMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TomoriMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(AnonMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TakiMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(SoyoMonster.ID, 0));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(RanaMonster.ID, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UikaMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(MutsumiMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(NyamuchiMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(UmiriMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TomoriMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(AnonMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(TakiMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(SoyoMonster.NAME, 0));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(RanaMonster.NAME, 0));
         // 添加成员入侵事件概率
         BaseMod.addSaveField("chance", new InvasionChangeSaved());
     }
+
 }
 

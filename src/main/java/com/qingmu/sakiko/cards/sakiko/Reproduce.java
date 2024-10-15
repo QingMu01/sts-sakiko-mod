@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReproduceAction;
@@ -21,16 +20,8 @@ public class Reproduce extends AbstractSakikoCard {
     public Reproduce() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 2);
-
-        this.exhaust = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.setUpgradeAttr(1, 0, 0, 1);
+        this.setExhaust(true, true);
     }
 
     @Override
@@ -40,8 +31,7 @@ public class Reproduce extends AbstractSakikoCard {
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        CardGroup cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(p);
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return !cardGroup.isEmpty();
+        return !MusicBattleFiled.DrawMusicPile.drawMusicPile.get(p).isEmpty();
     }
 }

@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
+import com.qingmu.sakiko.powers.FukkenPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Oshiawaseni extends AbstractSakikoCard {
@@ -20,21 +20,15 @@ public class Oshiawaseni extends AbstractSakikoCard {
 
     public Oshiawaseni() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 6, 3);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(5);
-            this.upgradeMagicNumber(2);
-        }
+        this.initBaseAttr(1, 0, 7, 1);
+        this.setUpgradeAttr(1, 0, 2, 1);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GainBlockAction(p, p, this.block));
-        this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.magicNumber)));
+        this.submitActionsToBot(
+                new GainBlockAction(p, p, this.block),
+                new ApplyPowerAction(p, p, new FukkenPower(p,this.magicNumber), this.magicNumber)
+        );
     }
 }

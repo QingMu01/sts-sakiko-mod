@@ -1,13 +1,13 @@
 package com.qingmu.sakiko.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
+import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
-import com.qingmu.sakiko.powers.MusicalNotePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import com.qingmu.sakiko.utils.MusicCardFinder;
 
 public class Speaker extends AbstractSakikoRelic {
 
@@ -20,8 +20,6 @@ public class Speaker extends AbstractSakikoRelic {
 
     public Speaker() {
         super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER);
-        this.counter = 1;
-        this.amount = 0;
     }
 
     @Override
@@ -31,24 +29,18 @@ public class Speaker extends AbstractSakikoRelic {
 
     @Override
     public void atBattleStart() {
-        if (this.counter > 0) {
-            this.counter--;
-            this.flash();
-            this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-            this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 18)));
-        }
-    }
-
-    @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
-        this.amount++;
-        if (amount >= 20) {
-            this.counter++;
-            if (this.counter > 1) {
-                this.counter = 1;
-            }
-            this.amount = 0;
-        }
+        AbstractCard card = MusicCardFinder.returnTrulyRandomCardInCombat();
+        AbstractDungeon.player.limbo.group.add(card);
+        card.current_y = -200.0F * Settings.scale;
+        card.target_x = Settings.WIDTH / 2.0F;
+        card.target_y = Settings.HEIGHT / 2.0F;
+        card.targetAngle = 0.0F;
+        card.lighten(false);
+        card.drawScale = 0.12F;
+        card.targetDrawScale = 0.75F;
+        card.applyPowers();
+        card.purgeOnUse = true;
+        this.addToBot(new NewQueueCardAction(card, AbstractDungeon.getRandomMonster(), false, true));
     }
 
     @Override

@@ -2,11 +2,10 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class Utopia extends AbstractMusic {
 
@@ -19,42 +18,21 @@ public class Utopia extends AbstractMusic {
 
     public Utopia() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 6, 0, 4);
-
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
-        this.baseDamage = 6;
-        this.baseMagicNumber = 4;
-    }
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(2);
-        }
+        this.initMusicAttr(2, 2);
     }
 
     @Override
     public void applyPowers() {
-        int realBaseDamage = this.baseDamage + this.extraNumber;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * this.magicNumber;
         super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage + this.extraNumber;
-        this.baseDamage += PowerHelper.getPowerAmount(KirameiPower.POWER_ID) * this.magicNumber;
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+        this.baseDamage = (int) (this.musicNumber * Math.pow(2, MemberHelper.getBandMemberCount()));
+        this.isDamageModified = MemberHelper.getBandMemberCount() > 0;
     }
 
     @Override
     public void play() {
-        this.addToTop(new DamageAction(this.music_target, new DamageInfo(this.music_source, this.damage, this.damageType)));
+        this.addToTop(new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageType)));
     }
 }

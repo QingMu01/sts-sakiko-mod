@@ -21,16 +21,10 @@ public class CurtainCall extends AbstractSakikoCard {
 
     public CurtainCall() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 5, 0, 4);
+        this.initBaseAttr(1, 5, 0, 5);
+        this.setUpgradeAttr(0, 0, 0, 0);
     }
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(0);
-        }
-    }
 
     @Override
     public void applyPowers() {
@@ -38,16 +32,6 @@ public class CurtainCall extends AbstractSakikoCard {
         int size = MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
         this.baseDamage += size * this.magicNumber;
         super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        int size = MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size();
-        this.baseDamage += size * this.magicNumber;
-        super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
     }

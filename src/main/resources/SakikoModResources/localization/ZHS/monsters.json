@@ -1,16 +1,16 @@
 {
   "SakikoMod:UikaMonster": {
-    "NAME": "初华(?)",
+    "NAME": "初华",
     "DIALOG": [
       "小祥...?",
       "我，无畏 @悲伤@ ..."
     ],
     "MOVES": [
-      ""
+      "sumimi的牵绊"
     ]
   },
   "SakikoMod:MutsumiMonster": {
-    "NAME": "睦(?)",
+    "NAME": "睦",
     "DIALOG": [
       "祥...?",
       "我，无畏 @死亡@ ..."
@@ -22,29 +22,30 @@
     ]
   },
   "SakikoMod:NyamuchiMonster": {
-    "NAME": "喵梦(?)",
+    "NAME": "喵梦",
     "DIALOG": [
       "祥子...?",
       "我，无畏 @爱情@ ...",
-      "喵梦亲我要 @抗议@ ！"
+      "喵梦亲我要 #r@抗议@ ！"
     ],
     "MOVES": [
       "累晕...",
-      "双踩连发",
-      "鼓槌重击"
+      "鼓槌重击",
+      "双踩连发"
     ]
-  },  "SakikoMod:UmiriMonster": {
-    "NAME": "海铃(?)",
+  },
+  "SakikoMod:UmiriMonster": {
+    "NAME": "海铃",
     "DIALOG": [
       "祥子同学...?",
       "我，无畏 @恐惧@ ..."
     ],
     "MOVES": [
-      ""
+      "赶场"
     ]
   },
   "SakikoMod:TomoriMonster": {
-    "NAME": "灯(?)",
+    "NAME": "灯",
     "DIALOG": [
       "小祥...?",
       "能和我......组一辈子乐队吗？"
@@ -54,7 +55,7 @@
     ]
   },
   "SakikoMod:AnonMonster": {
-    "NAME": "爱音(?)",
+    "NAME": "爱音",
     "DIALOG": [
       "祥子同学...?",
       "我，无畏 @契约@ ..."
@@ -64,7 +65,7 @@
     ]
   },
   "SakikoMod:RanaMonster": {
-    "NAME": "乐奈(?)",
+    "NAME": "乐奈",
     "DIALOG": [
       "无聊的女孩子...",
       "来开live！"
@@ -76,7 +77,7 @@
     ]
   },
   "SakikoMod:TakiMonster": {
-    "NAME": "立希(?)",
+    "NAME": "立希",
     "DIALOG": [
       "祥子...?",
       "......"
@@ -86,13 +87,26 @@
     ]
   },
   "SakikoMod:SoyoMonster": {
-    "NAME": "素世(?)",
+    "NAME": "素世",
     "DIALOG": [
       "小祥...?",
       "我大概，一辈子也忘不掉Crychic了..."
     ],
     "MOVES": [
       "欧内该"
+    ]
+  },
+  "SakikoMod:ManaMonster": {
+    "NAME": "真奈",
+    "DIALOG": [
+      "真奈也来帮忙！",
+      "真奈撑不住啦！",
+      "初酱，先吃甜甜圈吧，mana去拿两个！",
+      "初酱，等等mana呀！"
+    ],
+    "MOVES": [
+      "初酱就由真奈来守护！",
+      "甜甜圈"
     ]
   }
 }

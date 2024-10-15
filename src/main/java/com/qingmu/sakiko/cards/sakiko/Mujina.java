@@ -1,6 +1,9 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
@@ -12,30 +15,30 @@ public class Mujina extends AbstractSakikoCard {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Mujina.png";
 
-    private static final CardType TYPE = CardType.SKILL;
+    private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.COMMON;
-    private static final CardTarget TARGET = CardTarget.SELF;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Mujina() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 1);
+        this.initBaseAttr(2, 15, 0, 4);
+        this.setUpgradeAttr(2, 5, 0, 1);
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+    protected void applyPowersToBlock() {
+        this.baseBlock = MemberHelper.getBandMemberCount() * this.magicNumber;
+        super.applyPowersToBlock();
+        this.isBlockModified = (this.block != this.baseBlock);
+        this.appendDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int needToDraw = this.magicNumber;
-        if (MemberHelper.getBandMemberCount() >= 4) {
-            needToDraw++;
-        }
-        this.addToBot(new DrawCardAction(needToDraw));
+        this.submitActionsToBot(
+                new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
+                new GainBlockAction(p, this.block)
+        );
     }
 
 }

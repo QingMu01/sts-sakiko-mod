@@ -1,7 +1,9 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.powers.watcher.MantraPower;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -11,21 +13,14 @@ public class A2Z_PP extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/A2Z_PP.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public A2Z_PP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 5);
-
-        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
         this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
-    }
-
-    @Override
-    public void applyAmount() {
-        this.amount = Math.min(this.amount, this.magicNumber);
-        this.appendDescription(this.amount);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
+        this.initMusicAttr(6, 2, 2, 1);
     }
 
     @Override
@@ -34,15 +29,25 @@ public class A2Z_PP extends AbstractMusic {
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(5);
-        }
+    public void applyPowers() {
+        int realBaseMusicNumber = this.baseMusicNumber;
+        this.baseMusicNumber += this.amount * this.magicNumber;
+        super.applyPowers();
+        this.baseMusicNumber = realBaseMusicNumber;
+        this.isModifiedMusicNumber = (this.musicNumber != this.baseMusicNumber);
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseMusicNumber = this.baseMusicNumber;
+        this.baseMusicNumber += this.amount * this.magicNumber;
+        super.calculateCardDamage(mo);
+        this.baseMusicNumber = realBaseMusicNumber;
+        this.isModifiedMusicNumber = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new MantraPower(this.music_source, this.amount)));
+        this.addToTop(new DamageAllEnemiesAction(this.m_source, this.multiDamage, this.damageTypeForTurn, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
     }
 }

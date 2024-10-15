@@ -1,8 +1,12 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MoonsPower;
+import com.qingmu.sakiko.modifier.DoubleTapModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Futatsunotsuki extends AbstractMusic {
@@ -11,27 +15,24 @@ public class Futatsunotsuki extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Futatsunotsuki.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public Futatsunotsuki() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 1);
-
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-    }
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.initMusicAttr(1, 1, 1, 0);
+        this.setExhaust(true, true);
     }
 
 
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source, new MoonsPower(this.music_source, this.magicNumber + this.extraNumber)));
+        this.addToTop(new CardSelectorAction(this.magicNumber, true, card -> !(card instanceof AbstractMusic) && !CardModifierManager.hasModifier(card,DoubleTapModifier.ID), card -> null, action -> {
+            for (AbstractCard card : action.selected) {
+                CardModifierManager.addModifier(card, new DoubleTapModifier(this.musicNumber));
+            }
+        }, CardGroup.CardGroupType.HAND));
     }
 }

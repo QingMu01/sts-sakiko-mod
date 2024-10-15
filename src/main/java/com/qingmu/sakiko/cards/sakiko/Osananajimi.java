@@ -23,22 +23,15 @@ public class Osananajimi extends AbstractSakikoCard {
     public Osananajimi() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.exhaust = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(this.magicNumber, false, card -> !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT), card -> {
+        this.addToBot(new CardSelectorAction(this.magicNumber, true, card -> !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT), card -> {
             CardModifierManager.addModifier(card, new MoonLightModifier());
             return CardGroup.CardGroupType.DISCARD_PILE;
+        }, action -> {
         }, CardGroup.CardGroupType.HAND));
     }
 }

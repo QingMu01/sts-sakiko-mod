@@ -3,14 +3,14 @@
     "NAME": "钢琴模型",
     "FLAVOR": "仿造某人曾使用过的钢琴而制造的模型。在其一侧刻有“TGW”字样的图案。",
     "DESCRIPTIONS": [
-      "你每打出 1 张非音乐牌，获得 2 层 #y音符 。"
+      "战斗开始时，进入 #y创作者 。"
     ]
   },
   "SakikoMod:DoubleKeyboard": {
     "NAME": "键盘玩具",
     "FLAVOR": "能够发出多种乐器音色的装置，可惜只是一个儿童玩具。",
     "DESCRIPTIONS": [
-      "替换 #y钢琴模型 。如果你打出和上一张类型一样的牌，获得 #b6 层 #y音符 。"
+      "替换 #y钢琴模型 。进入 #y心流姿态 的阈值降低 #b2 点。"
     ]
   },
   "SakikoMod:Payslip": {
@@ -24,7 +24,7 @@
     "NAME": "便携音响",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "战斗开始时，消耗1点充能来触发一轮 #y乐章 的特效。每20次 #y演奏 恢复1层充能，最多持有1层充能。"
+      "战斗开始时，打出一张随机 #y音乐 牌。"
     ]
   },
   "SakikoMod:NoteBook": {
@@ -43,65 +43,65 @@
   },
   "SakikoMod:AncientMask": {
     "NAME": "古老面具",
-    "FLAVOR": "不要破坏AveMujica的世界观desuwa!",
+    "FLAVOR": "不符合世界观的面具",
     "DESCRIPTIONS": [
-      "战斗开始时，获得 #g5 点 #y临时生命 。"
+      "每次 #y斩杀 时，恢复 #g8 生命值。"
     ]
   },
   "SakikoMod:Mutsumi": {
     "NAME": "睦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。若叶睦能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
+      "这件遗物视为一位 #y队友 。若叶睦能力的象征，战斗开始时获得 #b1 层 #y复权 。"
     ]
   },
   "SakikoMod:Nyamuchi": {
     "NAME": "若麦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。祐天寺若麦能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
+      "这件遗物视为一位 #y队友 。祐天寺若麦能力的象征，战斗开始时获得 #b1 层 #y复权 。"
     ]
   },
   "SakikoMod:Uika": {
     "NAME": "初华的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。三角初华能力的象征，战斗开始时获得 #b2 层 #y闪耀 。"
+      "这件遗物视为一位 #y队友 。三角初华能力的象征，战斗开始时获得 #b1 层 #y复权 。"
     ]
   },
   "SakikoMod:Umiri": {
     "NAME": "海铃的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。八幡海铃能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
+      "这件遗物视为一位 #y队友 。八幡海铃能力的象征，战斗开始时获得 #b1 层 #y复权 。"
     ]
   },
   "SakikoMod:Tomori": {
     "NAME": "灯的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。高松灯能力的象征，战斗开始时获得 #b2 层 #y闪耀 。"
+      "这件遗物视为一位 #y队友 。高松灯能力的象征，战斗开始时获得 #b1 层 #y闪耀 。"
     ]
   },
   "SakikoMod:Taki": {
     "NAME": "立希的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。椎名立希能力的象征，战斗开始时获得 #b5 层 #y心之壁 。"
+      "这件遗物视为一位 #y队友 。椎名立希能力的象征，回合开始时获得 #b3 层 #y心之壁 。"
     ]
   },
   "SakikoMod:Soyo": {
     "NAME": "素世的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。长崎素世能力的象征，战斗开始时获得 #b5 层 #y心之壁 。"
+      "这件遗物视为一位 #y队友 。长崎素世能力的象征，回合开始时获得 #b3 层 #y心之壁 。"
     ]
   },
   "SakikoMod:Rana": {
     "NAME": "乐奈的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。要乐奈能力的象征，战斗开始时获得 #b1 层 #y双月 。"
+      "这件遗物视为一位 #y队友 。要乐奈能力的象征，战斗开始时获得 #b1 层 #y双重演奏 。"
     ]
   },
   "SakikoMod:Anon": {
@@ -109,7 +109,7 @@
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "这件遗物视为一位 #y队友 。千早爱音能力的象征，每前进15次，恢复一层充能。 NL 在战斗中右键本遗物消耗一层充能，恢复 #g15 点生命值。",
-      "爱音已经被 @#r切割@ 了 desuwa"
+      "爱音已经被 #r@切割@ 了 desuwa"
     ]
   },
   "SakikoMod:Band_AVEMUJICA": {
@@ -121,27 +121,30 @@
   },
   "SakikoMod:Band_CRYCHIC": {
     "NAME": "CryChic",
-    "FLAVOR": "",
+    "FLAVOR": "遥不可及的梦",
     "DESCRIPTIONS": [
-      "占位"
+      "获得时，选择一张 #y音乐牌 。在每场战斗开始时，这张牌会出现在手牌中。",
+      "选择一张牌 ",
+      "在每场战斗开始时，将 ",
+      " 放入你的手牌。"
     ]
   },
   "SakikoMod:Combination_ANSK": {
-    "NAME": "双人组合：爱祥",
+    "NAME": "⌈ANOKO⌋",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "占位"
+      "开启故事的新篇章吧。"
     ]
   },
   "SakikoMod:Combination_TMSK": {
-    "NAME": "双人组合：灯祥",
+    "NAME": "双向月光",
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "你不再受到 #y心之壁 的伤害。"
     ]
   },
   "SakikoMod:Combination_UKSK": {
-    "NAME": "双人组合：初祥",
+    "NAME": "救赎",
     "FLAVOR": "",
     "DESCRIPTIONS": [
       "战斗胜利后获得 #g完全恢复 。"

@@ -1,8 +1,10 @@
 package com.qingmu.sakiko.relics;
 
-import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class AncientMask extends AbstractSakikoRelic {
@@ -23,10 +25,12 @@ public class AncientMask extends AbstractSakikoRelic {
         return this.DESCRIPTIONS[0];
     }
 
+    public void onMonsterDeath(AbstractMonster m) {
+        if (!m.hasPower(MinionPower.POWER_ID) && m.currentHealth == 0) {
+            this.flash();
+            this.addToBot(new RelicAboveCreatureAction(m, this));
+            AbstractDungeon.player.heal(8);
+        }
 
-    @Override
-    public void atBattleStart() {
-        this.flash();
-        this.addToBot(new AddTemporaryHPAction(AbstractDungeon.player, AbstractDungeon.player, 5));
     }
 }

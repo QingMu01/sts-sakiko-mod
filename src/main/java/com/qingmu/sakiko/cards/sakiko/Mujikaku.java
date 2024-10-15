@@ -19,20 +19,15 @@ public class Mujikaku extends AbstractSakikoCard {
 
     public Mujikaku() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 0);
-    }
+        this.tags.add(CardTags.HEALING);
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(1);
-        }
+        this.initBaseAttr(1, 0, 0, 1);
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new MujikakuPower(p, 1)));
+        this.addToBot(new ApplyPowerAction(p, p, new MujikakuPower(p, this.magicNumber)));
 
     }
 }

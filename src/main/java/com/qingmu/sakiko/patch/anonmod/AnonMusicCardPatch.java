@@ -6,13 +6,14 @@ import basemod.abstracts.CustomCard;
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.powers.FeverReadyPower;
 import com.qingmu.sakiko.powers.MoonsPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import power.musicStart;
@@ -61,14 +62,16 @@ public class AnonMusicCardPatch {
             this.baseMagicNumber = this.anonCard.baseMagicNumber;
             this.setBackgroundTexture("img/pink/512/bg_skill.png", "img/pink/1024/bg_skill.png");
             this.setOrbTexture("img/UI/star.png", "img/UI/star_164.png");
-            this.miniTitle = "AnonMod";
+            this.MINI_TITLE = "AnonMod";
             this.initializeDescription();
         }
 
         @Override
         public void use(AbstractPlayer p, AbstractMonster m) {
             this.anonCard.use(p, m);
-            this.usedTurn = GameActionManager.turn;
+            this.m_source = p;
+            this.m_target = m;
+            this.addToBot(new ApplyPowerAction(p, p, new FeverReadyPower(p, 1)));
         }
 
         @Override

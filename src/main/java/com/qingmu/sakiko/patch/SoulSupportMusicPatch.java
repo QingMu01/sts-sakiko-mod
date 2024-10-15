@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.Soul;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiled;
@@ -17,7 +17,7 @@ import javassist.CtBehavior;
 public class SoulSupportMusicPatch {
 
     /*
-     * soul是一个功能类负责卡牌运转与动画效果。
+     * soul是一个功能类，负责卡牌运转与动画效果。
      * 本patch使其支持歌单相关动画。
      *  */
     @SpirePatch(clz = Soul.class, method = "shuffle")

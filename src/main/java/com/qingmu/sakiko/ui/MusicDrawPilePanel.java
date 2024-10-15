@@ -223,14 +223,14 @@ public class MusicDrawPilePanel extends AbstractPanel {
                 !AbstractDungeon.getMonsters().areMonstersDead())
             if (Settings.isConsoleBuild) {
                 if (!AbstractDungeon.player.hasRelic("Frozen Eye")) {
-                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + 1 + MSG[3]);
+                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[3]);
                 } else {
-                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + 1 + MSG[4]);
+                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[4]);
                 }
             } else if (!AbstractDungeon.player.hasRelic("Frozen Eye")) {
-                TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + 1 + MSG[1]);
+                TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[1]);
             } else {
-                TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + 1 + MSG[2]);
+                TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[2]);
             }
     }
 

@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.CardSelectToObliviousFiled;
+import com.qingmu.sakiko.patch.filed.CardSelectorFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import org.apache.logging.log4j.LogManager;
@@ -35,12 +35,12 @@ public class CardSelectorAction extends AbstractGameAction {
     // 候选
     public final CardGroup candidate = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
     // 已选
-    public final List<AbstractCard> selected = new ArrayList<>();
+    public List<AbstractCard> selected = new ArrayList<>();
     // 无法被选择
     private final List<AbstractCard> cantSelectedList = new ArrayList<>();
 
     // 目标卡牌列表
-    public final CardGroup.CardGroupType[] targets;
+    private final CardGroup.CardGroupType[] targets;
 
     // 过滤器，不符合要求的不会加入候选
     private final Predicate<AbstractCard> filter;
@@ -49,28 +49,28 @@ public class CardSelectorAction extends AbstractGameAction {
     // 回调函数，执行完选择后回调
     private final Consumer<CardSelectorAction> callback;
 
-    private final boolean anyNumber;
+    private final boolean allowUnderAmount;
 
 
     // 单目标选择
-    public CardSelectorAction(int amount, boolean anyNumber, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> endOfSelect, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, amount, anyNumber, filter, processor, endOfSelect, target);
+    public CardSelectorAction(int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> endOfSelect, CardGroup.CardGroupType target) {
+        this(AbstractDungeon.player, amount, allowUnderAmount, filter, processor, endOfSelect, target);
     }
 
     // 单目标选择，无过滤器、有回调
-    public CardSelectorAction(int amount, boolean anyNumber, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, amount, anyNumber, e -> true, processor, callback, target);
+    public CardSelectorAction(int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType target) {
+        this(AbstractDungeon.player, amount, allowUnderAmount, e -> true, processor, callback, target);
     }
 
     // 单目标选择，无过滤器、无回调
-    public CardSelectorAction(int amount, boolean anyNumber, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, amount, anyNumber, e -> true, processor, action -> {
+    public CardSelectorAction(int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
+        this(AbstractDungeon.player, amount, allowUnderAmount, e -> true, processor, action -> {
         }, target);
     }
 
     // 单目标选择，有过滤器、无回调
-    public CardSelectorAction(int amount, boolean anyNumber, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, amount, anyNumber, filter, processor, action -> {
+    public CardSelectorAction(int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
+        this(AbstractDungeon.player, amount, allowUnderAmount, filter, processor, action -> {
         }, target);
     }
 
@@ -84,10 +84,10 @@ public class CardSelectorAction extends AbstractGameAction {
      * @callback: 回调函数
      * @targets: 目标卡组列表
      * */
-    public CardSelectorAction(AbstractPlayer p, int amount, boolean anyNumber, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType... targets) {
+    public CardSelectorAction(AbstractPlayer p, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType... targets) {
         this.player = p;
         this.amount = amount;
-        this.anyNumber = anyNumber;
+        this.allowUnderAmount = allowUnderAmount;
 
         this.filter = filter;
         this.processor = processor;
@@ -140,15 +140,29 @@ public class CardSelectorAction extends AbstractGameAction {
                 card.unfadeOut();
                 card.applyPowers();
             }
-            String prompt;
-            if (this.anyNumber) {
-                prompt = uiStrings.EXTRA_TEXT[3];
-            } else {
-                prompt = String.format(uiStrings.EXTRA_TEXT[2], this.amount);
+            if (!this.allowUnderAmount && this.candidate.size() <= this.amount) {
+                for (AbstractCard selectedCard : this.candidate.group) {
+                    CardGroup.CardGroupType apply = this.processor.apply(selectedCard);
+                    this.moveCard(selectedCard, apply);
+                }
+                this.selected.addAll(this.candidate.group);
+                this.callback.accept(this);
+                this.player.hand.refreshHandLayout();
+                this.releaseCards(candidate.group);
+                this.releaseCards(cantSelectedList);
+                AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                this.isDone = true;
+                return;
             }
-
-            AbstractDungeon.gridSelectScreen.open(this.candidate, this.amount, this.anyNumber, prompt);
+            AbstractDungeon.gridSelectScreen.open(this.candidate, this.amount, true, String.format(uiStrings.EXTRA_TEXT[2], this.amount));
             this.tickDuration();
+        }
+        if (!this.allowUnderAmount) {
+            if (AbstractDungeon.gridSelectScreen.selectedCards.size() < this.amount) {
+                AbstractDungeon.gridSelectScreen.confirmButton.hide();
+            } else {
+                AbstractDungeon.gridSelectScreen.confirmButton.show();
+            }
         }
         if (!AbstractDungeon.gridSelectScreen.selectedCards.isEmpty()) {
             for (AbstractCard selectedCard : AbstractDungeon.gridSelectScreen.selectedCards) {
@@ -165,42 +179,115 @@ public class CardSelectorAction extends AbstractGameAction {
         this.tickDuration();
     }
 
+    private void lockedTargetCardGroup(CardGroup.CardGroupType target) {
+        if (target == CardGroup.CardGroupType.DRAW_PILE) {
+            Iterator<AbstractCard> iterator = this.player.drawPile.group.iterator();
+            while (iterator.hasNext()) {
+                AbstractCard card = iterator.next();
+                CardSelectorFiled.location.set(card, CardGroup.CardGroupType.DRAW_PILE);
+                if (this.filter.test(card)) {
+                    this.candidate.addToTop(card);
+                } else {
+                    this.cantSelectedList.add(card);
+                }
+                iterator.remove();
+            }
+        }
+        if (target == CardGroup.CardGroupType.HAND) {
+            Iterator<AbstractCard> iterator = this.player.hand.group.iterator();
+            while (iterator.hasNext()) {
+                AbstractCard card = iterator.next();
+                CardSelectorFiled.location.set(card, CardGroup.CardGroupType.HAND);
+                if (this.filter.test(card)) {
+                    this.candidate.addToTop(card);
+                } else {
+                    this.cantSelectedList.add(card);
+                }
+                iterator.remove();
+            }
+        }
+        if (target == CardGroup.CardGroupType.DISCARD_PILE) {
+            Iterator<AbstractCard> iterator = this.player.discardPile.group.iterator();
+            while (iterator.hasNext()) {
+                AbstractCard card = iterator.next();
+                CardSelectorFiled.location.set(card, CardGroup.CardGroupType.DISCARD_PILE);
+                if (this.filter.test(card)) {
+                    this.candidate.addToTop(card);
+                } else {
+                    this.cantSelectedList.add(card);
+                }
+                iterator.remove();
+            }
+        }
+        if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
+            Iterator<AbstractCard> iterator = this.player.exhaustPile.group.iterator();
+            while (iterator.hasNext()) {
+                AbstractCard card = iterator.next();
+                CardSelectorFiled.location.set(card, CardGroup.CardGroupType.EXHAUST_PILE);
+                if (this.filter.test(card)) {
+                    this.candidate.addToTop(card);
+                } else {
+                    this.cantSelectedList.add(card);
+                }
+                iterator.remove();
+            }
+        }
+        if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
+            Iterator<AbstractCard> iterator = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).group.iterator();
+            while (iterator.hasNext()) {
+                AbstractCard card = iterator.next();
+                CardSelectorFiled.location.set(card, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE);
+                if (this.filter.test(card)) {
+                    this.candidate.addToTop(card);
+                } else {
+                    this.cantSelectedList.add(card);
+                }
+                iterator.remove();
+            }
+        }
+    }
+
     private void releaseCards(List<AbstractCard> cards) {
         for (AbstractCard card : cards) {
-            CardGroup.CardGroupType location = CardSelectToObliviousFiled.location.get(card);
+            CardGroup.CardGroupType location = CardSelectorFiled.location.get(card);
             if (location == CardGroup.CardGroupType.DRAW_PILE) {
                 this.player.drawPile.addToTop(card);
+                continue;
             }
             if (location == CardGroup.CardGroupType.HAND) {
                 this.player.hand.addToTop(card);
+                continue;
             }
             if (location == CardGroup.CardGroupType.DISCARD_PILE) {
                 this.player.discardPile.addToTop(card);
+                continue;
             }
             if (location == CardGroup.CardGroupType.EXHAUST_PILE) {
                 this.player.exhaustPile.addToTop(card);
+                continue;
             }
             if (location == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
                 MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).addToTop(card);
+                continue;
             }
-            CardSelectToObliviousFiled.location.set(card, null);
+            CardSelectorFiled.location.set(card, null);
         }
     }
 
     private void moveCard(AbstractCard card, CardGroup.CardGroupType target) {
         if (target == null) {
-            CardGroup.CardGroupType source = CardSelectToObliviousFiled.location.get(card);
+            CardGroup.CardGroupType source = CardSelectorFiled.location.get(card);
             this.getCardGroup(source).addToTop(card);
         } else if (target == CardGroup.CardGroupType.DRAW_PILE || target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            this.getCardGroup(CardSelectToObliviousFiled.location.get(card)).moveToDeck(card, false);
+            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToDeck(card, false);
         } else if (target == CardGroup.CardGroupType.HAND) {
-            this.getCardGroup(CardSelectToObliviousFiled.location.get(card)).moveToHand(card);
+            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToHand(card);
         } else if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            this.getCardGroup(CardSelectToObliviousFiled.location.get(card)).moveToDiscardPile(card);
+            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToDiscardPile(card);
         } else if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            this.getCardGroup(CardSelectToObliviousFiled.location.get(card)).moveToExhaustPile(card);
+            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToExhaustPile(card);
         }
-        CardSelectToObliviousFiled.location.set(card, null);
+        CardSelectorFiled.location.set(card, null);
     }
 
     private CardGroup getCardGroup(CardGroup.CardGroupType target) {
@@ -215,74 +302,6 @@ public class CardSelectorAction extends AbstractGameAction {
         } else if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
             return MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player);
         } else return new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-    }
-
-    private void lockedTargetCardGroup(CardGroup.CardGroupType target) {
-        if (target == CardGroup.CardGroupType.DRAW_PILE) {
-            Iterator<AbstractCard> iterator = this.player.drawPile.group.iterator();
-            while (iterator.hasNext()) {
-                AbstractCard card = iterator.next();
-                CardSelectToObliviousFiled.location.set(card, CardGroup.CardGroupType.DRAW_PILE);
-                if (this.filter.test(card)) {
-                    this.candidate.addToTop(card);
-                } else {
-                    this.cantSelectedList.add(card);
-                }
-                iterator.remove();
-            }
-        }
-        if (target == CardGroup.CardGroupType.HAND) {
-            Iterator<AbstractCard> iterator = this.player.hand.group.iterator();
-            while (iterator.hasNext()) {
-                AbstractCard card = iterator.next();
-                CardSelectToObliviousFiled.location.set(card, CardGroup.CardGroupType.HAND);
-                if (this.filter.test(card)) {
-                    this.candidate.addToTop(card);
-                } else {
-                    this.cantSelectedList.add(card);
-                }
-                iterator.remove();
-            }
-        }
-        if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            Iterator<AbstractCard> iterator = this.player.discardPile.group.iterator();
-            while (iterator.hasNext()) {
-                AbstractCard card = iterator.next();
-                CardSelectToObliviousFiled.location.set(card, CardGroup.CardGroupType.DISCARD_PILE);
-                if (this.filter.test(card)) {
-                    this.candidate.addToTop(card);
-                } else {
-                    this.cantSelectedList.add(card);
-                }
-                iterator.remove();
-            }
-        }
-        if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            Iterator<AbstractCard> iterator = this.player.exhaustPile.group.iterator();
-            while (iterator.hasNext()) {
-                AbstractCard card = iterator.next();
-                CardSelectToObliviousFiled.location.set(card, CardGroup.CardGroupType.EXHAUST_PILE);
-                if (this.filter.test(card)) {
-                    this.candidate.addToTop(card);
-                } else {
-                    this.cantSelectedList.add(card);
-                }
-                iterator.remove();
-            }
-        }
-        if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            Iterator<AbstractCard> iterator = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).group.iterator();
-            while (iterator.hasNext()) {
-                AbstractCard card = iterator.next();
-                CardSelectToObliviousFiled.location.set(card, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE);
-                if (this.filter.test(card)) {
-                    this.candidate.addToTop(card);
-                } else {
-                    this.cantSelectedList.add(card);
-                }
-                iterator.remove();
-            }
-        }
     }
 
     public static String getTargetName(CardGroup.CardGroupType target) {

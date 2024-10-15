@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.cards.tmpcard.Remember;
+import com.qingmu.sakiko.cards.colorless.Remember;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Yowaiwatashi extends AbstractSakikoCard {
@@ -21,16 +21,8 @@ public class Yowaiwatashi extends AbstractSakikoCard {
 
     public Yowaiwatashi() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 1);
-        this.cardsToPreview = new Remember();
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(1);
-        }
+        this.initBaseAttr(1, 0, 0, 1, new Remember());
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override

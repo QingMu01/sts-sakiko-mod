@@ -21,17 +21,10 @@ public class Strike_Sakiko extends AbstractSakikoCard {
     public Strike_Sakiko() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 6, 0, 0);
+        this.setUpgradeAttr(1,3,0,0);
 
         this.tags.add(CardTags.STARTER_STRIKE);
         this.tags.add(CardTags.STRIKE);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDamage(3);
-        }
     }
 
     @Override

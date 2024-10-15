@@ -19,19 +19,13 @@ public class Masquerade extends AbstractSakikoCard {
 
     public Masquerade() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 4);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(2);
-        }
+        this.initBaseAttr(2, 0, 0, 1);
+        this.setUpgradeAttr(2, 0, 0, 0);
+        this.setEthereal(true, false);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new MasqueradePower(p, this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(p, p, new MasqueradePower(p, this.magicNumber), this.magicNumber));
     }
 }

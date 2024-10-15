@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -21,20 +22,15 @@ public class Boomerang extends AbstractSakikoCard {
     public Boomerang() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 4, 0, 0);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(0);
-        }
+        this.setUpgradeAttr(0, 0, 0, 0);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
-        this.addToBot(new ApplyPowerAction(p, p, new BoomerangPower(p, this.damage, 1)));
+        this.submitActionsToBot(
+                new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
+                new ApplyPowerAction(p, p, new BoomerangPower(p, this.damage))
+        );
     }
 
 }

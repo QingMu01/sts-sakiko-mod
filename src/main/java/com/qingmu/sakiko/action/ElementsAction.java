@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import com.qingmu.sakiko.cards.sakiko.Elements;
+import com.qingmu.sakiko.cards.colorless.Elements;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 

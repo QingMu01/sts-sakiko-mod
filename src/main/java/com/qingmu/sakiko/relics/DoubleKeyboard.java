@@ -1,13 +1,11 @@
 package com.qingmu.sakiko.relics;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.utility.UseCardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
+import basemod.BaseMod;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.constant.CardTypeColorHelper;
-import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class DoubleKeyboard extends AbstractSakikoRelic {
@@ -20,31 +18,14 @@ public class DoubleKeyboard extends AbstractSakikoRelic {
 
     public DoubleKeyboard() {
         super(ID, ImageMaster.loadImage(IMG_PATH), RELIC_TIER);
+        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FLOW),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FLOW)));
+        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FEVER),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FEVER)));
+        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_OBLIVIOUS),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_OBLIVIOUS)));
     }
 
-    private CardTypeColorHelper cardTypeColor = CardTypeColorHelper.NORMAL;
     @Override
     public String getUpdatedDescription() {
         return this.DESCRIPTIONS[0];
-    }
-
-    @Override
-    public void atBattleStart() {
-        this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 0)));
-    }
-
-    @Override
-    public void onUseCard(AbstractCard card, UseCardAction action) {
-        if (!card.purgeOnUse && cardTypeColor == getCardType(card)){
-            this.flash();
-            this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new MusicalNotePower(AbstractDungeon.player, 6)));
-        }
-        this.cardTypeColor = getCardType(card);
-    }
-
-    @Override
-    public void onVictory() {
-        this.cardTypeColor = CardTypeColorHelper.NORMAL;
     }
 
     @Override
@@ -54,40 +35,22 @@ public class DoubleKeyboard extends AbstractSakikoRelic {
 
     @Override
     public void obtain() {
-        this.instantObtain(AbstractDungeon.player,0,true);
+        this.instantObtain(AbstractDungeon.player, 0, true);
         this.flash();
     }
 
-    public CardTypeColorHelper getCardType(AbstractCard card){
-        if (card.purgeOnUse){
-            return this.cardTypeColor;
-        }
-        if (card.type == SakikoEnum.CardTypeEnum.MUSIC){
-            return CardTypeColorHelper.MUSIC;
-        }
-        switch (card.type){
-            case ATTACK:{
-                return CardTypeColorHelper.ATTACK;
-            }
-            case SKILL:{
-                return CardTypeColorHelper.SKILL;
-            }
-            case POWER:{
-                return CardTypeColorHelper.POWER;
-            }
-            case CURSE:{
-                return CardTypeColorHelper.CURSE;
-            }
-            case STATUS:{
-                return CardTypeColorHelper.STATUS;
-            }
-            default:{
-                return CardTypeColorHelper.NORMAL;
-            }
-        }
+    @Override
+    public void onEnterRoom(AbstractRoom room) {
+        SakikoConst.STANCE_CHANGE_THRESHOLD_USED -= 2;
     }
 
-    public CardTypeColorHelper getCardTypeColor() {
-        return this.cardTypeColor;
+    @Override
+    public void onEquip() {
+        SakikoConst.STANCE_CHANGE_THRESHOLD_USED -= 2;
+    }
+
+    @Override
+    public void onUnequip() {
+        SakikoConst.STANCE_CHANGE_THRESHOLD_USED = SakikoConst.STANCE_CHANGE_THRESHOLD;
     }
 }

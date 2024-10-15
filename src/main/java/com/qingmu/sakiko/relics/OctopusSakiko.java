@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class OctopusSakiko extends AbstractSakikoRelic {
@@ -52,7 +52,6 @@ public class OctopusSakiko extends AbstractSakikoRelic {
         if (GameActionManager.turn % 2 == 0) {
             this.setTexture(TB);
         } else {
-            this.addToBot(new DrawCardAction(2));
             this.setTexture(TA);
         }
     }

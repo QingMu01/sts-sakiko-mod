@@ -8,11 +8,11 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class TakiInferiorityPower extends AbstractPower implements TriggerOnPlayMusicPower {
+public class TakiInferiorityPower extends AbstractPower implements TriggerOnPlayMusic {
     public static final String POWER_ID = ModNameHelper.make(TakiInferiorityPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
@@ -28,7 +28,6 @@ public class TakiInferiorityPower extends AbstractPower implements TriggerOnPlay
         this.type = AbstractPower.PowerType.BUFF;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
-        this.priority = 105;
 
         this.updateDescription();
     }

@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.ExhaustBlurEffect;
 import com.megacrit.cardcrawl.vfx.ExhaustEmberEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 
 public class DoublePlayEffect extends AbstractGameEffect {
@@ -24,7 +24,7 @@ public class DoublePlayEffect extends AbstractGameEffect {
         this.music.current_y = music.current_y;
         this.music.target_x = Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
         this.music.target_y = Settings.HEIGHT / 2.0F;
-        this.music.calculateCardDamage((AbstractMonster) music.music_target);
+        this.music.calculateCardDamage((AbstractMonster) music.m_target);
 
         this.duration = 1.0f;
     }

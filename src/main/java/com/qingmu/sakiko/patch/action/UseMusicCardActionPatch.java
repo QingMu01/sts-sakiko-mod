@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.patch.action;
 
+import basemod.helpers.CardModifierManager;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.utility.HandCheckAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -8,16 +9,17 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.action.common.FakeUseCardAction;
+import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.ShowMusicCardMoveToWaitPlayEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
-
-    public static int PLAY_LIMIT = 3;
 
     /*
      * 构建UseCardAction时，判断是否为MUSIC_POWER类型，如果是，则将卡牌类型改为POWER
@@ -73,10 +75,16 @@ public class UseMusicCardActionPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if (___targetCard instanceof AbstractMusic && (AbstractDungeon.player.hand.group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
-                ___targetCard.applyPowers();
+                if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID)) {
+                    CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
+                    __instance.isDone = true;
+                    AbstractDungeon.actionManager.addToBottom(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
+                    return SpireReturn.Return();
+                }
                 CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);
-                if (cardGroup.size() > PLAY_LIMIT) {
+                // 超过队列大小时演奏最顶部的音乐
+                if (cardGroup.size() > SakikoConst.MUSIC_QUEUE_LIMIT_USED) {
                     AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));
                     AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(1));
                 }

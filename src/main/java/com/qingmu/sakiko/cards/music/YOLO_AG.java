@@ -1,7 +1,9 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.powers.BufferPower;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -11,43 +13,31 @@ public class YOLO_AG extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/YOLO_AG.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public YOLO_AG() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 3);
-
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
-        this.tags.add(SakikoEnum.CardTagEnum.COUNTER);
         this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+
+        this.initMusicAttr(1, 1, 1, 0);
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(3);
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        super.use(p, m);
+        this.amount = this.musicNumber;
+    }
+
+    @Override
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+        if (this.amount > 0) {
+            this.amount--;
+            this.addToTop(new GainEnergyAction(this.magicNumber));
         }
     }
 
     @Override
-    public void applyAmount() {
-        this.amount = Math.min(this.amount, this.magicNumber);
-
-        this.rawDescription = DESCRIPTION + String.format(EXTENDED_DESCRIPTION[0], this.amount);
-        this.initializeDescription();
-    }
-
-
-    @Override
-    public void triggerInBufferPlayedMusic(AbstractMusic music) {
-        this.amount++;
-    }
-
-    @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new BufferPower(this.music_source, this.amount)));
     }
 }

@@ -3,7 +3,8 @@ package com.qingmu.sakiko.utils;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.qingmu.sakiko.monsters.*;
+import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.powers.FallApartPower;
 import com.qingmu.sakiko.relics.menbers.AbstractBandMember;
 
 import java.util.ArrayList;
@@ -30,6 +31,10 @@ public class MemberHelper {
 
     public static int getBandMemberCount() {
         AbstractPlayer p = AbstractDungeon.player;
+        if (p.hasPower(FallApartPower.POWER_ID)){
+            p.getPower(FallApartPower.POWER_ID).flash();
+            return 0;
+        }
         int count = 0;
         for (AbstractRelic relic : p.relics) {
             if (relic instanceof AbstractBandMember) {

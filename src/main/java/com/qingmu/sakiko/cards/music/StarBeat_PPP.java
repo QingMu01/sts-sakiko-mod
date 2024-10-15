@@ -1,8 +1,11 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class StarBeat_PPP extends AbstractMusic {
@@ -11,28 +14,34 @@ public class StarBeat_PPP extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/StarBeat_PPP.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public StarBeat_PPP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 3);
+        this.initMusicAttr(1, 1);
 
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
+        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+        this.setExhaust(true, true);
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(2);
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        super.use(p, m);
+        this.amount = this.musicNumber;
+    }
+
+    @Override
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+        if (this.amount > 0) {
+            this.amount--;
+            AbstractCard copy = music.makeSameInstanceOf();
+            copy.retain = true;
+            this.addToTop(new MakeTempCardInHandAction(copy, 1));
         }
     }
 
-
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.music_source, this.music_source
-                , new KirameiPower(this.music_source, this.magicNumber)));
     }
 }

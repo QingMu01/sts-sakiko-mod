@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
+import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 import com.qingmu.sakiko.action.effect.ShowCardAndToMusicListEffect;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.MusicCardFinder;
@@ -16,12 +17,14 @@ public class StoryAction extends AbstractGameAction {
 
     private boolean retrieveCard = false;
     private final AbstractCard.CardType cardType = SakikoEnum.CardTypeEnum.MUSIC;
+    private final boolean isUpgraded;
 
-    public StoryAction() {
+    public StoryAction(boolean isUpgraded) {
         this.duration = Settings.ACTION_DUR_FAST;
         this.amount = 1;
-        this.actionType = ActionType.CARD_MANIPULATION;
+        this.isUpgraded = isUpgraded;
 
+        this.actionType = ActionType.CARD_MANIPULATION;
     }
 
     @Override
@@ -40,7 +43,11 @@ public class StoryAction extends AbstractGameAction {
 
                     disCard.current_x = -1000.0F * Settings.xScale;
                     if (this.amount == 1) {
-                        AbstractDungeon.effectList.add(new ShowCardAndToMusicListEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F,true,true,false));
+                        if (this.isUpgraded) {
+                            AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
+                        } else {
+                            AbstractDungeon.effectList.add(new ShowCardAndToMusicListEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F, true, true, false));
+                        }
                     }
                     AbstractDungeon.cardRewardScreen.discoveryCard = null;
                 }

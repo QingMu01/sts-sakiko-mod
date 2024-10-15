@@ -4,10 +4,10 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class NotePunch extends AbstractSakikoCard {
@@ -22,30 +22,26 @@ public class NotePunch extends AbstractSakikoCard {
 
     public NotePunch() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 0);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-        }
+        this.initBaseAttr(1, 7, 0, 2);
+        this.setUpgradeAttr(1,0,0,1);
     }
 
     @Override
     public void applyPowers() {
-        this.baseDamage = this.upgraded ? MusicalNotePower.getTurnCount() : MusicalNotePower.getCombatCount() / 2;
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
         super.applyPowers();
-        this.isMultiDamage = (this.baseDamage != this.damage);
-        this.appendDescription();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        this.baseDamage = this.upgraded ? MusicalNotePower.getTurnCount() : MusicalNotePower.getCombatCount() / 2;
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
         super.calculateCardDamage(mo);
-        this.isMultiDamage = (this.baseDamage != this.damage);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     @Override

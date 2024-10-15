@@ -2,11 +2,13 @@ package com.qingmu.sakiko.cards.music.monster;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.powers.monster.RanaHaruhikagePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@SakikoModEnable(enable = false)
 public class Haruhikage_Rana extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(Haruhikage_Rana.class.getSimpleName());
@@ -21,19 +23,12 @@ public class Haruhikage_Rana extends AbstractMusic {
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-        }
-    }
-
-    @Override
     public boolean canUpgrade() {
         return false;
     }
 
     @Override
     public void play() {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this.music_source, new RanaHaruhikagePower(AbstractDungeon.player, this.music_source, 2)));
+        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, this.m_source, new RanaHaruhikagePower(AbstractDungeon.player, 2)));
     }
 }

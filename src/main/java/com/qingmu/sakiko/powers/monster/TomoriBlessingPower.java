@@ -38,9 +38,6 @@ public class TomoriBlessingPower extends AbstractPower {
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
         if (this.amount >= 999) {
             this.amount = 999;
         }

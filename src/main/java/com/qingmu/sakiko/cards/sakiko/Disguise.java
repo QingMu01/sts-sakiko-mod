@@ -20,20 +20,14 @@ public class Disguise extends AbstractSakikoCard {
     public Disguise() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 8, 1);
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBlock(4);
-            this.upgradeMagicNumber(1);
-        }
+        this.setUpgradeAttr(1, 0, 3, 1);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new GainBlockAction(p, p, this.block));
-        this.addToBot(new DrawCardAction(p, this.magicNumber));
+        this.submitActionsToBot(
+                new GainBlockAction(p, p, this.block),
+                new DrawCardAction(p, this.magicNumber)
+        );
     }
 }

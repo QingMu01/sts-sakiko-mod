@@ -2,15 +2,17 @@ package com.qingmu.sakiko.relics;
 
 import basemod.ReflectionHacks;
 import basemod.abstracts.CustomRelic;
+import basemod.abstracts.CustomSavable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractMusic;
 
-public abstract class AbstractSakikoRelic extends CustomRelic {
+public abstract class AbstractSakikoRelic extends CustomRelic implements CustomSavable<Integer> {
 
     protected int amount = -1;
 
@@ -31,7 +33,29 @@ public abstract class AbstractSakikoRelic extends CustomRelic {
         }
     }
 
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
-
+    @Override
+    public void update() {
+        super.update();
+        if (this.hb.hovered && InputHelper.justClickedRight) {
+            InputHelper.justClickedRight = false;
+            this.onRightClick();
+        }
     }
+
+    @Override
+    public void onLoad(Integer integer) {
+        this.amount = integer;
+    }
+
+    @Override
+    public Integer onSave() {
+        return this.amount;
+    }
+
+    public void triggerOnPlayMusicCard(AbstractMusic music) {
+    }
+
+    public void onRightClick() {
+    }
+
 }

@@ -6,7 +6,7 @@ import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousModifier extends AbstractCardModifier {
-    public static String ID = ModNameHelper.make(MoonLightModifier.class.getSimpleName());
+    public static String ID = ModNameHelper.make(ObliviousModifier.class.getSimpleName());
 
     @Override
     public void onInitialApplication(AbstractCard card) {

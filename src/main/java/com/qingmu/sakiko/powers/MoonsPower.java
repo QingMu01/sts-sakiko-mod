@@ -7,14 +7,13 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.effect.DoublePlayEffect;
-import com.qingmu.sakiko.cards.music.AbstractMusic;
-import com.qingmu.sakiko.inteface.power.TriggerOnPlayMusicPower;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MoonsPower extends AbstractPower implements TriggerOnPlayMusicPower {
+public class MoonsPower extends AbstractPower implements TriggerOnPlayMusic {
 
     public static final String POWER_ID = ModNameHelper.make(MoonsPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -46,8 +45,6 @@ public class MoonsPower extends AbstractPower implements TriggerOnPlayMusicPower
         if (this.amount > 0) {
             this.flash();
             AbstractDungeon.effectList.add(new DoublePlayEffect(music));
-            music.applyPowers();
-            music.calculateCardDamage((AbstractMonster) music.music_target);
             music.play();
             this.reducePower(1);
         }

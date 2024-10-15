@@ -20,19 +20,12 @@ public class Blocked extends AbstractSakikoCard {
     public Blocked() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.exhaust = true;
-    }
-
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeBaseCost(0);
-        }
+        this.setUpgradeAttr(0, 0, 0, 0);
+        this.setExhaust(true, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(m, p, new BlockedPower(m,this.magicNumber)));
+        this.addToBot(new ApplyPowerAction(m, p, new BlockedPower(m, this.magicNumber), this.magicNumber));
     }
 }

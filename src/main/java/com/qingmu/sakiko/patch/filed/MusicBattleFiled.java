@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.ui.MusicSlotItem;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,10 @@ public class MusicBattleFiled {
     @SpirePatch(clz = AbstractPlayer.class, method = SpirePatch.CLASS)
     public static class BattalInfoPatch {
         /*
+         * 向AbstractPlayer类添加一个歌牌列表（球位）
+         * */
+        public static SpireField<ArrayList<MusicSlotItem>> musicSlotItems = new SpireField<>(ArrayList::new);
+        /*
          * 向AbstractPlayer类添加一个字段，用来记录本场战斗中演奏的音乐
          * */
         public static SpireField<ArrayList<AbstractCard>> musicPlayedThisCombat = new SpireField<>(ArrayList::new);
@@ -42,14 +47,9 @@ public class MusicBattleFiled {
         public static SpireField<ArrayList<AbstractCard>> musicPlayedThisTurn = new SpireField<>(ArrayList::new);
 
         /*
-         * 向AbstractPlayer类添加一个字段，用来记录本回合获取的音符
-         * */
-        public static SpireField<Integer> musicalNoteThisTurn = new SpireField<>(()-> 0);
-
-        /*
-         * 向AbstractPlayer类添加一个字段，用来记录本场战斗获取的乐章
-         * */
-        public static SpireField<Integer> movementThisCombat = new SpireField<>(()-> 0);
+        * 向AbstractPlayer类添加一个字段，用来记录本回合姿态转变的次数
+        * */
+        public static SpireField<Integer> stanceChangedThisTurn = new SpireField<>(()-> 0);
 
     }
 }

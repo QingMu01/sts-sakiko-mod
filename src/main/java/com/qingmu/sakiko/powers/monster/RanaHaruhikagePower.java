@@ -19,15 +19,12 @@ public class RanaHaruhikagePower extends AbstractPower {
     private static final String path48 = "SakikoModResources/img/powers/RanaHaruhiKage48.png";
     private static final String path128 = "SakikoModResources/img/powers/RanaHaruhiKage128.png";
 
-    private AbstractCreature source;
-
-    public RanaHaruhikagePower(AbstractCreature owner, AbstractCreature source, int amount) {
+    public RanaHaruhikagePower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = AbstractPower.PowerType.BUFF;
         this.amount = amount;
-        this.source = source;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
 

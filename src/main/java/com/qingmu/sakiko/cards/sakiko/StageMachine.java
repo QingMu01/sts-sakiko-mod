@@ -2,13 +2,11 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.ResetMusicalNoteAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class StageMachine extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(StageMachine.class.getSimpleName());
@@ -21,29 +19,22 @@ public class StageMachine extends AbstractSakikoCard {
 
     public StageMachine() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 4);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
-    }
+        this.initBaseAttr(1, 0, 5, 3);
+        this.setUpgradeAttr(1, 0, 3, 1);
 
-    @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeMagicNumber(2);
-        }
     }
 
     @Override
     protected void applyPowersToBlock() {
-        int powerAmount = PowerHelper.getPowerAmount2(MusicalNotePower.POWER_ID);
-        this.baseBlock = powerAmount * this.magicNumber;
+        int realBaseBlock = this.baseBlock;
+        this.baseBlock += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size();
         super.applyPowersToBlock();
-        this.appendDescription();
+        this.baseBlock = realBaseBlock;
+        this.isBlockModified = (this.block != this.baseBlock);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new GainBlockAction(p, this.block));
-        this.addToBot(new ResetMusicalNoteAction());
     }
 }

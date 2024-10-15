@@ -2,14 +2,15 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.powers.MusicalNotePower;
+import com.qingmu.sakiko.inteface.TriggerOnOblivion;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class EndOfWorld extends AbstractSakikoCard {
+public class EndOfWorld extends AbstractSakikoCard implements TriggerOnOblivion {
     public static final String ID = ModNameHelper.make(EndOfWorld.class.getSimpleName());
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/EndOfWorld.png";
@@ -20,36 +21,20 @@ public class EndOfWorld extends AbstractSakikoCard {
 
     public EndOfWorld() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 8, 0, 1);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSICAL_NOTE);
+        this.initBaseAttr(2, 13, 0, 2);
+        this.setUpgradeAttr(2, 0, 0, 1);
+
         this.isMultiDamage = true;
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDamage(3);
-            this.upgradeMagicNumber(1);
-        }
+    public void triggerOnPlayMusic(AbstractMusic music) {
+        this.baseDamage += this.magicNumber;
     }
 
     @Override
-    public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += MusicalNotePower.getCombatCount() * this.magicNumber;
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += MusicalNotePower.getCombatCount() * this.magicNumber;
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+    public void triggerOnOblivion() {
+        this.addToBot(new MakeTempCardInDiscardAction(this.makeSameInstanceOf(), 1));
     }
 
     @Override
