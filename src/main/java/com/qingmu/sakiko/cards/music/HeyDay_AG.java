@@ -18,6 +18,7 @@ public class HeyDay_AG extends AbstractMusic {
     public HeyDay_AG() {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.initMusicAttr(1, 1);
+        this.setExhaust(true, true);
     }
 
 

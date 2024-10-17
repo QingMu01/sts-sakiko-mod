@@ -40,13 +40,17 @@ public class SymbolWaterModifier extends AbstractMusicCardModifier {
     public String modifyDescription(String rawDescription, AbstractCard card) {
         CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
         String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
-        if (!card.keywords.contains(SakikoConst.KEYWORD_WATER)) {
-            card.keywords.add(SakikoConst.KEYWORD_WATER);
-        }
         if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
             return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.heal);
         }
         return String.format(realDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalHeal(card));
+    }
+
+    @Override
+    public void onInitialApplication(AbstractCard card) {
+        if (!card.keywords.contains(SakikoConst.KEYWORD_WATER)) {
+            card.keywords.add(SakikoConst.KEYWORD_WATER);
+        }
     }
 
     @Override

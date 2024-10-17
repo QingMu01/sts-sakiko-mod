@@ -27,7 +27,7 @@ public class StageMachine extends AbstractSakikoCard {
     @Override
     protected void applyPowersToBlock() {
         int realBaseBlock = this.baseBlock;
-        this.baseBlock += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size();
+        this.baseBlock += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
         super.applyPowersToBlock();
         this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);

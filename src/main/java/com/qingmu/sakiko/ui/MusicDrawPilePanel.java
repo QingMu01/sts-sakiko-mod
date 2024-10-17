@@ -15,7 +15,6 @@ import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.helpers.controller.CInputActionSet;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
-import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.ui.panels.AbstractPanel;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
@@ -36,9 +35,9 @@ public class MusicDrawPilePanel extends AbstractPanel {
 
     public static final String[] LABEL = tutorialStrings.LABEL;
 
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MusicDrawPilePanel"));
+    private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ModNameHelper.make("MusicDrawPilePanel"));
 
-    public static final String[] TEXT = uiStrings.TEXT;
+    public static final String[] TEXT = TUTORIAL_STRING.TEXT;
 
     private static final int RAW_W = 128;
 

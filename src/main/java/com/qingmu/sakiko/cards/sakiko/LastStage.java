@@ -29,7 +29,7 @@ public class LastStage extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(999, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, endOfSelect -> {
+        this.addToBot(new CardSelectorAction("", 999, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, endOfSelect -> {
             this.baseDamage += endOfSelect.selected.size() * this.magicNumber;
             this.calculateCardDamage(m);
             this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY));

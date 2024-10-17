@@ -30,9 +30,6 @@ public class SymbolAirModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_AIR)) {
-            card.keywords.add(SakikoConst.KEYWORD_AIR);
-        }
         return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.needDraw, this.amount);
     }
 
@@ -46,6 +43,13 @@ public class SymbolAirModifier extends AbstractMusicCardModifier {
         this.amount -= 1;
         card.initializeDescription();
         return this.amount <= 0;
+    }
+
+    @Override
+    public void onInitialApplication(AbstractCard card) {
+        if (!card.keywords.contains(SakikoConst.KEYWORD_AIR)) {
+            card.keywords.add(SakikoConst.KEYWORD_AIR);
+        }
     }
 
     @Override

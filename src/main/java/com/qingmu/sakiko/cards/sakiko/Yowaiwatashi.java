@@ -27,7 +27,7 @@ public class Yowaiwatashi extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(this.magicNumber, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, action -> {
+        this.addToBot(new CardSelectorAction("", this.magicNumber, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, action -> {
             this.addToBot(new MakeTempCardInHandAction(new Remember(), action.selected.size()));
         }, CardGroup.CardGroupType.HAND));
     }

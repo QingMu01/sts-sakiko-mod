@@ -41,6 +41,6 @@ public class Angles extends AbstractMusic {
         for (int i = 0; i < actions.length; i++) {
             actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.musicNumber, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
         }
-        this.submitActionsToBot(actions);
+        this.submitActionsToTop(actions);
     }
 }

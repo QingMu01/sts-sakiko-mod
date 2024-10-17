@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.DamageCallbackAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -18,7 +19,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/SilhouetteDance_MYGO.png";
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public SilhouetteDance_MYGO() {
         super(ID, IMG_PATH, RARITY, TARGET);
@@ -41,8 +42,14 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
     }
 
     @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.baseDamage = this.musicNumber;
+        super.calculateCardDamage(mo);
+    }
+
+    @Override
     public void play() {
-        this.addToTop(new DamageCallbackAction(this.m_target, new DamageInfo(this.m_source, this.musicNumber, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HEAVY, (damageAmount) -> {
+        this.addToTop(new DamageCallbackAction(this.m_target, new DamageInfo(this.m_source, this.baseDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HEAVY, (damageAmount) -> {
             if (damageAmount > 0) {
                 this.addToTop(new GainBlockAction(this.m_source, damageAmount));
             }

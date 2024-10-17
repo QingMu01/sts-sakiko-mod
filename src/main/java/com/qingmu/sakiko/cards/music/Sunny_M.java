@@ -16,7 +16,8 @@ public class Sunny_M extends AbstractMusic {
 
     public Sunny_M() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initBaseAttr(5, 3, 4, 2);
+        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+        this.initMusicAttr(5, 3, 4, 2);
     }
 
     @Override

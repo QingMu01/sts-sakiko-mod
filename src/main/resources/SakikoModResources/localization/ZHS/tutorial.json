@@ -11,6 +11,11 @@
       "歌单"
     ]
   },
+  "SakikoMod:MusicDrawPilePanel": {
+    "TEXT": [
+      "我的歌单是 #r空的 。"
+    ]
+  },
   "SakikoMod:MusicSlot": {
     "TEXT": [
       "待演奏区",

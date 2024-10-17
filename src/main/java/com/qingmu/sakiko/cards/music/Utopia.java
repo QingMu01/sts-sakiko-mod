@@ -13,7 +13,7 @@ public class Utopia extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Utopia.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Utopia() {

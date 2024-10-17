@@ -44,6 +44,6 @@ public class FukkenPower extends AbstractPower implements ModifiedMusicNumber {
 
     @Override
     public float modifyMusicNumber(AbstractMusic music, float musicNumber) {
-        return music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + (this.amount * 2) : musicNumber;
+        return music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + this.amount : musicNumber;
     }
 }

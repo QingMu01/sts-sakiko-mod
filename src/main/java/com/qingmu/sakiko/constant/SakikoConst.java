@@ -2,8 +2,8 @@ package com.qingmu.sakiko.constant;
 
 public class SakikoConst {
     // 姿态转换阈值
-    public static final int STANCE_CHANGE_THRESHOLD = 7;
-    public static int STANCE_CHANGE_THRESHOLD_USED = 7;
+    public static final int STANCE_CHANGE_THRESHOLD = 5;
+    public static int STANCE_CHANGE_THRESHOLD_USED = 5;
 
     // 心流替换阈值
     public static final int FLOW_THRESHOLD = 10;

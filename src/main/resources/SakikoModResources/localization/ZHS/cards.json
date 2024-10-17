@@ -42,7 +42,7 @@
   },
   "SakikoMod:QuaerereLumina": {
     "NAME": "探寻光明",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 获得 !M! 层 sakikomod:复权 。 消耗 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 获得 !M! 层 sakikomod:复权 。"
   },
   "SakikoMod:ImpenetrableThorns": {
     "NAME": "拒绝的刺",
@@ -274,7 +274,7 @@
   },
   "SakikoMod:FirstOne": {
     "NAME": "最初降临之人",
-    "DESCRIPTION": "你的 sakikomod:心流槽 不会在回合结束时清空。"
+    "DESCRIPTION": "获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:BandLeader": {
     "NAME": "乐队领袖",
@@ -440,12 +440,12 @@
   "SakikoMod:Louder_R": {
     "NAME": "Louder",
     "MINI_TITLE": "Roselia",
-    "DESCRIPTION": " sakikomod:演奏 ：从抽牌堆、手牌、弃牌堆中选择至多 !SakikoMod:MN! 张牌，使其打出后移除本场战斗。"
+    "DESCRIPTION": " sakikomod:演奏 ：从抽牌堆、手牌、弃牌堆中选择至多 !SakikoMod:MN! 张牌，使其打出后移除本场战斗。 NL 消耗 。"
   },
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
     "MINI_TITLE": "Roselia",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其获得虚无。这张牌接下来 !SakikoMod:MN! 次打出后返回手牌。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其获得在回合结束后 消耗 。这张牌接下来 !SakikoMod:MN! 次打出后返回手牌。 NL 消耗 。"
   },
   "SakikoMod:ShuwarinDreamin_PP": {
     "NAME": "Shuwarin Dreamin",
@@ -481,7 +481,10 @@
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
     "MINI_TITLE": "RAISE A SUILEN",
-    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对目标造成 !SakikoMod:MN! 点伤害，这张牌每有一点 sakikomod:热度 额外造成一次伤害。"
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对目标造成 !SakikoMod:MN! 点伤害，这张牌每有一点 sakikomod:热度 额外造成一次伤害。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （当前造成%d次伤害）"
+    ]
   },
   "SakikoMod:Expose_RAS": {
     "NAME": "EXPOSE 'Burn out!!!'",
@@ -491,7 +494,7 @@
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
     "MINI_TITLE": "MyGO!!!!!",
-    "DESCRIPTION": " sakikomod:演奏 ：对目标造成 !SakikoMod:MN! 点伤害，未被格挡的伤害将转化为 格挡 。 NL sakikomod:闪耀 在这张牌上发挥 !M! 倍效果。"
+    "DESCRIPTION": " sakikomod:演奏 ：对目标造成 !D! 点伤害，未被格挡的伤害将转化为 格挡 。 NL sakikomod:闪耀 在这张牌上发挥 !M! 倍效果。"
   },
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",

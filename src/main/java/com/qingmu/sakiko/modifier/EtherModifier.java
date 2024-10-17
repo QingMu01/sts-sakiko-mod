@@ -29,9 +29,6 @@ public class EtherModifier extends AbstractMusicCardModifier {
     public String modifyDescription(String rawDescription, AbstractCard card) {
         CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
         String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
-        if (!card.keywords.contains(SakikoConst.KEYWORD_ETHER)) {
-            card.keywords.add(SakikoConst.KEYWORD_ETHER);
-        }
         if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
             return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], Math.min(this.costDown, card.costForTurn));
         }
@@ -42,6 +39,9 @@ public class EtherModifier extends AbstractMusicCardModifier {
     public void onInitialApplication(AbstractCard card) {
         if (card.costForTurn >= 0) {
             card.cost = card.costForTurn = Math.max(0, card.cost - this.costDown);
+        }
+        if (!card.keywords.contains(SakikoConst.KEYWORD_ETHER)) {
+            card.keywords.add(SakikoConst.KEYWORD_ETHER);
         }
     }
 

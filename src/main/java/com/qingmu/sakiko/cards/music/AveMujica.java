@@ -6,6 +6,8 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
 import com.megacrit.cardcrawl.cards.curses.CurseOfTheBell;
 import com.megacrit.cardcrawl.cards.curses.Necronomicurse;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
@@ -17,6 +19,8 @@ public class AveMujica extends AbstractMusic {
     public static final String ID = ModNameHelper.make(AveMujica.class.getSimpleName());
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/AveMujica.png";
+
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(AveMujica.class.getSimpleName()));
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
@@ -32,7 +36,7 @@ public class AveMujica extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(this.musicNumber, false, card -> !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, action -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> !CardModifierManager.hasModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, action -> {
             for (AbstractCard card : action.selected) {
                 CardModifierManager.addModifier(card, new AveMujicaModifier());
             }

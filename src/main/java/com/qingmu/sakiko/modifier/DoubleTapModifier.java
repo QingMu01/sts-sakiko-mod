@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.modifier;
 
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -30,15 +31,13 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_MOONS)) {
-            card.keywords.add(SakikoConst.KEYWORD_MOONS);
-        }
         return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.usedCount);
     }
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
         AbstractCard copy = card.makeSameInstanceOf();
+        CardModifierManager.removeModifiersById(copy, ID, false);
         AbstractDungeon.player.limbo.addToBottom(copy);
         copy.current_x = card.current_x;
         copy.current_y = card.current_y;
@@ -62,17 +61,22 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        AbstractCard copy = card.makeCopy();
-        card.cost = copy.cost + 1;
-        card.setCostForTurn(card.cost);
+        if (card.cost >= 0) {
+            card.cost += 1;
+            card.setCostForTurn(card.cost);
+        }
+        if (!card.keywords.contains(SakikoConst.KEYWORD_MOONS)) {
+            card.keywords.add(SakikoConst.KEYWORD_MOONS);
+        }
     }
 
     @Override
     public void onRemove(AbstractCard card) {
-        AbstractCard copy = card.makeCopy();
-        card.cost = copy.cost - 1;
-        card.setCostForTurn(card.cost);
-
+        if (card.cost >= 0) {
+            AbstractCard copy = card.makeCopy();
+            card.cost = copy.cost;
+            card.setCostForTurn(card.cost);
+        }
         card.keywords.remove(SakikoConst.KEYWORD_MOONS);
     }
 

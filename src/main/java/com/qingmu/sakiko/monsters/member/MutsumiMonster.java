@@ -33,7 +33,6 @@ public class MutsumiMonster extends AbstractMemberMonster {
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
 
-    // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/mutsumi.png";
 
     public MutsumiMonster(float x, float y) {

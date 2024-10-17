@@ -62,8 +62,8 @@ public class GameActionManagerPatch {
             CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
             long count = cardGroup.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)).count();
             if (count > 0) {
-                cardGroup.group.sort(Comparator.comparing(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
-                __instance.addToBottom(new ReadyToPlayMusicAction((int) count));
+                cardGroup.group.sort(Comparator.comparing(card -> !card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
+                __instance.addToBottom(new ReadyToPlayMusicAction((int) count, true));
             }
         }
     }

@@ -3,6 +3,8 @@ package com.qingmu.sakiko.cards.music;
 import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
@@ -14,6 +16,8 @@ public class Futatsunotsuki extends AbstractMusic {
     public static final String ID = ModNameHelper.make(Futatsunotsuki.class.getSimpleName());
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Futatsunotsuki.png";
+
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(Futatsunotsuki.class.getSimpleName()));
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
@@ -29,9 +33,10 @@ public class Futatsunotsuki extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(this.magicNumber, true, card -> !(card instanceof AbstractMusic) && !CardModifierManager.hasModifier(card,DoubleTapModifier.ID), card -> null, action -> {
+        int realMusicNumber = this.musicNumber;
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, true, card -> !(card instanceof AbstractMusic) && !CardModifierManager.hasModifier(card, DoubleTapModifier.ID), card -> null, action -> {
             for (AbstractCard card : action.selected) {
-                CardModifierManager.addModifier(card, new DoubleTapModifier(this.musicNumber));
+                CardModifierManager.addModifier(card, new DoubleTapModifier(realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
     }

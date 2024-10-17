@@ -18,10 +18,14 @@ public class AveMujicaModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
+        return TUTORIAL_STRING.LABEL[0] + cardName;
+    }
+
+    @Override
+    public void onInitialApplication(AbstractCard card) {
         if (!card.keywords.contains(SakikoConst.KEYWORD_RESTART)) {
             card.keywords.add(SakikoConst.KEYWORD_RESTART);
         }
-        return TUTORIAL_STRING.LABEL[0] + cardName;
     }
 
     @Override

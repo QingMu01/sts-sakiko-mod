@@ -3,6 +3,7 @@ package com.qingmu.sakiko.patch;
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -43,10 +44,10 @@ public class MusicBattleLogicPatch {
                         if (((AbstractMusic) card).cryChicSelect) {
                             placeOnTop[0].add(card);
                         } else {
-                            AbstractDungeon.player.discardPile.addToBottom(card);
+                            AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(card, 1));
                         }
                     } else {
-                        AbstractDungeon.player.discardPile.addToBottom(card);
+                        AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDiscardAction(card, 1));
                     }
                     continue;
                 }

@@ -7,8 +7,10 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.cards.sakiko.VoidOrder;
 import com.qingmu.sakiko.utils.FontBitmapHelp;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -18,6 +20,9 @@ public class VoidOrderPower extends AbstractPower {
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
+
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(VoidOrder.class.getSimpleName()));
+
 
     private static final String path48 = "SakikoModResources/img/powers/Boomerang48.png";
     private static final String path128 = "SakikoModResources/img/powers/Boomerang128.png";
@@ -45,7 +50,7 @@ public class VoidOrderPower extends AbstractPower {
     @Override
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
-            this.addToBot(new CardSelectorAction(this.amount, true, card -> CardGroup.CardGroupType.HAND, action -> {
+            this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.amount, true, card -> CardGroup.CardGroupType.HAND, action -> {
                 for (AbstractCard card : action.selected) {
                     if (card.cost >= 0) {
                         int newCost = AbstractDungeon.cardRandomRng.random(3);

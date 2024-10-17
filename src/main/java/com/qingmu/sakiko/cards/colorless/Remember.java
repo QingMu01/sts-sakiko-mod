@@ -4,6 +4,8 @@ import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
@@ -17,6 +19,8 @@ public class Remember extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(Remember.class.getSimpleName());
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/colorless/Remember.png";
+
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(Remember.class.getSimpleName()));
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.SPECIAL;
@@ -34,7 +38,7 @@ public class Remember extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(this.magicNumber, false, c -> !c.hasTag(SakikoEnum.CardTagEnum.REMEMBER), card -> CardGroup.CardGroupType.HAND, action -> {
+        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, false, c -> !c.hasTag(SakikoEnum.CardTagEnum.REMEMBER), card -> CardGroup.CardGroupType.HAND, action -> {
             for (AbstractCard card : action.selected) {
                 CardModifierManager.addModifier(card, new RememberModifier());
                 if (this.upgraded) {

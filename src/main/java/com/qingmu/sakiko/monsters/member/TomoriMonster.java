@@ -33,7 +33,6 @@ public class TomoriMonster extends AbstractMemberMonster {
     public static final String NAME = monsterStrings.NAME;
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
-    // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/tomori.png";
 
     public TomoriMonster(float x, float y) {
@@ -72,7 +71,7 @@ public class TomoriMonster extends AbstractMemberMonster {
                 .setActions(() -> new AbstractGameAction[]{
                         new PlaySoundAction(SoundHelper.TOMORI_MAGIC),
                         new AnimateJumpAction(this),
-                        new ApplyPowerAction(this, this, new TomoriBlessingPower(this, 1))
+                        new ApplyPowerAction(AbstractDungeon.player, this, new TomoriBlessingPower(AbstractDungeon.player, 1))
                 })
                 .build());
         return specialIntentActions;

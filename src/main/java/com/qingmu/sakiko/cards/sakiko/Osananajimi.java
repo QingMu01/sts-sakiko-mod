@@ -3,6 +3,8 @@ package com.qingmu.sakiko.cards.sakiko;
 import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
@@ -16,6 +18,8 @@ public class Osananajimi extends AbstractSakikoCard {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Osananajimi.png";
 
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MoonLightDiscard"));
+
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
@@ -28,7 +32,7 @@ public class Osananajimi extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(this.magicNumber, true, card -> !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT), card -> {
+        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, true, card -> !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT), card -> {
             CardModifierManager.addModifier(card, new MoonLightModifier());
             return CardGroup.CardGroupType.DISCARD_PILE;
         }, action -> {

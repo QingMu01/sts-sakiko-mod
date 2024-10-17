@@ -30,7 +30,7 @@ public class QuaerereLumina extends AbstractSakikoCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.submitActionsToBot(
                 new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
-                new ApplyPowerAction(p, p, new FukkenPower(p,this.magicNumber), this.magicNumber)
+                new ApplyPowerAction(p, p, new FukkenPower(p, this.magicNumber), this.magicNumber)
         );
     }
 }

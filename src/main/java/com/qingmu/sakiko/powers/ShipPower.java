@@ -41,7 +41,7 @@ public class ShipPower extends AbstractPower implements CanPlayMusic {
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + (this.amount + 1) + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
     @Override
@@ -55,11 +55,12 @@ public class ShipPower extends AbstractPower implements CanPlayMusic {
     @Override
     public boolean canPlayMusic(AbstractMusic music) {
         if (this.amount > 0) {
-            this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
-            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new IntangiblePower(this.owner, 1), 1));
-            return true;
-        } else {
+            this.flash();
+            this.addToTop(new ReducePowerAction(this.owner, this.owner, this, 1));
+            this.addToTop(new ApplyPowerAction(this.owner, this.owner, new IntangiblePower(this.owner, 1), 1));
             return false;
+        } else {
+            return true;
         }
     }
 }

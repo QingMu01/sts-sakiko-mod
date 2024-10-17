@@ -5,25 +5,25 @@ import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnOblivion;
-import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
+import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousAction extends CardSelectorAction {
 
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(ObliviousAction.class.getSimpleName()));
+
     // 忘却 默认方法
     public ObliviousAction(int amount) {
-        super(AbstractDungeon.player, amount, false, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, action -> {
+        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, false, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, action -> {
             for (AbstractCard card : action.selected) {
-                if (card instanceof AbstractMusic) {
-                    CardModifierManager.addModifier(card, new ImmediatelyPlayModifier());
-                }
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
                 CardModifierManager.addModifier(card, new ObliviousModifier());
                 AbstractDungeon.player.limbo.addToBottom(card);

@@ -31,9 +31,6 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
     public String modifyDescription(String rawDescription, AbstractCard card) {
         CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
         String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
-        if (!card.keywords.contains(SakikoConst.KEYWORD_FIRE)) {
-            card.keywords.add(SakikoConst.KEYWORD_FIRE);
-        }
         if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
             return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.damage);
         }
@@ -45,6 +42,12 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
         return damage + this.damage;
     }
 
+    @Override
+    public void onInitialApplication(AbstractCard card) {
+        if (!card.keywords.contains(SakikoConst.KEYWORD_FIRE)) {
+            card.keywords.add(SakikoConst.KEYWORD_FIRE);
+        }
+    }
 
     @Override
     public void onRemove(AbstractCard card) {

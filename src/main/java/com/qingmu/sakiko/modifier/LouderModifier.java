@@ -15,14 +15,12 @@ public class LouderModifier extends AbstractCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_LOUDER)) {
-            card.keywords.add(SakikoConst.KEYWORD_LOUDER);
-        }
         return TUTORIAL_STRING.LABEL[0] + cardName;
     }
     @Override
     public void onInitialApplication(AbstractCard card) {
         card.tags.add(SakikoEnum.CardTagEnum.REMOVE_FLAG);
+        card.keywords.add(SakikoConst.KEYWORD_LOUDER);
     }
 
     @Override

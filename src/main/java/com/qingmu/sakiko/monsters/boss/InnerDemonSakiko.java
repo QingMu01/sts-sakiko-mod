@@ -18,13 +18,11 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
 
-    // 怪物的图片，请自行添加
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
     public InnerDemonSakiko(float x, float y) {
         super(NAME, ID, IMG, x, y);
         this.type = EnemyType.BOSS;
-
     }
 
     @Override

@@ -199,6 +199,13 @@
       "你现在无法看见敌人真实的意图与属性。回合开始时下降一层。"
     ]
   },
+  "SakikoMod:ShipPower": {
+    "NAME": "贼船",
+    "DESCRIPTIONS": [
+      "接下来 #b",
+      " 次演奏无效化，转而获得 #b1 层 #y无实体 。"
+    ]
+  },
   "SakikoMod:AnonDasuruPower": {
     "NAME": "爱堕",
     "DESCRIPTIONS": [

@@ -28,6 +28,12 @@ public class FullMoon extends AbstractSakikoCard {
     }
 
     @Override
+    public void applyPowers() {
+        super.applyPowers();
+        this.appendDescription(GameActionManager.turn);
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (GameActionManager.turn >= this.magicNumber) {
             this.addToBot(new ChangeStanceAction(ObliviousStance.STANCE_ID));

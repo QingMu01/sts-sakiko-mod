@@ -12,14 +12,9 @@
       "谨慎操作，这是 #r不可逆 的。"
     ]
   },
-  "SakikoMod:MusicDrawPilePanel": {
-    "TEXT": [
-      "我的歌单是 #r空的 。"
-    ]
-  },
   "SakikoMod:MusicDrawPileViewScreen": {
     "TEXT": [
-      "每拥有12层 音符 时，从这里抽一张牌。",
+      "通过卡牌、姿态等效果可以从这里抽牌。",
       "（这里显示的卡牌按照稀有度排列）",
       "返回",
       "歌单"
@@ -47,8 +42,8 @@
     "EXTRA_TEXT": [
       "目标牌堆（%s）是 #r空的 。",
       "目标牌堆 #r未指定 。",
-      "选择 %d 张牌",
-      "选择任意张牌"
+      "选择 %d 张牌。",
+      "没有符合要求的牌可供选择。"
     ]
   },
   "SakikoMod:ChaosInfo": {
@@ -71,6 +66,76 @@
       "起舞吧，起舞吧，起舞吧！吾之力量本源之愿的崩坏，无人可及的崩坏，将天地万象焚烧殆尽，自深渊降临吧，这就是人类最强威力的攻击手段，这就是究级攻击魔法， Explosion！",
       "爆裂吧，现实！粉碎吧，精神！Banishiment this world！",
       "绽裂吧暗之扉！解放所现黑暗，将终焉的王之力贯彻虚空引路终世！"
+    ]
+  },
+  "SakikoMod:ObliviousAction": {
+    "TEXT": [
+      "选择的牌将被打出，然后消耗。"
+    ]
+  },
+  "SakikoMod:Remember": {
+    "TEXT": [
+      "选择的牌将加入手牌，打出这张牌会将其移除本场战斗。"
+    ]
+  },
+  "SakikoMod:AveMujica": {
+    "TEXT": [
+      "选择的牌被消耗时，将从卡组中永久移除。"
+    ]
+  },
+  "SakikoMod:BlackBirthday": {
+    "TEXT": [
+      "选择的牌被消耗时，将从卡组中永久升级。"
+    ]
+  },
+  "SakikoMod:Ether": {
+    "TEXT": [
+      "使其费用降低%d点。"
+    ]
+  },
+  "SakikoMod:FireBird_R": {
+    "TEXT": [
+      "使其打出后返回手牌，并在回合结束时被消耗。"
+    ]
+  },
+  "SakikoMod:Futatsunotsuki": {
+    "TEXT": [
+      "使其费用增加1点，并在打出时复制。"
+    ]
+  },
+  "SakikoMod:Louder_R": {
+    "TEXT": [
+      "使其打出时移除本场战斗。"
+    ]
+  },
+  "SakikoMod:Symbol_I": {
+    "TEXT": [
+      "使其基础伤害提高%d点。"
+    ]
+  },
+  "SakikoMod:Symbol_II": {
+    "TEXT": [
+      "使其接下来%d次打出时，抽%d张牌。"
+    ]
+  },
+  "SakikoMod:Symbol_III": {
+    "TEXT": [
+      "使其数值减半，打出时使你恢复%d点生命值。"
+    ]
+  },
+  "SakikoMod:Symbol_IV": {
+    "TEXT": [
+      "使其打出时为你提供%d点格挡。"
+    ]
+  },
+  "SakikoMod:MoonLightDiscard": {
+    "TEXT": [
+      "使变为白月光，并加入弃牌堆。"
+    ]
+  },
+  "SakikoMod:VoidOrder": {
+    "TEXT": [
+      "使其保留，然后将其费用随机化。"
     ]
   }
 }

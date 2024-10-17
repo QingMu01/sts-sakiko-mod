@@ -6,11 +6,14 @@ import basemod.abstracts.CustomSavable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.AbstractMusic;
+
+import java.lang.reflect.Type;
 
 public abstract class AbstractSakikoRelic extends CustomRelic implements CustomSavable<Integer> {
 
@@ -50,6 +53,12 @@ public abstract class AbstractSakikoRelic extends CustomRelic implements CustomS
     @Override
     public Integer onSave() {
         return this.amount;
+    }
+
+    @Override
+    public Type savedType() {
+        return new TypeToken<Integer>() {
+        }.getType();
     }
 
     public void triggerOnPlayMusicCard(AbstractMusic music) {

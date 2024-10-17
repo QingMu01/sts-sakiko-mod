@@ -33,13 +33,17 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
     public String modifyDescription(String rawDescription, AbstractCard card) {
         CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
         String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
-        if (!card.keywords.contains(SakikoConst.KEYWORD_EARTH)) {
-            card.keywords.add(SakikoConst.KEYWORD_EARTH);
-        }
         if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
             return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.block);
         }
         return String.format(realDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalBlock(card));
+    }
+
+    @Override
+    public void onInitialApplication(AbstractCard card) {
+        if (!card.keywords.contains(SakikoConst.KEYWORD_EARTH)) {
+            card.keywords.add(SakikoConst.KEYWORD_EARTH);
+        }
     }
 
     @Override
