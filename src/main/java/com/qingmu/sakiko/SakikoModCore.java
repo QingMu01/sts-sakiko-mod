@@ -38,6 +38,7 @@ import com.qingmu.sakiko.constant.ColorHelp;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.events.*;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
+import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.monsters.member.*;
 import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 import com.qingmu.sakiko.rewards.MusicCardReward;
@@ -195,6 +196,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         this.registerConfigUI();
         // 注册成员收集事件
         this.registerMemberCollect();
+        // 注册Boss战斗
+        this.registerBoss();
         // 设置解锁进阶
         this.unlockedAscension();
         // 添加歌单预览页面
@@ -371,6 +374,11 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(RanaMonster.NAME, 0));
         // 添加成员入侵事件概率
         BaseMod.addSaveField("chance", new InvasionChangeSaved());
+    }
+
+    public void registerBoss() {
+        BaseMod.addMonster(InnerDemonSakiko.ID, InnerDemonSakiko.NAME, () -> new InnerDemonSakiko(0.0F, 0.0F));
+        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(InnerDemonSakiko.NAME, 0));
     }
 
 }

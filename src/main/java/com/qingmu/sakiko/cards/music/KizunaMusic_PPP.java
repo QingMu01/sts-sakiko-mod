@@ -23,18 +23,24 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     @Override
     public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseBlock = this.musicNumber;
+
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += MemberHelper.getBandMemberCount();
         super.applyPowers();
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
+
+        this.isBlockModified = (this.magicNumber != this.baseMagicNumber);
+        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
     }
 
     @Override
     public void play() {
         AbstractGameAction[] actions = new AbstractGameAction[this.magicNumber];
         for (int i = 0; i < actions.length; i++) {
-            actions[i] = new GainBlockAction(this.m_source, this.m_source, this.musicNumber);
+            actions[i] = new GainBlockAction(this.m_source, this.m_source, this.block);
         }
         this.submitActionsToTop(actions);
     }

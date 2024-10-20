@@ -18,7 +18,7 @@ public class Louder_R extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Louder_R.png";
 
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(FireBird_R.class.getSimpleName()));
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(Louder_R.class.getSimpleName()));
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;

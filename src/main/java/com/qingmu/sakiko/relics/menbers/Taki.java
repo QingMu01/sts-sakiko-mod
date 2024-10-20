@@ -1,10 +1,10 @@
 package com.qingmu.sakiko.relics.menbers;
 
+import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -15,8 +15,7 @@ public class Taki extends AbstractBandMember {
 
     public Taki() {
         super(ID, IMG_PATH);
-        PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(KokoroNoKabePower.POWER_ID);
-        this.tips.add(new PowerTip(powerStrings.NAME, powerStrings.DESCRIPTIONS[0]));
+        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_KABE),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_KABE)));
     }
 
 

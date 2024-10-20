@@ -75,6 +75,7 @@ public class UseMusicCardActionPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if (___targetCard instanceof AbstractMusic && (AbstractDungeon.player.hand.group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
+                // 处理打出时立即演奏
                 if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID) || ___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
                     CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
                     __instance.isDone = true;
@@ -90,7 +91,9 @@ public class UseMusicCardActionPatch {
                 }
                 AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
                 AbstractDungeon.player.cardInUse = null;
+                AbstractDungeon.player.hand.refreshHandLayout();
                 ___targetCard.lighten(false);
+                ___targetCard.setAngle(0.0F,true);
                 ___targetCard.unfadeOut();
                 ___targetCard.stopGlowing();
                 ___targetCard.untip();

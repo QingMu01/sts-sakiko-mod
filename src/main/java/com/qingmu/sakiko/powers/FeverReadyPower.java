@@ -25,8 +25,8 @@ public class FeverReadyPower extends AbstractPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
-        this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
-        this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
+        this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
+        this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
 
         this.updateDescription();
     }
@@ -49,7 +49,7 @@ public class FeverReadyPower extends AbstractPower {
         if (this.amount >= 4) {
             this.flash();
             this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverPower(this.owner, 1)));
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new FeverPower(this.owner, 1), 1));
         }
     }
 

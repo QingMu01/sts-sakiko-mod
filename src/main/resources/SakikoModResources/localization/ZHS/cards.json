@@ -9,7 +9,7 @@
   },
   "SakikoMod:TwoInOne": {
     "NAME": "两位一体",
-    "DESCRIPTION": " sakikomod:演奏者 ：进入 sakikomod:创作者 。 NL 否则，进入 sakikomod:演奏者 。"
+    "DESCRIPTION": " sakikomod:创作者 ：进入 sakikomod:演奏者 。 NL 否则，进入 sakikomod:创作者 。"
   },
   "SakikoMod:Professional": {
     "NAME": "职业素养",
@@ -73,7 +73,7 @@
   },
   "SakikoMod:WalkThrough": {
     "NAME": "协同排练",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 进入 sakikomod:演奏者 。"
+    "DESCRIPTION": "造成 !D! 点伤害。每有一位队友，这张牌的伤害提高 !M! 点。 NL 进入 sakikomod:演奏者 。"
   },
   "SakikoMod:UntouchableMemories": {
     "NAME": "无法触及的回忆",
@@ -158,7 +158,8 @@
   },
   "SakikoMod:SecretThought": {
     "NAME": "隐秘思想",
-    "DESCRIPTION": " sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。"
+    "DESCRIPTION": " sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。",
+    "UPGRADE_DESCRIPTION": "固有 NL sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。"
   },
   "SakikoMod:FallApart": {
     "NAME": "分崩离析",
@@ -190,8 +191,8 @@
   },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
-    "DESCRIPTION": "演奏待演奏区的前 !M! 张牌。 NL 消耗 。",
-    "UPGRADE_DESCRIPTION": "演奏待演奏区的前 !M! 张牌。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏者 ：抽 !M! 张牌。 NL 否则，进入 sakikomod:演奏者 。",
+    "UPGRADE_DESCRIPTION": " 保留 NL sakikomod:演奏者 ：抽 !M! 张牌。 NL 否则，进入 sakikomod:演奏者 。"
   },
   "SakikoMod:DisharmonyNote": {
     "NAME": "不和谐音符",
@@ -239,7 +240,8 @@
   },
   "SakikoMod:MaskerFate": {
     "NAME": "人偶的命运",
-    "DESCRIPTION": " 不能被打出 。 NL 抽到时 sakikomod:忘却 !M! 。",
+    "DESCRIPTION": " 不能被打出 。 NL 丢弃时 sakikomod:忘却 !M! 。",
+    "UPGRADE_DESCRIPTION": " 不能被打出 。 NL 丢弃时最多 sakikomod:忘却 !M! 。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出。"
     ]
@@ -348,17 +350,17 @@
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，接下来 !SakikoMod:MN! 次打出这张牌时，抽 !M! 张牌。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，接下来 !SakikoMod:MN! 次打出时，抽 !M! 张牌。"
   },
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，使其数值变为原本的一半，打出这张牌时，恢复 !SakikoMod:MN! 点生命值。 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，使其数值变为原本的一半，打出时，恢复 !SakikoMod:MN! 点生命值。 消耗 。"
   },
   "SakikoMod:Symbol_IV": {
     "NAME": "Symbol IV:Earth",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，打出这张牌时，获得 !SakikoMod:MN! 点 格挡 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 1 张牌，打出时，获得 !SakikoMod:MN! 点 格挡 。"
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
@@ -368,17 +370,17 @@
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，这张牌被 消耗 时，将从卡组中永久移除。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将从卡组中永久移除。 NL 消耗 。"
   },
   "SakikoMod:Angles": {
     "NAME": "Angles",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：造成 !SakikoMod:MN! 点伤害 !M! 次，这张牌的攻击次数受队友数量加成。"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害 !M! 次，这张牌的攻击次数受队友数量加成。"
   },
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，这张牌被 消耗 时，将从卡组中 升级 。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将从卡组中 升级 。 NL 消耗 。"
   },
   "SakikoMod:ChoirSChoir": {
     "NAME": "Choir 'S' Choir",
@@ -394,7 +396,7 @@
   "SakikoMod:Mas_uerade": {
     "NAME": "Mas?uerade Rhapsody Re?uest ",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人失去 !SakikoMod:MN! 点生命。"
+    "DESCRIPTION": " sakikomod:演奏 ：使所有敌人失去 !D! 点生命。"
   },
   "SakikoMod:KamisamaBaka": {
     "NAME": "神明、笨蛋",
@@ -410,7 +412,8 @@
   "SakikoMod:NingenUta_CryChic": {
     "NAME": "想要成为人类之歌",
     "MINI_TITLE": "CRYCHIC",
-    "DESCRIPTION": " sakikomod:白月光 ， sakikomod:音乐能力 NL sakikomod:演奏 ：你获得增益状态时，额外获得 !SakikoMod:MN! 层。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL sakikomod:演奏 ：你首次获得增益状态时，额外获得 1 层。",
+    "UPGRADE_DESCRIPTION": " sakikomod:白月光 ， sakikomod:音乐能力 NL sakikomod:演奏 ：你首次获得增益状态时，额外获得 1 层。"
   },
   "SakikoMod:Haruhikage_CryChic": {
     "NAME": "春日影",
@@ -420,7 +423,7 @@
   "SakikoMod:KizunaMusic_PPP": {
     "NAME": "Kizuna Music",
     "MINI_TITLE": "Poppin'Party!",
-    "DESCRIPTION": " sakikomod:演奏 :获得 !SakikoMod:MN! 点 格挡 !M! 次，这张牌的格挡次数受队友数量影响。"
+    "DESCRIPTION": " sakikomod:演奏 :获得 !B! 点 格挡 !M! 次。 NL 这张牌的格挡次数受队友数量影响。"
   },
   "SakikoMod:StarBeat_PPP": {
     "NAME": "星之鼓动",
@@ -455,7 +458,7 @@
   "SakikoMod:A2Z_PP": {
     "NAME": "天下统一 A to Z",
     "MINI_TITLE": "Pastel*Palettes",
-    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对全部敌人造成 !SakikoMod:MN! 点伤害，这张牌每有一点 sakikomod:热度 ，伤害提高 !M! 点。"
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对全部敌人造成 !D! 点伤害，这张牌每有一点 sakikomod:热度 ，伤害提高 !M! 点。"
   },
   "SakikoMod:Egao_HHW": {
     "NAME": "笑容管弦乐",
@@ -481,7 +484,7 @@
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
     "MINI_TITLE": "RAISE A SUILEN",
-    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对目标造成 !SakikoMod:MN! 点伤害，这张牌每有一点 sakikomod:热度 额外造成一次伤害。",
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：对目标造成 !D! 点伤害，这张牌每有一点 sakikomod:热度 额外造成一次伤害。",
     "EXTENDED_DESCRIPTION": [
       " NL （当前造成%d次伤害）"
     ]

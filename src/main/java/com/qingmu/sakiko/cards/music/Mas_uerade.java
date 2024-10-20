@@ -25,6 +25,12 @@ public class Mas_uerade extends AbstractMusic {
         this.isMultiDamage = true;
     }
 
+    @Override
+    public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.applyPowers();
+    }
 
     @Override
     public void play() {

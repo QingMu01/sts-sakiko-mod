@@ -22,6 +22,8 @@ public class FearNoForgotten extends AbstractSakikoCard {
         this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
 
         this.initBaseAttr(0, 0, 0, 1);
+        this.setUpgradeAttr(0, 0, 0, 0);
+
         this.setExhaust(true, true);
         this.setInnate(false, true);
     }

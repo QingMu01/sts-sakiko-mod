@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.qingmu.sakiko.constant.SakikoEnum;
 
 public class AdventusAction extends AbstractGameAction {
 
@@ -19,6 +20,14 @@ public class AdventusAction extends AbstractGameAction {
     public void update() {
         if (this.player.hand.size() == BaseMod.MAX_HAND_SIZE) {
             this.player.createHandIsFullDialog();
+            this.isDone = true;
+            return;
+        }
+        if (this.player.drawPile.isEmpty() && this.player.discardPile.isEmpty()) {
+            this.isDone = true;
+            return;
+        }
+        if (this.player.drawPile.isEmpty() && this.player.discardPile.size() == this.player.discardPile.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)).count()) {
             this.isDone = true;
             return;
         }

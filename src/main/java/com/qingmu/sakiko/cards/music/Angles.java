@@ -22,15 +22,17 @@ public class Angles extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(4, 2, 2, 1);
+        this.initMusicAttr(4, 2, 2, 0);
     }
 
     @Override
     public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += MemberHelper.getBandMemberCount();
-        this.magicNumber = this.baseMagicNumber;
         super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
     }
@@ -39,7 +41,7 @@ public class Angles extends AbstractMusic {
     public void play() {
         AbstractGameAction[] actions = new AbstractGameAction[this.magicNumber];
         for (int i = 0; i < actions.length; i++) {
-            actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.musicNumber, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
+            actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
         }
         this.submitActionsToTop(actions);
     }

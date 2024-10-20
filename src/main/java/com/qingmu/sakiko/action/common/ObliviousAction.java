@@ -2,6 +2,7 @@ package com.qingmu.sakiko.action.common;
 
 import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.math.MathUtils;
+import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -20,9 +21,13 @@ public class ObliviousAction extends CardSelectorAction {
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(ObliviousAction.class.getSimpleName()));
 
-    // 忘却 默认方法
     public ObliviousAction(int amount) {
-        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, false, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, action -> {
+        this(amount, false);
+    }
+
+    // 忘却 默认方法
+    public ObliviousAction(int amount, boolean allowUnderAmount) {
+        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, action -> {
             for (AbstractCard card : action.selected) {
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
                 CardModifierManager.addModifier(card, new ObliviousModifier());
@@ -38,6 +43,7 @@ public class ObliviousAction extends CardSelectorAction {
                 if (card instanceof TriggerOnOblivion) {
                     ((TriggerOnOblivion) card).triggerOnOblivion();
                 }
+                AbstractDungeon.actionManager.addToBottom(new UnlimboAction(card));
             }
         }, CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE);
     }

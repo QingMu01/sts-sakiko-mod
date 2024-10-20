@@ -25,6 +25,6 @@ public class Kimewaza extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new AutoPlayPileCardAction(999,false,true, AutoPlayPileCardAction.DrawPileType.MUSIC_PILE));
+        this.addToBot(new AutoPlayPileCardAction(999, true, AutoPlayPileCardAction.DrawPileType.MUSIC_PILE));
     }
 }

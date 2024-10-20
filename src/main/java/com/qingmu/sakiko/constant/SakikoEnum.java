@@ -30,7 +30,7 @@ public class SakikoEnum {
     }
 
     /*
-     * 新增稀有度，音乐基础、音乐普通、音乐罕见、音乐稀有
+     * 新增稀有度
      * */
     public static class CardRarityEnum {
         @SpireEnum

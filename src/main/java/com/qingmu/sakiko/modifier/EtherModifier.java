@@ -30,7 +30,7 @@ public class EtherModifier extends AbstractMusicCardModifier {
         CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
         String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
         if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
-            return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], Math.min(this.costDown, card.costForTurn));
+            return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.costDown);
         }
         return String.format(realDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalCostDown(card));
     }

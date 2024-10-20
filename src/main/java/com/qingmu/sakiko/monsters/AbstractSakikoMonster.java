@@ -3,7 +3,6 @@ package com.qingmu.sakiko.monsters;
 import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -112,10 +111,15 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     }
 
     @Override
-    public void damage(DamageInfo info) {
-        super.damage(info);
-        if (this.canPhaseSwitch()) {
-            this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
+    public void die() {
+        if (AbstractDungeon.getCurrRoom().cannotLose) {
+            if (this.canPhaseSwitch()) {
+                this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
+            } else {
+                super.die();
+            }
+        } else {
+            super.die();
         }
     }
 

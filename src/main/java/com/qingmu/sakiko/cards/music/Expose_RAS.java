@@ -34,7 +34,7 @@ public class Expose_RAS extends AbstractMusic {
     public void triggerInBufferPlayedMusic(AbstractMusic music) {
         if (this.amount > 0) {
             this.amount--;
-            this.addToBot(new AutoPlayPileCardAction(1, true, false, AutoPlayPileCardAction.DrawPileType.DRAW_PILE));
+            this.addToBot(new AutoPlayPileCardAction(false, AutoPlayPileCardAction.DrawPileType.DRAW_PILE));
         }
     }
 

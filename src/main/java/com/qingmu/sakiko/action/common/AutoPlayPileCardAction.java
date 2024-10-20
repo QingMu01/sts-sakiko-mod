@@ -25,7 +25,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
     private final DrawPileType type;
     private final CardGroup targetPile;
 
-    public AutoPlayPileCardAction(int amount, boolean allowShuffle, boolean exhaustCards, DrawPileType type) {
+    private AutoPlayPileCardAction(int amount, boolean allowShuffle, boolean exhaustCards, DrawPileType type) {
         this.player = AbstractDungeon.player;
         this.amount = amount;
         this.type = type;
@@ -34,24 +34,44 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         this.targetPile = this.getCardGroup(type);
     }
 
+    //
+    public AutoPlayPileCardAction(int amount, boolean exhaustCards, DrawPileType type) {
+        this(amount, amount == 1, exhaustCards, type);
+    }
+
+    public AutoPlayPileCardAction(boolean exhaustCards, DrawPileType type) {
+        this(1, true, exhaustCards, type);
+    }
+
     @Override
     public void update() {
-        if (this.amount == 0) {
+        if (this.amount <= 0) {
             this.isDone = true;
             return;
         }
         if (targetPile.isEmpty()) {
             if (this.allowShuffle) {
+                int count = 0;
                 if (this.type == DrawPileType.MUSIC_PILE) {
-                    if (AbstractDungeon.player.discardPile.group.stream().anyMatch(card -> card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT))) {
+                    for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+                        if (card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
                         this.addToTop(new AutoPlayPileCardAction(this.amount, true, this.exhaustCards, DrawPileType.MUSIC_PILE));
                         this.addToTop(new ShuffleMusicDeckAction());
-                    } else {
-                        this.addToTop(new AutoPlayPileCardAction(this.amount, true, this.exhaustCards, DrawPileType.DRAW_PILE));
                     }
                 } else {
-                    this.addToTop(new AutoPlayPileCardAction(this.amount, true, this.exhaustCards, DrawPileType.DRAW_PILE));
-                    this.addToTop(new EmptyDeckShuffleAction());
+                    for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+                        if (!(card instanceof AbstractMusic) && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        this.addToTop(new AutoPlayPileCardAction(this.amount, true, this.exhaustCards, DrawPileType.DRAW_PILE));
+                        this.addToTop(new EmptyDeckShuffleAction());
+                    }
                 }
             }
             this.isDone = true;
@@ -66,7 +86,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         }
         AbstractDungeon.player.limbo.group.add(card);
         card.current_y = -200.0F * Settings.scale;
-        card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 350.0F, (Settings.WIDTH / 2.0F) - 150.0F);
+        card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 200.0F, (Settings.WIDTH / 2.0F) + 200.0F);
         card.target_y = MathUtils.random((Settings.HEIGHT / 2.0F) - 50.0F, (Settings.HEIGHT / 2.0F) + 50.0F);
         card.targetAngle = 0.0F;
         card.lighten(false);
@@ -74,7 +94,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         card.targetDrawScale = 0.75F;
         card.applyPowers();
         this.addToTop(new NewQueueCardAction(card, AbstractDungeon.getRandomMonster(), false, true));
-        if(!(card instanceof AbstractMusic)){
+        if (!(card instanceof AbstractMusic)) {
             this.addToTop(new UnlimboAction(card));
         }
         this.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));

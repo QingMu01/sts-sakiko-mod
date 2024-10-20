@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.powers.IntangiblePower;
+import com.megacrit.cardcrawl.powers.IntangiblePlayerPower;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.inteface.CanPlayMusic;
 import com.qingmu.sakiko.utils.FontBitmapHelp;
@@ -57,7 +57,7 @@ public class ShipPower extends AbstractPower implements CanPlayMusic {
         if (this.amount > 0) {
             this.flash();
             this.addToTop(new ReducePowerAction(this.owner, this.owner, this, 1));
-            this.addToTop(new ApplyPowerAction(this.owner, this.owner, new IntangiblePower(this.owner, 1), 1));
+            this.addToTop(new ApplyPowerAction(this.owner, this.owner, new IntangiblePlayerPower(this.owner, 1), 1));
             return false;
         } else {
             return true;

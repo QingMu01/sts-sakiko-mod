@@ -24,7 +24,7 @@ public class CreatorStance extends AbstractSakikoStance {
     public void onEnterStance() {
         CardCrawlGame.sound.play("STANCE_ENTER_CALM");
         AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.SKY, true));
-        this.submitActionsToBot(new DrawMusicAction(3));
+        this.submitActionsToBot(new DrawMusicAction(2));
     }
 
 

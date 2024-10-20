@@ -50,6 +50,8 @@ public class GameActionManagerPatch {
                 MusicBattleFiled.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
                 MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
                 MusicBattleFiled.BattalInfoPatch.stanceChangedThisTurn.set(AbstractDungeon.player, 0);
+                MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).clear();
+                MusicBattleFiled.MusicQueue.musicQueue.get(__instance).clear();
             } catch (NullPointerException ignored) {
             }
         }

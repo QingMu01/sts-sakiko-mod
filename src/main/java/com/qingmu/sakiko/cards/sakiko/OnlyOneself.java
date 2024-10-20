@@ -19,8 +19,8 @@ public class OnlyOneself extends AbstractSakikoCard {
 
     public OnlyOneself() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 14);
-        this.setUpgradeAttr(2, 0, 0, 6);
+        this.initBaseAttr(2, 0, 0, 12);
+        this.setUpgradeAttr(2, 0, 0, 4);
         this.setEthereal(true, true);
     }
 

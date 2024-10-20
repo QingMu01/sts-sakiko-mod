@@ -18,7 +18,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
     private int count = 0;
     private boolean shuffled = false;
 
-    private static CardGroup tmp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
+    private CardGroup tmp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
 
     private List<AbstractCard> moon_light = new ArrayList<>();
 

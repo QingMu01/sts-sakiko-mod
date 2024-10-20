@@ -186,8 +186,8 @@
       " 枚 #y金币 。"
     ]
   },
-  "SakikoMod:MoonsPower": {
-    "NAME": "双月",
+  "SakikoMod:DoublePlayPower": {
+    "NAME": "双重演奏",
     "DESCRIPTIONS": [
       "你的下 #b",
       " 次 #y演奏 生效两次。"
@@ -229,7 +229,7 @@
   "SakikoMod:NingenUtaPower": {
     "NAME": "想要成为人类之歌",
     "DESCRIPTIONS": [
-      "你获得增益状态时，额外获得 #b",
+      "你首次获得增益状态时，额外获得 #b",
       " 层。"
     ]
   },

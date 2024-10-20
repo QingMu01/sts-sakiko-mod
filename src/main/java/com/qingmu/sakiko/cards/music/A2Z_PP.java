@@ -2,7 +2,6 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -14,13 +13,15 @@ public class A2Z_PP extends AbstractMusic {
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/A2Z_PP.png";
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
 
     public A2Z_PP() {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.initMusicAttr(6, 2, 2, 1);
+
+        this.isMultiDamage = true;
     }
 
     @Override
@@ -30,20 +31,9 @@ public class A2Z_PP extends AbstractMusic {
 
     @Override
     public void applyPowers() {
-        int realBaseMusicNumber = this.baseMusicNumber;
-        this.baseMusicNumber += this.amount * this.magicNumber;
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
         super.applyPowers();
-        this.baseMusicNumber = realBaseMusicNumber;
-        this.isModifiedMusicNumber = (this.musicNumber != this.baseMusicNumber);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseMusicNumber = this.baseMusicNumber;
-        this.baseMusicNumber += this.amount * this.magicNumber;
-        super.calculateCardDamage(mo);
-        this.baseMusicNumber = realBaseMusicNumber;
-        this.isModifiedMusicNumber = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override

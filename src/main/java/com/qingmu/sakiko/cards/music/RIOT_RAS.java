@@ -35,11 +35,18 @@ public class RIOT_RAS extends AbstractMusic {
     }
 
     @Override
+    public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.applyPowers();
+    }
+
+    @Override
     public void play() {
         AbstractGameAction[] actions = new AbstractGameAction[this.amount + 1];
-        actions[0] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.musicNumber, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
+        actions[0] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
         for (int i = 1; i < actions.length; i++) {
-            actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.musicNumber, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
+            actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
         }
         this.submitActionsToTop(actions);
     }

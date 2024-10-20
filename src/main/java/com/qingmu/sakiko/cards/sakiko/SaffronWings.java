@@ -25,8 +25,8 @@ public class SaffronWings extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.tags.add(CardTags.HEALING);
 
-        this.initBaseAttr(2, 13, 0, 0);
-        this.setUpgradeAttr(2, 5, 0, 0);
+        this.initBaseAttr(2, 12, 0, 0);
+        this.setUpgradeAttr(2, 4, 0, 0);
     }
 
     @Override

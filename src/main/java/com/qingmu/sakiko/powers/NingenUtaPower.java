@@ -2,7 +2,6 @@ package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -10,6 +9,9 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.FontBitmapHelp;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber {
 
@@ -21,12 +23,14 @@ public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber
     private static final String path48 = "SakikoModResources/img/powers/Boomerang48.png";
     private static final String path128 = "SakikoModResources/img/powers/Boomerang128.png";
 
-    public NingenUtaPower(AbstractCreature owner, int amount) {
+    private Set<String> applied = new HashSet<>();
+
+    public NingenUtaPower(AbstractCreature owner) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = amount;
+        this.amount = -1;
 
 //        this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
 //        this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
@@ -43,16 +47,13 @@ public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber
 
     @Override
     public void onApplyPower(AbstractPower power, AbstractCreature target, AbstractCreature source) {
-        if (power.type == PowerType.BUFF && target.equals(this.owner)) {
-            this.addToBot(new ApplyPowerAction(this.owner, this.owner, power, this.amount));
+        if (this.applied.contains(power.ID) || this.owner.hasPower(power.ID) || power.amount <= 0) {
+            return;
         }
-    }
-
-    @Override
-    public void reducePower(int reduceAmount) {
-        this.amount -= reduceAmount;
-        if (this.amount <= 0) {
-            this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
+        if (power.type == PowerType.BUFF && target.equals(this.owner)) {
+            this.flash();
+            this.addToBot(new ApplyPowerAction(this.owner, null, power, this.amount));
+            this.applied.add(power.ID);
         }
     }
 }

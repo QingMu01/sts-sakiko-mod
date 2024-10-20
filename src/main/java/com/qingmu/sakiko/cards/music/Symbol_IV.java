@@ -25,7 +25,6 @@ public class Symbol_IV extends AbstractMusic {
     public Symbol_IV() {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
 
         this.initMusicAttr(3, 3);
     }

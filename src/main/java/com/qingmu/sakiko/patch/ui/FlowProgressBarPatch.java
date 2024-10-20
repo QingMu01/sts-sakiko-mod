@@ -4,7 +4,6 @@ import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -23,7 +22,7 @@ public class FlowProgressBarPatch {
 
 
     public static void Postfix(AbstractCreature __instance, SpriteBatch sb, Color ___hbTextColor, float ___hbYOffset) {
-        if (__instance instanceof TogawaSakiko || (__instance.isPlayer && ((AbstractPlayer) __instance).hasRelic("PrismaticShard"))) {
+        if (__instance instanceof TogawaSakiko) {
             float x = __instance.hb.cX - __instance.hb.width / 2.0F;
             float y = __instance.hb.cY - __instance.hb.height / 2.0F + ___hbYOffset;
             int currentAmount = MusicBattleFiled.BattalInfoPatch.stanceChangedThisTurn.get(__instance) % SakikoConst.STANCE_CHANGE_THRESHOLD_USED;

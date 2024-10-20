@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.utility.DiscardToHandAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
@@ -28,8 +29,10 @@ public class NoteTorrent extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        this.baseDamage += this.magicNumber;
-        this.addToBot(new DiscardToHandAction(this));
+        if (AbstractDungeon.player.discardPile.group.contains(this)){
+            this.baseDamage += this.magicNumber;
+            this.addToBot(new DiscardToHandAction(this));
+        }
     }
 
     @Override

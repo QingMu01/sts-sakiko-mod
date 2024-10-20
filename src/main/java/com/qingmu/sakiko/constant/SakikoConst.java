@@ -15,6 +15,10 @@ public class SakikoConst {
 
     public static final String KEYWORD_PREFIX = "sakikomod:";
 
+    public static final String KEYWORD_KIRAMEI = KEYWORD_PREFIX + "KIRAMEI";
+    public static final String KEYWORD_FUKKEN = KEYWORD_PREFIX + "FUKKEN";
+    public static final String KEYWORD_KABE = KEYWORD_PREFIX + "KOKORONOKABE";
+
     public static final String KEYWORD_MEMBER = KEYWORD_PREFIX + "MEMBER";
 
     public static final String KEYWORD_CREATOR = KEYWORD_PREFIX + "CREATOR";

@@ -22,14 +22,11 @@ public class DrawMusicAction extends AbstractGameAction {
 
     private final CardGroup musicDrawPile;
 
-    private final long discardMusicCount;
+    private int discardMusicCount;
 
     public DrawMusicAction(int amount) {
         this.setValues(AbstractDungeon.player, source, amount);
         this.musicDrawPile = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
-        this.discardMusicCount = AbstractDungeon.player.discardPile.group.stream()
-                .filter(card -> card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT))
-                .count();
         this.actionType = ActionType.DRAW;
         if (Settings.FAST_MODE) {
             this.duration = Settings.ACTION_DUR_XFAST;
@@ -38,9 +35,13 @@ public class DrawMusicAction extends AbstractGameAction {
         }
     }
 
-
     @Override
     public void update() {
+        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+            if (card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)){
+                this.discardMusicCount++;
+            }
+        }
         if (AbstractDungeon.player.hasPower("No Draw")) {
             AbstractDungeon.player.getPower("No Draw").flash();
             this.isDone = true;
@@ -69,22 +70,22 @@ public class DrawMusicAction extends AbstractGameAction {
             return;
         }
         this.draw();
+        AbstractDungeon.player.hand.refreshHandLayout();
     }
 
     private void draw() {
         CardCrawlGame.sound.playAV("CARD_DRAW_8", -0.12F, 0.25F);
         AbstractCard c = this.musicDrawPile.getTopCard();
-        c.current_x = CardGroup.DRAW_PILE_X;
-        c.current_y = CardGroup.DRAW_PILE_Y;
+        c.current_x = Settings.WIDTH * 0.04F;
+        c.current_y = Settings.HEIGHT * 0.25F;
         c.setAngle(0.0F, true);
         c.lighten(false);
         c.drawScale = 0.12F;
         c.targetDrawScale = 0.75F;
         c.triggerWhenDrawn();
+        this.musicDrawPile.removeCard(c);
         AbstractDungeon.player.hand.addToHand(c);
-        this.amount--;
         logger.info("Draw Music Card: {}", c.name);
-        this.musicDrawPile.removeTopCard();
         for (AbstractPower p : AbstractDungeon.player.powers) {
             p.onCardDraw(c);
         }
@@ -92,6 +93,7 @@ public class DrawMusicAction extends AbstractGameAction {
             r.onCardDraw(c);
         }
         AbstractDungeon.player.onCardDrawOrDiscard();
+        --this.amount;
     }
 }
 

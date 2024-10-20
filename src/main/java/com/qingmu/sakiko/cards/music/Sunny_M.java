@@ -21,16 +21,19 @@ public class Sunny_M extends AbstractMusic {
     }
 
     @Override
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+        this.amount++;
+    }
+
+    @Override
     public void applyPowers() {
-        int realBaseMusicNumber = this.baseMusicNumber;
-        this.baseMusicNumber += this.amount;
+        this.applyPowersToMusicNumber();
+        this.baseBlock = this.musicNumber + (this.amount * this.magicNumber);
         super.applyPowers();
-        this.baseMusicNumber = realBaseMusicNumber;
-        this.isModifiedMusicNumber = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
     public void play() {
-        this.addToTop(new GainBlockAction(this.m_source, this.musicNumber));
+        this.addToTop(new GainBlockAction(this.m_source, this.block));
     }
 }

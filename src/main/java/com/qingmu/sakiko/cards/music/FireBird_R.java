@@ -32,7 +32,7 @@ public class FireBird_R extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, false, card -> !CardModifierManager.hasModifier(card, FireBirdModifier.ID), card -> null, action -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, true, card -> !CardModifierManager.hasModifier(card, FireBirdModifier.ID), card -> null, action -> {
             for (AbstractCard card : action.selected) {
                 CardModifierManager.addModifier(card, new FireBirdModifier(realMusicNumber));
             }

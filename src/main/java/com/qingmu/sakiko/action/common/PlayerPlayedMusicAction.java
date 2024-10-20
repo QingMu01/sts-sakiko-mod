@@ -36,7 +36,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     private final AbstractMusic music;
     public boolean exhaustCard;
-    private boolean vfxDone = false;
 
     public PlayerPlayedMusicAction(AbstractMusic music) {
         this.music = music;
@@ -110,24 +109,15 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (!this.vfxDone) {
-            this.music.target_x = Settings.WIDTH / 2.0F;
-            this.music.target_y = Settings.HEIGHT / 2.0F;
-            this.music.targetDrawScale = 0.7F;
-            this.music.hb.resize(AbstractCard.IMG_WIDTH_S, AbstractCard.IMG_HEIGHT_S);
-            if (this.music.current_x < Settings.WIDTH / 2.0F) return;
-            this.vfxDone = true;
-            this.addToBot(new UnlimboAction(music));
-        }
         List<AbstractPower> collect = this.source.powers.stream().filter(power -> power instanceof CanPlayMusic).collect(Collectors.toList());
         if (collect.isEmpty()) {
             this.music.play();
         } else {
             boolean canPlay = true;
             for (AbstractPower power : collect) {
-                canPlay = ((CanPlayMusic)power).canPlayMusic(this.music);
+                canPlay = ((CanPlayMusic) power).canPlayMusic(this.music);
             }
-            if (canPlay){
+            if (canPlay) {
                 this.music.play();
             }
         }
@@ -149,7 +139,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 AbstractDungeon.player.cardInUse = null;
             } else {
                 AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
-                queue.removeCard(this.music);
                 AbstractDungeon.player.cardInUse = null;
                 this.isDone = true;
             }
@@ -173,7 +162,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
         if (this.music.purgeOnUse) {
             AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
-            queue.removeCard(this.music);
             AbstractDungeon.player.cardInUse = null;
             this.isDone = true;
             return;
@@ -193,6 +181,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             this.music.onMoveToDiscard();
             queue.moveToDiscardPile(this.music);
         }
+        this.addToBot(new UnlimboAction(music));
         this.isDone = true;
     }
 }

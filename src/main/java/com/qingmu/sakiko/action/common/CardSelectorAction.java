@@ -145,6 +145,8 @@ public class CardSelectorAction extends AbstractGameAction {
                 card.unhover();
                 card.unfadeOut();
                 card.applyPowers();
+                card.setAngle(0.0F,true);
+                card.targetDrawScale = 1.0F;
             }
             if (!this.allowUnderAmount && this.candidate.size() <= this.amount) {
                 for (AbstractCard selectedCard : this.candidate.group) {
@@ -188,6 +190,7 @@ public class CardSelectorAction extends AbstractGameAction {
             this.player.hand.refreshHandLayout();
             this.releaseCards(candidate.group);
             this.releaseCards(cantSelectedList);
+            AbstractDungeon.gridSelectScreen.targetGroup.clear();
         }
     }
 
@@ -260,7 +263,9 @@ public class CardSelectorAction extends AbstractGameAction {
     }
 
     private void releaseCards(List<AbstractCard> cards) {
-        for (AbstractCard card : cards) {
+        Iterator<AbstractCard> iterator = cards.iterator();
+        while (iterator.hasNext()) {
+            AbstractCard card = iterator.next();
             CardGroup.CardGroupType location = CardSelectorFiled.location.get(card);
             if (location == CardGroup.CardGroupType.DRAW_PILE) {
                 this.player.drawPile.addToTop(card);
@@ -278,6 +283,7 @@ public class CardSelectorAction extends AbstractGameAction {
                 MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).addToTop(card);
             }
             CardSelectorFiled.location.set(card, null);
+            iterator.remove();
         }
     }
 
@@ -337,6 +343,7 @@ public class CardSelectorAction extends AbstractGameAction {
     public static boolean isCostEffective(AbstractCard card) {
         return notStatusOrCurseCard(card) && (card.cost >= 0 || card.costForTurn >= 0);
     }
+
     public static boolean isCostEffectiveButNOtZero(AbstractCard card) {
         return notStatusOrCurseCard(card) && (card.cost > 0 || card.costForTurn > 0);
     }

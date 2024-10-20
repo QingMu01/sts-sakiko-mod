@@ -46,13 +46,6 @@
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/3248151544/AnonMod.jar</systemPath>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>actlikeit</groupId>-->
-<!--            <artifactId>actlikeit</artifactId>-->
-<!--            <version>v1.2.8</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${Steam.path}/workshop/content/646570/1934902042/actlikeit.jar</systemPath>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>

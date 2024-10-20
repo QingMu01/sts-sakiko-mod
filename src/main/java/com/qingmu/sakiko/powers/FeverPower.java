@@ -28,8 +28,8 @@ public class FeverPower extends AbstractPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
-        this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 84, 84);
-        this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 32, 32);
+        this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
+        this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
 
         this.updateDescription();
     }
@@ -44,18 +44,6 @@ public class FeverPower extends AbstractPower {
         if (!card.purgeOnUse && this.amount > 0 && (card.costForTurn > 0 || card.cost == -1)) {
             this.flash();
             this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
-        }
-
-    }
-
-    @Override
-    public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
-        if (this.amount >= 999) {
-            this.amount = 999;
         }
     }
 

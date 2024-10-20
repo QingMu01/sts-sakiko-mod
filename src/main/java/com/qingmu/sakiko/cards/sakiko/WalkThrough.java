@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.stances.PlayerStance;
+import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class WalkThrough extends AbstractSakikoCard {
@@ -22,8 +23,17 @@ public class WalkThrough extends AbstractSakikoCard {
 
     public WalkThrough() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 8, 0, 0);
-        this.setUpgradeAttr(1, 3, 0, 0);
+        this.initBaseAttr(1, 6, 0, 2);
+        this.setUpgradeAttr(1, 3, 0, 2);
+    }
+
+    @Override
+    public void applyPowers() {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += MemberHelper.getBandMemberCount() * this.magicNumber;
+        super.applyPowers();
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.baseDamage != this.damage);
     }
 
     @Override

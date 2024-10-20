@@ -21,7 +21,7 @@ public class EndOfWorld extends AbstractSakikoCard implements TriggerOnOblivion 
 
     public EndOfWorld() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 13, 0, 2);
+        this.initBaseAttr(2, 13, 0, 1);
         this.setUpgradeAttr(2, 0, 0, 1);
 
         this.isMultiDamage = true;

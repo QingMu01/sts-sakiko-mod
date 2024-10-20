@@ -108,7 +108,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
         intentActions.add(new IntentAction.Builder()
                 .setWeight(20)
                 .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(0))
+                .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
                         new DamageAction(AbstractDungeon.player, this.damage.get(1), true)

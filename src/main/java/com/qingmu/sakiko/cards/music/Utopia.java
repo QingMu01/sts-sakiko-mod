@@ -26,9 +26,10 @@ public class Utopia extends AbstractMusic {
 
     @Override
     public void applyPowers() {
-        super.applyPowers();
+        this.applyPowersToMusicNumber();
         this.baseDamage = (int) (this.musicNumber * Math.pow(2, MemberHelper.getBandMemberCount()));
-        this.isDamageModified = MemberHelper.getBandMemberCount() > 0;
+        super.applyPowers();
+        this.isDamageModified = this.baseDamage != this.damage;
     }
 
     @Override

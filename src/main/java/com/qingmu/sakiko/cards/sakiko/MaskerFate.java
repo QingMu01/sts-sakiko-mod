@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.common.ObliviousAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MaskerFate extends AbstractSakikoCard {
@@ -19,8 +20,10 @@ public class MaskerFate extends AbstractSakikoCard {
 
     public MaskerFate() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
+
         this.initBaseAttr(-2, 0, 0, 1);
-        this.setUpgradeAttr(-2, 0, 0, 1);
+        this.setUpgradeAttr(-2, 0, 0, 0);
     }
 
     @Override
@@ -29,8 +32,9 @@ public class MaskerFate extends AbstractSakikoCard {
     }
 
     @Override
-    public void triggerWhenDrawn() {
-        this.addToBot(new ObliviousAction(this.magicNumber));
+    public void didDiscard() {
+        this.addToBot(new ObliviousAction(this.magicNumber, this.upgraded));
+
     }
 
     @Override

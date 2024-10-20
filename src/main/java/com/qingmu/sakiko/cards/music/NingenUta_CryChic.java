@@ -18,12 +18,21 @@ public class NingenUta_CryChic extends AbstractMusic {
     public NingenUta_CryChic() {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
 
-        this.initMusicAttr(1, 1);
+        this.initMusicAttr(0, 0, 1, 0);
+    }
+
+    @Override
+    public void upgrade() {
+        if (!this.upgraded){
+            this.tags.remove(SakikoEnum.CardTagEnum.MOONLIGHT);
+        }
+        super.upgrade();
     }
 
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new NingenUtaPower(this.m_source, this.musicNumber), this.musicNumber));
+        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new NingenUtaPower(this.m_source), this.magicNumber));
     }
 }

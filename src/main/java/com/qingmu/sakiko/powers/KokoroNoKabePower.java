@@ -64,7 +64,7 @@ public class KokoroNoKabePower extends AbstractPower {
      * */
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner) {
+        if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner && damageAmount > 0) {
             // 免伤
             if (this.owner.isPlayer && ((AbstractPlayer) this.owner).hasRelic(Combination_TMSK.ID)) {
                 AbstractRelic relic = ((AbstractPlayer) this.owner).getRelic(Combination_TMSK.ID);
