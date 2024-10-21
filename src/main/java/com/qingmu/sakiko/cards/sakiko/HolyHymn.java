@@ -19,8 +19,10 @@ public class HolyHymn extends AbstractSakikoCard {
 
     public HolyHymn() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 1);
-        this.setUpgradeAttr(2, 0, 0, 1);
+        this.initBaseAttr(3, 0, 0, 1);
+        this.setUpgradeAttr(3, 0, 0, 0);
+
+        this.setEthereal(true, false);
     }
 
     @Override

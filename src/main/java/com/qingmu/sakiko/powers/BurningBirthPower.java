@@ -1,16 +1,15 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.utils.FontBitmapHelp;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -45,11 +44,17 @@ public class BurningBirthPower extends AbstractPower {
     }
 
     @Override
-    public void onCardDraw(AbstractCard card) {
-        if (card.cost == -2 || card.costForTurn == -2 || !card.canPlay(card)) {
-            this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, 1, DamageInfo.DamageType.HP_LOSS)));
-            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
-            this.addToBot(new DrawCardAction(this.amount));
-        }
+    public void atStartOfTurnPostDraw() {
+        this.addToBot(new CardSelectorAction(DESCRIPTIONS[2], this.amount, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, action -> {
+            int count = 0;
+            for (AbstractCard card : action.selected) {
+                if (card.costForTurn <= 0) {
+                    count++;
+                } else {
+                    count += card.costForTurn;
+                }
+            }
+            this.addToBot(new DrawCardAction(AbstractDungeon.player, count));
+        }, CardGroup.CardGroupType.HAND));
     }
 }

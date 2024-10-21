@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.relics.menbers;
 
+import basemod.abstracts.CustomSavable;
+import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -8,7 +10,9 @@ import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.powers.FallApartPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class Anon extends AbstractBandMember {
+import java.lang.reflect.Type;
+
+public class Anon extends AbstractBandMember implements CustomSavable<Integer> {
 
     public static final String ID = ModNameHelper.make(Anon.class.getSimpleName());
     private static final String IMG_PATH = "SakikoModResources/img/relics/members/anon_relic.png";
@@ -52,4 +56,21 @@ public class Anon extends AbstractBandMember {
             this.amount = 0;
         }
     }
+
+    @Override
+    public void onLoad(Integer integer) {
+        this.amount = integer;
+    }
+
+    @Override
+    public Integer onSave() {
+        return this.amount;
+    }
+
+    @Override
+    public Type savedType() {
+        return new TypeToken<Integer>() {
+        }.getType();
+    }
+
 }

@@ -2,7 +2,6 @@ package com.qingmu.sakiko.monsters.member;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
@@ -101,17 +100,7 @@ public class ManaMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(2))
                 .setMultiplier(this.multiCount)
-                .setActions(() -> {
-                    AbstractGameAction[] actions = new AbstractGameAction[this.multiCount * 2];
-                    for (int i = 0; i < actions.length; i++) {
-                        if (i % 2 == 0) {
-                            actions[i] = new AnimateFastAttackAction(this);
-                        } else {
-                            actions[i] = new DamageAction(AbstractDungeon.player, this.damage.get(2));
-                        }
-                    }
-                    return actions;
-                })
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
                 .build());
         return intentActions;
     }

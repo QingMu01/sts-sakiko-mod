@@ -17,7 +17,6 @@ public class NingenUta_CryChic extends AbstractMusic {
 
     public NingenUta_CryChic() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
 
         this.initMusicAttr(0, 0, 1, 0);
@@ -26,7 +25,7 @@ public class NingenUta_CryChic extends AbstractMusic {
     @Override
     public void upgrade() {
         if (!this.upgraded){
-            this.tags.remove(SakikoEnum.CardTagEnum.MOONLIGHT);
+            this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
         }
         super.upgrade();
     }

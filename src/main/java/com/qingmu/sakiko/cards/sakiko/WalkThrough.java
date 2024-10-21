@@ -37,6 +37,16 @@ public class WalkThrough extends AbstractSakikoCard {
     }
 
     @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        int realBaseDamage = this.baseDamage;
+        this.baseDamage += MemberHelper.getBandMemberCount() * this.magicNumber;
+        super.calculateCardDamage(mo);
+        this.baseDamage = realBaseDamage;
+        this.isDamageModified = (this.baseDamage != this.damage);
+
+    }
+
+    @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.submitActionsToBot(
                 new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),

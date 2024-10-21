@@ -42,7 +42,7 @@ public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0];
     }
 
     @Override

@@ -24,7 +24,7 @@
     "NAME": "便携音响",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "战斗开始时，打出一张随机 #y音乐 牌。"
+      "战斗开始时，从歌单中选择一张牌打出。"
     ]
   },
   "SakikoMod:NoteBook": {
@@ -130,25 +130,24 @@
     ]
   },
   "SakikoMod:Combination_ANSK": {
-    "NAME": "⌈ANOKO⌋",
-    "FLAVOR": "",
+    "NAME": "ANOKO",
+    "FLAVOR": "可以联机做梦的妙妙道具！",
     "DESCRIPTIONS": [
-      "开启故事的新篇章吧。"
+      "在篝火处休息后，将你的最大生命值翻倍。"
     ]
   },
   "SakikoMod:Combination_TMSK": {
-    "NAME": "双向月光",
-    "FLAVOR": "",
+    "NAME": "救赎",
+    "FLAVOR": "你曾帮助过她，现在她来帮助你了。",
     "DESCRIPTIONS": [
       "你不再受到 #y心之壁 的伤害。"
     ]
   },
   "SakikoMod:Combination_UKSK": {
-    "NAME": "救赎",
-    "FLAVOR": "",
+    "NAME": "归宿",
+    "FLAVOR": "人偶们所创造的，新的归宿。",
     "DESCRIPTIONS": [
       "战斗胜利后获得 #g完全恢复 。"
     ]
   }
-
 }

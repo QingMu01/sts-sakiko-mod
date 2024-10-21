@@ -15,14 +15,13 @@ public class LoftMoon extends AbstractSakikoCard {
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
 
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public LoftMoon() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 0);
-        this.setExhaust(true, false);
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override

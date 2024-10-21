@@ -1,8 +1,6 @@
 package com.qingmu.sakiko.monsters.boss;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -33,7 +31,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         super(MOVES[0] + NAME, ID, IMG, x, y);
         this.type = EnemyType.BOSS;
         this.canPlayMusic = true;
-        this.setHp(400);
+        this.setHp(500);
 
         // 重击
         this.damage.add(new DamageInfo(this, 60));
@@ -84,15 +82,15 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         // 更新行动
         switch (this.phase) {
             case 1: {
-                System.out.println("phase 2");
+
                 break;
             }
             case 2: {
-                System.out.println("phase 3");
+
                 break;
             }
             case 3: {
-                System.out.println("phase 4");
+
                 break;
             }
         }
@@ -104,32 +102,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(50)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0))
-                })
-                .build());
-        intentActions.add(new IntentAction.Builder()
-                .setID("multi")
-                .setWeight(50)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(1))
-                .setMultiplier(this.multiCount)
-                .setActions(() -> {
-                    AbstractGameAction[] actions = new AbstractGameAction[this.multiCount * 2];
-                    for (int i = 0; i < actions.length; i++) {
-                        if (i % 2 == 0) {
-                            actions[i] = new AnimateFastAttackAction(this);
-                        } else {
-                            actions[i] = new DamageAction(AbstractDungeon.player, this.damage.get(1));
-                        }
-                    }
-                    return actions;
-                })
-                .build());
         return intentActions;
     }
 

@@ -14,7 +14,7 @@ public class Masquerade extends AbstractSakikoCard {
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Masquerade.png";
 
     private static final CardType TYPE = CardType.POWER;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Masquerade() {

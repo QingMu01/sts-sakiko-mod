@@ -17,6 +17,7 @@ import com.megacrit.cardcrawl.vfx.stance.WrathParticleEffect;
 import com.qingmu.sakiko.action.effect.SakikoStanceAuraEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -57,7 +58,7 @@ public class ObliviousStance extends AbstractSakikoStance {
 
     @Override
     public void onEndOfTurn() {
-        if (this.isTriggered && MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size() < 7) {
+        if (this.isTriggered && MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).size() <= SakikoConst.OBLIVIOUS_STANCE_THRESHOLD_USED) {
             this.submitActionsToBot(new ChangeStanceAction(NeutralStance.STANCE_ID));
         } else {
             this.isTriggered = false;

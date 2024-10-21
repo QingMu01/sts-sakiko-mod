@@ -32,9 +32,8 @@ public class MaskerFate extends AbstractSakikoCard {
     }
 
     @Override
-    public void didDiscard() {
+    public void onMoveToDiscard() {
         this.addToBot(new ObliviousAction(this.magicNumber, this.upgraded));
-
     }
 
     @Override

@@ -2,7 +2,7 @@
   "SakikoMod:CreatorStance": {
     "NAME": "创作者",
     "DESCRIPTION": [
-      "进入这个 #y姿态 时，从 #y歌单 抽 #b2 张牌。"
+      "进入这个 #y姿态 时，从 #y歌单 抽 #b3 张牌。"
     ]
   },
   "SakikoMod:PlayerStance": {
@@ -20,7 +20,7 @@
   "SakikoMod:ObliviousStance": {
     "NAME": "心流：假面",
     "DESCRIPTION": [
-      "回合结束时，获得新回合。新回合结束时，如果 #y演奏 的次数小于7，则退出这个 #y姿态 。",
+      "回合结束时，获得新回合。新回合结束时，如果 #y演奏 的次数小于 #b3 ，则退出这个 #y姿态 。",
       "如今正是 #r@复权@ 之时！",
       "堕入 #r~遗忘~ 的深渊吧..."
     ]

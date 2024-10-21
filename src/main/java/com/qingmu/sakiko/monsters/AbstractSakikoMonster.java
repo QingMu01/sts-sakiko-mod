@@ -2,7 +2,11 @@ package com.qingmu.sakiko.monsters;
 
 import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -87,12 +91,13 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     @Override
     public final void takeTurn() {
-        this.actionHistory.add(this.intentAction);
         this.intentAction.doIntentAction(this, this.intentAction.rollNext.test(this));
 
         for (IntentAction action : this.actionHistory) {
             action.repeatInterval = Math.max(0, action.repeatInterval - 1);
         }
+
+        this.actionHistory.add(this.intentAction);
     }
 
     @Override
@@ -148,4 +153,15 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
         }
     }
 
+    protected AbstractGameAction[] generateMultiAttack(DamageInfo info, int multiplier) {
+        AbstractGameAction[] actions = new AbstractGameAction[multiplier * 2];
+        for (int i = 0; i < actions.length; i++) {
+            if (i % 2 == 0) {
+                actions[i] = new AnimateFastAttackAction(this);
+            } else {
+                actions[i] = new DamageAction(AbstractDungeon.player, info);
+            }
+        }
+        return actions;
+    }
 }

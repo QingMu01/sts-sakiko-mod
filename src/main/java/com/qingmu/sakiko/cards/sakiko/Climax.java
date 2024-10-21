@@ -1,13 +1,20 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.stances.AbstractStance;
+import com.megacrit.cardcrawl.stances.CalmStance;
+import com.megacrit.cardcrawl.stances.DivinityStance;
+import com.qingmu.sakiko.action.common.DrawMusicAction;
+import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.powers.ZekkouchouPower;
+import com.qingmu.sakiko.stances.CreatorStance;
+import com.qingmu.sakiko.stances.PlayerStance;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Climax extends AbstractSakikoCard {
@@ -24,15 +31,31 @@ public class Climax extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 9, 0, 1);
         this.setUpgradeAttr(1, 2, 0, 0);
-        this.setExhaust(true, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.submitActionsToBot(
                 new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY),
-                new ApplyPowerAction(p, p, new ZekkouchouPower(p, this.magicNumber), this.magicNumber)
+                this.getStanceAction(p.stance)
         );
+    }
+
+    private AbstractGameAction getStanceAction(AbstractStance stance) {
+        AbstractGameAction action = new WaitAction(0.1f);
+        if (stance instanceof PlayerStance) {
+            action = new ReadyToPlayMusicAction(3);
+        }
+        if (stance instanceof CreatorStance) {
+            action = new DrawMusicAction(3);
+        }
+        if (stance instanceof CalmStance) {
+            action = new GainEnergyAction(2);
+        }
+        if (stance instanceof DivinityStance) {
+            action = new GainEnergyAction(3);
+        }
+        return action;
     }
 
 }

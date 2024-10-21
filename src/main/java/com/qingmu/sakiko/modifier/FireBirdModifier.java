@@ -1,10 +1,14 @@
 package com.qingmu.sakiko.modifier;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.CardModifierManager;
+import basemod.helpers.TooltipInfo;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
-import com.megacrit.cardcrawl.actions.utility.DiscardToHandAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -12,6 +16,9 @@ import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.Collections;
+import java.util.List;
 
 public class FireBirdModifier extends AbstractMusicCardModifier {
 
@@ -31,27 +38,42 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.amount);
+        return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], Math.max(0, this.amount));
     }
 
     @Override
-    public void onInitialApplication(AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_FIREBIRD)) {
-            card.keywords.add(SakikoConst.KEYWORD_FIREBIRD);
-        }
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FIREBIRD), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FIREBIRD)));
     }
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
-        if (this.amount > 0) {
-            this.amount--;
-            this.addToBot(new DiscardToHandAction(card));
-        }
+        this.amount--;
+        card.initializeDescription();
     }
 
     @Override
-    public boolean removeAtEndOfTurn(AbstractCard card) {
-        return true;
+    public boolean removeOnCardPlayed(AbstractCard card) {
+        if (this.amount < 0){
+            card.returnToHand = false;
+        }
+        return super.removeOnCardPlayed(card);
+    }
+
+    @Override
+    public void onInitialApplication(AbstractCard card) {
+        card.returnToHand = true;
+    }
+
+    @Override
+    public void atEndOfTurn(AbstractCard card, CardGroup group) {
+        this.addToBot(new AbstractGameAction() {
+            @Override
+            public void update() {
+                CardModifierManager.removeModifiersById(card, ID, false);
+                this.isDone = true;
+            }
+        });
     }
 
     @Override

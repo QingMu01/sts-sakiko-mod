@@ -1,6 +1,8 @@
 package com.qingmu.sakiko.modifier;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -9,6 +11,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SymbolAirModifier extends AbstractMusicCardModifier {
 
@@ -46,15 +51,8 @@ public class SymbolAirModifier extends AbstractMusicCardModifier {
     }
 
     @Override
-    public void onInitialApplication(AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_AIR)) {
-            card.keywords.add(SakikoConst.KEYWORD_AIR);
-        }
-    }
-
-    @Override
-    public void onRemove(AbstractCard card) {
-        card.keywords.remove(SakikoConst.KEYWORD_AIR);
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_AIR), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_AIR)));
     }
 
     @Override

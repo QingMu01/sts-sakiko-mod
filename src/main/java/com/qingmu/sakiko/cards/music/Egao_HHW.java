@@ -20,7 +20,7 @@ public class Egao_HHW extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(CardTags.HEALING);
 
-        this.initMusicAttr(7, 3);
+        this.initMusicAttr(15, 5);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.qingmu.sakiko.modifier;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
+import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -12,6 +14,9 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SymbolEarthModifier extends AbstractMusicCardModifier {
 
@@ -40,20 +45,13 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
     }
 
     @Override
-    public void onInitialApplication(AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_EARTH)) {
-            card.keywords.add(SakikoConst.KEYWORD_EARTH);
-        }
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_EARTH), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_EARTH)));
     }
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
         this.addToBot(new GainBlockAction(AbstractDungeon.player, this.block, true));
-    }
-
-    @Override
-    public void onRemove(AbstractCard card) {
-        card.keywords.remove(SakikoConst.KEYWORD_EARTH);
     }
 
     @Override

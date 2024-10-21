@@ -4,7 +4,6 @@ import basemod.BaseMod;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
-import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -40,17 +39,8 @@ public class DoubleKeyboard extends AbstractSakikoRelic {
     }
 
     @Override
-    public void onEnterRoom(AbstractRoom room) {
+    public void atBattleStart() {
         SakikoConst.STANCE_CHANGE_THRESHOLD_USED -= 2;
     }
 
-    @Override
-    public void onEquip() {
-        SakikoConst.STANCE_CHANGE_THRESHOLD_USED -= 2;
-    }
-
-    @Override
-    public void onUnequip() {
-        SakikoConst.STANCE_CHANGE_THRESHOLD_USED = SakikoConst.STANCE_CHANGE_THRESHOLD;
-    }
 }

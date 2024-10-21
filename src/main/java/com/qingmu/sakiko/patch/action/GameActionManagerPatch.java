@@ -46,12 +46,13 @@ public class GameActionManagerPatch {
             SakikoConst.MUSIC_QUEUE_LIMIT_USED = SakikoConst.MUSIC_QUEUE_LIMIT;
             SakikoConst.STANCE_CHANGE_THRESHOLD_USED = SakikoConst.STANCE_CHANGE_THRESHOLD;
             SakikoConst.FLOW_THRESHOLD_USED = SakikoConst.FLOW_THRESHOLD;
+            SakikoConst.OBLIVIOUS_STANCE_THRESHOLD_USED = SakikoConst.OBLIVIOUS_STANCE_THRESHOLD;
             try {
                 MusicBattleFiled.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
                 MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
                 MusicBattleFiled.BattalInfoPatch.stanceChangedThisTurn.set(AbstractDungeon.player, 0);
-                MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).clear();
-                MusicBattleFiled.MusicQueue.musicQueue.get(__instance).clear();
+                MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).clear();
+                MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).clear();
             } catch (NullPointerException ignored) {
             }
         }

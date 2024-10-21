@@ -1,7 +1,9 @@
 package com.qingmu.sakiko.modifier;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
+import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -10,6 +12,9 @@ import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SymbolFireModifier extends AbstractMusicCardModifier {
 
@@ -43,15 +48,8 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
     }
 
     @Override
-    public void onInitialApplication(AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_FIRE)) {
-            card.keywords.add(SakikoConst.KEYWORD_FIRE);
-        }
-    }
-
-    @Override
-    public void onRemove(AbstractCard card) {
-        card.keywords.remove(SakikoConst.KEYWORD_FIRE);
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FIRE), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FIRE)));
     }
 
     @Override

@@ -134,8 +134,9 @@
   "SakikoMod:BurningBirthPower": {
     "NAME": "烈火重生",
     "DESCRIPTIONS": [
-      "当你抽到无法被打出的牌时，失去 #r1 点生命值，将其消耗，然后抽 #b",
-      " 张牌。"
+      "回合开始时，消耗最多 #b",
+      " 张手牌。然后抽取这些牌费用之和的牌。",
+      "消耗选择的牌。"
     ]
   },
   "SakikoMod:VoidOrderPower": {
@@ -229,8 +230,7 @@
   "SakikoMod:NingenUtaPower": {
     "NAME": "想要成为人类之歌",
     "DESCRIPTIONS": [
-      "你首次获得增益状态时，额外获得 #b",
-      " 层。"
+      "你首次获得增益状态时，额外获得 #b1 层。"
     ]
   },
   "SakikoMod:SoyoConstrictedPower": {

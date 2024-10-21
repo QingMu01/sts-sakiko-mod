@@ -5,11 +5,11 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.stances.AbstractStance;
-import com.qingmu.sakiko.stances.PlayerStance;
+import com.qingmu.sakiko.stances.CreatorStance;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class KingOfTingPower extends AbstractPower {
@@ -35,8 +35,8 @@ public class KingOfTingPower extends AbstractPower {
     }
 
     @Override
-    public void onChangeStance(AbstractStance oldStance, AbstractStance newStance) {
-        if (newStance.ID.equals(PlayerStance.STANCE_ID)) {
+    public void atStartOfTurn() {
+        if (AbstractDungeon.player.stance.ID.equals(CreatorStance.STANCE_ID)) {
             this.addToBot(new ApplyPowerAction(this.owner, this.owner, new KirameiPower(this.owner, this.amount), this.amount));
         }
     }

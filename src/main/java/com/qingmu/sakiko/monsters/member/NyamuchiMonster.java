@@ -106,17 +106,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                                     .setIntent(Intent.ATTACK)
                                     .setDamageAmount(this.damage.get(2))
                                     .setMultiplier(this.multiCount)
-                                    .setActions(() -> {
-                                        AbstractGameAction[] actions = new AbstractGameAction[this.multiCount * 2];
-                                        for (int i = 0; i < actions.length; i++) {
-                                            if (i % 2 == 0) {
-                                                actions[i] = new AnimateFastAttackAction(this);
-                                            } else {
-                                                actions[i] = new DamageAction(AbstractDungeon.player, this.damage.get(2));
-                                            }
-                                        }
-                                        return actions;
-                                    })
+                                    .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
                                     // 设置一个空回合
                                     .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
                                             .setMoveName(MOVES[0])

@@ -9,6 +9,10 @@ public class SakikoConst {
     public static final int FLOW_THRESHOLD = 10;
     public static int FLOW_THRESHOLD_USED = 10;
 
+    // 维持忘却的阈值
+    public static final int OBLIVIOUS_STANCE_THRESHOLD = 3;
+    public static int OBLIVIOUS_STANCE_THRESHOLD_USED = 3;
+
     // 音乐队列大小
     public static final int MUSIC_QUEUE_LIMIT = 3;
     public static int MUSIC_QUEUE_LIMIT_USED = 3;

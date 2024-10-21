@@ -2,7 +2,6 @@ package com.qingmu.sakiko.monsters.member;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -119,17 +118,8 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(2))
                 .setMultiplier(this.multiCount)
-                .setActions(() -> {
-                    AbstractGameAction[] actions = new AbstractGameAction[this.multiCount * 2];
-                    for (int i = 0; i < this.multiCount; i++) {
-                        if (i % 2 == 0) {
-                            actions[i] = new AnimateFastAttackAction(this);
-                        } else {
-                            actions[i] = new DamageAction(AbstractDungeon.player, this.damage.get(2), true);
-                        }
-                    }
-                    return actions;
-                }).build());
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                .build());
         return intentActions;
     }
 }

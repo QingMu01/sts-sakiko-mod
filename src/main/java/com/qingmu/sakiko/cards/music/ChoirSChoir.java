@@ -34,6 +34,6 @@ public class ChoirSChoir extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new ChooseOneAction(this.chooseCardList));
+        this.addToTop(new ChooseOneAction(new ArrayList<>(this.chooseCardList)));
     }
 }

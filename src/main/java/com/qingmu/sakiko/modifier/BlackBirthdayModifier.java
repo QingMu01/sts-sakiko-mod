@@ -1,6 +1,8 @@
 package com.qingmu.sakiko.modifier;
 
+import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -10,6 +12,9 @@ import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.Collections;
+import java.util.List;
 
 public class BlackBirthdayModifier extends AbstractMusicCardModifier {
 
@@ -22,10 +27,8 @@ public class BlackBirthdayModifier extends AbstractMusicCardModifier {
     }
 
     @Override
-    public void onInitialApplication(AbstractCard card) {
-        if (!card.keywords.contains(SakikoConst.KEYWORD_REBIRTH)) {
-            card.keywords.add(SakikoConst.KEYWORD_REBIRTH);
-        }
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_REBIRTH),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_REBIRTH)));
     }
 
     @Override

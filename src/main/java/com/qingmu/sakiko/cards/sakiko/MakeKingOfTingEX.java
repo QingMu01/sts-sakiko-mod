@@ -19,7 +19,7 @@ public class MakeKingOfTingEX extends AbstractSakikoCard {
 
     public MakeKingOfTingEX() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 1);
+        this.initBaseAttr(2, 0, 0, 2);
         this.setUpgradeAttr(2, 0, 0, 1);
     }
 
