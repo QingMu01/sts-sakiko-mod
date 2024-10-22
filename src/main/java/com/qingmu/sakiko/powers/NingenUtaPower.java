@@ -52,7 +52,7 @@ public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber
         }
         if (power.type == PowerType.BUFF && target.equals(this.owner)) {
             this.flash();
-            this.addToBot(new ApplyPowerAction(this.owner, null, power, this.amount));
+            this.addToBot(new ApplyPowerAction(this.owner, null, power, 1));
             this.applied.add(power.ID);
         }
     }

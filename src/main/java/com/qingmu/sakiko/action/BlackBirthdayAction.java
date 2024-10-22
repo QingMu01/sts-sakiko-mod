@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.relics.Band_AVEMUJICA;
 
 public class BlackBirthdayAction extends AbstractGameAction {
@@ -51,7 +51,7 @@ public class BlackBirthdayAction extends AbstractGameAction {
                         cardGroup.addToBottom(card);
                     }
                 }
-                for (AbstractCard card : MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.p).group) {
+                for (AbstractCard card : MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.p).group) {
                     if (card.canUpgrade() && card.type != AbstractCard.CardType.STATUS) {
                         cardGroup.addToBottom(card);
                     }

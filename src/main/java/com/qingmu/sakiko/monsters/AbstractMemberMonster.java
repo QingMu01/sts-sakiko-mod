@@ -1,9 +1,6 @@
 package com.qingmu.sakiko.monsters;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.dungeons.*;
 
 public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
 
@@ -20,7 +17,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
             this.setHp(baseHp - 10, baseHp + 10);
         }
         // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
+        if (AbstractDungeon.id.equals(TheCity.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.baseAttack += 4; // 12
             this.baseHp += 60; // 140
             this.baseSlash += 10; // 22

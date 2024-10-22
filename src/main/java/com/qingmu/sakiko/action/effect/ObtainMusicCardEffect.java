@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class ObtainMusicCardEffect extends AbstractGameEffect {
 
@@ -35,7 +35,7 @@ public class ObtainMusicCardEffect extends AbstractGameEffect {
             this.duration -= Gdx.graphics.getDeltaTime();
             if (this.duration < 0) {
                 this.isDone = true;
-                MusicBattleFiled.MusicQueue.musicQueue.get(this.source).addToTop(this.music);
+                MusicBattleFiledPatch.MusicQueue.musicQueue.get(this.source).addToTop(this.music);
             }
         }
     }

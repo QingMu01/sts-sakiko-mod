@@ -30,7 +30,7 @@ public class WalkThrough extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += MemberHelper.getBandMemberCount() * this.magicNumber;
+        this.baseDamage += MemberHelper.getCount() * this.magicNumber;
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.baseDamage != this.damage);
@@ -39,7 +39,7 @@ public class WalkThrough extends AbstractSakikoCard {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += MemberHelper.getBandMemberCount() * this.magicNumber;
+        this.baseDamage += MemberHelper.getCount() * this.magicNumber;
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.baseDamage != this.damage);

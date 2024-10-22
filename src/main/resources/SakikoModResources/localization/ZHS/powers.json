@@ -63,12 +63,6 @@
       "你的队友数量视为 #r0 。"
     ]
   },
-  "SakikoMod:DebutPower": {
-    "NAME": "首次登台",
-    "DESCRIPTIONS": [
-      "本回合，你打出的音乐牌将被立刻 #y演奏 。"
-    ]
-  },
   "SakikoMod:LeaderPower": {
     "NAME": "领袖",
     "DESCRIPTIONS": [
@@ -252,6 +246,20 @@
     "DESCRIPTIONS": [
       "心之壁对你造成的伤害减少 #r",
       " 点。使你获取心之壁的量减半。"
+    ]
+  },
+  "SakikoMod:FakeKirameiPower": {
+    "NAME": "记忆中的闪耀",
+    "DESCRIPTIONS": [
+      "只存在于祥子记忆中的，虚假的闪耀。受到的伤害减少 #b",
+      " %。"
+    ]
+  },
+  "SakikoMod:IdealFukkenPower": {
+    "NAME": "理想中的复权",
+    "DESCRIPTIONS": [
+      "只存在于祥子鸿图中的，假想的复权。造成的伤害提高 #b",
+      " %。"
     ]
   }
 }

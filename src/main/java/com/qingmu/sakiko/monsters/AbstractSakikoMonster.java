@@ -9,10 +9,11 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.ui.MusicSlotItem;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
             Iterator<SpecialIntentAction> iterator = this.specialIntent.iterator();
             while (iterator.hasNext()) {
                 SpecialIntentAction next = iterator.next();
-                if ((!this.actionHistory.contains(next) || next.repeatInterval == 0) && next.predicate.test(this)) {
+                if ((!this.actionHistory.contains(next) || next.repeatInterval <= 0) && next.predicate.test(this)) {
                     if (next.removable.test(this)) {
                         iterator.remove();
                     }
@@ -82,7 +83,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
             }
         }
         IntentAction roll = IntentAction.roll(this.effectiveIntentAction, random);
-        if (!this.actionHistory.contains(roll) || (roll != null && roll.repeatInterval == 0)) {
+        if (roll != null && (!this.actionHistory.contains(roll) || roll.repeatInterval <= 0)) {
             return roll;
         } else {
             return getRandomEffectiveIntent(AbstractDungeon.aiRng.random(99));
@@ -94,7 +95,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
         this.intentAction.doIntentAction(this, this.intentAction.rollNext.test(this));
 
         for (IntentAction action : this.actionHistory) {
-            action.repeatInterval = Math.max(0, action.repeatInterval - 1);
+            action.repeatInterval -= 1;
         }
 
         this.actionHistory.add(this.intentAction);
@@ -130,13 +131,16 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     // 获取即将演奏的音乐
     protected void obtainMusic(AbstractMusic music) {
+        music.m_target = AbstractDungeon.player;
+        music.m_source = this;
+        AbstractDungeon.effectList.add(new ObtainMusicCardEffect(music, this));
     }
 
     @Override
     public void update() {
         super.update();
         if (this.canPlayMusic) {
-            CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(this);
+            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this);
             this.musicSlotItem.update();
             this.musicSlotItem.setMusic(null);
             if (!cardGroup.isEmpty()) {

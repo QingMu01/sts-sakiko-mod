@@ -365,7 +365,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     public void registerBoss() {
         BaseMod.addMonster(InnerDemonSakiko.ID, InnerDemonSakiko.NAME, () -> new InnerDemonSakiko(0.0F, 0.0F));
-        BaseMod.addMonsterEncounter(TheEnding.ID, new MonsterInfo(InnerDemonSakiko.NAME, 0));
+        BaseMod.addBoss(TheEnding.ID, InnerDemonSakiko.ID, "", "");
     }
 
 }

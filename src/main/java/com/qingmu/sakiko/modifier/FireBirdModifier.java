@@ -13,8 +13,8 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.action.effect.ShowAndExhaustCardEffect;
 import com.qingmu.sakiko.constant.SakikoConst;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -54,7 +54,7 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     @Override
     public boolean removeOnCardPlayed(AbstractCard card) {
-        if (this.amount < 0){
+        if (this.amount < 0) {
             card.returnToHand = false;
         }
         return super.removeOnCardPlayed(card);
@@ -81,11 +81,11 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
         if (AbstractDungeon.player.hand.contains(card)) {
             this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
         } else if (AbstractDungeon.player.discardPile.contains(card)) {
+            AbstractDungeon.effectList.add(new ShowAndExhaustCardEffect(card));
             this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.discardPile));
         } else if (AbstractDungeon.player.drawPile.contains(card)) {
+            AbstractDungeon.effectList.add(new ShowAndExhaustCardEffect(card));
             this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.drawPile));
-        } else if (MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).contains(card)) {
-            this.addToBot(new ExhaustSpecificCardAction(card, MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player)));
         }
     }
 

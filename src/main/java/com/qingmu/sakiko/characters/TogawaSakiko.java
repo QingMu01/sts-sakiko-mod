@@ -81,6 +81,7 @@ public class TogawaSakiko extends CustomPlayer {
         decks.add(ModNameHelper.make("Defend_Sakiko"));
         decks.add(ModNameHelper.make("Professional"));
         decks.add(ModNameHelper.make("TwoInOne"));
+        decks.add(ModNameHelper.make("KillKiss"));
         return decks;
     }
 

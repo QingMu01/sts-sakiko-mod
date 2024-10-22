@@ -4,16 +4,16 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.powers.MinionPower;
+import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
@@ -37,10 +37,11 @@ public class TakiMonster extends AbstractMemberMonster {
 
     public TakiMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
+        this.setDefaultAttribute();
         if (AbstractDungeon.id.equals(Exordium.ID)) {
             this.powerful = 1;
         }
-        if (AbstractDungeon.id.equals(TheCity.ID)) {
+        if (AbstractDungeon.id.equals(TheCity.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.powerful = 2;
         }
         if (AbstractDungeon.id.equals(TheBeyond.ID)) {
@@ -61,8 +62,12 @@ public class TakiMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.TAKI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.TAKI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override

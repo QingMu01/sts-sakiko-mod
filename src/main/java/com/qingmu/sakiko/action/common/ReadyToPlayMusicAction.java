@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +32,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
     }
 
     public ReadyToPlayMusicAction(int amount, AbstractCreature source, boolean isTurnEnd) {
-        this.queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
+        this.queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
         this.source = source;
         this.amount = Math.min(amount, this.queue.size());
         this.isTurnEnd = isTurnEnd;

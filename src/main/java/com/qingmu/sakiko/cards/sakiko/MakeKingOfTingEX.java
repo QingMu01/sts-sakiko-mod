@@ -14,12 +14,12 @@ public class MakeKingOfTingEX extends AbstractSakikoCard {
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
 
     private static final CardType TYPE = CardType.POWER;
-    private static final CardRarity RARITY = CardRarity.RARE;
+    private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public MakeKingOfTingEX() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 2);
+        this.initBaseAttr(2, 0, 0, 1);
         this.setUpgradeAttr(2, 0, 0, 1);
     }
 

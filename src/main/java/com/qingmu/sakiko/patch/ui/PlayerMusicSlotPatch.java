@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.ui.MusicSlotItem;
 
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class PlayerMusicSlotPatch {
     public static class RenderPatch {
         public static void Prefix(AbstractPlayer __instance, SpriteBatch sb) {
             if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
+                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
                     float spacing = MUSIC_SLOT_HEIGHT + MUSIC_SLOT_PADDING;
-                    ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiled.BattalInfoPatch.musicSlotItems.get(__instance);
+                    ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiledPatch.BattalInfoFiled.musicSlotItems.get(__instance);
                     for (int i = 0; i < musicSlotItems.size(); i++) {
                         MusicSlotItem item = musicSlotItems.get(i);
                         float y = MUSIC_SLOT_Y - MUSIC_SLOT_HEIGHT - (i * spacing);
@@ -47,9 +47,9 @@ public class PlayerMusicSlotPatch {
     public static class UpdatePatch {
         public static void Postfix(AbstractPlayer __instance) {
             if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
-                    CardGroup musics = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
-                    ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiled.BattalInfoPatch.musicSlotItems.get(__instance);
+                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
+                    CardGroup musics = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+                    ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiledPatch.BattalInfoFiled.musicSlotItems.get(__instance);
                     while (musicSlotItems.size() < 3) {
                         musicSlotItems.add(new MusicSlotItem());
                     }

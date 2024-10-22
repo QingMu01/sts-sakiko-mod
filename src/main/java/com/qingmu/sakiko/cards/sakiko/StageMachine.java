@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class StageMachine extends AbstractSakikoCard {
@@ -27,7 +27,7 @@ public class StageMachine extends AbstractSakikoCard {
     @Override
     protected void applyPowersToBlock() {
         int realBaseBlock = this.baseBlock;
-        this.baseBlock += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
+        this.baseBlock += MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
         super.applyPowersToBlock();
         this.baseBlock = realBaseBlock;
         this.isBlockModified = (this.block != this.baseBlock);

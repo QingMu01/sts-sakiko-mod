@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class OctopusSakiko extends AbstractSakikoRelic {
@@ -31,7 +32,6 @@ public class OctopusSakiko extends AbstractSakikoRelic {
         return this.DESCRIPTIONS[0];
     }
 
-
     @Override
     public void triggerOnPlayMusicCard(AbstractMusic music) {
         if (this.isFirst) {
@@ -54,5 +54,10 @@ public class OctopusSakiko extends AbstractSakikoRelic {
         } else {
             this.setTexture(TA);
         }
+    }
+
+    @Override
+    public boolean canSpawn() {
+        return AbstractDungeon.player instanceof TogawaSakiko;
     }
 }

@@ -31,9 +31,9 @@ public class MonsterRoomAppendInvasionPatch {
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
             if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))) {
-                if (AbstractDungeon.floorNum > 35 && MemberHelper.getBandMemberCount() < 4) {
+                if (AbstractDungeon.floorNum > 35 && MemberHelper.getCount() < 4) {
                     setEvent();
-                } else if (MemberHelper.getBandMemberCount() < 4){
+                } else if (MemberHelper.getCount() < 4){
                     if (AbstractDungeon.eventRng.randomBoolean(invasion.chance)) {
                         invasion.chance = 0;
                         setEvent();

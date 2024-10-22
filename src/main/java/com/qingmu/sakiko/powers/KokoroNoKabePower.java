@@ -39,7 +39,7 @@ public class KokoroNoKabePower extends AbstractPower {
         this.owner = owner;
         this.type = PowerType.BUFF;
         this.amount = amount;
-
+        this.priority = 110;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
         this.updateDescription();

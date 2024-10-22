@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardSelectorFiled;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -248,7 +248,7 @@ public class CardSelectorAction extends AbstractGameAction {
             }
         }
         if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            Iterator<AbstractCard> iterator = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).group.iterator();
+            Iterator<AbstractCard> iterator = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.player).group.iterator();
             while (iterator.hasNext()) {
                 AbstractCard card = iterator.next();
                 CardSelectorFiled.location.set(card, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE);
@@ -280,7 +280,7 @@ public class CardSelectorAction extends AbstractGameAction {
                 this.player.exhaustPile.addToTop(card);
             }
             if (location == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-                MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player).addToTop(card);
+                MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.player).addToTop(card);
             }
             CardSelectorFiled.location.set(card, null);
             iterator.remove();
@@ -290,30 +290,30 @@ public class CardSelectorAction extends AbstractGameAction {
     private void moveCard(AbstractCard card, CardGroup.CardGroupType target) {
         if (target == null) {
             CardGroup.CardGroupType source = CardSelectorFiled.location.get(card);
-            this.getCardGroup(source).addToTop(card);
+            getCardGroup(source).addToTop(card);
         } else if (target == CardGroup.CardGroupType.DRAW_PILE || target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToDeck(card, false);
+            getCardGroup(CardSelectorFiled.location.get(card)).moveToDeck(card, false);
         } else if (target == CardGroup.CardGroupType.HAND) {
-            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToHand(card);
+            getCardGroup(CardSelectorFiled.location.get(card)).moveToHand(card);
         } else if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToDiscardPile(card);
+            getCardGroup(CardSelectorFiled.location.get(card)).moveToDiscardPile(card);
         } else if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            this.getCardGroup(CardSelectorFiled.location.get(card)).moveToExhaustPile(card);
+            getCardGroup(CardSelectorFiled.location.get(card)).moveToExhaustPile(card);
         }
         CardSelectorFiled.location.set(card, null);
     }
 
-    private CardGroup getCardGroup(CardGroup.CardGroupType target) {
+    public static CardGroup getCardGroup(CardGroup.CardGroupType target) {
         if (target == CardGroup.CardGroupType.DRAW_PILE) {
-            return this.player.drawPile;
+            return AbstractDungeon.player.drawPile;
         } else if (target == CardGroup.CardGroupType.HAND) {
-            return this.player.hand;
+            return AbstractDungeon.player.hand;
         } else if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            return this.player.discardPile;
+            return AbstractDungeon.player.discardPile;
         } else if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            return this.player.exhaustPile;
+            return AbstractDungeon.player.exhaustPile;
         } else if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            return MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player);
+            return MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         } else return new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
     }
 

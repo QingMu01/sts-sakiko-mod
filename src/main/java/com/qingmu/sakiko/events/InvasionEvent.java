@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -23,7 +24,7 @@ public class InvasionEvent extends PhasedEvent {
     private static final String[] OPTIONS = eventStrings.OPTIONS;
     private static final String IMG_PATH = "SakikoModResources/img/event/bg00098.png";
 
-    private final Map<String, Integer> optionMember = MemberHelper.getMember(4);
+    private final Map<String, Integer> optionMember = MemberHelper.initSelectedMembers(4);
 
     public InvasionEvent() {
         super(ID, NAME, IMG_PATH);
@@ -44,7 +45,7 @@ public class InvasionEvent extends PhasedEvent {
     private TextPhase getMemberSelectPhase() {
         TextPhase textPhase = new TextPhase(DESCRIPTIONS[1]);
         optionMember.forEach((name, index) -> textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> {
-            CombatPhase combatPhase = new CombatPhase(MemberHelper.memberList.get(index))
+            CombatPhase combatPhase = new CombatPhase(SakikoConst.BAND_MEMBER_LIST.get(index))
                     .addRewards(true, room -> {
                         // 离开，提示获得成员
                         room.rewards.add(new RewardItem(50, false));

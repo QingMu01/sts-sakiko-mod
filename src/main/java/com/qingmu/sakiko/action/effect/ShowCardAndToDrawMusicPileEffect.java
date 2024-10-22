@@ -12,16 +12,15 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDrawPileEffect;
 import com.megacrit.cardcrawl.vfx.combat.CardPoofEffect;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
-public class ShowCardAndToMusicListEffect extends AbstractGameEffect {
+public class ShowCardAndToDrawMusicPileEffect extends AbstractGameEffect {
 
-    private static final float EFFECT_DUR = 1.5F;
-    private AbstractCard card;
+    private final AbstractCard card;
     private static final float PADDING = 30.0F * Settings.scale;
     private boolean cardOffset;
 
-    public ShowCardAndToMusicListEffect(AbstractCard srcCard, float x, float y, boolean randomSpot, boolean cardOffset, boolean toBottom) {
+    public ShowCardAndToDrawMusicPileEffect(AbstractCard srcCard, float x, float y, boolean randomSpot, boolean cardOffset, boolean toBottom) {
         this.cardOffset = false;
         this.card = srcCard.makeStatEquivalentCopy();
         this.cardOffset = cardOffset;
@@ -40,7 +39,7 @@ public class ShowCardAndToMusicListEffect extends AbstractGameEffect {
             this.card.upgrade();
         }
         CardCrawlGame.sound.play("CARD_OBTAIN");
-        CardGroup cardGroup = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         if (toBottom) {
             cardGroup.addToBottom(this.card);
         } else if (randomSpot) {

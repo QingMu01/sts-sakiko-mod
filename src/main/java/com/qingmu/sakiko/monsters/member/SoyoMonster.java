@@ -4,16 +4,17 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.MinionPower;
+import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.action.common.PlaySoundAction;
 import com.qingmu.sakiko.constant.SoundHelper;
@@ -45,7 +46,7 @@ public class SoyoMonster extends AbstractMemberMonster {
         if (AbstractDungeon.id.equals(TheCity.ID)) {
             this.powerful += 5;
         }
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
+        if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.powerful += 5;
         }
 
@@ -65,8 +66,12 @@ public class SoyoMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.SOYO_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.SOYO_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override
@@ -108,9 +113,15 @@ public class SoyoMonster extends AbstractMemberMonster {
         intentActions.add(new IntentAction.Builder()
                 .setWeight(20)
                 .setIntent(Intent.DEFEND)
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new GainBlockAction(this, this.baseBlock * 2)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new AnimateSlowAttackAction(this));
+                    for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                        if (!monster.isDead && !monster.isDying) {
+                            actions.add(new GainBlockAction(monster, this, this.baseBlock * 2));
+                        }
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
                 }).build());
         return intentActions;
     }

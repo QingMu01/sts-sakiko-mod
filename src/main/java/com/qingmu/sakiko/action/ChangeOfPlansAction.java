@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.powers.DexterityPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 import java.util.Iterator;
 
@@ -23,7 +23,7 @@ public class ChangeOfPlansAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(this.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this.player);
         if (!this.isUpgrade) {
             if (!cardGroup.isEmpty()){
                 AbstractCard card = cardGroup.getBottomCard();

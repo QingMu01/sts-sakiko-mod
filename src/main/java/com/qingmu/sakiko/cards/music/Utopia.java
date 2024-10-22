@@ -2,6 +2,7 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.MemberHelper;
@@ -13,8 +14,10 @@ public class Utopia extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Utopia.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
+
+    private int playedCount = 0;
 
     public Utopia() {
         super(ID, IMG_PATH, RARITY, TARGET);
@@ -25,10 +28,25 @@ public class Utopia extends AbstractMusic {
     }
 
     @Override
+    public void triggerOnPlayMusic(AbstractMusic music) {
+        if (music == this) {
+            this.playedCount++;
+        }
+    }
+
+    @Override
     public void applyPowers() {
         this.applyPowersToMusicNumber();
-        this.baseDamage = (int) (this.musicNumber * Math.pow(2, MemberHelper.getBandMemberCount()));
+        this.baseDamage = (int) (this.musicNumber * Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount)));
         super.applyPowers();
+        this.isDamageModified = this.baseDamage != this.damage;
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = (int) (this.musicNumber * Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount)));
+        super.calculateCardDamage(mo);
         this.isDamageModified = this.baseDamage != this.damage;
     }
 

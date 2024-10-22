@@ -34,6 +34,8 @@ public class SakikoEnum {
      * */
     public static class CardRarityEnum {
         @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_BASIC;
+        @SpireEnum
         public static AbstractCard.CardRarity MUSIC_UNCOMMON;
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_RARE;

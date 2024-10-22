@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class LoftMoon extends AbstractSakikoCard {
@@ -27,7 +27,7 @@ public class LoftMoon extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).size();
+        this.baseMagicNumber += MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).size();
         super.applyPowers();
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;

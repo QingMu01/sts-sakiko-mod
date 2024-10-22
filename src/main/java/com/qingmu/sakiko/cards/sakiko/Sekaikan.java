@@ -14,7 +14,7 @@ public class Sekaikan extends AbstractSakikoCard {
     private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Sekaikan.png";
 
     private static final CardType TYPE = CardType.POWER;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Sekaikan() {

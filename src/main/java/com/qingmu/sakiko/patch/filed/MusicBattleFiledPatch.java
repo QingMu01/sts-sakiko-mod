@@ -11,7 +11,7 @@ import com.qingmu.sakiko.ui.MusicSlotItem;
 
 import java.util.ArrayList;
 
-public class MusicBattleFiled {
+public class MusicBattleFiledPatch {
 
     @SpirePatch(clz = AbstractPlayer.class, method = SpirePatch.CLASS)
     public static class DrawMusicPile {
@@ -31,7 +31,7 @@ public class MusicBattleFiled {
     }
 
     @SpirePatch(clz = AbstractPlayer.class, method = SpirePatch.CLASS)
-    public static class BattalInfoPatch {
+    public static class BattalInfoFiled {
         /*
          * 向AbstractPlayer类添加一个歌牌列表（球位）
          * */

@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReproduceAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Reproduce extends AbstractSakikoCard {
@@ -32,6 +32,6 @@ public class Reproduce extends AbstractSakikoCard {
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return !MusicBattleFiled.DrawMusicPile.drawMusicPile.get(p).isEmpty();
+        return !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(p).isEmpty();
     }
 }

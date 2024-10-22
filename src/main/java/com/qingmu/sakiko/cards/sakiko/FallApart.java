@@ -30,12 +30,12 @@ public class FallApart extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         super.applyPowers();
-        this.appendDescription(MemberHelper.getBandMemberCount() * this.magicNumber);
+        this.appendDescription(MemberHelper.getCount() * this.magicNumber);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int bandMemberCount = MemberHelper.getBandMemberCount();
+        int bandMemberCount = MemberHelper.getCount();
         this.addToBot(new ApplyPowerAction(p, p, new KokoroNoKabePower(p, bandMemberCount * this.magicNumber), bandMemberCount * this.magicNumber));
         this.addToBot(new ApplyPowerAction(p, p, new FallApartPower(p)));
     }

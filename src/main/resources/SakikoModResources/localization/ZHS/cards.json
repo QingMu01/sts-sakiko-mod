@@ -97,7 +97,7 @@
   },
   "SakikoMod:TheDebut": {
     "NAME": "首次登台",
-    "DESCRIPTION": "造成 !D! 点伤害，本回合，你打出的音乐牌将被直接 sakikomod:演奏 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 若本回合没有打出过 sakikomod:音乐 牌，则从 sakikomod:歌单 抽 !M! 张牌。"
   },
   "SakikoMod:UnrepentantDecision": {
     "NAME": "无悔的决定",
@@ -133,7 +133,7 @@
   },
   "SakikoMod:NoteTorrent": {
     "NAME": "音符洪流",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 每次 sakikomod:演奏 时，这张牌从弃牌堆返回手牌，伤害在本场战斗中提高 !M! 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌在弃牌堆时，每次 sakikomod:演奏 这张牌的在本场战斗中提高 !M! ，打出一张这张牌的复制品。"
   },
   "SakikoMod:TruthOfTheWorld": {
     "NAME": "世界的真相",
@@ -238,8 +238,8 @@
   },
   "SakikoMod:MaskerFate": {
     "NAME": "人偶的命运",
-    "DESCRIPTION": " 不能被打出 。 NL 进入弃牌堆时 sakikomod:忘却 !M! 。",
-    "UPGRADE_DESCRIPTION": " 不能被打出 。 NL 进入弃牌堆时最多 sakikomod:忘却 !M! 。",
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时 sakikomod:忘却 !M! 。",
+    "UPGRADE_DESCRIPTION": " 不能被打出 。 NL 抽到时最多 sakikomod:忘却 !M! 。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出。"
     ]
@@ -343,6 +343,11 @@
     "NAME": "安可",
     "DESCRIPTION": "回合结束时，获得一个新回合。这个新回合只会恢复 [E] ，抽3张牌。且保留上回合剩余费用。"
   },
+  "SakikoMod:KillKiss": {
+    "NAME": "KiLLKiSS",
+    "MINI_TITLE": "AVE MUJICA",
+    "DESCRIPTION": " sakikomod:演奏 ：对目标造成 !D! 点伤害，如果这首歌是本回合演奏的第一首歌，则获得 !M! 点 力量 。"
+  },
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
     "MINI_TITLE": "AVE MUJICA",
@@ -408,7 +413,7 @@
   "SakikoMod:Utopia": {
     "NAME": "乌托邦",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害。每有一位队友，这张牌的基础伤害翻倍。"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害，每次 *演奏 后，这张牌的基础伤害翻倍。 NL 翻倍次数不会超过队友数量。"
   },
   "SakikoMod:NingenUta_CryChic": {
     "NAME": "想要成为人类之歌",
@@ -551,5 +556,26 @@
   "SakikoMod:ChoosePurple": {
     "NAME": "观者",
     "DESCRIPTION": "随机将观者的一张牌加入手牌。这张牌的费用设置为0，数值设置为 !M! 。"
+  },
+  "SakikoMod:DistantPast": {
+    "NAME": "遥远的过去",
+    "DESCRIPTION": " 不能被打出 NL 抽到时，抽一张牌， 消耗 自身。 NL 在弃牌堆加入两张复制品，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。",
+    "EXTENDED_DESCRIPTION": [
+      "这张牌不能被打出"
+    ]
+  },
+  "SakikoMod:AbolitionCase": {
+    "NAME": "废案",
+    "DESCRIPTION": "抽到时自动打出。 NL sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
+  },
+  "SakikoMod:AveMujica_Boss": {
+    "NAME": "Ave Mujica",
+    "MINI_TITLE": "心魔祥子",
+    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。"
+  },
+  "SakikoMod:BlackBirthday_Boss": {
+    "NAME": "Black Birthday",
+    "MINI_TITLE": "心魔祥子",
+    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
   }
 }

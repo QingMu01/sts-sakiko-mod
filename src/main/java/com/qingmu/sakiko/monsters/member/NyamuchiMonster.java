@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
@@ -12,7 +13,9 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
@@ -45,8 +48,12 @@ public class NyamuchiMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override
@@ -106,7 +113,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                                     .setIntent(Intent.ATTACK)
                                     .setDamageAmount(this.damage.get(2))
                                     .setMultiplier(this.multiCount)
-                                    .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                                     // 设置一个空回合
                                     .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
                                             .setMoveName(MOVES[0])

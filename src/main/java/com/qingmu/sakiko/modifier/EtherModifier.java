@@ -42,14 +42,17 @@ public class EtherModifier extends AbstractMusicCardModifier {
 
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_ETHER),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_ETHER)));
+        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_ETHER), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_ETHER)));
+    }
+
+    @Override
+    public void onDrawn(AbstractCard card) {
+        card.setCostForTurn(-this.costDown);
     }
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        if (card.costForTurn >= 0) {
-            card.cost = card.costForTurn = Math.max(0, card.cost - this.costDown);
-        }
+        card.setCostForTurn(-this.costDown);
     }
 
     @Override

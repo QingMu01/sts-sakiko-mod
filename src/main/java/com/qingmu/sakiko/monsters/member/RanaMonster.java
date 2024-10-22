@@ -9,10 +9,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.dungeons.Exordium;
-import com.megacrit.cardcrawl.dungeons.TheBeyond;
-import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.IntangiblePower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -21,15 +18,13 @@ import com.qingmu.sakiko.action.common.DamageCallbackAction;
 import com.qingmu.sakiko.action.common.PlayBGMAction;
 import com.qingmu.sakiko.action.common.PlaySoundAction;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
-import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.music.monster.Haruhikage_Rana;
 import com.qingmu.sakiko.constant.MusicHelper;
 import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -53,7 +48,7 @@ public class RanaMonster extends AbstractMemberMonster {
         this.canPlayMusic = true;
         super.setDefaultAttribute();
 
-        if (AbstractDungeon.id.equals(Exordium.ID)) {
+        if (AbstractDungeon.id.equals(Exordium.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.powerful = 10;
         }
         if (AbstractDungeon.id.equals(TheCity.ID)) {
@@ -92,7 +87,7 @@ public class RanaMonster extends AbstractMemberMonster {
 
     @Override
     protected IntentAction getRandomEffectiveIntent(int random) {
-        boolean empty = MusicBattleFiled.MusicQueue.musicQueue.get(this).isEmpty();
+        boolean empty = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty();
         if (empty && AbstractDungeon.aiRng.randomBoolean()) {
             this.obtainMusic(new Haruhikage_Rana());
         }
@@ -107,7 +102,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setIntent(Intent.MAGIC)
                 .setRemovable(m -> false)
                 .setRepeatInterval(4)
-                .setPredicate(m -> !MusicBattleFiled.MusicQueue.musicQueue.get(this).isEmpty() && AbstractDungeon.monsterRng.randomBoolean())
+                .setPredicate(m -> !MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty() && AbstractDungeon.monsterRng.randomBoolean())
                 .setActions(() -> new AbstractGameAction[]{
                         new ReadyToPlayMusicAction(1, this),
                         new PlayBGMAction(MusicHelper.HARUHIKAGE, false, this)
@@ -164,14 +159,6 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
                 .build());
         return intentActions;
-    }
-
-
-    @Override
-    protected void obtainMusic(AbstractMusic music) {
-        music.m_target = AbstractDungeon.player;
-        music.m_source = this;
-        AbstractDungeon.effectList.add(new ObtainMusicCardEffect(music, this));
     }
 
 }

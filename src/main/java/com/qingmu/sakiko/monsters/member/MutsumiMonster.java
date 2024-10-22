@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
@@ -13,7 +14,9 @@ import com.megacrit.cardcrawl.cards.status.VoidCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
+import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
@@ -45,15 +48,23 @@ public class MutsumiMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override
     public void die() {
         super.die();
-        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.MUTSUMI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override
@@ -118,7 +129,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(2))
                 .setMultiplier(this.multiCount)
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                 .build());
         return intentActions;
     }

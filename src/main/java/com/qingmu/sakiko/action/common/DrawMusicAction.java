@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,7 @@ public class DrawMusicAction extends AbstractGameAction {
 
     public DrawMusicAction(int amount) {
         this.setValues(AbstractDungeon.player, source, amount);
-        this.musicDrawPile = MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        this.musicDrawPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
         this.actionType = ActionType.DRAW;
         if (Settings.FAST_MODE) {
             this.duration = Settings.ACTION_DUR_XFAST;

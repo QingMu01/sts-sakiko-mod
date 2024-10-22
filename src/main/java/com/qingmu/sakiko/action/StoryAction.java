@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
-import com.qingmu.sakiko.action.effect.ShowCardAndToMusicListEffect;
+import com.qingmu.sakiko.action.effect.ShowCardAndToDrawMusicPileEffect;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
@@ -46,7 +46,7 @@ public class StoryAction extends AbstractGameAction {
                         if (this.isUpgraded) {
                             AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
                         } else {
-                            AbstractDungeon.effectList.add(new ShowCardAndToMusicListEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F, true, true, false));
+                            AbstractDungeon.effectList.add(new ShowCardAndToDrawMusicPileEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F, true, true, false));
                         }
                     }
                     AbstractDungeon.cardRewardScreen.discoveryCard = null;

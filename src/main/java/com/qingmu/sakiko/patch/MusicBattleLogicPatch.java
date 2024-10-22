@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,8 +21,8 @@ public class MusicBattleLogicPatch {
     public static class PreBattleLogic {
         // 清理上次战斗的牌组
         public static void Prefix(AbstractPlayer __instance) {
-            MusicBattleFiled.DrawMusicPile.drawMusicPile.get(__instance).clear();
-            MusicBattleFiled.MusicQueue.musicQueue.get(__instance).clear();
+            MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(__instance).clear();
+            MusicBattleFiledPatch.MusicQueue.musicQueue.get(__instance).clear();
         }
     }
 
@@ -53,7 +53,7 @@ public class MusicBattleLogicPatch {
                 }
                 if (card instanceof AbstractMusic) {
                     iterator.remove();
-                    MusicBattleFiled.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).addToBottom(card);
+                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).addToBottom(card);
                 }
             }
         }

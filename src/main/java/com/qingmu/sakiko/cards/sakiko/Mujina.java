@@ -27,7 +27,7 @@ public class Mujina extends AbstractSakikoCard {
 
     @Override
     protected void applyPowersToBlock() {
-        this.baseBlock = MemberHelper.getBandMemberCount() * this.magicNumber;
+        this.baseBlock = MemberHelper.getCount() * this.magicNumber;
         super.applyPowersToBlock();
         this.isBlockModified = (this.block != this.baseBlock);
         this.appendDescription();

@@ -17,7 +17,7 @@ public class SpecialIntentAction extends IntentAction {
     // 执行后是否需要删除这个意图
     public final Predicate<AbstractSakikoMonster> removable;
 
-    public SpecialIntentAction(String id, String moveName, AbstractMonster.Intent intent, int damageAmount, int multiplier, boolean isMultiDamage, int repeatInterval, Consumer<? super IntentAction> callback, Predicate<AbstractSakikoMonster> predicate, Predicate<AbstractSakikoMonster> removable, Supplier<AbstractGameAction[]> actions) {
+    private SpecialIntentAction(String id, String moveName, AbstractMonster.Intent intent, int damageAmount, int multiplier, boolean isMultiDamage, int repeatInterval, Consumer<? super IntentAction> callback, Predicate<AbstractSakikoMonster> predicate, Predicate<AbstractSakikoMonster> removable, Supplier<AbstractGameAction[]> actions) {
         super(id, moveName, 0, intent, damageAmount, multiplier, isMultiDamage, repeatInterval, m -> true, callback, actions);
         this.predicate = predicate;
         this.removable = removable;

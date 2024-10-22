@@ -2,7 +2,10 @@ package com.qingmu.sakiko.relics;
 
 import basemod.abstracts.CustomSavable;
 import com.google.gson.reflect.TypeToken;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -35,6 +38,14 @@ public class Combination_ANSK extends AbstractSakikoRelic implements CustomSavab
         }
     }
 
+    @Override
+    public int onPlayerGainedBlock(float blockAmount) {
+        AbstractMonster anon = AbstractDungeon.getCurrRoom().monsters.getMonster("");
+        if (anon != null && !anon.isDying) {
+            this.addToBot(new GainBlockAction(anon, AbstractDungeon.player, (int) blockAmount));
+        }
+        return super.onPlayerGainedBlock(blockAmount);
+    }
 
     @Override
     public void onLoad(Boolean bool) {

@@ -26,7 +26,7 @@ public class Ensemble extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += MemberHelper.getBandMemberCount();
+        this.baseMagicNumber += MemberHelper.getCount();
         super.applyPowers();
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;

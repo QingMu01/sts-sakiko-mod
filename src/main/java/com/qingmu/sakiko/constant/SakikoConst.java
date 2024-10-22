@@ -1,6 +1,19 @@
 package com.qingmu.sakiko.constant;
 
+import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.relics.menbers.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class SakikoConst {
+    public static final List<String> BAND_MEMBER_LIST = Arrays.asList(UikaMonster.ID, MutsumiMonster.ID, UmiriMonster.ID, NyamuchiMonster.ID, TomoriMonster.ID,AnonMonster.ID,SoyoMonster.ID,TakiMonster.ID,RanaMonster.ID);
+
+    public static final List<String> AVE_MUJICA = Arrays.asList(Uika.ID, Mutsumi.ID, Nyamuchi.ID, Umiri.ID);
+
+    public static final List<String> CRYCHIC = Arrays.asList(Tomori.ID, Taki.ID, Soyo.ID, Mutsumi.ID);
+
+
     // 姿态转换阈值
     public static final int STANCE_CHANGE_THRESHOLD = 5;
     public static int STANCE_CHANGE_THRESHOLD_USED = 5;

@@ -15,7 +15,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class AutoPlayPileCardAction extends AbstractGameAction {
 
@@ -103,7 +103,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
     private CardGroup getCardGroup(DrawPileType type) {
         switch (type) {
             case MUSIC_PILE:
-                return MusicBattleFiled.DrawMusicPile.drawMusicPile.get(this.player);
+                return MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.player);
             case DRAW_PILE:
             default:
                 return this.player.drawPile;

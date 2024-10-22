@@ -43,7 +43,7 @@ public class IntentAction {
 
     public final Consumer<? super IntentAction> callback;
 
-    public IntentAction(String id, String moveName, float weight, AbstractMonster.Intent intent, int damageAmount, int multiplier, boolean isMultiDamage, int repeatInterval, Predicate<AbstractSakikoMonster> rollNext, Consumer<? super IntentAction> callback, Supplier<AbstractGameAction[]> actions) {
+    protected IntentAction(String id, String moveName, float weight, AbstractMonster.Intent intent, int damageAmount, int multiplier, boolean isMultiDamage, int repeatInterval, Predicate<AbstractSakikoMonster> rollNext, Consumer<? super IntentAction> callback, Supplier<AbstractGameAction[]> actions) {
         this.ID = id;
 
         this.moveName = moveName;

@@ -6,7 +6,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 import java.util.Iterator;
 
@@ -19,7 +19,7 @@ public class DisharmonyNoteAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(this.player);
+        CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this.player);
         if (cardGroup.isEmpty()){
             this.isDone = true;
             return;

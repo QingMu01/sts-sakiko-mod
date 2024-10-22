@@ -3,6 +3,7 @@ package com.qingmu.sakiko.monsters.member;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.actions.utility.HideHealthBarAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -11,10 +12,13 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
+import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -58,8 +62,12 @@ public class UikaMonster extends AbstractMemberMonster {
                 this.addToTop(new HideHealthBarAction(monster));
             }
         }
-        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.UIKA_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.UIKA_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override
@@ -67,10 +75,11 @@ public class UikaMonster extends AbstractMemberMonster {
         List<SpecialIntentAction> specialIntentActions = new ArrayList<>();
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
-                .setPredicate(m -> AbstractDungeon.getCurrRoom().monsters.monsters.stream().noneMatch(monster -> monster instanceof ManaMonster))
-                .setRemovable(m -> false)
+                .setPredicate(m -> AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID) == null)
                 .setIntent(Intent.UNKNOWN)
-                .setActions(() -> new AbstractGameAction[]{new SpawnMonsterAction(new ManaMonster(this.hb_x - (220 * Settings.scale), this.hb_y), true)})
+                .setActions(() -> new AbstractGameAction[]{
+                        new SpawnMonsterAction(new ManaMonster(this.hb_x - (240 * Settings.scale), this.hb_y), true)
+                })
                 .build());
         return specialIntentActions;
     }
@@ -126,7 +135,7 @@ public class UikaMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(2))
                 .setMultiplier(this.multiCount)
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                 .build());
         return intentActions;
 

@@ -14,7 +14,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.ui.PlayerMusicSlotPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -62,7 +62,7 @@ public class MusicSlotItem {
             }
         }
         if (this.owner.isPlayer) {
-            CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
+            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
             if (cardGroup.isEmpty()) {
                 this.musicListString = uiStrings.TEXT[3];
             } else {

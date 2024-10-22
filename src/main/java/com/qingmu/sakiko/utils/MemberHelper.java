@@ -3,39 +3,23 @@ package com.qingmu.sakiko.utils;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.powers.FallApartPower;
 import com.qingmu.sakiko.relics.menbers.AbstractBandMember;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class MemberHelper {
 
-    public static List<String> memberList = new ArrayList<>();
-
-    static {
-        memberList.add(UikaMonster.ID);
-        memberList.add(MutsumiMonster.ID);
-        memberList.add(UmiriMonster.ID);
-        memberList.add(NyamuchiMonster.ID);
-        memberList.add(TomoriMonster.ID);
-        memberList.add(AnonMonster.ID);
-        memberList.add(SoyoMonster.ID);
-        memberList.add(TakiMonster.ID);
-        memberList.add(RanaMonster.ID);
-    }
-
-    public static int getBandMemberCount() {
-        AbstractPlayer p = AbstractDungeon.player;
-        if (p.hasPower(FallApartPower.POWER_ID)){
-            p.getPower(FallApartPower.POWER_ID).flash();
-            return 0;
-        }
+    public static int getCount() {
         int count = 0;
+        AbstractPlayer p = AbstractDungeon.player;
+        if (p.hasPower(FallApartPower.POWER_ID)) {
+            p.getPower(FallApartPower.POWER_ID).flash();
+            return count;
+        }
         for (AbstractRelic relic : p.relics) {
             if (relic instanceof AbstractBandMember) {
                 count++;
@@ -44,14 +28,44 @@ public class MemberHelper {
         return count;
     }
 
-    public static Map<String, Integer> getMember(int count) {
+    public static int getAveMujicaCount() {
+        int count = 0;
+        AbstractPlayer p = AbstractDungeon.player;
+        if (p.hasPower(FallApartPower.POWER_ID)) {
+            p.getPower(FallApartPower.POWER_ID).flash();
+            return count;
+        }
+        for (AbstractRelic relic : p.relics) {
+            if (SakikoConst.AVE_MUJICA.contains(relic.relicId)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int getCrychicCount(){
+        int count = 0;
+        AbstractPlayer p = AbstractDungeon.player;
+        if (p.hasPower(FallApartPower.POWER_ID)) {
+            p.getPower(FallApartPower.POWER_ID).flash();
+            return count;
+        }
+        for (AbstractRelic relic : p.relics) {
+            if (SakikoConst.CRYCHIC.contains(relic.relicId)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static Map<String, Integer> initSelectedMembers(int count) {
         Map<String, Integer> tmp = new HashMap<>();
-            do {
-                int i = AbstractDungeon.eventRng.random(0, memberList.size() - 1);
-                String s = memberList.get(i);
-                if (!AbstractDungeon.player.hasRelic(s.replace("Monster","")))
-                    tmp.put(s,i);
-            } while (tmp.size() < count);
+        do {
+            int i = AbstractDungeon.eventRng.random(0, SakikoConst.BAND_MEMBER_LIST.size() - 1);
+            String s = SakikoConst.BAND_MEMBER_LIST.get(i);
+            if (!AbstractDungeon.player.hasRelic(s.replace("Monster", "")))
+                tmp.put(s, i);
+        } while (tmp.size() < count);
         return tmp;
     }
 }

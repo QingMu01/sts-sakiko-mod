@@ -16,7 +16,7 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
@@ -41,7 +41,7 @@ public class UseMusicCardActionPatch {
             if (card[0].hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
-            for (AbstractCard music : MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
+            for (AbstractCard music : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
                 if (!(__instance instanceof FakeUseCardAction) && AbstractDungeon.player.hand.group.stream().allMatch(c -> c.canPlay(card[0]))) {
                     ((AbstractMusic) music).triggerInBufferUsedCard(card[0]);
                 }
@@ -82,7 +82,7 @@ public class UseMusicCardActionPatch {
                     AbstractDungeon.actionManager.addToBottom(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
                     return SpireReturn.Return();
                 }
-                CardGroup cardGroup = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
+                CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
                 cardGroup.addToTop(___targetCard);
                 // 超过队列大小时演奏最顶部的音乐
                 if (cardGroup.size() > SakikoConst.MUSIC_QUEUE_LIMIT_USED) {

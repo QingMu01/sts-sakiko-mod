@@ -27,7 +27,7 @@ public class KizunaMusic_PPP extends AbstractMusic {
         this.baseBlock = this.musicNumber;
 
         int realBaseMagicNumber = this.baseMagicNumber;
-        this.baseMagicNumber += MemberHelper.getBandMemberCount();
+        this.baseMagicNumber += MemberHelper.getCount();
         super.applyPowers();
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;

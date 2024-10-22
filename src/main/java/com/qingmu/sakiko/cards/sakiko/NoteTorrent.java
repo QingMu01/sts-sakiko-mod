@@ -2,9 +2,11 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.utility.DiscardToHandAction;
+import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -29,9 +31,15 @@ public class NoteTorrent extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (AbstractDungeon.player.discardPile.group.contains(this)){
+        if (AbstractDungeon.player.discardPile.group.contains(this)) {
             this.baseDamage += this.magicNumber;
-            this.addToBot(new DiscardToHandAction(this));
+            AbstractCard copy = this.makeSameInstanceOf();
+            copy.purgeOnUse = true;
+            copy.current_x = Settings.WIDTH + copy.hb.width + 50.0f * Settings.scale;
+            copy.current_y = Settings.HEIGHT + copy.hb.height + 50.0f * Settings.scale;
+            copy.target_x = Settings.WIDTH / 2.0f;
+            copy.target_y = Settings.HEIGHT / 2.0f;
+            this.addToBot(new NewQueueCardAction(copy, true, true, true));
         }
     }
 

@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.constant.SakikoConst;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 @SpirePatch(clz = AbstractCreature.class, method = "renderHealth")
 public class FlowProgressBarPatch {
@@ -25,7 +25,7 @@ public class FlowProgressBarPatch {
         if (__instance instanceof TogawaSakiko) {
             float x = __instance.hb.cX - __instance.hb.width / 2.0F;
             float y = __instance.hb.cY - __instance.hb.height / 2.0F + ___hbYOffset;
-            int currentAmount = MusicBattleFiled.BattalInfoPatch.stanceChangedThisTurn.get(__instance) % SakikoConst.STANCE_CHANGE_THRESHOLD_USED;
+            int currentAmount = MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.get(__instance) % SakikoConst.STANCE_CHANGE_THRESHOLD_USED;
             int maxAmount = SakikoConst.STANCE_CHANGE_THRESHOLD_USED;
             renderFlowProgressBarBg(sb, x, y, maxAmount, currentAmount, __instance);
             renderFlowProgressBar(sb, x, y, (__instance.hb.width * ((float) currentAmount / (float) maxAmount)), currentAmount);

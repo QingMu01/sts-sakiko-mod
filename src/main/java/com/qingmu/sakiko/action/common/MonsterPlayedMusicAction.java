@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class MonsterPlayedMusicAction extends AbstractGameAction {
 
@@ -28,7 +28,7 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
     public void update() {
         this.music.play();
         AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
-        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(source);
+        CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
         queue.removeCard(this.music);
         sakikoMonster.musicSlotItem.updateLocation = true;
         this.isDone = true;

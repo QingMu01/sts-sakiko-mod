@@ -22,7 +22,7 @@ import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiled;
+import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,7 +64,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             }
         }
         // 待演奏区钩子 演奏时触发
-        for (AbstractCard card : MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
+        for (AbstractCard card : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
             if (card instanceof AbstractMusic && card != this.music) {
                 ((AbstractMusic) card).triggerInBufferPlayedMusic(this.music);
             }
@@ -102,8 +102,8 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
 
         // 添加记录
-        MusicBattleFiled.BattalInfoPatch.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
-        MusicBattleFiled.BattalInfoPatch.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
+        MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
+        MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
         logger.info("Player played music card: {}", this.music);
     }
 
@@ -121,16 +121,16 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 this.music.play();
             }
         }
-        CardGroup queue = MusicBattleFiled.MusicQueue.musicQueue.get(AbstractDungeon.player);
+        CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
         // 处理回忆赋予的移除
         if (CardModifierManager.hasModifier(this.music, RememberModifier.ID) || CardModifierManager.hasModifier(this.music, LouderModifier.ID)) {
             logger.info("remove music card :{}", this.music);
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
-                AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));
+                this.addToTop(new ShowCardAction(this.music));
                 if (Settings.FAST_MODE) {
-                    AbstractDungeon.actionManager.addToTop(new WaitAction(0.1F));
+                    this.addToTop(new WaitAction(0.1F));
                 } else {
-                    AbstractDungeon.actionManager.addToTop(new WaitAction(0.7F));
+                    this.addToTop(new WaitAction(0.7F));
                 }
                 queue.empower(this.music);
                 this.isDone = true;
@@ -146,11 +146,11 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
 
         if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
-            AbstractDungeon.actionManager.addToTop(new ShowCardAction(this.music));
+            this.addToTop(new ShowCardAction(this.music));
             if (Settings.FAST_MODE) {
-                AbstractDungeon.actionManager.addToTop(new WaitAction(0.1F));
+                this.addToTop(new WaitAction(0.1F));
             } else {
-                AbstractDungeon.actionManager.addToTop(new WaitAction(0.7F));
+                this.addToTop(new WaitAction(0.7F));
             }
 
             queue.empower(this.music);
