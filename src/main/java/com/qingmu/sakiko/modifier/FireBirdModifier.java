@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.modifier;
 
-import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
@@ -33,17 +32,21 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? (TUTORIAL_STRING.LABEL[0] + cardName) : cardName;
     }
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], Math.max(0, this.amount));
+        return this.isLastModified(card, ID)
+                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], Math.max(0, this.amount))
+                : rawDescription;
     }
 
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FIREBIRD), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FIREBIRD)));
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(this.getTooltip(SakikoConst.KEYWORD_FIREBIRD))
+                : Collections.emptyList();
     }
 
     @Override

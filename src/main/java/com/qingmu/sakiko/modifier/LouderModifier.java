@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.modifier;
 
-import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -13,15 +12,16 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 import java.util.Collections;
 import java.util.List;
 
-public class LouderModifier extends AbstractCardModifier {
+public class LouderModifier extends AbstractMusicCardModifier {
 
     public static final String ID = ModNameHelper.make(LouderModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? TUTORIAL_STRING.LABEL[0] + cardName : cardName;
     }
+
     @Override
     public void onInitialApplication(AbstractCard card) {
         card.tags.add(SakikoEnum.CardTagEnum.REMOVE_FLAG);
@@ -29,7 +29,9 @@ public class LouderModifier extends AbstractCardModifier {
 
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_LOUDER),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_LOUDER)));
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(this.getTooltip(SakikoConst.KEYWORD_LOUDER))
+                : Collections.emptyList();
     }
 
     @Override

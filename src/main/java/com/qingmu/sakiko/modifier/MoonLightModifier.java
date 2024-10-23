@@ -1,11 +1,14 @@
 package com.qingmu.sakiko.modifier;
 
 import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.ArrayList;
 
 public class MoonLightModifier extends AbstractCardModifier {
     public static String ID = ModNameHelper.make(MoonLightModifier.class.getSimpleName());
@@ -13,7 +16,7 @@ public class MoonLightModifier extends AbstractCardModifier {
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        return rawDescription + " NL " + TUTORIAL_STRING.TEXT[0];
+        return this.isLastModifier(card) ? rawDescription + " NL " + TUTORIAL_STRING.TEXT[0] : rawDescription;
     }
 
     @Override
@@ -34,5 +37,10 @@ public class MoonLightModifier extends AbstractCardModifier {
     @Override
     public String identifier(AbstractCard card) {
         return ID;
+    }
+
+    private boolean isLastModifier(AbstractCard card) {
+        ArrayList<AbstractCardModifier> modifiers = CardModifierManager.getModifiers(card, ID);
+        return modifiers.get(modifiers.size() - 1).equals(this);
     }
 }

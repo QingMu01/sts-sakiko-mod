@@ -113,7 +113,7 @@ public class CardSelectorAction extends AbstractGameAction {
                 logger.info("Empty target?");
                 return;
             }
-            if (Arrays.stream(targets).allMatch(target -> this.getCardGroup(target).isEmpty())) {
+            if (Arrays.stream(targets).allMatch(target -> getCardGroup(target).isEmpty())) {
                 StringBuilder targetDesc = new StringBuilder();
                 for (int i = 0; i < targets.length; i++) {
                     if (getCardGroup(targets[i]).isEmpty()) {
@@ -344,7 +344,7 @@ public class CardSelectorAction extends AbstractGameAction {
         return notStatusOrCurseCard(card) && (card.cost >= 0 || card.costForTurn >= 0);
     }
 
-    public static boolean isCostEffectiveButNOtZero(AbstractCard card) {
+    public static boolean isCostEffectiveButNotZero(AbstractCard card) {
         return notStatusOrCurseCard(card) && (card.cost > 0 || card.costForTurn > 0);
     }
 

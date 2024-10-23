@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.modifier;
 
-import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -25,7 +24,7 @@ public class MyGoModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? TUTORIAL_STRING.LABEL[0] + cardName : cardName;
     }
 
     @Override
@@ -41,7 +40,9 @@ public class MyGoModifier extends AbstractMusicCardModifier {
 
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_MYGO),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_MYGO)));
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(this.getTooltip(SakikoConst.KEYWORD_MYGO))
+                : Collections.emptyList();
     }
 
     @Override

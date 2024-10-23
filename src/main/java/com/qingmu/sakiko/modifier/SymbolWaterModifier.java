@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.modifier;
 
-import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
@@ -11,7 +10,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.constant.SakikoConst;
@@ -33,27 +31,26 @@ public class SymbolWaterModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? (TUTORIAL_STRING.LABEL[0] + cardName) : cardName;
+    }
+
+    @Override
+    public String modifyDescription(String rawDescription, AbstractCard card) {
+        return this.isLastModified(card, ID)
+                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalHeal(card))
+                : rawDescription;
+    }
+
+    @Override
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(this.getTooltip(SakikoConst.KEYWORD_WATER))
+                : Collections.emptyList();
     }
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
         this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, this.heal));
-    }
-
-    @Override
-    public String modifyDescription(String rawDescription, AbstractCard card) {
-        CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(card.cardID);
-        String realDescription = card.upgraded ? (cardStrings.UPGRADE_DESCRIPTION == null ? cardStrings.DESCRIPTION : cardStrings.UPGRADE_DESCRIPTION) : cardStrings.DESCRIPTION;
-        if (CardModifierManager.getModifiers(card, ID).size() <= 1) {
-            return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.heal);
-        }
-        return String.format(realDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalHeal(card));
-    }
-
-    @Override
-    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_WATER), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_WATER)));
     }
 
     @Override

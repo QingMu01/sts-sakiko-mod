@@ -1,6 +1,5 @@
 package com.qingmu.sakiko.modifier;
 
-import basemod.BaseMod;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
@@ -31,12 +30,21 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? (TUTORIAL_STRING.LABEL[0] + cardName) : cardName;
     }
 
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        return String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.usedCount);
+        return this.isLastModified(card, ID)
+                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.usedCount)
+                : rawDescription;
+    }
+
+    @Override
+    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(this.getTooltip(SakikoConst.KEYWORD_MOONS))
+                : Collections.emptyList();
     }
 
     @Override
@@ -46,8 +54,8 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
         AbstractDungeon.player.limbo.addToBottom(copy);
         copy.current_x = card.current_x;
         copy.current_y = card.current_y;
-        copy.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
-        copy.target_y = (float) Settings.HEIGHT / 2.0F;
+        copy.target_x = Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
+        copy.target_y = Settings.HEIGHT / 2.0F;
         copy.purgeOnUse = true;
         if (target != null && !target.isPlayer) {
             copy.calculateCardDamage((AbstractMonster) target);
@@ -55,11 +63,6 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
         } else {
             AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(copy, true, card.energyOnUse, true, true), true);
         }
-    }
-
-    @Override
-    public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_MOONS),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_MOONS)));
     }
 
     @Override
@@ -79,11 +82,10 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onRemove(AbstractCard card) {
-        if (card.cost >= 0) {
-            AbstractCard copy = card.makeCopy();
-            card.cost = copy.cost;
-            card.setCostForTurn(card.cost);
-        }
+        AbstractCard copy = card.makeCopy();
+        card.cost = copy.cost;
+        card.setCostForTurn(card.cost);
+
     }
 
     @Override

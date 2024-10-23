@@ -23,12 +23,14 @@ public class BlackBirthdayModifier extends AbstractMusicCardModifier {
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
-        return TUTORIAL_STRING.LABEL[0] + cardName;
+        return this.isLastModified(card, ID) ? (TUTORIAL_STRING.LABEL[0] + cardName) : cardName;
     }
 
     @Override
     public List<TooltipInfo> additionalTooltips(AbstractCard card) {
-        return Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_REBIRTH),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_REBIRTH)));
+        return this.isLastModified(card, ID)
+                ? Collections.singletonList(new TooltipInfo(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_REBIRTH), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_REBIRTH)))
+                : Collections.emptyList();
     }
 
     @Override
