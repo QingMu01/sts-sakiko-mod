@@ -15,7 +15,7 @@ public class Veritas extends AbstractSakikoCard implements CustomSavable<Integer
 
     public static final String ID = ModNameHelper.make(Veritas.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Veritas.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;

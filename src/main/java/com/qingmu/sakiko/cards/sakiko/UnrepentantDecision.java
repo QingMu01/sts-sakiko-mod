@@ -13,7 +13,7 @@ public class UnrepentantDecision extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(UnrepentantDecision.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/UnrepentantDecision.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;

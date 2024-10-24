@@ -17,7 +17,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
             this.setHp(baseHp - 10, baseHp + 10);
         }
         // act2 基本属性
-        if (AbstractDungeon.id.equals(TheCity.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
+        if (AbstractDungeon.id.equals(TheCity.ID)) {
             this.baseAttack += 4; // 12
             this.baseHp += 60; // 140
             this.baseSlash += 10; // 22
@@ -26,7 +26,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
             this.setHp(baseHp - 15, baseHp + 15);
         }
         // act3 基本属性
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
+        if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.baseAttack += 4; // 16
             this.baseHp += 80; // 220
             this.baseSlash += 12; // 34

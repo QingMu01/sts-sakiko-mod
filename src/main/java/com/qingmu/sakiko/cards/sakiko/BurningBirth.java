@@ -11,7 +11,7 @@ public class BurningBirth extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(BurningBirth.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/BurningBirth.png";
 
     private static final CardType TYPE = CardType.POWER;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;

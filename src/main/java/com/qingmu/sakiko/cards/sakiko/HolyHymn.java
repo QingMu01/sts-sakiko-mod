@@ -11,7 +11,7 @@ public class HolyHymn extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(HolyHymn.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/HolyHymn.png";
 
     private static final CardType TYPE = CardType.POWER;
     private static final CardRarity RARITY = CardRarity.RARE;

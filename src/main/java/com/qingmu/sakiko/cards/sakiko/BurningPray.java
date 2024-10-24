@@ -15,7 +15,7 @@ public class BurningPray extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(BurningPray.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/BurningPray.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;

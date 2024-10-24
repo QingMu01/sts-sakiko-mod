@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -19,8 +18,8 @@ public class DoublePlayPower extends AbstractPower implements TriggerOnPlayMusic
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    private static final String path48 = "SakikoModResources/img/powers/MoonsPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/MoonsPower84.png";
+    private static final String path48 = "SakikoModResources/img/powers/DoublePlayPower48.png";
+    private static final String path128 = "SakikoModResources/img/powers/DoublePlayPower128.png";
 
     public DoublePlayPower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -43,8 +42,8 @@ public class DoublePlayPower extends AbstractPower implements TriggerOnPlayMusic
     public void triggerOnPlayMusicCard(AbstractMusic music) {
         if (this.amount > 0) {
             this.flash();
+            this.reducePower(1);
             music.play();
-            this.addToTop(new ReducePowerAction(this.owner, this.owner, this, 1));
         }
     }
 

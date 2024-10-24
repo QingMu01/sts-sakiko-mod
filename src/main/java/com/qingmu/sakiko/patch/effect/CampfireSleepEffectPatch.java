@@ -13,8 +13,8 @@ public class CampfireSleepEffectPatch {
     public static void insert(CampfireSleepEffect __instance) {
         if (AbstractDungeon.player.hasRelic(Combination_ANSK.ID)) {
             Combination_ANSK relic = (Combination_ANSK) AbstractDungeon.player.getRelic(Combination_ANSK.ID);
-            relic.flash();
             if (!relic.isSleep) {
+                relic.flash();
                 relic.isSleep = true;
                 AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.maxHealth, true);
             }

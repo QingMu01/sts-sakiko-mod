@@ -16,7 +16,7 @@ public class GravityRadar extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(GravityRadar.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/GravityRadar.png";
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MoonLightDiscard"));
 
@@ -34,8 +34,8 @@ public class GravityRadar extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, false, card -> CardGroup.CardGroupType.DISCARD_PILE, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, false, card -> CardGroup.CardGroupType.DISCARD_PILE, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new MoonLightModifier());
             }
         }, CardGroup.CardGroupType.DRAW_PILE));

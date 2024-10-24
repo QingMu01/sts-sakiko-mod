@@ -11,7 +11,7 @@ public class Nobility extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Nobility.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Nobility.png";
 
 
     private static final CardType TYPE = CardType.POWER;

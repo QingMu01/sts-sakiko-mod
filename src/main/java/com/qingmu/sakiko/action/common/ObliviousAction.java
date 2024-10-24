@@ -27,8 +27,8 @@ public class ObliviousAction extends CardSelectorAction {
 
     // 忘却 默认方法
     public ObliviousAction(int amount, boolean allowUnderAmount) {
-        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, action -> {
-            for (AbstractCard card : action.selected) {
+        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, cardList -> {
+            for (AbstractCard card : cardList) {
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
                 CardModifierManager.addModifier(card, new ObliviousModifier());
                 AbstractDungeon.player.limbo.addToBottom(card);

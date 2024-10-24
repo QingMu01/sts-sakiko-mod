@@ -13,7 +13,7 @@ public class FullMoon extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(FullMoon.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/FullMoon.png";
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.RARE;

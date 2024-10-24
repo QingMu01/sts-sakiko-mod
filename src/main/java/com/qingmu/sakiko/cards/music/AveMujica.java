@@ -36,8 +36,8 @@ public class AveMujica extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> !CardModifierManager.hasModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> !CardModifierManager.hasModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new AveMujicaModifier());
             }
         }, CardGroup.CardGroupType.HAND));

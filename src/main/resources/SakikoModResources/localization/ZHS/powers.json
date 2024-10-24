@@ -261,5 +261,24 @@
       "只存在于祥子鸿图中的，假想的复权。造成的伤害提高 #b",
       " %。"
     ]
+  },
+  "SakikoMod:CrychicKizunaPower": {
+    "NAME": "Crychic的牵绊",
+    "DESCRIPTIONS": [
+      "持有此状态的单位会共同承受伤害。"
+    ]
+  },
+  "SakikoMod:AveMujicaDictatorshipPower": {
+    "NAME": "AveMujica的独裁者",
+    "DESCRIPTIONS": [
+      "持有此状态的单位会将受到的伤害均摊给爪牙。"
+    ]
+  },
+  "SakikoMod:MusicalAbilityPower": {
+    "NAME": "音乐才华",
+    "DESCRIPTIONS": [
+      "你每打出 #b12 张非音乐牌，进行一次 #y演奏 。距离下次演奏还差 #b",
+      " 张牌。"
+    ]
   }
 }

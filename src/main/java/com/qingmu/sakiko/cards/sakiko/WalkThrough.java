@@ -15,7 +15,7 @@ public class WalkThrough extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(WalkThrough.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/WalkThrough.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.COMMON;

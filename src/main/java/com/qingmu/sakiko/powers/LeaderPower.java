@@ -19,7 +19,7 @@ public class LeaderPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/LeaderPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/LeaderPower84.png";
+    private static final String path128 = "SakikoModResources/img/powers/LeaderPower128.png";
 
     public LeaderPower(AbstractCreature owner, int amount) {
         this.name = NAME;

@@ -127,7 +127,7 @@ public class IntentAction {
         return null;
     }
 
-    public static class Builder {
+    public final static class Builder {
         private String id;
         // 图标
         private AbstractMonster.Intent intent;

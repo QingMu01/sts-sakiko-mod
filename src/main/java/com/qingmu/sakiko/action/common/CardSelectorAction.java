@@ -50,30 +50,30 @@ public class CardSelectorAction extends AbstractGameAction {
     // 处理器，处理卡牌，设置卡牌将会移动到哪个卡组
     private final Function<AbstractCard, CardGroup.CardGroupType> processor;
     // 回调函数，执行完选择后回调
-    private final Consumer<CardSelectorAction> callback;
+    private final Consumer<List<AbstractCard>> callback;
 
     private final boolean allowUnderAmount;
 
 
     // 单目标选择
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> endOfSelect, CardGroup.CardGroupType target) {
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> endOfSelect, CardGroup.CardGroupType target) {
         this(AbstractDungeon.player, prompt, amount, allowUnderAmount, filter, processor, endOfSelect, target);
     }
 
     // 单目标选择，无过滤器、有回调
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType target) {
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType target) {
         this(AbstractDungeon.player, prompt, amount, allowUnderAmount, e -> true, processor, callback, target);
     }
 
     // 单目标选择，无过滤器、无回调
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, e -> true, processor, action -> {
+        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, e -> true, processor, callback -> {
         }, target);
     }
 
     // 单目标选择，有过滤器、无回调
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, filter, processor, action -> {
+        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, filter, processor, callback -> {
         }, target);
     }
 
@@ -87,7 +87,7 @@ public class CardSelectorAction extends AbstractGameAction {
      * @callback: 回调函数
      * @targets: 目标卡组列表
      * */
-    public CardSelectorAction(AbstractPlayer p, String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<CardSelectorAction> callback, CardGroup.CardGroupType... targets) {
+    public CardSelectorAction(AbstractPlayer p, String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... targets) {
         this.player = p;
         this.prompt = prompt;
         this.amount = amount;
@@ -108,7 +108,7 @@ public class CardSelectorAction extends AbstractGameAction {
         if (this.duration == Settings.ACTION_DUR_FAST) {
             if (this.targets.length == 0) {
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.player.dialogX, this.player.dialogY, 1.5F, uiStrings.EXTRA_TEXT[1], true));
-                this.callback.accept(this);
+                this.callback.accept(this.selected);
                 this.isDone = true;
                 logger.info("Empty target?");
                 return;
@@ -124,7 +124,7 @@ public class CardSelectorAction extends AbstractGameAction {
                     }
                 }
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.player.dialogX, this.player.dialogY, 1.5F, String.format(uiStrings.EXTRA_TEXT[0], targetDesc), true));
-                this.callback.accept(this);
+                this.callback.accept(this.selected);
                 this.isDone = true;
                 logger.info("target has no card");
                 return;
@@ -135,7 +135,7 @@ public class CardSelectorAction extends AbstractGameAction {
             if (this.candidate.isEmpty()) {
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.player.dialogX, this.player.dialogY, 1.5F, uiStrings.EXTRA_TEXT[3], true));
                 this.releaseCards(cantSelectedList);
-                this.callback.accept(this);
+                this.callback.accept(this.selected);
                 this.isDone = true;
                 logger.info("no candidate");
                 return;
@@ -145,7 +145,7 @@ public class CardSelectorAction extends AbstractGameAction {
                 card.unhover();
                 card.unfadeOut();
                 card.applyPowers();
-                card.setAngle(0.0F,true);
+                card.setAngle(0.0F, true);
                 card.targetDrawScale = 1.0F;
             }
             if (!this.allowUnderAmount && this.candidate.size() <= this.amount) {
@@ -154,7 +154,7 @@ public class CardSelectorAction extends AbstractGameAction {
                     this.moveCard(selectedCard, apply);
                 }
                 this.selected.addAll(this.candidate.group);
-                this.callback.accept(this);
+                this.callback.accept(this.selected);
                 this.player.hand.refreshHandLayout();
                 this.releaseCards(candidate.group);
                 this.releaseCards(cantSelectedList);
@@ -186,7 +186,7 @@ public class CardSelectorAction extends AbstractGameAction {
         }
         this.tickDuration();
         if (this.isDone) {
-            this.callback.accept(this);
+            this.callback.accept(this.selected);
             this.player.hand.refreshHandLayout();
             this.releaseCards(candidate.group);
             this.releaseCards(cantSelectedList);

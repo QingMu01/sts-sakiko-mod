@@ -96,7 +96,7 @@
     "DESCRIPTION": "造成 !D! 点伤害。 NL 斩杀 时，将溢出伤害转化为对自己的治疗。"
   },
   "SakikoMod:TheDebut": {
-    "NAME": "首次登台",
+    "NAME": "出道公演",
     "DESCRIPTION": "造成 !D! 点伤害。 NL 若本回合没有打出过 sakikomod:音乐 牌，则从 sakikomod:歌单 抽 !M! 张牌。"
   },
   "SakikoMod:UnrepentantDecision": {
@@ -128,7 +128,7 @@
     "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。 NL 本回合，每次姿态转换会使这张牌额外造成1次伤害。"
   },
   "SakikoMod:MoonLaughNight": {
-    "NAME": "银月狂笑之夜",
+    "NAME": "月狂笑之夜",
     "DESCRIPTION": "造成!D!点伤害，你每有一层 sakikomod:复权 ，这张牌的伤害提高 !M! 。"
   },
   "SakikoMod:NoteTorrent": {
@@ -158,7 +158,8 @@
   },
   "SakikoMod:SecretThought": {
     "NAME": "隐秘思想",
-    "DESCRIPTION": " sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。"
+    "DESCRIPTION": " sakikomod:创作者 ：获得 [E] [E] 。 NL 否则，进入创作者。",
+    "UPGRADE_DESCRIPTION": " sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。"
   },
   "SakikoMod:FallApart": {
     "NAME": "分崩离析",
@@ -219,7 +220,8 @@
   },
   "SakikoMod:BandBusiness": {
     "NAME": "乐队运营",
-    "DESCRIPTION": " 不能被打出 。 NL 如果这张牌在手牌中，你演奏时获得 !M! [E] ，然后将这张牌丢弃。",
+    "DESCRIPTION": " 不能被打出 。 NL 如果这张牌在手牌中，你 sakikomod:演奏 后获得 [E] ，然后将这张牌丢弃。",
+    "UPGRADE_DESCRIPTION": " 不能被打出 。 NL 如果这张牌在手牌中，你 sakikomod:演奏 后获得 [E] [E] ，然后将这张牌丢弃。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出。"
     ]
@@ -315,7 +317,7 @@
   },
   "SakikoMod:BurningBirth": {
     "NAME": "烈火重生",
-    "DESCRIPTION": "回合开始时，选择最多 !M! 张手牌，将其消耗。 NL 你抽取被消耗牌费用之和的牌。"
+    "DESCRIPTION": "回合开始时，选择 !M! 张手牌，将其消耗。 NL 抽取被消耗牌费用之和的牌，选择状态牌或诅咒牌时，失去1点生命。"
   },
   "SakikoMod:FormerGlory": {
     "NAME": "昔日荣光",
@@ -413,7 +415,10 @@
   "SakikoMod:Utopia": {
     "NAME": "乌托邦",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害，每次 *演奏 后，这张牌的基础伤害翻倍。 NL 翻倍次数不会超过队友数量。"
+    "DESCRIPTION": " sakikomod:演奏 ：造成 !D! 点伤害，每次 *演奏 后，这张牌的伤害翻倍，翻倍次数不会超过 sakikomod:队友 数量。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （当前伤害为%s倍）"
+    ]
   },
   "SakikoMod:NingenUta_CryChic": {
     "NAME": "想要成为人类之歌",
@@ -444,7 +449,7 @@
   "SakikoMod:YOLO_AG": {
     "NAME": "Y.O.L.O.",
     "MINI_TITLE": "Afterglow",
-    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ： 消耗 自身。这张牌位于待演奏区时，接下来 !SakikoMod:MN! 次 sakikomod:演奏 ，你获得 !M! [E] 。"
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ： 消耗 自身。这张牌位于待演奏区时，接下来 !SakikoMod:MN! 次 sakikomod:演奏 ，你获得 [E] 。"
   },
   "SakikoMod:Louder_R": {
     "NAME": "Louder",
@@ -559,7 +564,7 @@
   },
   "SakikoMod:DistantPast": {
     "NAME": "遥远的过去",
-    "DESCRIPTION": " 不能被打出 NL 抽到时，抽一张牌， 消耗 自身。 NL 在弃牌堆加入两张复制品，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。",
+    "DESCRIPTION": " 不能被打出 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。被 消耗 时，若弃牌堆同名卡少于六张，则加入两张复制品。 NL 虚无 。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出"
     ]

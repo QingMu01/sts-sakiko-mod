@@ -1,10 +1,11 @@
 package com.qingmu.sakiko.monsters.boss;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
+import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.actions.unique.RemoveDebuffsAction;
 import com.megacrit.cardcrawl.actions.utility.HideHealthBarAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -18,7 +19,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.action.RenameMonsterAction;
-import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
+import com.qingmu.sakiko.action.monster.CrychicHonorAction;
 import com.qingmu.sakiko.action.monster.ExhaustSpecialCardByIdAction;
 import com.qingmu.sakiko.cards.music.monster.AbolitionCase;
 import com.qingmu.sakiko.cards.music.monster.AveMujica_Boss;
@@ -31,8 +32,10 @@ import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.monsters.member.*;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.powers.monster.AveMujicaDictatorshipPower;
 import com.qingmu.sakiko.powers.monster.FakeKirameiPower;
 import com.qingmu.sakiko.powers.monster.IdealFukkenPower;
+import com.qingmu.sakiko.powers.monster.MusicalAbilityPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
 
-    private int baseAttack = 25, baseSlash = 60, baseMultiDamage = 5, multiCount = 12, baseBlock = 20;
+    private int baseAttack = 25, baseSlash = 60, baseMultiDamage = 5, multiCount = 12, baseBlock = 20, baseHp = 600;
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
     private int moveCount = 0;
@@ -55,7 +58,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         super(MOVES[0] + NAME, ID, IMG, x, y);
         this.type = EnemyType.BOSS;
         this.canPlayMusic = true;
-        this.setHp(400);
+        this.setHp(this.baseHp);
 
         this.damage.add(new DamageInfo(this, this.baseAttack));
         // 重击
@@ -92,10 +95,25 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     protected boolean canPhaseSwitch() {
         if (this.currentHealth <= 0 && !this.halfDead) {
             if (AbstractDungeon.getCurrRoom().cannotLose) {
+                // 阶段转换
                 this.phase++;
+                if (this.phase == 1) {
+                    this.addToBot(new TalkAction(this, DIALOG[1], 2.0F, 2.0F));
+                } else if (this.phase == 2) {
+                    this.addToBot(new TalkAction(this, DIALOG[3], 2.0F, 2.0F));
+                } else if (this.phase == 3) {
+                    this.addToBot(new TalkAction(this, DIALOG[5], 2.0F, 2.0F));
+                } else if (this.phase == 4) {
+                    this.addToBot(new TalkAction(this, DIALOG[7], 2.0F, 2.0F));
+                }
                 this.halfDead = true;
-                this.powers.removeIf(power -> !power.ID.equals(FakeKirameiPower.POWER_ID) && !power.ID.equals(IdealFukkenPower.POWER_ID));
+                AbstractDungeon.getCurrRoom().monsters.monsters.removeIf(monster -> monster.hasPower(MinionPower.POWER_ID));
+                // 清除debuff
+                this.powers.removeIf(power -> power.type == AbstractPower.PowerType.DEBUFF);
+                this.powers.removeIf(power -> power.ID.equals(MusicalAbilityPower.POWER_ID));
+                // 清除歌单
                 MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).clear();
+                // 清除爪牙
                 for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                     if (!monster.id.equals(ID) && !monster.isDead && !monster.isDying) {
                         this.addToTop(new HideHealthBarAction(monster));
@@ -104,6 +122,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                     }
                 }
                 this.applyPowers();
+                // 阶段转化结束
                 if (this.phase >= 4) {
                     AbstractDungeon.getCurrRoom().cannotLose = false;
                     this.halfDead = false;
@@ -121,11 +140,21 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setIntent(Intent.UNKNOWN)
                 .setPredicate(m -> true)
                 .setActions(() -> new AbstractGameAction[]{
-                        new HealAction(this, this, (this.phase + 1) * 100 + 400),
+                        new HealAction(this, this, (this.phase + 1) * 200 + this.baseHp),
                         new RenameMonsterAction(this, MOVES[this.phase] + NAME)})
                 .setCallback(ia -> {
-                    this.maxHealth = (this.phase + 1) * 100 + 400;
+                    this.maxHealth = (this.phase + 1) * 200 + this.baseHp;
                     this.halfDead = false;
+                    if (this.phase == 1) {
+                        this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
+                        this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
+                    } else if (this.phase == 2) {
+                        this.addToBot(new TalkAction(this, DIALOG[4], 2.0F, 2.0F));
+                        this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
+                    } else if (this.phase == 3) {
+                        this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
+                        this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
+                    }
                 })
                 .build()
         );
@@ -140,16 +169,15 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.2f)),
+                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new SharpHidePower(this, 3), 3)
                         })
                         .build());
-
                 intentActions.add(new IntentAction.Builder()
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.2f)),
+                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new ThornsPower(this, 2), 2)
                         })
                         .build());
@@ -157,7 +185,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.2f)),
+                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new BeatOfDeathPower(this, 1), 1)
                         })
                         .build());
@@ -195,22 +223,23 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         })
                         .build());
                 intentActions.add(new IntentAction.Builder()
-                        .setWeight(30)
-                        .setIntent(Intent.MAGIC)
+                        .setWeight(20)
+                        .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new AnimateJumpAction(this),
-                                new ReadyToPlayMusicAction(1, this)
+                                new RemoveDebuffsAction(this),
+                                new ApplyPowerAction(this, this, new FakeKirameiPower(this, 5), 5),
+                                new ApplyPowerAction(this, this, new IdealFukkenPower(this, 1), 1)
                         })
                         .build());
                 intentActions.add(new IntentAction.Builder()
-                        .setWeight(20)
+                        .setWeight(25)
                         .setIntent(Intent.ATTACK)
                         .setDamageAmount(this.damage.get(2))
                         .setMultiplier(this.multiCount)
                         .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                         .build());
                 intentActions.add(new IntentAction.Builder()
-                        .setWeight(20)
+                        .setWeight(25)
                         .setIntent(Intent.ATTACK)
                         .setDamageAmount(this.damage.get(1))
                         .setActions(() -> new AbstractGameAction[]{
@@ -221,12 +250,11 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 break;
             }
             case 3: {
-                // 四阶段 高攻击性，6回合后自爆
+                // 四阶段 高攻击性
                 this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.HAND));
                 this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.DISCARD_PILE));
                 this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.DRAW_PILE));
                 this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE));
-                this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, 5), 5));
                 intentActions.add(new IntentAction.Builder()
                         .setWeight(50)
                         .setIntent(Intent.ATTACK)
@@ -264,27 +292,38 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                     List<AbstractGameAction> actions = new ArrayList<>();
                     for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                         if (!monster.isDead && !monster.isDying) {
-                            actions.add(new GainBlockAction(monster, this, this.baseBlock));
+                            actions.add(new GainBlockAction(monster, this, this.baseBlock, true));
                         }
                     }
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .build());
         intentActions.add(new IntentAction.Builder()
-                .setWeight(40)
+                .setWeight(10)
                 .setIntent(Intent.BUFF)
                 .setActions(() -> {
                     List<AbstractGameAction> actions = new ArrayList<>();
                     for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                         if (!monster.isDead && !monster.isDying) {
-                            actions.add(new HealAction(monster, this, (int) (this.baseBlock * 0.8)));
+                            actions.add(new HealAction(monster, this, this.baseBlock * 2));
                         }
                     }
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .build());
         intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
+                .setWeight(25)
+                .setIntent(Intent.BUFF)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                        actions.add(new ApplyPowerAction(monster, this, new StrengthPower(monster, 2), 2));
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
+                .build());
+        intentActions.add(new IntentAction.Builder()
+                .setWeight(25)
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
@@ -298,17 +337,21 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     @Override
     protected List<SpecialIntentAction> initSpecialIntent() {
         ArrayList<SpecialIntentAction> specialIntentActions = new ArrayList<>();
-        // 一阶段，召唤队友
+        // 一阶段，召唤队友，全体队友共同承受伤害
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setPredicate(m -> this.phase == 0)
                 .setMoveName(MOVES[4])
                 .setIntent(Intent.UNKNOWN)
-                .setActions(() -> new AbstractGameAction[]{
-                        new SFXAction("MONSTER_COLLECTOR_SUMMON"),
-                        new SpawnMonsterAction(new TomoriMonster(this.hb_x - (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
-                        new SpawnMonsterAction(new TakiMonster(this.hb_x + (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
-                        new SpawnMonsterAction(new SoyoMonster(this.hb_x - (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true),
-                        new SpawnMonsterAction(new MutsumiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true)
+                .setActions(() -> {
+                    List<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new SFXAction("MONSTER_COLLECTOR_SUMMON"));
+                    actions.add(new TalkAction(this, DIALOG[0], 2.0F, 2.0F));
+                    actions.add(new SpawnMonsterAction(new TomoriMonster(this.hb_x - (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new TakiMonster(this.hb_x + (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new SoyoMonster(this.hb_x - (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new MutsumiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+                    actions.add(new CrychicHonorAction(this));
+                    return actions.toArray(new AbstractGameAction[0]);
                 })
                 .build());
         // 二阶段，塞牌
@@ -334,15 +377,17 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .build());
         // 三阶段 召唤队友
         specialIntentActions.add(new SpecialIntentAction.Builder()
-                .setPredicate(m -> this.phase == 2)
+                .setPredicate(m -> this.phase == 2 && AbstractDungeon.getCurrRoom().monsters.monsters.stream().noneMatch(mo -> mo.hasPower(MinionPower.POWER_ID)))
                 .setMoveName(MOVES[6])
                 .setIntent(Intent.UNKNOWN)
+                .setRemovable(m -> false)
                 .setActions(() -> new AbstractGameAction[]{
                         new SFXAction("MONSTER_COLLECTOR_SUMMON"),
                         new SpawnMonsterAction(new UikaMonster(this.hb_x - (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
                         new SpawnMonsterAction(new MutsumiMonster(this.hb_x + (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
                         new SpawnMonsterAction(new UmiriMonster(this.hb_x - (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true),
-                        new SpawnMonsterAction(new NyamuchiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true)
+                        new SpawnMonsterAction(new NyamuchiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true),
+                        new ApplyPowerAction(this, this, new AveMujicaDictatorshipPower(this))
                 })
                 .build());
         // 四阶段 五福临门
@@ -351,7 +396,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setIntent(Intent.STRONG_DEBUFF)
                 .setActions(() -> new AbstractGameAction[]{
                         new MakeTempCardInDiscardAction(new DistantPast(), 1),
-                        new MakeTempCardInDiscardAction(new AbolitionCase(), 1),
+                        new MakeTempCardInDiscardAction(new AbolitionCase(), 2),
                         new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true), 2),
                         new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, 2, true), 2),
                         new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 2, true), 2),

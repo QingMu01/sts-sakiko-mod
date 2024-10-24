@@ -33,8 +33,8 @@ public class Symbol_I extends AbstractMusic {
     public void play() {
         // callback中取得的数据是被被重置后的，在这里提前获取计算完成后的数据副本
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isAttackCard, card -> null, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isAttackCard, card -> null, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new SymbolFireModifier(realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));

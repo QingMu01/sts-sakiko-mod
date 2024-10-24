@@ -11,7 +11,7 @@ public class MaskerFate extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(MaskerFate.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/MaskerFate.png";
 
 
     private static final CardType TYPE = CardType.SKILL;

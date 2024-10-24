@@ -15,7 +15,7 @@ public class TruthOfTheWorld extends AbstractSakikoCard implements TriggerOnObli
 
     public static final String ID = ModNameHelper.make(TruthOfTheWorld.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/TruthOfTheWorld.png";
 
 
     private static final CardType TYPE = CardType.ATTACK;

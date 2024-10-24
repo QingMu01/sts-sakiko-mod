@@ -18,7 +18,7 @@ public class Elements extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Elements.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/other/Elements.png";
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.SPECIAL;

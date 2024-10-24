@@ -27,9 +27,9 @@ public class ClassicMusicianPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/ClassicMusicianPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/ClassicMusicianPower84.png";
+    private static final String path128 = "SakikoModResources/img/powers/ClassicMusicianPower128.png";
 
-    private List<AbstractMusic> usedMusicCardThisTurn;
+    private final List<AbstractMusic> usedMusicCardThisTurn;
 
     public ClassicMusicianPower(AbstractCreature owner, int amount) {
         this.name = NAME;

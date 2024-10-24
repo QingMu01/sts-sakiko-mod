@@ -10,7 +10,7 @@ public class ChangeOfPlans extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(ChangeOfPlans.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/ChangeOfPlans.png";
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.COMMON;

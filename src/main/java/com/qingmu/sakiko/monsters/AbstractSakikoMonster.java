@@ -117,20 +117,20 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     }
 
     @Override
-    public void die() {
+    public void die(boolean triggerRelics) {
         if (AbstractDungeon.getCurrRoom().cannotLose) {
             if (this.canPhaseSwitch()) {
                 this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
             } else {
-                super.die();
+                super.die(triggerRelics);
             }
         } else {
-            super.die();
+            super.die(triggerRelics);
         }
     }
 
     // 获取即将演奏的音乐
-    protected void obtainMusic(AbstractMusic music) {
+    public void obtainMusic(AbstractMusic music) {
         music.m_target = AbstractDungeon.player;
         music.m_source = this;
         AbstractDungeon.effectList.add(new ObtainMusicCardEffect(music, this));
@@ -158,12 +158,13 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     }
 
     protected AbstractGameAction[] generateMultiAttack(DamageInfo info, int multiplier) {
-        AbstractGameAction[] actions = new AbstractGameAction[multiplier * 2];
+        int animationCount = 1 + multiplier % 4;
+        AbstractGameAction[] actions = new AbstractGameAction[multiplier + animationCount];
         for (int i = 0; i < actions.length; i++) {
-            if (i % 2 == 0) {
+            if (i % 4 == 0) {
                 actions[i] = new AnimateFastAttackAction(this);
             } else {
-                actions[i] = new DamageAction(AbstractDungeon.player, info);
+                actions[i] = new DamageAction(AbstractDungeon.player, info,true);
             }
         }
         return actions;

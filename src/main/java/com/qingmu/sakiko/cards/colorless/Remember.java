@@ -18,7 +18,7 @@ public class Remember extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Remember.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/colorless/Remember.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/other/Remember.png";
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(Remember.class.getSimpleName()));
 
@@ -38,8 +38,8 @@ public class Remember extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, false, c -> !c.hasTag(SakikoEnum.CardTagEnum.REMEMBER), card -> CardGroup.CardGroupType.HAND, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, false, c -> !c.hasTag(SakikoEnum.CardTagEnum.REMEMBER), card -> CardGroup.CardGroupType.HAND, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new RememberModifier());
                 if (this.upgraded) {
                     card.setCostForTurn(0);

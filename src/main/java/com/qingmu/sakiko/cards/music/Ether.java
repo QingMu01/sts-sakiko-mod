@@ -33,8 +33,8 @@ public class Ether extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isCostEffectiveButNotZero, card -> null, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isCostEffectiveButNotZero, card -> null, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new EtherModifier(realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));

@@ -19,8 +19,8 @@ public class Masquerade extends AbstractSakikoCard {
 
     public Masquerade() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 0, 1);
-        this.setUpgradeAttr(2, 0, 0, 0);
+        this.initBaseAttr(3, 0, 0, 1);
+        this.setUpgradeAttr(3, 0, 0, 0);
         this.setEthereal(true, false);
     }
 

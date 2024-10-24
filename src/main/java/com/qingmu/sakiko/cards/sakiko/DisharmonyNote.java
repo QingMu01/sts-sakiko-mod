@@ -9,7 +9,7 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 public class DisharmonyNote extends AbstractSakikoCard {
     public static final String ID = ModNameHelper.make(DisharmonyNote.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/DisharmonyNote.png";
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.COMMON;

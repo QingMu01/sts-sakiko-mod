@@ -32,8 +32,8 @@ public class Symbol_IV extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, action -> {
-            for (AbstractCard card : action.selected) {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new SymbolEarthModifier(realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));

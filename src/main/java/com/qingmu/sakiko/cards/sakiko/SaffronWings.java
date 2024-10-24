@@ -14,7 +14,7 @@ public class SaffronWings extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(SaffronWings.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/SaffronWings.png";
 
 
     private static final CardType TYPE = CardType.ATTACK;

@@ -13,7 +13,7 @@ public class BandBusiness extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(BandBusiness.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/BandBusiness.png";
 
 
     private static final CardType TYPE = CardType.SKILL;

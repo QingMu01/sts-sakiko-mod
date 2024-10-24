@@ -35,7 +35,7 @@ public class Osananajimi extends AbstractSakikoCard {
         this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.magicNumber, true, card -> !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT), card -> {
             CardModifierManager.addModifier(card, new MoonLightModifier());
             return CardGroup.CardGroupType.DISCARD_PILE;
-        }, action -> {
+        }, cardList -> {
         }, CardGroup.CardGroupType.HAND));
     }
 }

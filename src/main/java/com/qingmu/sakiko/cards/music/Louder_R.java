@@ -33,8 +33,8 @@ public class Louder_R extends AbstractMusic {
 
     @Override
     public void play() {
-        this.submitActionsToTop(new CardSelectorAction(AbstractDungeon.player, uiStrings.TEXT[0], this.musicNumber, true, card -> true, card -> null, action -> {
-            for (AbstractCard card : action.selected) {
+        this.submitActionsToTop(new CardSelectorAction(AbstractDungeon.player, uiStrings.TEXT[0], this.musicNumber, true, card -> true, card -> null, cardList -> {
+            for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new LouderModifier());
             }
         }, CardGroup.CardGroupType.DRAW_PILE, CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE));

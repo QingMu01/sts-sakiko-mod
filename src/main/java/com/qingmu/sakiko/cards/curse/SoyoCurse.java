@@ -16,7 +16,7 @@ public class SoyoCurse extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(SoyoCurse.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/other/SoyoCurse.png";
 
     private static final CardType TYPE = CardType.CURSE;
     private static final CardRarity RARITY = CardRarity.CURSE;

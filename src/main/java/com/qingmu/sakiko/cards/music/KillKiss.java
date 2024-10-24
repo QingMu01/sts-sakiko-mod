@@ -12,7 +12,7 @@ public class KillKiss extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(KillKiss.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/music/Angles.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/music/KillKiss.png";
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_BASIC;
     private static final CardTarget TARGET = CardTarget.ENEMY;
@@ -24,6 +24,14 @@ public class KillKiss extends AbstractMusic {
 
         this.initMusicAttr(4, 2, 1, 1);
     }
+
+    @Override
+    public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.applyPowers();
+    }
+
 
     @Override
     public void play() {

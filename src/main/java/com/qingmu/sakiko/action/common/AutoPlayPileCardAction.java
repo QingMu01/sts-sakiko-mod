@@ -9,34 +9,29 @@ import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 public class AutoPlayPileCardAction extends AbstractGameAction {
 
-    private final AbstractPlayer player;
     private final boolean allowShuffle;
     private final boolean exhaustCards;
     private final DrawPileType type;
     private final CardGroup targetPile;
 
     private AutoPlayPileCardAction(int amount, boolean allowShuffle, boolean exhaustCards, DrawPileType type) {
-        this.player = AbstractDungeon.player;
         this.amount = amount;
         this.type = type;
         this.allowShuffle = allowShuffle;
         this.exhaustCards = exhaustCards;
-        this.targetPile = this.getCardGroup(type);
+        this.targetPile = CardSelectorAction.getCardGroup(type == DrawPileType.MUSIC_PILE ? SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE : CardGroup.CardGroupType.DRAW_PILE);
     }
 
-    //
     public AutoPlayPileCardAction(int amount, boolean exhaustCards, DrawPileType type) {
-        this(amount, amount == 1, exhaustCards, type);
+        this(amount, false, exhaustCards, type);
     }
 
     public AutoPlayPileCardAction(boolean exhaustCards, DrawPileType type) {
@@ -98,16 +93,6 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
             this.addToTop(new UnlimboAction(card));
         }
         this.addToTop(new WaitAction(Settings.ACTION_DUR_FASTER));
-    }
-
-    private CardGroup getCardGroup(DrawPileType type) {
-        switch (type) {
-            case MUSIC_PILE:
-                return MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(this.player);
-            case DRAW_PILE:
-            default:
-                return this.player.drawPile;
-        }
     }
 
     public enum DrawPileType {

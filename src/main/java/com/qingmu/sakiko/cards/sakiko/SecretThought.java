@@ -12,7 +12,7 @@ public class SecretThought extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(SecretThought.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/skill.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/SecretThought.png";
 
     private static final CardType TYPE = CardType.SKILL;
     private static final CardRarity RARITY = CardRarity.COMMON;
@@ -20,8 +20,8 @@ public class SecretThought extends AbstractSakikoCard {
 
     public SecretThought() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 1);
+        this.initBaseAttr(1, 0, 0, 2);
+        this.setUpgradeAttr(1, 0, 0, 0);
     }
 
     @Override

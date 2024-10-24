@@ -39,6 +39,7 @@ import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.events.*;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
+import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
 import com.qingmu.sakiko.monsters.member.*;
 import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 import com.qingmu.sakiko.rewards.MusicCardReward;
@@ -365,7 +366,9 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     public void registerBoss() {
         BaseMod.addMonster(InnerDemonSakiko.ID, InnerDemonSakiko.NAME, () -> new InnerDemonSakiko(0.0F, 0.0F));
+        BaseMod.addMonster(InstinctSakiko.ID, InstinctSakiko.NAME, () -> new InstinctSakiko(0.0F, 0.0F));
         BaseMod.addBoss(TheEnding.ID, InnerDemonSakiko.ID, "", "");
+        BaseMod.addBoss(TheEnding.ID, InstinctSakiko.ID, "", "");
     }
 
 }

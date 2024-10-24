@@ -47,7 +47,9 @@ public class TogawaSakiko extends CustomPlayer {
             "SakikoModResources/img/ui/orb/layer5d.png",
     };
     // 每个图层的旋转速度
-    private static final float[] LAYER_SPEED = new float[]{-40.0F, -32.0F, 20.0F, -20.0F, 2.0F};    // 人物的本地化文本，如卡牌的本地化文本一样，如何书写见下
+    private static final float[] LAYER_SPEED = new float[]{-40.0F, -32.0F, 20.0F, -20.0F, 2.0F};
+
+    // 人物的本地化文本，如卡牌的本地化文本一样，如何书写见下
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString("SakikoMod:TogawaSakiko");
 
     private final Texture mask = ImageMaster.loadImage("SakikoModResources/img/characters/sakiko/TogawaSakiko.png");

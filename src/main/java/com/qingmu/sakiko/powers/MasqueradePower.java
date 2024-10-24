@@ -19,7 +19,7 @@ public class MasqueradePower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/MasqueradePower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/MasqueradePower84.png";
+    private static final String path128 = "SakikoModResources/img/powers/MasqueradePower128.png";
 
     public MasqueradePower(AbstractCreature owner, int amount) {
         this.name = NAME;

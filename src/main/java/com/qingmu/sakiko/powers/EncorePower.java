@@ -25,7 +25,7 @@ public class EncorePower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/EncorePower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/EncorePower84.png";
+    private static final String path128 = "SakikoModResources/img/powers/EncorePower128.png";
 
     private int residue = 0;
 

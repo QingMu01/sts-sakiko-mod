@@ -42,10 +42,10 @@ public class UmiriMonster extends AbstractMemberMonster {
         if (AbstractDungeon.id.equals(Exordium.ID)) {
             this.powerful = 1;
         }
-        if (AbstractDungeon.id.equals(TheCity.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
+        if (AbstractDungeon.id.equals(TheCity.ID)) {
             this.powerful = 2;
         }
-        if (AbstractDungeon.id.equals(TheBeyond.ID)) {
+        if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.powerful = 3;
         }
         this.baseMulti -= 2;
@@ -117,7 +117,7 @@ public class UmiriMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setMultiplier(this.multiCount)
                 .setDamageAmount(this.damage.get(2))
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                 .build());
         // 30概率格挡
         intentActions.add(new IntentAction.Builder()

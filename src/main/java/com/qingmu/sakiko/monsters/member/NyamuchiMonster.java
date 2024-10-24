@@ -48,19 +48,19 @@ public class NyamuchiMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        if (this.hasPower(MinionPower.POWER_ID)) {
-            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
-        } else {
-            this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
-            CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
-        }
+        this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 
     @Override
     public void die() {
         super.die();
-        this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
-        CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        if (this.hasPower(MinionPower.POWER_ID)) {
+            this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
+        } else {
+            this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+            CardCrawlGame.sound.playV(SoundHelper.NYAMUCHI_DEATH.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
+        }
     }
 
     @Override

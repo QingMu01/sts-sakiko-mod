@@ -16,14 +16,14 @@ public class AbolitionCase extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(AbolitionCase.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/music/Haruhikage_CryChic.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/music/AbolitionCase.png";
 
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_SPECIAL;
     private static final CardTarget TARGET = CardTarget.NONE;
 
     public AbolitionCase() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(0, 0, 1, 0);
+        this.initMusicAttr(0, 0, 3, 0);
     }
 
     @Override

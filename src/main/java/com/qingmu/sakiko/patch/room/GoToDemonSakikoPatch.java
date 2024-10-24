@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
@@ -31,6 +32,6 @@ public class GoToDemonSakikoPatch {
     }
 
     private static boolean canGoToDemonSakiko() {
-        return (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("SakikoCertificate")) && BossInfoFiled.canBattleWithDemonSakiko.get(CardCrawlGame.dungeon);
+        return (AbstractDungeon.player instanceof TogawaSakiko || SakikoModCore.SAKIKO_CONFIG.getBool("enableBoss")) && BossInfoFiled.canBattleWithDemonSakiko.get(CardCrawlGame.dungeon);
     }
 }

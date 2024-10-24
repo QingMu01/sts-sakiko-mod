@@ -14,7 +14,7 @@ public class Disallow extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Disallow.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/Disallow.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.COMMON;

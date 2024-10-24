@@ -11,7 +11,7 @@ public class FormerGlory extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(FormerGlory.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/FormerGlory.png";
 
     private static final CardType TYPE = CardType.POWER;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;

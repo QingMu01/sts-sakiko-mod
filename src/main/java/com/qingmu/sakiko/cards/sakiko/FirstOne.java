@@ -11,7 +11,7 @@ public class FirstOne extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(FirstOne.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/power.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/FirstOne.png";
 
 
     private static final CardType TYPE = CardType.POWER;

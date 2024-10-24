@@ -28,18 +28,13 @@ public class Utopia extends AbstractMusic {
     }
 
     @Override
-    public void triggerOnPlayMusic(AbstractMusic music) {
-        if (music == this) {
-            this.playedCount++;
-        }
-    }
-
-    @Override
     public void applyPowers() {
         this.applyPowersToMusicNumber();
-        this.baseDamage = (int) (this.musicNumber * Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount)));
+        int powed = (int) Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount));
+        this.baseDamage = this.musicNumber * powed;
         super.applyPowers();
         this.isDamageModified = this.baseDamage != this.damage;
+        this.appendDescription(powed);
     }
 
     @Override
@@ -53,5 +48,6 @@ public class Utopia extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageType)));
+        this.playedCount++;
     }
 }

@@ -19,7 +19,7 @@ public class MujikakuPower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private static final String path48 = "SakikoModResources/img/powers/MujikakuPower48.png";
-    private static final String path128 = "SakikoModResources/img/powers/MujikakuPower84.png";
+    private static final String path128 = "SakikoModResources/img/powers/MujikakuPower128.png";
 
     public MujikakuPower(AbstractCreature owner, int amount) {
         this.name = NAME;

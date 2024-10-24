@@ -15,7 +15,7 @@ public class LastStage extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(LastStage.class.getSimpleName());
 
-    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/attack.png";
+    private static final String IMG_PATH = "SakikoModResources/img/cards/sakiko/LastStage.png";
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.RARE;
@@ -29,8 +29,8 @@ public class LastStage extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new CardSelectorAction("", 999, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, endOfSelect -> {
-            this.baseDamage += endOfSelect.selected.size() * this.magicNumber;
+        this.addToBot(new CardSelectorAction("", 999, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, cardList -> {
+            this.baseDamage += cardList.size() * this.magicNumber;
             this.calculateCardDamage(m);
             this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY));
         }, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE));

@@ -3,9 +3,11 @@ package com.qingmu.sakiko.cards.music.monster;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.powers.monster.IdealFukkenPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@SakikoModEnable(enable = false)
 public class BlackBirthday_Boss extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(BlackBirthday_Boss.class.getSimpleName());
@@ -17,7 +19,7 @@ public class BlackBirthday_Boss extends AbstractMusic {
 
     public BlackBirthday_Boss() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(0, 0, 2, 0);
+        this.initMusicAttr(0, 0, 1, 0);
     }
 
     @Override

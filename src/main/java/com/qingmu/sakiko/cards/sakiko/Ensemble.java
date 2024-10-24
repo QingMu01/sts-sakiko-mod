@@ -15,7 +15,7 @@ public class Ensemble extends AbstractSakikoCard {
 
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.ENEMY;
+    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
 
     public Ensemble() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);

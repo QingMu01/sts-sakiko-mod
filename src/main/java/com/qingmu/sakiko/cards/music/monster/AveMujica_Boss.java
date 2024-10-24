@@ -3,9 +3,11 @@ package com.qingmu.sakiko.cards.music.monster;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.powers.monster.FakeKirameiPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@SakikoModEnable(enable = false)
 public class AveMujica_Boss extends AbstractMusic {
 
     public static final String ID = ModNameHelper.make(AveMujica_Boss.class.getSimpleName());
