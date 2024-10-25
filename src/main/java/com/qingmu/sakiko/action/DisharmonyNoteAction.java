@@ -4,11 +4,10 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.qingmu.sakiko.action.common.CleanMusicQueueAction;
 import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-
-import java.util.Iterator;
 
 public class DisharmonyNoteAction extends AbstractGameAction {
     private AbstractPlayer player;
@@ -28,12 +27,7 @@ public class DisharmonyNoteAction extends AbstractGameAction {
         cardGroup.removeCard(bottomCard);
         this.player.limbo.addToBottom(bottomCard);
         this.addToBot(new PlayerPlayedMusicAction((AbstractMusic) bottomCard));
-        Iterator<AbstractCard> iterator = cardGroup.group.iterator();
-        while (iterator.hasNext()) {
-            AbstractCard card = iterator.next();
-            iterator.remove();
-            cardGroup.moveToDiscardPile(card);
-        }
+        this.addToBot(new CleanMusicQueueAction(this.player));
         this.isDone = true;
     }
 }

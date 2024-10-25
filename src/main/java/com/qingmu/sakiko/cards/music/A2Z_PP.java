@@ -2,6 +2,7 @@ package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -34,6 +35,13 @@ public class A2Z_PP extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
         super.applyPowers();
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
+        super.calculateCardDamage(mo);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.qingmu.sakiko.cards.music;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.KillKissAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
@@ -32,6 +33,12 @@ public class KillKiss extends AbstractMusic {
         super.applyPowers();
     }
 
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.calculateCardDamage(mo);
+    }
 
     @Override
     public void play() {

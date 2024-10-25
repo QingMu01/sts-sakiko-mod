@@ -1,12 +1,15 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.inteface.TriggerOnOblivion;
+import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class CreateOfWorld extends AbstractSakikoCard implements TriggerOnOblivion {
@@ -31,7 +34,9 @@ public class CreateOfWorld extends AbstractSakikoCard implements TriggerOnOblivi
 
     @Override
     public void triggerOnOblivion() {
-        this.addToBot(new MakeTempCardInDiscardAction(this.makeSameInstanceOf(), 1));
+        AbstractCard copy = this.makeSameInstanceOf();
+        CardModifierManager.removeModifiersById(copy, ObliviousModifier.ID, false);
+        this.addToBot(new MakeTempCardInDiscardAction(copy, 1));
     }
 
     @Override

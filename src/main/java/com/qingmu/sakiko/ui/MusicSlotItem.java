@@ -80,7 +80,10 @@ public class MusicSlotItem {
             this.music.render(sb);
             this.renderAmount(sb, x, y);
         }
+        Color color = sb.getColor();
+        sb.setColor(Color.WHITE.cpy());
         sb.draw(MUSIC_SLOT_IMG, x - (MUSIC_SLOT_IMG.getWidth() / 2.0f) * Settings.scale, y - (MUSIC_SLOT_IMG.getHeight() / 2.0f) * Settings.scale, MUSIC_SLOT_IMG.getWidth() * Settings.scale, MUSIC_SLOT_IMG.getHeight() * Settings.scale);
+        sb.setColor(color);
         this.hb.render(sb);
         this.hb.move(x, y);
         if (this.hb.hovered) {

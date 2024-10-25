@@ -1,5 +1,6 @@
 package com.qingmu.sakiko.monsters.boss;
 
+import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
@@ -13,14 +14,14 @@ import com.megacrit.cardcrawl.cards.status.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.HeartAnimListener;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.FrailPower;
-import com.megacrit.cardcrawl.powers.VulnerablePower;
-import com.megacrit.cardcrawl.powers.WeakPower;
+import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.vfx.combat.HeartMegaDebuffEffect;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
+import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -38,10 +39,16 @@ public class InstinctSakiko extends AbstractSakikoMonster {
 
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
+    private HeartAnimListener animListener = new HeartAnimListener();
+
     public InstinctSakiko(float x, float y) {
-        super(MOVES[0] + NAME, ID, IMG, x, y);
+        super(NAME, ID, IMG, x, y);
+        this.loadAnimation("images/npcs/heart/skeleton.atlas", "images/npcs/heart/skeleton.json", 1.0F);
+        AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
+        e.setTimeScale(1.5F);
+        this.state.addListener(this.animListener);
         this.type = EnemyType.BOSS;
-        this.setHp(1000);
+        this.setHp(800);
 
         // 重击
         this.damage.add(new DamageInfo(this, 60));
@@ -49,6 +56,23 @@ public class InstinctSakiko extends AbstractSakikoMonster {
         this.damage.add(new DamageInfo(this, 5));
     }
 
+    @Override
+    public void usePreBattleAction() {
+        BossInfoFiled.canBattleWithDemonSakiko.set(CardCrawlGame.dungeon, false);
+        CardCrawlGame.music.unsilenceBGM();
+        AbstractDungeon.scene.fadeOutAmbiance();
+        AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
+        int invincibleAmt = 300;
+        if (AbstractDungeon.ascensionLevel >= 19) {
+            invincibleAmt -= 100;
+        }
+        int beatAmount = 1;
+        if (AbstractDungeon.ascensionLevel >= 19) {
+            ++beatAmount;
+        }
+        this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, invincibleAmt), invincibleAmt));
+        this.addToBot(new ApplyPowerAction(this, this, new BeatOfDeathPower(this, beatAmount), beatAmount));
+    }
 
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
@@ -100,6 +124,11 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                         new MakeTempCardInDrawPileAction(new VoidCard(), 1, true, false, false, Settings.WIDTH * 0.8F, Settings.HEIGHT / 2.0F),
                         new WaitAction(1.0f),
                         new TalkAction(this, DIALOG[0], 1.0F, 2.0F)
+                })
+                .setCallback(ia -> {
+                    this.atlas = null;
+                    this.state.removeListener(this.animListener);
+                    this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
                 })
                 .build());
         return specialIntentActions;

@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.action.common;
 
+import basemod.ReflectionHacks;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
@@ -8,12 +10,14 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardSelectorFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
+import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -363,4 +367,26 @@ public class CardSelectorAction extends AbstractGameAction {
     public static boolean isMusicCard(AbstractCard card) {
         return card instanceof AbstractMusic || card.type == SakikoEnum.CardTypeEnum.MUSIC;
     }
+
+    // 处理确认按钮，防止其他mod强制二次确认
+    @SpirePatch(clz = GridCardSelectScreen.class, method = "update")
+    public static class GridCardSelectScreenPatch {
+        @SpireInsertPatch(locator = Locator.class)
+        public static SpireReturn<Void> postfix(GridCardSelectScreen __instance){
+            int numCards = ReflectionHacks.getPrivate(__instance, GridCardSelectScreen.class, "numCards");
+            if (__instance.selectedCards.size() == numCards){
+                __instance.confirmButton.show();
+            }
+            return SpireReturn.Continue();
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.FieldAccessMatcher(GridCardSelectScreen.class,"numCards");
+                return LineFinder.findInOrder(ctBehavior, matcher);
+            }
+        }
+    }
+
 }

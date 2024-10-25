@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.DamageCallbackAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -40,6 +41,22 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
             strength.amount /= this.magicNumber;
         }
     }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        AbstractPower strength = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
+        if (strength != null) {
+            strength.amount *= this.magicNumber;
+        }
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.calculateCardDamage(mo);
+        if (strength != null) {
+            strength.amount /= this.magicNumber;
+        }
+
+    }
+
     @Override
     public void play() {
         this.addToTop(new DamageCallbackAction(this.m_target, new DamageInfo(this.m_source, this.baseDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HEAVY, (damageAmount) -> {

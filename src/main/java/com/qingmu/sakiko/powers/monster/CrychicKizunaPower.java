@@ -12,7 +12,8 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CrychicKizunaPower extends AbstractPower {
 
@@ -43,25 +44,21 @@ public class CrychicKizunaPower extends AbstractPower {
         if (info.type == DamageInfo.DamageType.THORNS || this.owner.isPlayer || damageAmount <= 0) {
             return damageAmount;
         } else {
-            ArrayList<AbstractMonster> monsters = AbstractDungeon.getCurrRoom().monsters.monsters;
-            int powerCount = (int) monsters.stream().filter(m -> m.hasPower(POWER_ID)).count();
+            List<AbstractMonster> monsters = AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(m -> !m.isDead && m.hasPower(POWER_ID)).collect(Collectors.toList());
+            int powerCount = monsters.size();
             if (powerCount <= 1) {
                 return damageAmount;
             } else {
                 if (damageAmount < powerCount) {
                     return damageAmount;
                 } else {
-                    int[] parts = new int[powerCount];
                     // 计算每份的基本值
                     int baseValue = damageAmount / powerCount;
                     // 计算余数
                     int remainder = damageAmount % powerCount;
                     // 分配值
                     for (int i = 0; i < powerCount; i++) {
-                        parts[i] = baseValue + (i < remainder ? 1 : 0);
-                    }
-                    for (int i = 0; i < monsters.size(); i++) {
-                        this.addToBot(new DamageAction(monsters.get(i), new DamageInfo(this.owner, parts[i], DamageInfo.DamageType.THORNS),true));
+                        this.addToBot(new DamageAction(monsters.get(i), new DamageInfo(this.owner, baseValue + (i < remainder ? 1 : 0), DamageInfo.DamageType.THORNS), true));
                     }
                     return 0;
                 }

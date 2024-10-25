@@ -3,6 +3,7 @@ package com.qingmu.sakiko.cards.music;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.MemberHelper;
@@ -32,6 +33,18 @@ public class Angles extends AbstractMusic {
         int realBaseMagicNumber = this.baseMagicNumber;
         this.baseMagicNumber += MemberHelper.getCount();
         super.applyPowers();
+        this.magicNumber = this.baseMagicNumber;
+        this.baseMagicNumber = realBaseMagicNumber;
+        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        int realBaseMagicNumber = this.baseMagicNumber;
+        this.baseMagicNumber += MemberHelper.getCount();
+        super.calculateCardDamage(mo);
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);

@@ -19,8 +19,8 @@ public class BurningBirth extends AbstractSakikoCard {
 
     public BurningBirth() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 1);
+        this.initBaseAttr(2, 0, 0, 1);
+        this.setUpgradeAttr(1, 0, 0, 0);
     }
 
     @Override

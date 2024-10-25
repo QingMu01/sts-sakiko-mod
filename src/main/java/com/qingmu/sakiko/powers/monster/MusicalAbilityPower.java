@@ -43,7 +43,7 @@ public class MusicalAbilityPower extends AbstractPower {
         if (!(card instanceof AbstractMusic)){
             this.flashWithoutSound();
             ++this.amount;
-            if (this.amount == 12) {
+            if (this.amount == 6) {
                 this.amount = 0;
                 this.playApplyPowerSfx();
                 this.addToBot(new ReadyToPlayMusicAction(1, this.owner));

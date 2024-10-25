@@ -19,7 +19,7 @@ public class BlackBirthday_Boss extends AbstractMusic {
 
     public BlackBirthday_Boss() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(0, 0, 1, 0);
+        this.initMusicAttr(0, 0, 2, 0);
     }
 
     @Override

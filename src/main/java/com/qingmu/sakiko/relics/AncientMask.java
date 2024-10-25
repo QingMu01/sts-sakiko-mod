@@ -25,7 +25,7 @@ public class AncientMask extends AbstractSakikoRelic {
     }
 
     public void onMonsterDeath(AbstractMonster m) {
-        if (m.isDying || m.currentHealth <= 0 && !m.halfDead && !m.hasPower("Minion")) {
+        if ((m.isDying || m.currentHealth <= 0) && !m.halfDead && !m.hasPower("Minion")) {
             this.flash();
             this.addToBot(new RelicAboveCreatureAction(m, this));
             AbstractDungeon.player.heal(8);

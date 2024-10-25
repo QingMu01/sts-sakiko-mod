@@ -23,12 +23,12 @@ public class PlayBGMAction extends AbstractGameAction {
     @Override
     public void update() {
         if (this.isForce) {
-            CardCrawlGame.music.playTempBgmInstantly(musicHelper.name());
+            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name());
             this.isDone = true;
             return;
         }
         if (!this.monster.isPlayBGM) {
-            CardCrawlGame.music.playTempBgmInstantly(MusicHelper.HARUHIKAGE.name());
+            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name());
             this.monster.isPlayBGM = true;
         }
         this.isDone = true;

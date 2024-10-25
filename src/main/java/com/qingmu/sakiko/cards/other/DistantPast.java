@@ -2,11 +2,11 @@ package com.qingmu.sakiko.cards.other;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
-import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.monster.DistantPastAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
@@ -26,10 +26,9 @@ public class DistantPast extends AbstractSakikoCard {
 
     public DistantPast() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(-2, 0, 0, 2);
+        this.initBaseAttr(-2, 0, 0, 3);
         this.setUpgradeAttr(-2, 0, 0, 0);
-
-        this.setEthereal(true, true);
+        this.setExhaust(true,true);
     }
 
     @Override
@@ -43,21 +42,20 @@ public class DistantPast extends AbstractSakikoCard {
 
     @Override
     public void triggerOnExhaust() {
-        int count = 0;
-        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
-            if (card.cardID.equals(ID)) {
-                count++;
-            }
-        }
-        if (count < 6) {
-            this.addToBot(new MakeTempCardInDiscardAction(this, 2));
-        }
+        this.addToBot(new DistantPastAction());
     }
+
+
+    public void triggerOnEndOfTurnForPlayingCard() {
+        this.dontTriggerOnUseCard = true;
+        AbstractDungeon.actionManager.cardQueue.add(new CardQueueItem(this, true));
+    }
+
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
         this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return false;
+        return this.dontTriggerOnUseCard;
     }
 
     @Override

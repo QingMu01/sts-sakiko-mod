@@ -19,7 +19,7 @@ public class AveMujica_Boss extends AbstractMusic {
 
     public AveMujica_Boss() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(0, 0, 2, 0);
+        this.initMusicAttr(0, 0, 5, 0);
     }
 
     @Override

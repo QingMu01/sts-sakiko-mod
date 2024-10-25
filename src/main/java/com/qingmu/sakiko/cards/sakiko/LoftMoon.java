@@ -32,6 +32,7 @@ public class LoftMoon extends AbstractSakikoCard {
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
+        this.appendDescription(this.magicNumber);
     }
 
     @Override

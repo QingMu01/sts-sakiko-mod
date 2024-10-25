@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
+import com.megacrit.cardcrawl.cutscenes.CutscenePanel;
 import com.megacrit.cardcrawl.events.city.Vampires;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -186,6 +187,14 @@ public class TogawaSakiko extends CustomPlayer {
         return Vampires.DESCRIPTIONS[1];
     }
 
+    @Override
+    public ArrayList<CutscenePanel> getCutscenePanels() {
+        ArrayList<CutscenePanel> panels = new ArrayList<>();
+        panels.add(new CutscenePanel("SakikoModResources/img/characters/sakiko/page1.png"));
+        panels.add(new CutscenePanel("SakikoModResources/img/characters/sakiko/page2.png"));
+        panels.add(new CutscenePanel("SakikoModResources/img/characters/sakiko/page3.png"));
+        return panels;
+    }
     public void switchMask(boolean isMask) {
         if (isMask) {
             img = mask;

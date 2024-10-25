@@ -43,7 +43,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
 
     private float scale = 1.0F;
 
-    private static final float OFFSET_Y = 200.0F;
+    private static final float OFFSET_Y = 200.0F * Settings.scale;
 
     private static final float COUNT_CIRCLE_W = 128.0F * Settings.scale;
 
@@ -77,11 +77,12 @@ public class MusicDrawPilePanel extends AbstractPanel {
 
     private static final float HITBOX_W2 = 450.0F * Settings.scale;
 
-    private Hitbox hb = new Hitbox(0.0F, OFFSET_Y + 0.0F, HITBOX_W, HITBOX_W);
+    private Texture img = ImageMaster.loadImage("SakikoModResources/img/ui/musicDeck.png");
+
+    private Hitbox hb = new Hitbox(0.0F, DECK_Y, HITBOX_W, HITBOX_W);
 
     private Hitbox bannerHb = new Hitbox(0.0F, OFFSET_Y + 0.0F, HITBOX_W2, HITBOX_W);
 
-    private Texture img = ImageMaster.loadImage("SakikoModResources/img/ui/musicDeck.png");
 
     public MusicDrawPilePanel() {
         super(0.0F, 0.0F, -300.0F * Settings.scale, -300.0F * Settings.scale, null, true);
@@ -149,6 +150,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
 
         }
     }
+
     private void openDrawPile() {
         AbstractPlayer p = AbstractDungeon.player;
         if (!MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(p).isEmpty()) {
@@ -181,34 +183,34 @@ public class MusicDrawPilePanel extends AbstractPanel {
     public void render(SpriteBatch sb) {
         if (this.hb.hovered || (this.bannerHb.hovered && AbstractDungeon.screen == AbstractDungeon.CurrentScreen.GAME_DECK_VIEW))
             this.scale = 1.2F * Settings.scale;
-        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW){
+        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW) {
             for (GameDeckGlowEffect e : this.vfxBelow)
                 e.render(sb, this.current_x, this.current_y + this.bob.y * 0.5F);
-        }else {
+        } else {
             for (GameDeckGlowEffect e : this.vfxBelow)
-                e.render(sb, this.current_x, this.current_y + (this.bob.y * 0.5F) + OFFSET_Y);
+                e.render(sb, this.current_x, this.current_y + (this.bob.y * 0.5F) + DECK_Y);
         }
         sb.setColor(Color.WHITE);
-        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW){
+        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW) {
             sb.draw(img, this.current_x + DECK_X, this.current_y + (DECK_Y - OFFSET_Y) + this.bob.y / 2.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0.0F, 0, 0, 128, 128, false, false);
-        }else {
+        } else {
             sb.draw(img, this.current_x + DECK_X, this.current_y + DECK_Y + this.bob.y / 2.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0.0F, 0, 0, 128, 128, false, false);
         }
         String msg = Integer.toString(MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).size());
         this.gl.setText(FontHelper.turnNumFont, msg);
         sb.setColor(Color.WHITE);
-        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW){
+        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW) {
             sb.draw(ImageMaster.DECK_COUNT_CIRCLE, this.current_x + COUNT_OFFSET_X, this.current_y + (COUNT_OFFSET_Y - OFFSET_Y), COUNT_CIRCLE_W, COUNT_CIRCLE_W);
-        }else {
+        } else {
             sb.draw(ImageMaster.DECK_COUNT_CIRCLE, this.current_x + COUNT_OFFSET_X, this.current_y + COUNT_OFFSET_Y, COUNT_CIRCLE_W, COUNT_CIRCLE_W);
         }
 
         if (Settings.isControllerMode)
             sb.draw(CInputActionSet.drawPile
                     .getKeyImg(), this.current_x - 32.0F + 30.0F * Settings.scale, this.current_y - 32.0F + 40.0F * Settings.scale, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale * 0.75F, Settings.scale * 0.75F, 0.0F, 0, 0, 64, 64, false, false);
-        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW){
+        if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW) {
             FontHelper.renderFontCentered(sb, FontHelper.turnNumFont, msg, this.current_x + COUNT_X, this.current_y + (COUNT_Y - OFFSET_Y));
-        }else {
+        } else {
             FontHelper.renderFontCentered(sb, FontHelper.turnNumFont, msg, this.current_x + COUNT_X, this.current_y + COUNT_Y);
         }
 
@@ -233,10 +235,11 @@ public class MusicDrawPilePanel extends AbstractPanel {
             }
     }
 
-    public float getPanelX(){
+    public float getPanelX() {
         return this.current_x + DECK_X;
     }
-    public float getPanelY(){
+
+    public float getPanelY() {
         return this.current_y + DECK_Y + this.bob.y / 2.0F;
     }
 }

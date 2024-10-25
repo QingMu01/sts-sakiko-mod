@@ -109,8 +109,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 this.halfDead = true;
                 AbstractDungeon.getCurrRoom().monsters.monsters.removeIf(monster -> monster.hasPower(MinionPower.POWER_ID));
                 // 清除debuff
-                this.powers.removeIf(power -> power.type == AbstractPower.PowerType.DEBUFF);
-                this.powers.removeIf(power -> power.ID.equals(MusicalAbilityPower.POWER_ID));
+                this.powers.removeIf(power -> !power.ID.equals(IdealFukkenPower.POWER_ID) && !power.ID.equals(FakeKirameiPower.POWER_ID) && !power.ID.equals(InvinciblePower.POWER_ID));
                 // 清除歌单
                 MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).clear();
                 // 清除爪牙
@@ -143,15 +142,18 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         new HealAction(this, this, (this.phase + 1) * 200 + this.baseHp),
                         new RenameMonsterAction(this, MOVES[this.phase] + NAME)})
                 .setCallback(ia -> {
-                    this.maxHealth = (this.phase + 1) * 200 + this.baseHp;
+                    this.maxHealth = this.baseHp;
                     this.halfDead = false;
                     if (this.phase == 1) {
+                        this.maxHealth = this.maxHealth + 200;
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
                     } else if (this.phase == 2) {
+                        this.maxHealth = this.maxHealth + 200;
                         this.addToBot(new TalkAction(this, DIALOG[4], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
                     } else if (this.phase == 3) {
+                        this.maxHealth = this.maxHealth + 200;
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
                     }
@@ -169,7 +171,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new SharpHidePower(this, 3), 3)
                         })
                         .build());
@@ -177,7 +178,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new ThornsPower(this, 2), 2)
                         })
                         .build());
@@ -185,7 +185,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setWeight(25)
                         .setIntent(Intent.BUFF)
                         .setActions(() -> new AbstractGameAction[]{
-                                new HealAction(this, this, (int) (this.maxHealth * 0.1f)),
                                 new ApplyPowerAction(this, this, new BeatOfDeathPower(this, 1), 1)
                         })
                         .build());

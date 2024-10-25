@@ -27,9 +27,6 @@ import com.qingmu.sakiko.relics.AbstractSakikoRelic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     public static final Logger logger = LogManager.getLogger(PlayerPlayedMusicAction.class.getName());
@@ -109,17 +106,15 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        List<AbstractPower> collect = this.source.powers.stream().filter(power -> power instanceof CanPlayMusic).collect(Collectors.toList());
-        if (collect.isEmpty()) {
-            this.music.play();
-        } else {
-            boolean canPlay = true;
-            for (AbstractPower power : collect) {
+        boolean canPlay = true;
+        for (AbstractPower power : this.source.powers) {
+            if (power instanceof CanPlayMusic){
                 canPlay = ((CanPlayMusic) power).canPlayMusic(this.music);
             }
-            if (canPlay) {
-                this.music.play();
-            }
+        }
+        if (canPlay){
+            this.music.calculateCardDamage((AbstractMonster) this.music.m_target);
+            this.music.play();
         }
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
         // 处理回忆赋予的移除

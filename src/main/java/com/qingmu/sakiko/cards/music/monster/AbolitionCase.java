@@ -23,12 +23,21 @@ public class AbolitionCase extends AbstractMusic {
 
     public AbolitionCase() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(0, 0, 3, 0);
+        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
+        this.initMusicAttr(0, 0, 1, 0);
     }
 
     @Override
     public boolean canUpgrade() {
         return false;
+    }
+
+    @Override
+    public void triggerInBufferPlayedMusic(AbstractMusic music) {
+        AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
+        if (monster != null) {
+            this.addToBot(new ApplyPowerAction(monster, AbstractDungeon.player, new IdealFukkenPower(monster, this.magicNumber), this.magicNumber));
+        }
     }
 
     @Override
@@ -38,9 +47,5 @@ public class AbolitionCase extends AbstractMusic {
 
     @Override
     public void play() {
-        AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
-        if (monster != null) {
-            this.addToBot(new ApplyPowerAction(monster, AbstractDungeon.player, new IdealFukkenPower(monster, this.magicNumber), this.magicNumber));
-        }
     }
 }

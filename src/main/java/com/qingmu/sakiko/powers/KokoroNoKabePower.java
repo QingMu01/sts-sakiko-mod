@@ -52,9 +52,7 @@ public class KokoroNoKabePower extends AbstractPower {
 
     @Override
     public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer) {
-            this.addToBot(new ActiveKabeAction(this.owner));
-        }
+        this.addToBot(new ActiveKabeAction(this.owner, false));
     }
 
     /*

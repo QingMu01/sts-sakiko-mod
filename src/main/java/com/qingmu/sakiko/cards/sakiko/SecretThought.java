@@ -21,7 +21,7 @@ public class SecretThought extends AbstractSakikoCard {
     public SecretThought() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 2);
-        this.setUpgradeAttr(1, 0, 0, 0);
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override

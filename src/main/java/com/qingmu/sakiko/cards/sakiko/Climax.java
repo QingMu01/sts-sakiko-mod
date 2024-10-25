@@ -29,8 +29,8 @@ public class Climax extends AbstractSakikoCard {
 
     public Climax() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 9, 0, 1);
-        this.setUpgradeAttr(1, 2, 0, 0);
+        this.initBaseAttr(1, 5, 0, 0);
+        this.setUpgradeAttr(1, 3, 0, 0);
     }
 
     @Override

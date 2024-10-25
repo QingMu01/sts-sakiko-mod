@@ -21,7 +21,7 @@ public class KillKissAction extends AbstractGameAction {
     @Override
     public void update() {
         ArrayList<AbstractCard> cards = MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player);
-        if (cards.isEmpty() || cards.get(0) == this.card) {
+        if (cards.isEmpty() || (cards.size() == 1 && cards.get(0) == this.card)) {
             this.addToTop(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, this.card.magicNumber), this.card.magicNumber));
         }
         this.isDone = true;

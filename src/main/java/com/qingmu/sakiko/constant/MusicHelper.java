@@ -2,7 +2,8 @@ package com.qingmu.sakiko.constant;
 
 public enum MusicHelper {
 
-    HARUHIKAGE("SakikoModResources/music/mygo_02_stem.mp3");
+    HARUHIKAGE("SakikoModResources/music/mygo_02_stem.mp3"),
+    SHIORI("SakikoModResources/music/bgm513.mp3");
 
     private final String path;
 

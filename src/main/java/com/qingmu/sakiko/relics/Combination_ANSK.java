@@ -2,13 +2,13 @@ package com.qingmu.sakiko.relics;
 
 import basemod.abstracts.CustomSavable;
 import com.google.gson.reflect.TypeToken;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
-import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.lang.reflect.Type;
@@ -35,7 +35,14 @@ public class Combination_ANSK extends AbstractSakikoRelic implements CustomSavab
     @Override
     public void onEnterRoom(AbstractRoom room) {
         if (this.isSleep && room instanceof MonsterRoomBoss) {
-            AbstractDungeon.bossKey = InstinctSakiko.ID;
+//            AbstractDungeon.bossKey = InstinctSakiko.ID;
+        }
+    }
+
+    @Override
+    public void atTurnStart() {
+        if (GameActionManager.turn == 2){
+//            this.addToBot(new SpawnMonsterAction(new AnonMonster(AbstractDungeon.player.hb_x + 230 * Settings.scale, AbstractDungeon.player.hb_y),false));
         }
     }
 

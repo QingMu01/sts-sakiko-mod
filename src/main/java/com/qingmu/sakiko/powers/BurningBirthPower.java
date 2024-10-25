@@ -46,17 +46,21 @@ public class BurningBirthPower extends AbstractPower {
 
     @Override
     public void atStartOfTurnPostDraw() {
-        this.addToBot(new CardSelectorAction(DESCRIPTIONS[2], this.amount, false, card -> CardGroup.CardGroupType.EXHAUST_PILE, cardList -> {
+        this.addToBot(new CardSelectorAction(DESCRIPTIONS[2], this.amount, true, card -> CardGroup.CardGroupType.EXHAUST_PILE, cardList -> {
             int count = 0;
+            int stateOrCurse = 0;
             for (AbstractCard card : cardList) {
-                if (card.costForTurn != -1){
+                if (CardSelectorAction.isStatusOrCurseCard(card)) {
+                    stateOrCurse++;
+                } else if (card.costForTurn > 0) {
                     count += card.costForTurn;
                 }
             }
             if (count > 0) {
                 this.addToBot(new DrawCardAction(AbstractDungeon.player, count));
-            } else if (count < 0) {
-                this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, 1, DamageInfo.DamageType.HP_LOSS), AbstractGameAction.AttackEffect.FIRE));
+            }
+            if (stateOrCurse > 0) {
+                this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, stateOrCurse, DamageInfo.DamageType.HP_LOSS), AbstractGameAction.AttackEffect.FIRE));
             }
         }, CardGroup.CardGroupType.HAND));
     }

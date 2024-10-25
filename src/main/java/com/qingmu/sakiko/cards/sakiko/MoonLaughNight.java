@@ -23,7 +23,7 @@ public class MoonLaughNight extends AbstractSakikoCard {
     public MoonLaughNight() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 8, 0, 3);
-        this.setUpgradeAttr(1, 3, 0, 2);
+        this.setUpgradeAttr(1, 3, 0, 1);
     }
 
     @Override

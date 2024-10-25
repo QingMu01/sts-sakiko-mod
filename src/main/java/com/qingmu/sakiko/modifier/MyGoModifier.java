@@ -49,4 +49,10 @@ public class MyGoModifier extends AbstractMusicCardModifier {
     public AbstractCardModifier makeCopy() {
         return new MyGoModifier(this.amount);
     }
+
+    @Override
+    public String identifier(AbstractCard card) {
+        return ID;
+    }
+
 }

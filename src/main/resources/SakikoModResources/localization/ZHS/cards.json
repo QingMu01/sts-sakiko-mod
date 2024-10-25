@@ -38,7 +38,7 @@
   },
   "SakikoMod:Spying": {
     "NAME": "情报收集",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 如果目标的意图是攻击，则 sakikomod:激活 你的 sakikomod:心之壁 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL sakikomod:激活 你的 sakikomod:心之壁 ，如果目标的意图是攻击，则本次激活不会使层数下降。"
   },
   "SakikoMod:QuaerereLumina": {
     "NAME": "探寻光明",
@@ -81,7 +81,10 @@
   },
   "SakikoMod:Ensemble": {
     "NAME": "合奏",
-    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL 每有一位 sakikomod:队友 ，额外造成一次伤害。"
+    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL 每有一位 sakikomod:队友 ，额外造成一次伤害。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成%d次伤害）"
+    ]
   },
   "SakikoMod:Boomerang": {
     "NAME": "回旋镖",
@@ -125,10 +128,13 @@
   },
   "SakikoMod:DollDance": {
     "NAME": "人偶之舞",
-    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。 NL 本回合，每次姿态转换会使这张牌额外造成1次伤害。"
+    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。 NL 本回合，每次姿态转换会使这张牌额外造成1次伤害。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （造成%d次伤害）"
+    ]
   },
   "SakikoMod:MoonLaughNight": {
-    "NAME": "月狂笑之夜",
+    "NAME": "月笑夜",
     "DESCRIPTION": "造成!D!点伤害，你每有一层 sakikomod:复权 ，这张牌的伤害提高 !M! 。"
   },
   "SakikoMod:NoteTorrent": {
@@ -159,11 +165,11 @@
   "SakikoMod:SecretThought": {
     "NAME": "隐秘思想",
     "DESCRIPTION": " sakikomod:创作者 ：获得 [E] [E] 。 NL 否则，进入创作者。",
-    "UPGRADE_DESCRIPTION": " sakikomod:创作者 ：获得 !M! [E] 。 NL 否则，进入创作者。"
+    "UPGRADE_DESCRIPTION": " sakikomod:创作者 ：获得 [E] [E] [E] 。 NL 否则，进入创作者。"
   },
   "SakikoMod:FallApart": {
     "NAME": "分崩离析",
-    "DESCRIPTION": "你每有一位 sakikomod:队友 ，获得 !M! 层 sakikomod:心之壁 。本场战斗中，队友不再发挥作用。 NL 消耗 。",
+    "DESCRIPTION": "你每有一位 sakikomod:队友 ，获得 !M! 层 sakikomod:心之壁 。接下来两个回合，队友不再发挥作用。 NL 消耗 。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得 %d 层心之壁）"
     ]
@@ -209,7 +215,10 @@
   },
   "SakikoMod:LoftMoon": {
     "NAME": "阁楼之月",
-    "DESCRIPTION": "抽 !M! 张牌。 NL 待演奏区中每有一张牌，额外抽1张牌。"
+    "DESCRIPTION": "抽 !M! 张牌。 NL 待演奏区中每有一张牌，额外抽1张牌。",
+    "EXTENDED_DESCRIPTION": [
+      " NL （当前抽取%d张牌）"
+    ]
   },
   "SakikoMod:Reproduce": {
     "NAME": "再生产",
@@ -264,7 +273,7 @@
   },
   "SakikoMod:MeteorMoon": {
     "NAME": "堕月",
-    "DESCRIPTION": "进入 sakikomod:心流：假面 。 NL 退出这个姿态时，所有单位受到你当前生命值的伤害。 NL 消耗 。"
+    "DESCRIPTION": "进入 sakikomod:假面 。 NL 退出这个姿态时，所有单位受到你当前生命值的伤害。 NL 消耗 。"
   },
   "SakikoMod:Yowaiwatashi": {
     "NAME": "软弱的我已经死了",
@@ -317,7 +326,7 @@
   },
   "SakikoMod:BurningBirth": {
     "NAME": "烈火重生",
-    "DESCRIPTION": "回合开始时，选择 !M! 张手牌，将其消耗。 NL 抽取被消耗牌费用之和的牌，选择状态牌或诅咒牌时，失去1点生命。"
+    "DESCRIPTION": "回合开始时，选择 !M! 张手牌，将其消耗。 NL 抽取被消耗牌费用之和的牌，选择 *状态牌 或 *诅咒牌 时，失去1点生命。"
   },
   "SakikoMod:FormerGlory": {
     "NAME": "昔日荣光",
@@ -378,7 +387,7 @@
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将从卡组中永久移除。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将这张牌与被选择的牌从卡组中永久移除。 NL 消耗 。"
   },
   "SakikoMod:Angles": {
     "NAME": "Angles",
@@ -388,7 +397,7 @@
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将从卡组中 升级 。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择 !SakikoMod:MN! 张牌，选择的牌被 消耗 时，将这张牌从卡组中永久移除，将选择的牌从卡组中 升级 。 NL 消耗 。"
   },
   "SakikoMod:ChoirSChoir": {
     "NAME": "Choir 'S' Choir",
@@ -490,7 +499,7 @@
   "SakikoMod:Sunny_M": {
     "NAME": "有所依靠的Sunny,Sunny",
     "MINI_TITLE": "Morfonica",
-    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：获得 !SakikoMod:MN! 点格挡，这张牌每有一点 sakikomod:热度 ，格挡量提高 !M! 点。"
+    "DESCRIPTION": " sakikomod:安可曲 NL sakikomod:演奏 ：获得 !B! 点格挡，这张牌每有一点 sakikomod:热度 ，格挡量提高 !M! 点。"
   },
   "SakikoMod:RIOT_RAS": {
     "NAME": "R·I·O·T",
@@ -564,14 +573,14 @@
   },
   "SakikoMod:DistantPast": {
     "NAME": "遥远的过去",
-    "DESCRIPTION": " 不能被打出 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。被 消耗 时，若弃牌堆同名卡少于六张，则加入两张复制品。 NL 虚无 。",
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。回合结束时，若卡组中的同名卡少于六张，则在弃牌堆加入两张复制品。 NL 虚无 。",
     "EXTENDED_DESCRIPTION": [
-      "这张牌不能被打出"
+      "这张牌不能被打出。"
     ]
   },
   "SakikoMod:AbolitionCase": {
     "NAME": "废案",
-    "DESCRIPTION": "抽到时自动打出。 NL sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
+    "DESCRIPTION": " sakikomod:安可曲 NL 抽到时自动打出这张牌。这张牌位于待演奏区时，你每次 sakikomod:演奏 给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
   },
   "SakikoMod:AveMujica_Boss": {
     "NAME": "Ave Mujica",

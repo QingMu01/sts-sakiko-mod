@@ -109,7 +109,6 @@ public class RanaMonster extends AbstractMemberMonster {
                 }).build());
         return specialIntentActions;
     }
-
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();

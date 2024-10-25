@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
+import com.qingmu.sakiko.action.RemoveMasterDeckSpecificCardAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -20,6 +21,12 @@ public class BlackBirthdayModifier extends AbstractMusicCardModifier {
 
     public static String ID = ModNameHelper.make(BlackBirthdayModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
+
+    private AbstractCard card;
+
+    public BlackBirthdayModifier(AbstractCard card) {
+        this.card = card;
+    }
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
@@ -40,12 +47,19 @@ public class BlackBirthdayModifier extends AbstractMusicCardModifier {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
                 AbstractDungeon.topLevelEffectsQueue.add(new ShowCardBrieflyEffect(card.makeStatEquivalentCopy()));
                 c.upgrade();
+                this.addToBot(new RemoveMasterDeckSpecificCardAction(this.card));
             }
         }
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new BlackBirthdayModifier();
+        return new BlackBirthdayModifier(this.card);
     }
+
+    @Override
+    public String identifier(AbstractCard card) {
+        return ID;
+    }
+
 }

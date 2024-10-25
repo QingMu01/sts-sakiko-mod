@@ -4,6 +4,7 @@ import basemod.abstracts.CustomMonster;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateFastAttackAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -158,15 +159,16 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     }
 
     protected AbstractGameAction[] generateMultiAttack(DamageInfo info, int multiplier) {
-        int animationCount = 1 + multiplier % 4;
-        AbstractGameAction[] actions = new AbstractGameAction[multiplier + animationCount];
-        for (int i = 0; i < actions.length; i++) {
-            if (i % 4 == 0) {
-                actions[i] = new AnimateFastAttackAction(this);
-            } else {
-                actions[i] = new DamageAction(AbstractDungeon.player, info,true);
+        ArrayList<AbstractGameAction> actions = new ArrayList<>();
+        actions.add(new AnimateFastAttackAction(this));
+        int animationInsert = multiplier / 5;
+        for (int i = 0; i < multiplier; i++) {
+            if ((i + 1) % 5 == 0 && animationInsert > 0) {
+                actions.add(new AnimateJumpAction(this));
+                animationInsert--;
             }
+            actions.add(new DamageAction(AbstractDungeon.player, info));
         }
-        return actions;
+        return actions.toArray(new AbstractGameAction[0]);
     }
 }
