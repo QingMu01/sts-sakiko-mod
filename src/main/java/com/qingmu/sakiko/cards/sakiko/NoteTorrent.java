@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import basemod.abstracts.AbstractCardModifier;
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.utility.NewQueueCardAction;
@@ -27,6 +29,8 @@ public class NoteTorrent extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(0, 6, 0, 2);
         this.setUpgradeAttr(0, 0, 0, 2);
+
+        CardModifierManager.addModifier(this, new EndOfTurnResetAttrModifier());
     }
 
     @Override
@@ -46,5 +50,30 @@ public class NoteTorrent extends AbstractSakikoCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToTop(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+    }
+
+
+    public static class EndOfTurnResetAttrModifier extends AbstractCardModifier {
+
+        public static final String ID = ModNameHelper.make(EndOfTurnResetAttrModifier.class.getSimpleName());
+
+        @Override
+        public boolean removeAtEndOfTurn(AbstractCard card) {
+            AbstractCard copy = card.makeCopy();
+            card.baseDamage = copy.baseDamage;
+            card.baseBlock = copy.baseBlock;
+            card.baseMagicNumber = copy.baseMagicNumber;
+            return false;
+        }
+
+        @Override
+        public AbstractCardModifier makeCopy() {
+            return new EndOfTurnResetAttrModifier();
+        }
+
+        @Override
+        public String identifier(AbstractCard card) {
+            return ID;
+        }
     }
 }

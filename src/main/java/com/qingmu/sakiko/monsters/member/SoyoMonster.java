@@ -41,13 +41,13 @@ public class SoyoMonster extends AbstractMemberMonster {
         super(NAME, ID, IMG, x, y);
         this.setDefaultAttribute();
         if (AbstractDungeon.id.equals(Exordium.ID)) {
-            this.powerful = 5;
+            this.powerful = 2;
         }
         if (AbstractDungeon.id.equals(TheCity.ID)) {
-            this.powerful += 5;
+            this.powerful = 5;
         }
         if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
-            this.powerful += 5;
+            this.powerful = 10;
         }
 
         this.damage.add(new DamageInfo(this, this.baseAttack));

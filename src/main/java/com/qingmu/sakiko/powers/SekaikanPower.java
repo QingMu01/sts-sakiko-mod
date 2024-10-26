@@ -19,9 +19,12 @@ public class SekaikanPower extends AbstractPower {
     private static final String path48 = "SakikoModResources/img/powers/SekaikanPower48.png";
     private static final String path128 = "SakikoModResources/img/powers/SekaikanPower128.png";
 
-    public SekaikanPower(AbstractCreature owner, int amount) {
+    private boolean isUpgrade;
+
+    public SekaikanPower(AbstractCreature owner, int amount,boolean isUpgrade) {
         this.name = NAME;
-        this.ID = POWER_ID;
+        this.ID = POWER_ID + isUpgrade;
+        this.isUpgrade = isUpgrade;
         this.owner = owner;
         this.type = AbstractPower.PowerType.BUFF;
         this.amount = amount;
@@ -39,6 +42,6 @@ public class SekaikanPower extends AbstractPower {
     @Override
     public void atStartOfTurn() {
         this.flash();
-        this.addToBot(new MakeTempCardInHandAction(new Story(), this.amount));
+        this.addToBot(new MakeTempCardInHandAction(new Story(this.isUpgrade), this.amount));
     }
 }

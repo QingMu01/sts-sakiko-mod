@@ -159,9 +159,9 @@ public class CardSelectorAction extends AbstractGameAction {
                 }
                 this.selected.addAll(this.candidate.group);
                 this.callback.accept(this.selected);
-                this.player.hand.refreshHandLayout();
                 this.releaseCards(candidate.group);
                 this.releaseCards(cantSelectedList);
+                this.player.hand.refreshHandLayout();
                 AbstractDungeon.gridSelectScreen.selectedCards.clear();
                 this.isDone = true;
                 return;
@@ -191,9 +191,9 @@ public class CardSelectorAction extends AbstractGameAction {
         this.tickDuration();
         if (this.isDone) {
             this.callback.accept(this.selected);
-            this.player.hand.refreshHandLayout();
             this.releaseCards(candidate.group);
             this.releaseCards(cantSelectedList);
+            this.player.hand.refreshHandLayout();
             AbstractDungeon.gridSelectScreen.targetGroup.clear();
         }
     }

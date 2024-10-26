@@ -1,5 +1,7 @@
 package com.qingmu.sakiko.powers;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
@@ -8,6 +10,8 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -24,6 +28,7 @@ public class BoomerangPower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/Boomerang128.png";
 
     private int doubleAmount;
+    private Color doubleAmountColor = Color.GREEN.cpy();
 
     public BoomerangPower(AbstractCreature owner, int damage) {
         this.name = NAME;
@@ -68,6 +73,13 @@ public class BoomerangPower extends AbstractPower {
     @Override
     public void stackPower(int stackAmount) {
         this.amount += stackAmount;
-        this.doubleAmount = 1;
+        this.doubleAmount += 1;
     }
+
+    @Override
+    public void renderAmount(SpriteBatch sb, float x, float y, Color c) {
+        super.renderAmount(sb, x, y, c);
+        FontHelper.renderFontRightTopAligned(sb, FontHelper.powerAmountFont, Integer.toString(this.doubleAmount), x, y + 15 * Settings.scale, this.fontScale, this.doubleAmountColor);
+    }
+
 }

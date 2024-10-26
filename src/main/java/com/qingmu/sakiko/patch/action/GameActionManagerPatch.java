@@ -40,7 +40,7 @@ public class GameActionManagerPatch {
     }
 
     @SpirePatch(clz = GameActionManager.class, method = "clear")
-    public static class clearPatch {
+    public static class ClearPatch {
         // 进入下一个房间前执行的操作，清空本场战斗保留的数据
         public static void Postfix(GameActionManager __instance) {
             SakikoConst.MUSIC_QUEUE_LIMIT_USED = SakikoConst.MUSIC_QUEUE_LIMIT;
@@ -51,8 +51,6 @@ public class GameActionManagerPatch {
                 MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
                 MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
                 MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(AbstractDungeon.player, 0);
-                MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).clear();
-                MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).clear();
             } catch (NullPointerException ignored) {
             }
         }

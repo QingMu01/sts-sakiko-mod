@@ -21,7 +21,7 @@ public class Mujina extends AbstractSakikoCard {
 
     public Mujina() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 12, 0, 3);
+        this.initBaseAttr(2, 14, 0, 4);
         this.setUpgradeAttr(2, 4, 0, 1);
     }
 

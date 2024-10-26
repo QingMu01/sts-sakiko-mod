@@ -15,11 +15,18 @@ public class Story extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.SPECIAL;
     private static final CardTarget TARGET = CardTarget.NONE;
 
-    public Story() {
+    public Story(boolean isUpgrade) {
         super(ID, IMG_PATH, TYPE, CardColor.COLORLESS, RARITY, TARGET);
         this.initBaseAttr(0, 0, 0, 0);
         this.setUpgradeAttr(0, 0, 0, 0);
         this.setExhaust(true, true);
+        if (isUpgrade) {
+            this.upgrade();
+        }
+    }
+
+    public Story() {
+        this(false);
     }
 
     @Override

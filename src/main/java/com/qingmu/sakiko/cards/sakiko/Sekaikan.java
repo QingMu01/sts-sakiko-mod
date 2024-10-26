@@ -25,7 +25,7 @@ public class Sekaikan extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new SekaikanPower(p, this.magicNumber), this.magicNumber));
+        this.addToBot(new ApplyPowerAction(p, p, new SekaikanPower(p, this.magicNumber,this.upgraded), this.magicNumber));
     }
 
 }

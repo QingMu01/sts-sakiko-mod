@@ -53,7 +53,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (this.amount <= 0) {
+        if (this.amount <= 0 || this.queue.isEmpty()) {
             this.isDone = true;
             return;
         }

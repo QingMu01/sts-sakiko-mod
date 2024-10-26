@@ -139,7 +139,7 @@
   },
   "SakikoMod:NoteTorrent": {
     "NAME": "音符洪流",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌在弃牌堆时，每次 sakikomod:演奏 这张牌的在本场战斗中提高 !M! ，打出一张这张牌的复制品。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌在弃牌堆时，每次 sakikomod:演奏 这张牌在本回合的伤害提高 !M! ，并打出一张复制品。"
   },
   "SakikoMod:TruthOfTheWorld": {
     "NAME": "世界的真相",

@@ -70,13 +70,13 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     @Override
     public void usePreBattleAction() {
         AbstractDungeon.getCurrRoom().cannotLose = true;
+        BossInfoFiled.canBattleWithDemonSakiko.set(AbstractDungeon.player, false);
     }
 
     @Override
     public void die() {
         super.die();
         if (!AbstractDungeon.getCurrRoom().cannotLose) {
-            BossInfoFiled.canBattleWithDemonSakiko.set(CardCrawlGame.dungeon, false);
             this.onBossVictoryLogic();
             this.onFinalBossVictoryLogic();
             CardCrawlGame.stopClock = true;
@@ -139,21 +139,21 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setIntent(Intent.UNKNOWN)
                 .setPredicate(m -> true)
                 .setActions(() -> new AbstractGameAction[]{
-                        new HealAction(this, this, (this.phase + 1) * 200 + this.baseHp),
+                        new HealAction(this, this, 9999),
                         new RenameMonsterAction(this, MOVES[this.phase] + NAME)})
                 .setCallback(ia -> {
                     this.maxHealth = this.baseHp;
                     this.halfDead = false;
                     if (this.phase == 1) {
-                        this.maxHealth = this.maxHealth + 200;
+                        this.maxHealth = 800;
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
                     } else if (this.phase == 2) {
-                        this.maxHealth = this.maxHealth + 200;
+                        this.maxHealth = 1000;
                         this.addToBot(new TalkAction(this, DIALOG[4], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
                     } else if (this.phase == 3) {
-                        this.maxHealth = this.maxHealth + 200;
+                        this.maxHealth = 1000;
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
                     }

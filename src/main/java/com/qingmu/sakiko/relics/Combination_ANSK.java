@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.lang.reflect.Type;
@@ -35,7 +36,8 @@ public class Combination_ANSK extends AbstractSakikoRelic implements CustomSavab
     @Override
     public void onEnterRoom(AbstractRoom room) {
         if (this.isSleep && room instanceof MonsterRoomBoss) {
-//            AbstractDungeon.bossKey = InstinctSakiko.ID;
+            AbstractDungeon.bossList.add(0, InstinctSakiko.ID);
+            AbstractDungeon.bossKey = InstinctSakiko.ID;
         }
     }
 

@@ -39,16 +39,22 @@ public class UmiriMonster extends AbstractMemberMonster {
     public UmiriMonster(float x, float y) {
         super(NAME, ID, IMG, x, y);
         super.setDefaultAttribute();
+
         if (AbstractDungeon.id.equals(Exordium.ID)) {
+            this.multiCount = 2;
+            this.baseMulti = 3;
             this.powerful = 1;
         }
         if (AbstractDungeon.id.equals(TheCity.ID)) {
+            this.multiCount = 2;
+            this.baseMulti = 6;
             this.powerful = 2;
         }
         if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
+            this.multiCount = 3;
+            this.baseMulti = 8;
             this.powerful = 3;
         }
-        this.baseMulti -= 2;
         this.damage.add(new DamageInfo(this, this.baseAttack));
         this.damage.add(new DamageInfo(this, MathUtils.floor(this.baseSlash * 1.5f)));
         this.damage.add(new DamageInfo(this, this.baseMulti));

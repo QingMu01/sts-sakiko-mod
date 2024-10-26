@@ -1,14 +1,17 @@
 package com.qingmu.sakiko.powers;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
-import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -32,6 +35,8 @@ public class KokoroNoKabePower extends AbstractPower {
 
     private static final String path128 = "SakikoModResources/img/powers/KokoroNoKabe128.png";
 
+    private int damage;
+    private Color damageColor = Color.RED.cpy();
 
     public KokoroNoKabePower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -40,6 +45,7 @@ public class KokoroNoKabePower extends AbstractPower {
         this.type = PowerType.BUFF;
         this.amount = amount;
         this.priority = 1;
+        this.damage = 0;
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
         this.updateDescription();
@@ -62,12 +68,11 @@ public class KokoroNoKabePower extends AbstractPower {
      * */
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        if (info.type != DamageInfo.DamageType.THORNS && info.type != DamageInfo.DamageType.HP_LOSS && info.owner != null && info.owner != this.owner && damageAmount > 0) {
+        if (info.type == DamageInfo.DamageType.NORMAL && info.owner != this.owner && info.output > 0) {
             // 免伤
             if (this.owner.isPlayer && ((AbstractPlayer) this.owner).hasRelic(Combination_TMSK.ID)) {
                 AbstractRelic relic = ((AbstractPlayer) this.owner).getRelic(Combination_TMSK.ID);
                 relic.flash();
-                this.addToBot(new RelicAboveCreatureAction(this.owner, relic));
                 return damageAmount;
             }
             int buffed;
@@ -110,7 +115,13 @@ public class KokoroNoKabePower extends AbstractPower {
     }
 
     private int calculateKabeDamage() {
-        return (int) Math.floor(12.0f * this.amount / 90.0f);
+        this.damage = (int) Math.floor(12.0f * this.amount / 90.0f);
+        return this.damage;
     }
 
+    @Override
+    public void renderAmount(SpriteBatch sb, float x, float y, Color c) {
+        super.renderAmount(sb, x, y, c);
+        FontHelper.renderFontRightTopAligned(sb, FontHelper.powerAmountFont, Integer.toString(this.damage), x, y + 15 * Settings.scale, this.fontScale, this.damageColor);
+    }
 }

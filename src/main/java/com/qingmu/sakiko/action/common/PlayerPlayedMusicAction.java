@@ -97,11 +97,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 }
             }
         }
-
-        // 添加记录
-        MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
-        MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
-        logger.info("Player played music card: {}", this.music);
     }
 
     @Override
@@ -113,6 +108,10 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
             }
         }
         if (canPlay){
+            // 添加记录
+            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(AbstractDungeon.player).add(this.music);
+            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).add(this.music);
+            logger.info("Player played music card: {}", this.music);
             this.music.calculateCardDamage((AbstractMonster) this.music.m_target);
             this.music.play();
         }

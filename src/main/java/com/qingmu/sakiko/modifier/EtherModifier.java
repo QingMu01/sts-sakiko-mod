@@ -43,13 +43,19 @@ public class EtherModifier extends AbstractMusicCardModifier {
     }
 
     @Override
-    public void onDrawn(AbstractCard card) {
-        card.setCostForTurn(-this.costDown);
+    public void onApplyPowers(AbstractCard card) {
+        if (this.isLastModified(card, ID)) {
+            int totalCostDown = getTotalCostDown(card);
+            card.setCostForTurn(card.cost - totalCostDown);
+        }
     }
 
     @Override
     public void onInitialApplication(AbstractCard card) {
-        card.setCostForTurn(-this.costDown);
+        if (this.isLastModified(card, ID)) {
+            int totalCostDown = getTotalCostDown(card);
+            card.setCostForTurn(card.cost - totalCostDown);
+        }
     }
 
     @Override

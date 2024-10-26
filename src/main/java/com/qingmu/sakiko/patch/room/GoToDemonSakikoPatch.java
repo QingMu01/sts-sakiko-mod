@@ -7,8 +7,6 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
-import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 
@@ -16,7 +14,7 @@ import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 public class GoToDemonSakikoPatch {
 
     public static SpireReturn<Void> Prefix(ProceedButton __instance) {
-        if (canGoToDemonSakiko()) {
+        if (BossInfoFiled.canBattleWithDemonSakiko.get(AbstractDungeon.player)) {
             CardCrawlGame.stopClock = false;
             AbstractDungeon.bossKey = InnerDemonSakiko.ID;
             CardCrawlGame.music.fadeOutBGM();
@@ -29,9 +27,5 @@ public class GoToDemonSakikoPatch {
             __instance.hide();
             return SpireReturn.Return();
         } else return SpireReturn.Continue();
-    }
-
-    private static boolean canGoToDemonSakiko() {
-        return (AbstractDungeon.player instanceof TogawaSakiko || SakikoModCore.SAKIKO_CONFIG.getBool("enableBoss")) && BossInfoFiled.canBattleWithDemonSakiko.get(CardCrawlGame.dungeon);
     }
 }
