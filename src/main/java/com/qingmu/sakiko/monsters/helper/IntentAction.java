@@ -3,9 +3,9 @@ package com.qingmu.sakiko.monsters.helper;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.RollMoveAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
+import com.qingmu.sakiko.utils.ActionHelper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -91,14 +91,14 @@ public class IntentAction {
 
     public void doIntentAction(AbstractSakikoMonster monster, boolean rollNext) {
         for (AbstractGameAction action : this.actions.get()) {
-            AbstractDungeon.actionManager.addToBottom(action);
+            ActionHelper.actionToBot(action);
         }
         if (callback != null) {
             callback.accept(this);
         }
         this.repeatInterval = this.repeatInterval_original;
         if (rollNext) {
-            AbstractDungeon.actionManager.addToBottom(new RollMoveAction(monster));
+            ActionHelper.actionToBot(new RollMoveAction(monster));
         }
     }
 

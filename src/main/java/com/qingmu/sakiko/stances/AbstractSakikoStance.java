@@ -2,9 +2,9 @@ package com.qingmu.sakiko.stances;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.StanceStrings;
 import com.megacrit.cardcrawl.stances.AbstractStance;
+import com.qingmu.sakiko.utils.ActionHelper;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,7 +37,7 @@ public abstract class AbstractSakikoStance extends AbstractStance {
 
     protected void submitActionsToTop(AbstractGameAction... actions) {
         if (actions != null) {
-            AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
+            ActionHelper.actionToBot(new AbstractGameAction() {
                 @Override
                 public void update() {
                     for (AbstractGameAction action : actions) {
@@ -54,7 +54,7 @@ public abstract class AbstractSakikoStance extends AbstractStance {
             if (actions.length > 1) {
                 Collections.reverse(Arrays.asList(actions));
             }
-            AbstractDungeon.actionManager.addToTop(new AbstractGameAction() {
+            ActionHelper.actionToTop(new AbstractGameAction() {
                 @Override
                 public void update() {
                     for (AbstractGameAction action : actions) {

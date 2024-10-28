@@ -23,6 +23,7 @@ import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
+import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -51,7 +52,7 @@ public class TomoriMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        AbstractDungeon.actionManager.addToBottom(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+        ActionHelper.actionToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
         CardCrawlGame.sound.playV(SoundHelper.TOMORI_INIT.name(), 2.0f * SakikoModCore.SAKIKO_CONFIG.getFloat("modSound"));
     }
 

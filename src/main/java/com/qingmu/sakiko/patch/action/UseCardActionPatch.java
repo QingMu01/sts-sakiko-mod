@@ -8,11 +8,11 @@ import com.megacrit.cardcrawl.actions.utility.ShowCardAndPoofAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
+import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 
@@ -27,7 +27,7 @@ public class UseCardActionPatch {
                     CardsHelper.h().empower(___targetCard);
                 } else {
                     CardsHelper.h().removeCard(___targetCard);
-                    AbstractDungeon.actionManager.addToTop(new ShowCardAndPoofAction(___targetCard));
+                    ActionHelper.actionToTop(new ShowCardAndPoofAction(___targetCard));
                 }
                 __instance.isDone = true;
                 DungeonHelper.getPlayer().cardInUse = null;

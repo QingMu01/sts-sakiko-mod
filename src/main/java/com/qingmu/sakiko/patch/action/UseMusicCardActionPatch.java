@@ -16,6 +16,7 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
+import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import javassist.CtBehavior;
@@ -80,7 +81,7 @@ public class UseMusicCardActionPatch {
                 if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID) || ___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
                     CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
                     __instance.isDone = true;
-                    AbstractDungeon.actionManager.addToBottom(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
+                    ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
                     return SpireReturn.Return();
                 }
                 CardGroup cardGroup = CardsHelper.mq();
@@ -88,9 +89,9 @@ public class UseMusicCardActionPatch {
                 // 超过队列大小时演奏最顶部的音乐
                 if (cardGroup.size() > SakikoConst.MUSIC_QUEUE_LIMIT_USED) {
                     AbstractDungeon.effectList.add(new ShowMusicCardMoveToWaitPlayEffect((AbstractMusic) ___targetCard));
-                    AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(1));
+                    ActionHelper.actionToBot(new ReadyToPlayMusicAction(1));
                 }
-                AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
+                ActionHelper.actionToBot(new HandCheckAction());
                 DungeonHelper.getPlayer().cardInUse = null;
                 CardsHelper.h().refreshHandLayout();
                 ___targetCard.lighten(false);

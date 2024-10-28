@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnOblivion;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
+import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -44,7 +45,7 @@ public class ObliviousAction extends CardSelectorAction {
                 if (card instanceof TriggerOnOblivion) {
                     ((TriggerOnOblivion) card).triggerOnOblivion();
                 }
-                AbstractDungeon.actionManager.addToBottom(new UnlimboAction(card));
+                ActionHelper.actionToBot(new UnlimboAction(card));
             }
         }, CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE);
     }

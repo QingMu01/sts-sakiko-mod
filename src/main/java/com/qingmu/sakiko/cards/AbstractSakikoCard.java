@@ -9,13 +9,16 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.CardStringsMiniTitleField;
+import com.qingmu.sakiko.utils.ActionHelper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractSakikoCard extends CustomCard {
 
@@ -86,33 +89,23 @@ public abstract class AbstractSakikoCard extends CustomCard {
 
 
     protected void submitActionsToBot(AbstractGameAction... actions) {
-        if (actions != null) {
-            AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
-                @Override
-                public void update() {
-                    for (AbstractGameAction action : actions) {
-                        this.addToBot(action);
-                    }
-                    this.isDone = true;
-                }
-            });
+        if (actions != null && actions.length > 0) {
+            if (actions.length > 1) {
+                ActionHelper.actionListToBot(actions);
+            } else {
+                this.addToBot(actions[0]);
+            }
         }
+
     }
 
     protected void submitActionsToTop(AbstractGameAction... actions) {
-        if (actions != null) {
+        if (actions != null && actions.length > 0) {
             if (actions.length > 1) {
-                Collections.reverse(Arrays.asList(actions));
+                ActionHelper.actionListToTop(actions);
+            } else {
+                this.addToTop(actions[0]);
             }
-            AbstractDungeon.actionManager.addToTop(new AbstractGameAction() {
-                @Override
-                public void update() {
-                    for (AbstractGameAction action : actions) {
-                        this.addToTop(action);
-                    }
-                    this.isDone = true;
-                }
-            });
         }
     }
 
