@@ -21,7 +21,7 @@ public class AlbumSell extends PhasedEvent {
     private static final String[] DESCRIPTIONS = eventStrings.DESCRIPTIONS;
     private static final String[] OPTIONS = eventStrings.OPTIONS;
 
-    private static final String IMG_PATH = "SakikoModResources/img/event/bg00857.png";
+    private static final String IMG_PATH = "SakikoModResources/img/event/bg00549.png";
 
     private AbstractCard elements = new Elements();
     private int elementsPrice = 242;
