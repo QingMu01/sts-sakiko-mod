@@ -3,13 +3,13 @@ package com.qingmu.sakiko.cards.music;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.DamageCallbackAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SilhouetteDance_MYGO extends AbstractMusic {
@@ -30,7 +30,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
 
     @Override
     public void applyPowers() {
-        AbstractPower krkrdkdk = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
+        AbstractPower krkrdkdk = DungeonHelper.getPlayer().getPower(KirameiPower.POWER_ID);
         if (krkrdkdk != null) {
             krkrdkdk.amount *= this.magicNumber;
         }
@@ -44,7 +44,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        AbstractPower krkrdkdk = AbstractDungeon.player.getPower(KirameiPower.POWER_ID);
+        AbstractPower krkrdkdk = DungeonHelper.getPlayer().getPower(KirameiPower.POWER_ID);
         if (krkrdkdk != null) {
             krkrdkdk.amount *= this.magicNumber;
         }

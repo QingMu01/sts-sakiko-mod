@@ -5,8 +5,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 import com.megacrit.cardcrawl.screens.CombatRewardScreen;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.rewards.MusicCardReward;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class AppendMusicRewardPatch {
 
@@ -17,7 +17,7 @@ public class AppendMusicRewardPatch {
     @SpirePatch(clz = CombatRewardScreen.class, method = "setupItemReward")
     public static class SetupItemReward {
         public static void Postfix(CombatRewardScreen __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko){
+            if (DungeonHelper.isSakiko()){
                 if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoomBoss.class)  || AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoomElite.class)) {
                     __instance.rewards.add(new MusicCardReward());
                 }

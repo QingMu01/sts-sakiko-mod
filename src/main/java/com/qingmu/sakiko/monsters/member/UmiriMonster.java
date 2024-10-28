@@ -21,6 +21,7 @@ import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class UmiriMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1).base)
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 35概率连击
         intentActions.add(new IntentAction.Builder()

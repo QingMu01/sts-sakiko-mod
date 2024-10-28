@@ -1,9 +1,8 @@
 package com.qingmu.sakiko.relics;
 
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Payslip extends AbstractSakikoRelic {
@@ -27,11 +26,11 @@ public class Payslip extends AbstractSakikoRelic {
     @Override
     public void onEnterRoom(AbstractRoom room) {
         this.flash();
-        AbstractDungeon.player.gainGold(5);
+        DungeonHelper.getPlayer().gainGold(5);
     }
 
     @Override
     public boolean canSpawn() {
-        return AbstractDungeon.player instanceof TogawaSakiko;
+        return DungeonHelper.isSakiko();
     }
 }

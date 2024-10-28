@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.monsters.member;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
@@ -22,6 +21,7 @@ import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
                 .setIntent(Intent.STRONG_DEBUFF)
-                .setPredicate(monster -> GameActionManager.turn == 1)
+                .setPredicate(monster -> DungeonHelper.getTurn() == 1)
                 .setActions(() -> new AbstractGameAction[]{
                         new MakeTempCardInDiscardAction(new VoidCard(), 1),
                         new MakeTempCardInDiscardAction(new Slimed(), 2)
@@ -85,12 +85,12 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK_DEBUFF)
                 .setDamageAmount(this.damage.get(0))
                 .setRepeatInterval(4)
-                .setPredicate(monster -> !AbstractDungeon.player.hasPower(VulnerablePower.POWER_ID) && AbstractDungeon.aiRng.randomBoolean())
+                .setPredicate(monster -> !DungeonHelper.getPlayer().hasPower(VulnerablePower.POWER_ID) && AbstractDungeon.aiRng.randomBoolean())
                 .setRemovable(m -> false)
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0), true),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), true),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new VulnerablePower(DungeonHelper.getPlayer(), 2, true))
                 }).build());
         return specialIntentActions;
     }
@@ -112,7 +112,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0), true)
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), true)
                 }).build());
         // 20概率重击
         intentActions.add(new IntentAction.Builder()
@@ -121,7 +121,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1), true)
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1), true)
                 }).build());
         // 30概率连击
         intentActions.add(new IntentAction.Builder()

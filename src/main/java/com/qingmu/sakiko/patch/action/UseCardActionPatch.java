@@ -13,6 +13,8 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class UseCardActionPatch {
     @SpirePatch(clz = UseCardAction.class, method = "update")
@@ -22,13 +24,13 @@ public class UseCardActionPatch {
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if ((CardModifierManager.hasModifier(___targetCard, RememberModifier.ID) || CardModifierManager.hasModifier(___targetCard, LouderModifier.ID)) && !(___targetCard instanceof AbstractMusic)) {
                 if (___targetCard.type == AbstractCard.CardType.POWER) {
-                    AbstractDungeon.player.hand.empower(___targetCard);
+                    CardsHelper.h().empower(___targetCard);
                 } else {
-                    AbstractDungeon.player.hand.removeCard(___targetCard);
+                    CardsHelper.h().removeCard(___targetCard);
                     AbstractDungeon.actionManager.addToTop(new ShowCardAndPoofAction(___targetCard));
                 }
                 __instance.isDone = true;
-                AbstractDungeon.player.cardInUse = null;
+                DungeonHelper.getPlayer().cardInUse = null;
                 CardModifierManager.removeModifiersById(___targetCard, RememberModifier.ID, false);
                 return SpireReturn.Return();
             } else return SpireReturn.Continue();

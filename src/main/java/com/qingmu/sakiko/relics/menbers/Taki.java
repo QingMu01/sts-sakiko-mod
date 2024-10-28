@@ -2,10 +2,10 @@ package com.qingmu.sakiko.relics.menbers;
 
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Taki extends AbstractBandMember {
@@ -28,6 +28,6 @@ public class Taki extends AbstractBandMember {
     @Override
     public void atTurnStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KokoroNoKabePower(AbstractDungeon.player,3),3));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new KokoroNoKabePower(DungeonHelper.getPlayer(),3),3));
     }
 }

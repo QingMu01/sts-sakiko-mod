@@ -15,6 +15,8 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.function.Predicate;
@@ -47,7 +49,7 @@ public class Band_CRYCHIC extends AbstractSakikoRelic implements CustomBottleRel
     }
 
     public void onEquip() {
-        if (AbstractDungeon.player.masterDeck.getPurgeableCards().group.stream().anyMatch(c -> c instanceof AbstractMusic)) {
+        if (CardsHelper.md().getPurgeableCards().group.stream().anyMatch(c -> c instanceof AbstractMusic)) {
             this.cardSelected = false;
             if (AbstractDungeon.isScreenUp) {
                 AbstractDungeon.dynamicBanner.hide();
@@ -57,7 +59,7 @@ public class Band_CRYCHIC extends AbstractSakikoRelic implements CustomBottleRel
 
             AbstractDungeon.getCurrRoom().phase = AbstractRoom.RoomPhase.INCOMPLETE;
             CardGroup cardGroup = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-            for (AbstractCard abstractCard : AbstractDungeon.player.masterDeck.getPurgeableCards().group.stream().filter(c -> c instanceof AbstractMusic).collect(Collectors.toList())) {
+            for (AbstractCard abstractCard : CardsHelper.md().getPurgeableCards().group.stream().filter(c -> c instanceof AbstractMusic).collect(Collectors.toList())) {
                 cardGroup.addToBottom(abstractCard);
             }
             AbstractDungeon.gridSelectScreen.open(cardGroup, 1, this.DESCRIPTIONS[1] + this.name + LocalizedStrings.PERIOD, false, false, false, false);
@@ -67,7 +69,7 @@ public class Band_CRYCHIC extends AbstractSakikoRelic implements CustomBottleRel
 
     public void onUnequip() {
         if (this.card != null) {
-            AbstractMusic cardInDeck = (AbstractMusic) AbstractDungeon.player.masterDeck.getSpecificCard(this.card);
+            AbstractMusic cardInDeck = (AbstractMusic) CardsHelper.md().getSpecificCard(this.card);
             if (cardInDeck != null) {
                 cardInDeck.cryChicSelect = false;
             }
@@ -76,19 +78,19 @@ public class Band_CRYCHIC extends AbstractSakikoRelic implements CustomBottleRel
 
     public void atBattleStart() {
         this.flash();
-        this.addToTop(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+        this.addToTop(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
     }
 
     @Override
     public Integer onSave() {
-        return AbstractDungeon.player.masterDeck.group.indexOf(this.card);
+        return CardsHelper.md().group.indexOf(this.card);
     }
 
     @Override
     public void onLoad(Integer integer) {
         this.cardIndex = integer;
-        if (this.cardIndex >= 0 && this.cardIndex < AbstractDungeon.player.masterDeck.group.size()) {
-            this.card = (AbstractMusic) AbstractDungeon.player.masterDeck.group.get(this.cardIndex);
+        if (this.cardIndex >= 0 && this.cardIndex < CardsHelper.md().group.size()) {
+            this.card = (AbstractMusic) CardsHelper.md().group.get(this.cardIndex);
             if (this.card != null) {
                 this.card.cryChicSelect = true;
                 if (!this.card.hasTag(SakikoEnum.CardTagEnum.ENCORE)){

@@ -11,7 +11,6 @@ import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
@@ -21,6 +20,7 @@ import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
                 }).build());
         // 20概率防御
         intentActions.add(new IntentAction.Builder()
@@ -89,7 +89,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateFastAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 40概率强化
         intentActions.add(new IntentAction.Builder()

@@ -7,6 +7,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,7 +27,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
     public ShuffleMusicDeckAction() {
         this.actionType = ActionType.SHUFFLE;
 
-        Iterator<AbstractCard> iterator = AbstractDungeon.player.discardPile.group.iterator();
+        Iterator<AbstractCard> iterator = CardsHelper.dsp().group.iterator();
         while (iterator.hasNext()) {
             AbstractCard card = iterator.next();
             if (card instanceof AbstractMusic) {
@@ -37,7 +39,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
                 }
             }
         }
-        for (AbstractRelic r : AbstractDungeon.player.relics) {
+        for (AbstractRelic r : DungeonHelper.getPlayer().relics) {
             r.onShuffle();
         }
     }
@@ -60,7 +62,7 @@ public class ShuffleMusicDeckAction extends AbstractGameAction {
             this.vfxDone = true;
         }
         this.isDone = true;
-        AbstractDungeon.player.discardPile.group.addAll(moon_light);
+        CardsHelper.dsp().group.addAll(moon_light);
         moon_light.clear();
     }
 }

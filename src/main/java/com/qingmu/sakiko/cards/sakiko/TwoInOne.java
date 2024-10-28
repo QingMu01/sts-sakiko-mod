@@ -1,11 +1,11 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.TwoInOneAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.stances.CreatorStance;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class TwoInOne extends AbstractSakikoCard {
@@ -28,7 +28,7 @@ public class TwoInOne extends AbstractSakikoCard {
 
     @Override
     public void applyPowers() {
-        if (AbstractDungeon.player.stance.ID.equals(CreatorStance.STANCE_ID)){
+        if (DungeonHelper.getPlayer().stance.ID.equals(CreatorStance.STANCE_ID)){
             this.loadCardImage(IMG_PATH);
         }else {
             this.loadCardImage(IMG_PATH_BACK);

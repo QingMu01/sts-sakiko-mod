@@ -3,11 +3,11 @@ package com.qingmu.sakiko.relics;
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.stances.CreatorStance;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ClassicPiano extends AbstractSakikoRelic {
@@ -33,7 +33,7 @@ public class ClassicPiano extends AbstractSakikoRelic {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+        this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
         this.addToBot(new ChangeStanceAction(CreatorStance.STANCE_ID));
     }
 }

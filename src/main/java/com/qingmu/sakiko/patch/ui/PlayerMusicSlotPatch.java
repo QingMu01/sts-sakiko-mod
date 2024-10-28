@@ -8,9 +8,10 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.ui.MusicSlotItem;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class PlayerMusicSlotPatch {
     public static class RenderPatch {
         public static void Prefix(AbstractPlayer __instance, SpriteBatch sb) {
             if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
+                if (DungeonHelper.isSakiko() || !CardsHelper.mq().isEmpty()) {
                     float spacing = MUSIC_SLOT_HEIGHT + MUSIC_SLOT_PADDING;
                     ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiledPatch.BattalInfoFiled.musicSlotItems.get(__instance);
                     for (int i = 0; i < musicSlotItems.size(); i++) {
@@ -47,8 +48,8 @@ public class PlayerMusicSlotPatch {
     public static class UpdatePatch {
         public static void Postfix(AbstractPlayer __instance) {
             if (AbstractDungeon.getCurrRoom() != null && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-                if (AbstractDungeon.player instanceof TogawaSakiko || !MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).isEmpty()) {
-                    CardGroup musics = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+                if (DungeonHelper.isSakiko() || !CardsHelper.mq().isEmpty()) {
+                    CardGroup musics = CardsHelper.mq();
                     ArrayList<MusicSlotItem> musicSlotItems = MusicBattleFiledPatch.BattalInfoFiled.musicSlotItems.get(__instance);
                     while (musicSlotItems.size() < 3) {
                         musicSlotItems.add(new MusicSlotItem());

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.qingmu.sakiko.constant.ColorHelp;
@@ -15,6 +14,7 @@ import com.qingmu.sakiko.stances.CreatorStance;
 import com.qingmu.sakiko.stances.FeverStance;
 import com.qingmu.sakiko.stances.ObliviousStance;
 import com.qingmu.sakiko.stances.PlayerStance;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class SakikoStanceAuraEffect extends AbstractGameEffect {
 
@@ -40,8 +40,8 @@ public class SakikoStanceAuraEffect extends AbstractGameEffect {
             this.color = new Color(MathUtils.random(0.6F, 0.7F), MathUtils.random(0.0F, 0.1F), MathUtils.random(0.6F, 0.7F), 0.0F);
         }
         this.color.a = 0.0F;
-        this.x = AbstractDungeon.player.hb.cX + MathUtils.random(-AbstractDungeon.player.hb.width / 16.0F, AbstractDungeon.player.hb.width / 16.0F);
-        this.y = AbstractDungeon.player.hb.cY + MathUtils.random(-AbstractDungeon.player.hb.height / 16.0F, AbstractDungeon.player.hb.height / 12.0F);
+        this.x = DungeonHelper.getPlayer().hb.cX + MathUtils.random(-DungeonHelper.getPlayer().hb.width / 16.0F, DungeonHelper.getPlayer().hb.width / 16.0F);
+        this.y = DungeonHelper.getPlayer().hb.cY + MathUtils.random(-DungeonHelper.getPlayer().hb.height / 16.0F, DungeonHelper.getPlayer().hb.height / 12.0F);
         this.x -= (float) this.img.packedWidth / 2.0F;
         this.y -= (float) this.img.packedHeight / 2.0F;
         switcher = !switcher;

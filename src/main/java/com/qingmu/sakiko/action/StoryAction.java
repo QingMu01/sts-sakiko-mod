@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.screens.CardRewardScreen;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 import com.qingmu.sakiko.action.effect.ShowCardAndToDrawMusicPileEffect;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class StoryAction extends AbstractGameAction {
             if (!this.retrieveCard) {
                 if (AbstractDungeon.cardRewardScreen.discoveryCard != null) {
                     AbstractCard disCard = AbstractDungeon.cardRewardScreen.discoveryCard.makeStatEquivalentCopy();
-                    if (AbstractDungeon.player.hasPower("MasterRealityPower")) {
+                    if (DungeonHelper.getPlayer().hasPower("MasterRealityPower")) {
                         disCard.upgrade();
                     }
 

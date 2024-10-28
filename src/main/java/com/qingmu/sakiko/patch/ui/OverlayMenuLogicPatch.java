@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.core.OverlayMenu;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.patch.filed.MusicDrawPilePanelFiled;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class OverlayMenuLogicPatch {
     /*
@@ -17,7 +16,7 @@ public class OverlayMenuLogicPatch {
     public static class UpdatePatch {
         @SpireInsertPatch(loc = 57)
         public static void patch(OverlayMenu __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
+            if (DungeonHelper.isSakiko() || DungeonHelper.getPlayer().hasRelic("PrismaticShard"))
                 MusicDrawPilePanelFiled.musicDrawPile.get(__instance).updatePositions();
         }
     }
@@ -25,7 +24,7 @@ public class OverlayMenuLogicPatch {
     public static class ShowCombatPanelsPatch {
         @SpireInsertPatch(loc = 104)
         public static void patch(OverlayMenu __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
+            if (DungeonHelper.isSakiko() || DungeonHelper.getPlayer().hasRelic("PrismaticShard"))
                 MusicDrawPilePanelFiled.musicDrawPile.get(__instance).show();
         }
     }
@@ -33,7 +32,7 @@ public class OverlayMenuLogicPatch {
     public static class HideCombatPanelsPatch {
         @SpireInsertPatch(loc = 120)
         public static void patch(OverlayMenu __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
+            if (DungeonHelper.isSakiko() || DungeonHelper.getPlayer().hasRelic("PrismaticShard"))
                 MusicDrawPilePanelFiled.musicDrawPile.get(__instance).hide();
         }
     }
@@ -42,7 +41,7 @@ public class OverlayMenuLogicPatch {
     public static class RenderPatch {
         @SpireInsertPatch(loc = 168)
         public static void patch(OverlayMenu __instance, SpriteBatch sb){
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard"))
+            if (DungeonHelper.isSakiko() || DungeonHelper.getPlayer().hasRelic("PrismaticShard"))
                 MusicDrawPilePanelFiled.musicDrawPile.get(__instance).render(sb);
         }
     }

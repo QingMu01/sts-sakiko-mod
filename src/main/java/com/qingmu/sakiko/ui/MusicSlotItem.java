@@ -7,15 +7,15 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.patch.ui.PlayerMusicSlotPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MusicSlotItem {
@@ -43,7 +43,7 @@ public class MusicSlotItem {
     }
 
     public MusicSlotItem() {
-        this(AbstractDungeon.player);
+        this(DungeonHelper.getPlayer());
     }
 
     public void update() {
@@ -62,7 +62,7 @@ public class MusicSlotItem {
             }
         }
         if (this.owner.isPlayer) {
-            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+            CardGroup cardGroup = CardsHelper.mq();
             if (cardGroup.isEmpty()) {
                 this.musicListString = uiStrings.TEXT[3];
             } else {

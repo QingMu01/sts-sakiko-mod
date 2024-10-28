@@ -26,6 +26,7 @@ import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
 
     @Override
     public void usePreBattleAction() {
-        BossInfoFiled.canBattleWithDemonSakiko.set(AbstractDungeon.player, false);
+        BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
         CardCrawlGame.music.unsilenceBGM();
         AbstractDungeon.scene.fadeOutAmbiance();
         AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
@@ -123,9 +124,9 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .setRepeatInterval(2)
                 .setActions(() -> {
                     ArrayList<AbstractGameAction> actions = new ArrayList<>();
-                    actions.add(new VFXAction(new BloodShotEffect(this.hb.cX, this.hb.cY, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, this.bloodHitCount), 0.25F));
+                    actions.add(new VFXAction(new BloodShotEffect(this.hb.cX, this.hb.cY, DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY, this.bloodHitCount), 0.25F));
                     for (int i = 0; i < this.bloodHitCount; i++) {
-                        actions.add(new DamageAction(AbstractDungeon.player, this.damage.get(1), AbstractGameAction.AttackEffect.BLUNT_HEAVY, true));
+                        actions.add(new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1), AbstractGameAction.AttackEffect.BLUNT_HEAVY, true));
                     }
                     return actions.toArray(new AbstractGameAction[0]);
                 })
@@ -137,8 +138,8 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .setCallback(ia -> this.moveCount++)
                 .setRepeatInterval(2)
                 .setActions(() -> new AbstractGameAction[]{
-                        new VFXAction(new ViceCrushEffect(AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY), 0.5F),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
+                        new VFXAction(new ViceCrushEffect(DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY), 0.5F),
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
                 })
                 .build());
         return intentActions;
@@ -152,9 +153,9 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .setIntent(Intent.STRONG_DEBUFF)
                 .setActions(() -> new AbstractGameAction[]{
                         new VFXAction(new HeartMegaDebuffEffect()),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true), 2),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, 2, true), 2),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new VulnerablePower(DungeonHelper.getPlayer(), 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new WeakPower(DungeonHelper.getPlayer(), 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new FrailPower(DungeonHelper.getPlayer(), 2, true), 2),
                         new MakeTempCardInDrawPileAction(new Dazed(), 1, true, false, false, Settings.WIDTH * 0.2F, Settings.HEIGHT / 2.0F),
                         new MakeTempCardInDrawPileAction(new Slimed(), 1, true, false, false, Settings.WIDTH * 0.35F, Settings.HEIGHT / 2.0F),
                         new MakeTempCardInDrawPileAction(new Wound(), 1, true, false, false, Settings.WIDTH * 0.5F, Settings.HEIGHT / 2.0F),

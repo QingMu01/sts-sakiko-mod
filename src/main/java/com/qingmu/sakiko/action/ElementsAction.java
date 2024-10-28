@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.qingmu.sakiko.cards.colorless.Elements;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ElementsAction extends AbstractGameAction {
@@ -33,7 +34,7 @@ public class ElementsAction extends AbstractGameAction {
             if (!this.retrieveCard) {
                 if (AbstractDungeon.cardRewardScreen.discoveryCard != null) {
                     AbstractCard disCard = AbstractDungeon.cardRewardScreen.discoveryCard;
-                    if (AbstractDungeon.player.hasPower("MasterRealityPower")) {
+                    if (DungeonHelper.getPlayer().hasPower("MasterRealityPower")) {
                         disCard.upgrade();
                     }
                     disCard.current_x = -1000.0F * Settings.xScale;

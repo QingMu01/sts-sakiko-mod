@@ -16,6 +16,7 @@ import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.ui.MusicSlotItem;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -133,7 +134,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     // 获取即将演奏的音乐
     public void obtainMusic(AbstractMusic music) {
-        music.m_target = AbstractDungeon.player;
+        music.m_target = DungeonHelper.getPlayer();
         music.m_source = this;
         AbstractDungeon.effectList.add(new ObtainMusicCardEffect(music, this));
     }
@@ -168,7 +169,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
                 actions.add(new AnimateJumpAction(this));
                 animationInsert--;
             }
-            actions.add(new DamageAction(AbstractDungeon.player, info));
+            actions.add(new DamageAction(DungeonHelper.getPlayer(), info));
         }
         return actions.toArray(new AbstractGameAction[0]);
     }

@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import com.qingmu.sakiko.cards.colorless.Elements;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class AlbumSell extends PhasedEvent {
@@ -28,8 +29,8 @@ public class AlbumSell extends PhasedEvent {
     public AlbumSell() {
         super(ID, NAME, IMG_PATH);
         registerPhase(0, new TextPhase(DESCRIPTIONS[0])
-                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[2], elementsPrice, elements.name), elements).enabledCondition(() -> AbstractDungeon.player.gold >= elementsPrice, String.format(OPTIONS[3], elementsPrice)), e -> {
-                    AbstractDungeon.player.loseGold(elementsPrice);
+                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[2], elementsPrice, elements.name), elements).enabledCondition(() -> DungeonHelper.getPlayer().gold >= elementsPrice, String.format(OPTIONS[3], elementsPrice)), e -> {
+                    DungeonHelper.getPlayer().loseGold(elementsPrice);
                     AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(elements, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
                     transitionKey("LeaveB");
                 })

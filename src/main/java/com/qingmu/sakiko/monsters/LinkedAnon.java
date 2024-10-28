@@ -3,7 +3,6 @@ package com.qingmu.sakiko.monsters;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
@@ -14,7 +13,6 @@ import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.combat.SmallLaserEffect;
@@ -24,6 +22,7 @@ import com.qingmu.sakiko.constant.SoundHelper;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.powers.monster.AnonDasuruPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class LinkedAnon extends AbstractMemberMonster {
         // 首次行动必定防御
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setIntent(Intent.DEFEND)
-                .setPredicate(monster -> GameActionManager.turn == 1)
+                .setPredicate(monster -> DungeonHelper.getTurn() == 1)
                 .setActions(() -> new AbstractGameAction[]{new GainBlockAction(this, this, MathUtils.floor(this.baseBlock * 1.5f))})
                 .build());
         // 半血下回复一半生命
@@ -90,9 +89,9 @@ public class LinkedAnon extends AbstractMemberMonster {
                 .setIntent(Intent.MAGIC)
                 .setActions(() -> new AbstractGameAction[]{new AnimateJumpAction(this),
                         new VFXAction(new BorderFlashEffect(Color.SKY.cpy())),
-                        new VFXAction(new SmallLaserEffect(AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, this.hb.cX, this.hb.cY), 0.1F),
+                        new VFXAction(new SmallLaserEffect(DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY, this.hb.cX, this.hb.cY), 0.1F),
                         new PlaySoundAction(SoundHelper.ANON_YEAH),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new AnonDasuruPower(AbstractDungeon.player, this, 1), 1)
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new AnonDasuruPower(DungeonHelper.getPlayer(), this, 1), 1)
                 }).build());
         // 15概率防御
         intentActions.add(new IntentAction.Builder()
@@ -115,7 +114,7 @@ public class LinkedAnon extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1).base)
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 20概率普通攻击+防御
         intentActions.add(new IntentAction.Builder()
@@ -124,7 +123,7 @@ public class LinkedAnon extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0).base)
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0)),
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
                         new GainBlockAction(this, this, this.baseBlock, true)
                 }).build());
         return intentActions;

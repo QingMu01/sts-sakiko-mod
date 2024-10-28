@@ -3,10 +3,10 @@ package com.qingmu.sakiko.cards.sakiko;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class CurtainCall extends AbstractSakikoCard {
@@ -29,7 +29,7 @@ public class CurtainCall extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        int size = MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).size();
+        int size = MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).size();
         this.baseDamage += size * this.magicNumber;
         super.applyPowers();
         this.baseDamage = realBaseDamage;

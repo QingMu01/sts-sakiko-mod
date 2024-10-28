@@ -3,8 +3,8 @@ package com.qingmu.sakiko.patch.action;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.SoulGroup;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.utils.CardsHelper;
 import javassist.CtBehavior;
 
 
@@ -17,7 +17,7 @@ public class DrawCardActionPatch {
     * */
     @SpireInsertPatch(locator = Locator.class, localvars = {"discardSize"})
     public static void Insert(DrawCardAction __instance, @ByRef int[] discardSize) {
-        discardSize[0] = (int) AbstractDungeon.player.discardPile.group.stream().filter(c -> !c.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)).count();
+        discardSize[0] = (int) CardsHelper.dsp().group.stream().filter(c -> !c.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)).count();
     }
 
     public static class Locator extends SpireInsertLocator {

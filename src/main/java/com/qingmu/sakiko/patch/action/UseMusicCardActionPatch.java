@@ -16,7 +16,8 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import javassist.CtBehavior;
 
 public class UseMusicCardActionPatch {
@@ -41,8 +42,8 @@ public class UseMusicCardActionPatch {
             if (card[0].hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 card[0].type = SakikoEnum.CardTypeEnum.MUSIC;
             }
-            for (AbstractCard music : MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).group) {
-                if (!(__instance instanceof FakeUseCardAction) && AbstractDungeon.player.hand.group.stream().allMatch(c -> c.canPlay(card[0]))) {
+            for (AbstractCard music : CardsHelper.mq().group) {
+                if (!(__instance instanceof FakeUseCardAction) && CardsHelper.h().group.stream().allMatch(c -> c.canPlay(card[0]))) {
                     ((AbstractMusic) music).triggerInBufferUsedCard(card[0]);
                 }
             }
@@ -74,7 +75,7 @@ public class UseMusicCardActionPatch {
     public static class MusicCardUpdatePatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
-            if (___targetCard instanceof AbstractMusic && (AbstractDungeon.player.hand.group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
+            if (___targetCard instanceof AbstractMusic && (CardsHelper.h().group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
                 // 处理打出时立即演奏
                 if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID) || ___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
                     CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
@@ -82,7 +83,7 @@ public class UseMusicCardActionPatch {
                     AbstractDungeon.actionManager.addToBottom(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
                     return SpireReturn.Return();
                 }
-                CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+                CardGroup cardGroup = CardsHelper.mq();
                 cardGroup.addToTop(___targetCard);
                 // 超过队列大小时演奏最顶部的音乐
                 if (cardGroup.size() > SakikoConst.MUSIC_QUEUE_LIMIT_USED) {
@@ -90,8 +91,8 @@ public class UseMusicCardActionPatch {
                     AbstractDungeon.actionManager.addToBottom(new ReadyToPlayMusicAction(1));
                 }
                 AbstractDungeon.actionManager.addToBottom(new HandCheckAction());
-                AbstractDungeon.player.cardInUse = null;
-                AbstractDungeon.player.hand.refreshHandLayout();
+                DungeonHelper.getPlayer().cardInUse = null;
+                CardsHelper.h().refreshHandLayout();
                 ___targetCard.lighten(false);
                 ___targetCard.setAngle(0.0F,true);
                 ___targetCard.unfadeOut();

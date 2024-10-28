@@ -9,10 +9,10 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class NoteTorrent extends AbstractSakikoCard {
@@ -35,7 +35,7 @@ public class NoteTorrent extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (AbstractDungeon.player.discardPile.group.contains(this)) {
+        if (CardsHelper.dsp().contains(this)) {
             this.baseDamage += this.magicNumber;
             AbstractCard copy = this.makeSameInstanceOf();
             copy.purgeOnUse = true;

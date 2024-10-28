@@ -9,12 +9,12 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BurningBirthPower extends AbstractPower {
@@ -58,7 +58,7 @@ public class BurningBirthPower extends AbstractPower {
                 }
             }
             if (count > 0) {
-                this.addToBot(new DrawCardAction(AbstractDungeon.player, count));
+                this.addToBot(new DrawCardAction(DungeonHelper.getPlayer(), count));
             }
             if (stateOrCurse > 0) {
                 this.addToBot(new DamageAction(this.owner, new DamageInfo(this.owner, stateOrCurse, DamageInfo.DamageType.HP_LOSS), AbstractGameAction.AttackEffect.FIRE));

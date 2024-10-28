@@ -12,7 +12,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDrawPileEffect;
 import com.megacrit.cardcrawl.vfx.combat.CardPoofEffect;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class ShowCardAndToDrawMusicPileEffect extends AbstractGameEffect {
 
@@ -35,11 +36,11 @@ public class ShowCardAndToDrawMusicPileEffect extends AbstractGameEffect {
         AbstractDungeon.effectsQueue.add(new CardPoofEffect(this.card.target_x, this.card.target_y));
         this.card.drawScale = 0.01F;
         this.card.targetDrawScale = 1.0F;
-        if (this.card.type != AbstractCard.CardType.CURSE && this.card.type != AbstractCard.CardType.STATUS && AbstractDungeon.player.hasPower("MasterRealityPower")) {
+        if (this.card.type != AbstractCard.CardType.CURSE && this.card.type != AbstractCard.CardType.STATUS && DungeonHelper.getPlayer().hasPower("MasterRealityPower")) {
             this.card.upgrade();
         }
         CardCrawlGame.sound.play("CARD_OBTAIN");
-        CardGroup cardGroup = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        CardGroup cardGroup = CardsHelper.dmp();
         if (toBottom) {
             cardGroup.addToBottom(this.card);
         } else if (randomSpot) {

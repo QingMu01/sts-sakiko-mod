@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -53,7 +54,7 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
         AbstractCard copy = card.makeSameInstanceOf();
         CardModifierManager.removeModifiersById(copy, ID, false);
-        AbstractDungeon.player.limbo.addToBottom(copy);
+        DungeonHelper.getPlayer().limbo.addToBottom(copy);
         copy.current_x = card.current_x;
         copy.current_y = card.current_y;
         copy.target_x = Settings.WIDTH / 2.0F - 300.0F * Settings.scale;

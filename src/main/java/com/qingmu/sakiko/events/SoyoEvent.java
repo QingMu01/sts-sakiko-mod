@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.RainingGoldEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import com.qingmu.sakiko.cards.curse.SoyoCurse;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SoyoEvent extends PhasedEvent {
@@ -37,7 +38,7 @@ public class SoyoEvent extends PhasedEvent {
                 .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[0], this.goldReward,this.curse.name), this.curse), (e) -> {
                     AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(this.curse, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
                     AbstractDungeon.effectList.add(new RainingGoldEffect(this.goldReward));
-                    AbstractDungeon.player.gainGold(this.goldReward);
+                    DungeonHelper.getPlayer().gainGold(this.goldReward);
                     transitionKey("accept");
                 }).addOption(OPTIONS[1], (e) -> transitionKey("reject")));
 

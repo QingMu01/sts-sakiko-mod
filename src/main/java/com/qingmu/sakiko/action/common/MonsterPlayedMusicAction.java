@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class MonsterPlayedMusicAction extends AbstractGameAction {
 
@@ -20,7 +21,7 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
         this.source = source;
         this.sakikoMonster = (AbstractSakikoMonster) source;
         sakikoMonster.musicSlotItem.updateLocation = false;
-        this.target = music.m_source == null ? AbstractDungeon.player : music.m_source;
+        this.target = music.m_source == null ? DungeonHelper.getPlayer() : music.m_source;
         this.addToBot(new AnimateJumpAction(this.source));
     }
 

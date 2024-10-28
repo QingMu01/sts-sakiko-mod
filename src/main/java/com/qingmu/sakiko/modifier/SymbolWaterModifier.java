@@ -9,11 +9,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -52,7 +52,7 @@ public class SymbolWaterModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
-        this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, this.heal));
+        this.addToBot(new HealAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), this.heal));
     }
 
     @Override

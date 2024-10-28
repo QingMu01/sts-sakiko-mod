@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SakikoFalling extends PhasedEvent {
@@ -50,25 +51,25 @@ public class SakikoFalling extends PhasedEvent {
         registerPhase("select", new TextPhase(originaleventStrings.DESCRIPTIONS[1])
                 .addOption(new TextPhase.OptionInfo(originaleventStrings.OPTIONS[1] + FontHelper.colorString(this.skillCard == null ? "None" : this.skillCard.name, "r"), this.skillCard).enabledCondition(() -> this.skill, originaleventStrings.OPTIONS[2]), e -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.skillCard));
-                    AbstractDungeon.player.masterDeck.removeCard(this.skillCard);
+                    CardsHelper.md().removeCard(this.skillCard);
                     logMetricCardRemoval("Falling", "Removed Skill", this.skillCard);
                     transitionKey("leave_skill");
                 })
                 .addOption(new TextPhase.OptionInfo(originaleventStrings.OPTIONS[3] + FontHelper.colorString(this.powerCard == null ? "None" : this.powerCard.name, "r"), this.powerCard).enabledCondition(() -> this.power, originaleventStrings.OPTIONS[4]), e -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.powerCard));
-                    AbstractDungeon.player.masterDeck.removeCard(this.powerCard);
+                    CardsHelper.md().removeCard(this.powerCard);
                     logMetricCardRemoval("Falling", "Removed Power", this.powerCard);
                     transitionKey("leave_power");
                 })
                 .addOption(new TextPhase.OptionInfo(originaleventStrings.OPTIONS[5] + FontHelper.colorString(this.attackCard == null ? "None" : this.attackCard.name, "r"), this.attackCard).enabledCondition(() -> this.attack, originaleventStrings.OPTIONS[6]), e -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.attackCard));
-                    AbstractDungeon.player.masterDeck.removeCard(this.attackCard);
+                    CardsHelper.md().removeCard(this.attackCard);
                     logMetricCardRemoval("Falling", "Removed Attack", this.attackCard);
                     transitionKey("leave_attack");
                 })
                 .addOption(new TextPhase.OptionInfo(OPTIONS[0] + FontHelper.colorString(this.musicCard == null ? "None" : this.musicCard.name, "r"), this.musicCard).enabledCondition(() -> this.music, OPTIONS[1]), e -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.musicCard));
-                    AbstractDungeon.player.masterDeck.removeCard(this.musicCard);
+                    CardsHelper.md().removeCard(this.musicCard);
                     logMetricCardRemoval("Falling", "Removed Music", this.musicCard);
                     transitionKey("leave_music");
                 }));

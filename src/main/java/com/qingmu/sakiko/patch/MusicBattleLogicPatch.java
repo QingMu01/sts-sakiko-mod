@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,7 +54,7 @@ public class MusicBattleLogicPatch {
                 }
                 if (card instanceof AbstractMusic) {
                     iterator.remove();
-                    MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).addToBottom(card);
+                    CardsHelper.dmp().addToBottom(card);
                 }
             }
         }

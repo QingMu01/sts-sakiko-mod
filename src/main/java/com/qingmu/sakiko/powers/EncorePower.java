@@ -9,12 +9,12 @@ import com.megacrit.cardcrawl.actions.unique.LoseEnergyAction;
 import com.megacrit.cardcrawl.actions.watcher.SkipEnemiesTurnAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.combat.WhirlwindEffect;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class EncorePower extends AbstractPower {
@@ -49,12 +49,12 @@ public class EncorePower extends AbstractPower {
 
     @Override
     public void onInitialApplication() {
-        AbstractDungeon.player.gameHandSize -= 2;
+        DungeonHelper.getPlayer().gameHandSize -= 2;
     }
 
     @Override
     public void onRemove() {
-        AbstractDungeon.player.gameHandSize += 2;
+        DungeonHelper.getPlayer().gameHandSize += 2;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class EncorePower extends AbstractPower {
     @Override
     public void onEnergyRecharge() {
         this.flash();
-        int i = (AbstractDungeon.player.energy.energyMaster - 1);
+        int i = (DungeonHelper.getPlayer().energy.energyMaster - 1);
         this.addToTop(new LoseEnergyAction(i));
         this.addToTop(new GainEnergyAction(this.residue));
     }

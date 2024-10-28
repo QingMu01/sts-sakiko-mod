@@ -1,14 +1,12 @@
 package com.qingmu.sakiko.relics;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class OctopusSakiko extends AbstractSakikoRelic {
@@ -35,13 +33,13 @@ public class OctopusSakiko extends AbstractSakikoRelic {
     @Override
     public void triggerOnPlayMusicCard(AbstractMusic music) {
         if (this.isFirst) {
-            if (GameActionManager.turn % 2 == 0) {
+            if (DungeonHelper.getTurn() % 2 == 0) {
                 this.addToBot(new GainEnergyAction(1));
             } else {
                 this.addToBot(new DrawCardAction(2));
             }
             this.flash();
-            this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+            this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
             this.isFirst = false;
         }
     }
@@ -49,7 +47,7 @@ public class OctopusSakiko extends AbstractSakikoRelic {
     @Override
     public void atTurnStart() {
         this.isFirst = true;
-        if (GameActionManager.turn % 2 == 0) {
+        if (DungeonHelper.getTurn() % 2 == 0) {
             this.setTexture(TB);
         } else {
             this.setTexture(TA);
@@ -58,6 +56,6 @@ public class OctopusSakiko extends AbstractSakikoRelic {
 
     @Override
     public boolean canSpawn() {
-        return AbstractDungeon.player instanceof TogawaSakiko;
+        return DungeonHelper.isSakiko();
     }
 }

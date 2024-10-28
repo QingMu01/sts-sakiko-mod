@@ -3,12 +3,13 @@ package com.qingmu.sakiko.patch.action;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.TalentPower;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import javassist.CtBehavior;
 
 import java.util.Comparator;
@@ -21,11 +22,11 @@ public class GameActionManagerPatch {
         // 切换回合时执行的操作，清空当前回合记录过的信息
         @SpireInsertPatch(locator = Locator.class)
         public static void insert(GameActionManager __instance) {
-            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
-            if (AbstractDungeon.player.hasPower(TalentPower.POWER_ID)) {
-                AbstractDungeon.player.getPower(TalentPower.POWER_ID).flash();
+            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).clear();
+            if (DungeonHelper.getPlayer().hasPower(TalentPower.POWER_ID)) {
+                DungeonHelper.getPlayer().getPower(TalentPower.POWER_ID).flash();
             } else {
-                MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(AbstractDungeon.player, 0);
+                MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(DungeonHelper.getPlayer(), 0);
             }
 
         }
@@ -48,9 +49,9 @@ public class GameActionManagerPatch {
             SakikoConst.FLOW_THRESHOLD_USED = SakikoConst.FLOW_THRESHOLD;
             SakikoConst.OBLIVIOUS_STANCE_THRESHOLD_USED = SakikoConst.OBLIVIOUS_STANCE_THRESHOLD;
             try {
-                MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(AbstractDungeon.player).clear();
-                MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).clear();
-                MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(AbstractDungeon.player, 0);
+                MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(DungeonHelper.getPlayer()).clear();
+                MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).clear();
+                MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(DungeonHelper.getPlayer(), 0);
             } catch (NullPointerException ignored) {
             }
         }
@@ -60,7 +61,7 @@ public class GameActionManagerPatch {
     public static class CallEndOfTurnActionsPatch {
         // 回合结束时自动演奏安可曲
         public static void Postfix(GameActionManager __instance) {
-            CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
+            CardGroup cardGroup = CardsHelper.mq();
             long count = cardGroup.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)).count();
             if (count > 0) {
                 cardGroup.group.sort(Comparator.comparing(card -> !card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));

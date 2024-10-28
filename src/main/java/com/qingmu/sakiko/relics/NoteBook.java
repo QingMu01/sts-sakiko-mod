@@ -2,10 +2,9 @@ package com.qingmu.sakiko.relics;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class NoteBook extends AbstractSakikoRelic {
@@ -28,12 +27,12 @@ public class NoteBook extends AbstractSakikoRelic {
 
     @Override
     public void atBattleStart() {
-        this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new KirameiPower(AbstractDungeon.player, 3)));
+        this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new KirameiPower(DungeonHelper.getPlayer(), 3)));
     }
 
     @Override
     public boolean canSpawn() {
-        return AbstractDungeon.player instanceof TogawaSakiko;
+        return DungeonHelper.isSakiko();
     }
 }

@@ -9,6 +9,7 @@ import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.powers.monster.IdealFukkenPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 @SakikoModEnable(enable = false)
@@ -36,7 +37,7 @@ public class AbolitionCase extends AbstractMusic {
     public void triggerInBufferPlayedMusic(AbstractMusic music) {
         AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
         if (monster != null) {
-            this.addToBot(new ApplyPowerAction(monster, AbstractDungeon.player, new IdealFukkenPower(monster, this.magicNumber), this.magicNumber));
+            this.addToBot(new ApplyPowerAction(monster, DungeonHelper.getPlayer(), new IdealFukkenPower(monster, this.magicNumber), this.magicNumber));
         }
     }
 

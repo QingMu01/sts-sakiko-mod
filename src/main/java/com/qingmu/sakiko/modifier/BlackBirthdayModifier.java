@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import com.qingmu.sakiko.action.RemoveMasterDeckSpecificCardAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -41,7 +42,7 @@ public class BlackBirthdayModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onExhausted(AbstractCard card) {
-        for (AbstractCard c : AbstractDungeon.player.masterDeck.group) {
+        for (AbstractCard c : CardsHelper.md().group) {
             if (c.uuid.equals(card.uuid)) {
                 AbstractDungeon.effectsQueue.add(new UpgradeShineEffect((float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
                 AbstractDungeon.topLevelEffectsQueue.add(new ShowCardBrieflyEffect(card.makeStatEquivalentCopy()));

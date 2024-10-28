@@ -35,6 +35,8 @@ import com.qingmu.sakiko.powers.monster.AveMujicaDictatorshipPower;
 import com.qingmu.sakiko.powers.monster.FakeKirameiPower;
 import com.qingmu.sakiko.powers.monster.IdealFukkenPower;
 import com.qingmu.sakiko.powers.monster.MusicalAbilityPower;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -69,7 +71,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     @Override
     public void usePreBattleAction() {
         AbstractDungeon.getCurrRoom().cannotLose = true;
-        BossInfoFiled.canBattleWithDemonSakiko.set(AbstractDungeon.player, false);
+        BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
     }
 
     @Override
@@ -193,7 +195,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setDamageAmount(this.damage.get(0))
                         .setActions(() -> new AbstractGameAction[]{
                                 new AnimateSlowAttackAction(this),
-                                new DamageAction(AbstractDungeon.player, this.damage.get(0))
+                                new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
                         })
                         .build());
                 intentActions.add(new IntentAction.Builder()
@@ -202,7 +204,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setDamageAmount(this.damage.get(1))
                         .setActions(() -> new AbstractGameAction[]{
                                 new AnimateSlowAttackAction(this),
-                                new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                                new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                         })
                         .build());
                 break;
@@ -240,7 +242,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setDamageAmount(this.damage.get(1))
                         .setActions(() -> new AbstractGameAction[]{
                                 new AnimateSlowAttackAction(this),
-                                new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                                new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                         })
                         .build());
                 break;
@@ -265,7 +267,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         .setRepeatInterval(2)
                         .setActions(() -> new AbstractGameAction[]{
                                 new AnimateSlowAttackAction(this),
-                                new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                                new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                         })
                         .build());
                 break;
@@ -321,7 +323,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
                 })
                 .build());
         return intentActions;
@@ -351,9 +353,9 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setPredicate(m -> {
                     ArrayList<AbstractCard> cards = new ArrayList<>();
-                    cards.addAll(AbstractDungeon.player.drawPile.group);
-                    cards.addAll(AbstractDungeon.player.hand.group);
-                    cards.addAll(AbstractDungeon.player.discardPile.group);
+                    cards.addAll(CardsHelper.dp().group);
+                    cards.addAll(CardsHelper.h().group);
+                    cards.addAll(CardsHelper.dsp().group);
                     for (AbstractCard card : cards) {
                         if (card.cardID.equals(DistantPast.ID) && !card.tags.contains(SakikoEnum.CardTagEnum.MOONLIGHT)) {
                             return false;
@@ -390,9 +392,9 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setActions(() -> new AbstractGameAction[]{
                         new MakeTempCardInDiscardAction(new DistantPast(), 1),
                         new MakeTempCardInDiscardAction(new AbolitionCase(), 2),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new VulnerablePower(AbstractDungeon.player, 2, true), 2),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, 2, true), 2),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new VulnerablePower(DungeonHelper.getPlayer(), 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new WeakPower(DungeonHelper.getPlayer(), 2, true), 2),
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new FrailPower(DungeonHelper.getPlayer(), 2, true), 2),
                 })
                 .build());
         specialIntentActions.add(new SpecialIntentAction.Builder()

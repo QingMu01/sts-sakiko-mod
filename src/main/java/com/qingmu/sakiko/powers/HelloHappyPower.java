@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.RainingGoldEffect;
 import com.megacrit.cardcrawl.vfx.SpotlightPlayerEffect;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class HelloHappyPower extends AbstractPower {
@@ -43,7 +44,7 @@ public class HelloHappyPower extends AbstractPower {
     public void onVictory() {
         AbstractDungeon.effectList.add(new RainingGoldEffect(this.amount * 2, true));
         AbstractDungeon.effectsQueue.add(new SpotlightPlayerEffect());
-        AbstractDungeon.player.gainGold(this.amount);
+        DungeonHelper.getPlayer().gainGold(this.amount);
     }
 
     @Override

@@ -23,6 +23,8 @@ import com.megacrit.cardcrawl.vfx.GameDeckGlowEffect;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -128,13 +130,13 @@ public class MusicDrawPilePanel extends AbstractPanel {
                 this.glowColor.a = tmp / 2.0F;
             }
 
-            if (this.hb.clicked && AbstractDungeon.overlayMenu.combatPanelsShown && AbstractDungeon.getMonsters() != null && !AbstractDungeon.getMonsters().areMonstersDead() && !AbstractDungeon.player.isDead) {
+            if (this.hb.clicked && AbstractDungeon.overlayMenu.combatPanelsShown && AbstractDungeon.getMonsters() != null && !AbstractDungeon.getMonsters().areMonstersDead() && !DungeonHelper.getPlayer().isDead) {
                 this.hb.clicked = false;
                 this.hb.hovered = false;
                 this.bannerHb.hovered = false;
                 AbstractDungeon.dynamicBanner.hide();
-                if (AbstractDungeon.player.hoveredCard != null) {
-                    AbstractDungeon.player.releaseCard();
+                if (DungeonHelper.getPlayer().hoveredCard != null) {
+                    DungeonHelper.getPlayer().releaseCard();
                 }
 
                 if (AbstractDungeon.isScreenUp) {
@@ -152,7 +154,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
     }
 
     private void openDrawPile() {
-        AbstractPlayer p = AbstractDungeon.player;
+        AbstractPlayer p = DungeonHelper.getPlayer();
         if (!MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(p).isEmpty()) {
             BaseMod.openCustomScreen(MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW);
         } else {
@@ -196,7 +198,7 @@ public class MusicDrawPilePanel extends AbstractPanel {
         } else {
             sb.draw(img, this.current_x + DECK_X, this.current_y + DECK_Y + this.bob.y / 2.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale, this.scale, 0.0F, 0, 0, 128, 128, false, false);
         }
-        String msg = Integer.toString(MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player).size());
+        String msg = Integer.toString(CardsHelper.dmp().size());
         this.gl.setText(FontHelper.turnNumFont, msg);
         sb.setColor(Color.WHITE);
         if (AbstractDungeon.screen == MusicDrawPileViewScreen.ScreenEnum.CUSTOM_CARD_GROUP_VIEW) {
@@ -223,12 +225,12 @@ public class MusicDrawPilePanel extends AbstractPanel {
                 !AbstractDungeon.isScreenUp && AbstractDungeon.getMonsters() != null &&
                 !AbstractDungeon.getMonsters().areMonstersDead())
             if (Settings.isConsoleBuild) {
-                if (!AbstractDungeon.player.hasRelic("Frozen Eye")) {
+                if (!DungeonHelper.getPlayer().hasRelic("Frozen Eye")) {
                     TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[3]);
                 } else {
                     TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[4]);
                 }
-            } else if (!AbstractDungeon.player.hasRelic("Frozen Eye")) {
+            } else if (!DungeonHelper.getPlayer().hasRelic("Frozen Eye")) {
                 TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[1]);
             } else {
                 TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, LABEL[0], MSG[0] + MSG[2]);

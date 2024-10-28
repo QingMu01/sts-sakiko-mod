@@ -22,6 +22,7 @@ import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.patch.anonmod.action.ApplyHeavyAction;
 import com.qingmu.sakiko.powers.monster.SoyoConstrictedPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -86,9 +87,9 @@ public class SoyoMonster extends AbstractMemberMonster {
                 .setActions(() -> new AbstractGameAction[]{
                         new PlaySoundAction(SoundHelper.SOYO_MAGIC),
                         new AnimateJumpAction(this),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new SoyoConstrictedPower(AbstractDungeon.player, this, this.powerful)),
-                        new ApplyHeavyAction(AbstractDungeon.player, this, this.powerful),
-                        new ApplyHeavyAction(this, AbstractDungeon.player, this.powerful)
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new SoyoConstrictedPower(DungeonHelper.getPlayer(), this, this.powerful)),
+                        new ApplyHeavyAction(DungeonHelper.getPlayer(), this, this.powerful),
+                        new ApplyHeavyAction(this, DungeonHelper.getPlayer(), this.powerful)
                 }).build());
         // 20概率重击
         intentActions.add(new IntentAction.Builder()
@@ -97,7 +98,7 @@ public class SoyoMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 20概率攻击并格挡
         intentActions.add(new IntentAction.Builder()
@@ -106,7 +107,7 @@ public class SoyoMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0)),
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
                         new GainBlockAction(this, this.baseBlock)
                 }).build());
         // 20概率专注格挡

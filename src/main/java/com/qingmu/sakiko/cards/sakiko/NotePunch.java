@@ -4,10 +4,9 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class NotePunch extends AbstractSakikoCard {
@@ -29,7 +28,7 @@ public class NotePunch extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
+        this.baseDamage += CardsHelper.mq().size() * this.magicNumber;
         super.applyPowers();
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);
@@ -38,7 +37,7 @@ public class NotePunch extends AbstractSakikoCard {
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int realBaseDamage = this.baseDamage;
-        this.baseDamage += MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).size() * this.magicNumber;
+        this.baseDamage += CardsHelper.mq().size() * this.magicNumber;
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
         this.isDamageModified = (this.damage != this.baseDamage);

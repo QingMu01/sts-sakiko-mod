@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.powers.ConstrictedPower;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.patch.anonmod.utils.HeavyHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 
@@ -29,15 +30,15 @@ public class SoyoCurse extends AbstractSakikoCard {
 
     @Override
     public void triggerWhenDrawn() {
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new ConstrictedPower(AbstractDungeon.player, AbstractDungeon.player, 5)));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new ConstrictedPower(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), 5)));
         if (Loader.isModLoaded("AnonMod") && SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
-            HeavyHelper.applyHeavy(AbstractDungeon.player, AbstractDungeon.player, 3);
+            HeavyHelper.applyHeavy(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), 3);
         }
 
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            this.addToBot(new ApplyPowerAction(monster, AbstractDungeon.player, new ConstrictedPower(monster, AbstractDungeon.player, 5)));
+            this.addToBot(new ApplyPowerAction(monster, DungeonHelper.getPlayer(), new ConstrictedPower(monster, DungeonHelper.getPlayer(), 5)));
             if (Loader.isModLoaded("AnonMod") && SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
-                HeavyHelper.applyHeavy(monster, AbstractDungeon.player, 3);
+                HeavyHelper.applyHeavy(monster, DungeonHelper.getPlayer(), 3);
             }
         }
     }

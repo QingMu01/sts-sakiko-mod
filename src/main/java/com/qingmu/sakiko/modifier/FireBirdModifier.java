@@ -15,6 +15,8 @@ import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.action.effect.ShowAndExhaustCardEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -83,16 +85,16 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onRemove(AbstractCard card) {
-        if (AbstractDungeon.player.hand.contains(card)) {
-            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
-        } else if (AbstractDungeon.player.limbo.contains(card)) {
-            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
-        } else if (AbstractDungeon.player.discardPile.contains(card)) {
+        if (CardsHelper.h().contains(card)) {
+            this.addToBot(new ExhaustSpecificCardAction(card, CardsHelper.h()));
+        } else if (DungeonHelper.getPlayer().limbo.contains(card)) {
+            this.addToBot(new ExhaustSpecificCardAction(card, CardsHelper.h()));
+        } else if (CardsHelper.dsp().contains(card)) {
             AbstractDungeon.effectList.add(new ShowAndExhaustCardEffect(card));
-            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.discardPile));
-        } else if (AbstractDungeon.player.drawPile.contains(card)) {
+            this.addToBot(new ExhaustSpecificCardAction(card, CardsHelper.dsp()));
+        } else if (CardsHelper.dp().contains(card)) {
             AbstractDungeon.effectList.add(new ShowAndExhaustCardEffect(card));
-            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.drawPile));
+            this.addToBot(new ExhaustSpecificCardAction(card, CardsHelper.dp()));
         }
     }
 

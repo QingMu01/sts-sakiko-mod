@@ -15,7 +15,7 @@ public class MemberHelper {
 
     public static int getCount() {
         int count = 0;
-        AbstractPlayer p = AbstractDungeon.player;
+        AbstractPlayer p = DungeonHelper.getPlayer();
         if (p.hasPower(FallApartPower.POWER_ID)) {
             p.getPower(FallApartPower.POWER_ID).flash();
             return count;
@@ -30,7 +30,7 @@ public class MemberHelper {
 
     public static int getAveMujicaCount() {
         int count = 0;
-        AbstractPlayer p = AbstractDungeon.player;
+        AbstractPlayer p = DungeonHelper.getPlayer();
         if (p.hasPower(FallApartPower.POWER_ID)) {
             p.getPower(FallApartPower.POWER_ID).flash();
             return count;
@@ -45,7 +45,7 @@ public class MemberHelper {
 
     public static int getCrychicCount(){
         int count = 0;
-        AbstractPlayer p = AbstractDungeon.player;
+        AbstractPlayer p = DungeonHelper.getPlayer();
         if (p.hasPower(FallApartPower.POWER_ID)) {
             p.getPower(FallApartPower.POWER_ID).flash();
             return count;
@@ -63,7 +63,7 @@ public class MemberHelper {
         do {
             int i = AbstractDungeon.eventRng.random(0, SakikoConst.BAND_MEMBER_LIST.size() - 1);
             String s = SakikoConst.BAND_MEMBER_LIST.get(i);
-            if (!AbstractDungeon.player.hasRelic(s.replace("Monster", "")))
+            if (!DungeonHelper.getPlayer().hasRelic(s.replace("Monster", "")))
                 tmp.put(s, i);
         } while (tmp.size() < count);
         return tmp;

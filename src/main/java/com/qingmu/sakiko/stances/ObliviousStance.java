@@ -20,6 +20,7 @@ import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousStance extends AbstractSakikoStance {
@@ -36,9 +37,9 @@ public class ObliviousStance extends AbstractSakikoStance {
     public void onEnterStance() {
         CardCrawlGame.sound.play("STANCE_ENTER_WRATH");
         AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GRAY, true));
-        if (AbstractDungeon.player instanceof TogawaSakiko) {
-            ((TogawaSakiko) AbstractDungeon.player).switchMask(true);
-            AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 2.0F, DESCRIPTIONS[1], true));
+        if (DungeonHelper.isSakiko()) {
+            ((TogawaSakiko) DungeonHelper.getPlayer()).switchMask(true);
+            AbstractDungeon.effectList.add(new ThoughtBubble(DungeonHelper.getPlayer().dialogX, DungeonHelper.getPlayer().dialogY, 2.0F, DESCRIPTIONS[1], true));
         }
     }
 
@@ -51,21 +52,21 @@ public class ObliviousStance extends AbstractSakikoStance {
 
     @Override
     public void onExitStance() {
-        if (AbstractDungeon.player instanceof TogawaSakiko) {
-            ((TogawaSakiko) AbstractDungeon.player).switchMask(false);
+        if (DungeonHelper.isSakiko()) {
+            ((TogawaSakiko) DungeonHelper.getPlayer()).switchMask(false);
         }
     }
 
     @Override
     public void onEndOfTurn() {
-        if (this.isTriggered && MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(AbstractDungeon.player).size() <= SakikoConst.OBLIVIOUS_STANCE_THRESHOLD_USED) {
+        if (this.isTriggered && MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).size() <= SakikoConst.OBLIVIOUS_STANCE_THRESHOLD_USED) {
             this.submitActionsToBot(new ChangeStanceAction(NeutralStance.STANCE_ID));
         } else {
             this.isTriggered = false;
         }
         if (!this.isTriggered) {
             this.submitActionsToTop(new SkipEnemiesTurnAction());
-            AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 2.0F, DESCRIPTIONS[2], true));
+            AbstractDungeon.effectList.add(new ThoughtBubble(DungeonHelper.getPlayer().dialogX, DungeonHelper.getPlayer().dialogY, 2.0F, DESCRIPTIONS[2], true));
             this.isTriggered = true;
         }
     }

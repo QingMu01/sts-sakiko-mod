@@ -10,7 +10,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
@@ -19,6 +18,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.action.ActiveKabeAction;
 import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
 import com.qingmu.sakiko.relics.Combination_TMSK;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class KokoroNoKabePower extends AbstractPower {
@@ -94,8 +94,8 @@ public class KokoroNoKabePower extends AbstractPower {
 
     @Override
     public void stackPower(int stackAmount) {
-        if (AbstractDungeon.player.hasPower(TomoriBlessingPower.POWER_ID)) {
-            AbstractDungeon.player.getPower(TomoriBlessingPower.POWER_ID).flash();
+        if (DungeonHelper.getPlayer().hasPower(TomoriBlessingPower.POWER_ID)) {
+            DungeonHelper.getPlayer().getPower(TomoriBlessingPower.POWER_ID).flash();
             stackAmount = stackAmount / 2;
         }
         this.amount += stackAmount;

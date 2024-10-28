@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Hype extends AbstractSakikoCard {
@@ -37,10 +39,10 @@ public class Hype extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (AbstractDungeon.player.hand.group.contains(this)) {
+        if (CardsHelper.h().contains(this)) {
             AbstractMonster m = AbstractDungeon.getRandomMonster();
             AbstractCard tmp = music.makeSameInstanceOf();
-            AbstractDungeon.player.limbo.addToBottom(tmp);
+            DungeonHelper.getPlayer().limbo.addToBottom(tmp);
             tmp.current_x = music.current_x;
             tmp.current_y = music.current_y;
             tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
@@ -51,7 +53,7 @@ public class Hype extends AbstractSakikoCard {
             if (this.upgraded) {
                 this.addToBot(new DiscardSpecificCardAction(this));
             } else {
-                this.addToBot(new ExhaustSpecificCardAction(this, AbstractDungeon.player.hand));
+                this.addToBot(new ExhaustSpecificCardAction(this, CardsHelper.h()));
             }
         }
     }

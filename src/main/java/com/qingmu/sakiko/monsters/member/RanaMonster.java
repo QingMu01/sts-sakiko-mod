@@ -25,6 +25,7 @@ import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ public class RanaMonster extends AbstractMemberMonster {
                         .setActions(() -> new AbstractGameAction[]{
                                 new AnimateSlowAttackAction(this),
                                 new PlaySoundAction(SoundHelper.RANA_MAGIC),
-                                new DamageCallbackAction(AbstractDungeon.player, this.damage.get(0), (damageAmount, action) -> {
+                                new DamageCallbackAction(DungeonHelper.getPlayer(), this.damage.get(0), (damageAmount, action) -> {
                                     // 造成未被格挡的伤害时才会偷钱
                                     if (damageAmount > 0) {
                                         pafeCount++;
@@ -147,7 +148,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 连击
         intentActions.add(new IntentAction.Builder()

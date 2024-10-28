@@ -1,10 +1,10 @@
 package com.qingmu.sakiko.action.effect;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.patch.ui.PlayerMusicSlotPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 /*
  * 超出音乐展示槽上限的音乐，只播放动画
@@ -25,7 +25,7 @@ public class ShowMusicCardMoveToWaitPlayEffect extends AbstractGameEffect {
     public void update() {
         this.music.update();
         if (this.music.current_x <= this.music.target_x) {
-            AbstractDungeon.player.limbo.removeCard(this.music);
+            DungeonHelper.getPlayer().limbo.removeCard(this.music);
             this.isDone = true;
         }
     }

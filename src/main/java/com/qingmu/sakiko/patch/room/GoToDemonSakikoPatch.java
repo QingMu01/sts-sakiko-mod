@@ -9,12 +9,13 @@ import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.megacrit.cardcrawl.ui.buttons.ProceedButton;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 @SpirePatch(clz = ProceedButton.class, method = "goToTrueVictoryRoom")
 public class GoToDemonSakikoPatch {
 
     public static SpireReturn<Void> Prefix(ProceedButton __instance) {
-        if (BossInfoFiled.canBattleWithDemonSakiko.get(AbstractDungeon.player)) {
+        if (BossInfoFiled.canBattleWithDemonSakiko.get(DungeonHelper.getPlayer())) {
             CardCrawlGame.stopClock = false;
             AbstractDungeon.bossKey = InnerDemonSakiko.ID;
             CardCrawlGame.music.fadeOutBGM();

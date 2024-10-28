@@ -2,10 +2,10 @@ package com.qingmu.sakiko.relics.menbers;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.qingmu.sakiko.powers.DoublePlayPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Rana extends AbstractBandMember {
@@ -28,6 +28,6 @@ public class Rana extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new DoublePlayPower(AbstractDungeon.player,1)));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(),DungeonHelper.getPlayer(),new DoublePlayPower(DungeonHelper.getPlayer(),1)));
     }
 }

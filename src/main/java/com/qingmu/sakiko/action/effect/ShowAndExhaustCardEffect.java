@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.ExhaustBlurEffect;
 import com.megacrit.cardcrawl.vfx.ExhaustEmberEffect;
 import com.megacrit.cardcrawl.vfx.combat.CardPoofEffect;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 public class ShowAndExhaustCardEffect extends AbstractGameEffect {
 
@@ -42,7 +43,7 @@ public class ShowAndExhaustCardEffect extends AbstractGameEffect {
         }
         this.card.update();
         this.duration -= Gdx.graphics.getDeltaTime();
-        if (!this.card.fadingOut && this.duration < 0.7F && !AbstractDungeon.player.hand.contains(this.card)) {
+        if (!this.card.fadingOut && this.duration < 0.7F && !CardsHelper.h().contains(this.card)) {
             this.card.fadingOut = true;
         }
         if (this.duration < 0) {

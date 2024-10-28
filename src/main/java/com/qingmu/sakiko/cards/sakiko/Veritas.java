@@ -6,9 +6,9 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Veritas extends AbstractSakikoCard implements CustomSavable<Integer> {
@@ -35,7 +35,7 @@ public class Veritas extends AbstractSakikoCard implements CustomSavable<Integer
     @Override
     public void triggerOnExhaust() {
         this.baseDamage += this.magicNumber;
-        for (AbstractCard card : AbstractDungeon.player.masterDeck.group) {
+        for (AbstractCard card : CardsHelper.md().group) {
             if (card.uuid.equals(this.uuid)){
                 card.baseDamage = this.baseDamage;
                 break;

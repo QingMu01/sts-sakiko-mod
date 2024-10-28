@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.powers.FallApartPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.lang.reflect.Type;
@@ -31,18 +32,18 @@ public class Anon extends AbstractBandMember implements CustomSavable<Integer> {
     @Override
     public void onRightClick() {
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-            if (!AbstractDungeon.player.hasPower(FallApartPower.POWER_ID)) {
+            if (!DungeonHelper.getPlayer().hasPower(FallApartPower.POWER_ID)) {
                 if (this.counter > 0) {
                     this.flash();
-                    this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
-                    this.addToBot(new HealAction(AbstractDungeon.player, AbstractDungeon.player, 15));
+                    this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
+                    this.addToBot(new HealAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), 15));
                     this.counter--;
                 }
             } else {
-                AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, DESCRIPTIONS[1], true));
+                AbstractDungeon.effectList.add(new ThoughtBubble(DungeonHelper.getPlayer().dialogX, DungeonHelper.getPlayer().dialogY, 3.0F, DESCRIPTIONS[1], true));
             }
         } else {
-            AbstractDungeon.player.heal(15);
+            DungeonHelper.getPlayer().heal(15);
             this.counter--;
         }
     }

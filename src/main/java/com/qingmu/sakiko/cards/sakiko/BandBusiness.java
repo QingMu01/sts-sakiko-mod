@@ -3,10 +3,10 @@ package com.qingmu.sakiko.cards.sakiko;
 import com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BandBusiness extends AbstractSakikoCard {
@@ -32,7 +32,7 @@ public class BandBusiness extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (AbstractDungeon.player.hand.group.contains(this)) {
+        if (CardsHelper.h().contains(this)) {
             this.addToBot(new GainEnergyAction(this.magicNumber));
             this.addToBot(new DiscardSpecificCardAction(this));
         }

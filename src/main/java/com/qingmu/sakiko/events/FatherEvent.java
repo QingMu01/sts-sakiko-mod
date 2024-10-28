@@ -11,6 +11,8 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FatherEvent extends PhasedEvent {
@@ -31,15 +33,15 @@ public class FatherEvent extends PhasedEvent {
                 .addOption(OPTIONS[0], (e) -> transitionKey("Select"))
                 .addOption(OPTIONS[1], (e) -> transitionKey("LeaveC")));
         registerPhase("Select", new TextPhase(DESCRIPTIONS[1])
-                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[3], AbstractDungeon.player.gold / 2)).enabledCondition(() -> AbstractDungeon.player.gold > 200, OPTIONS[5]), (e) -> {
-                    AbstractDungeon.player.loseGold(AbstractDungeon.player.gold / 2);
+                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[3], DungeonHelper.getPlayer().gold / 2)).enabledCondition(() -> DungeonHelper.getPlayer().gold > 200, OPTIONS[5]), (e) -> {
+                    DungeonHelper.getPlayer().loseGold(DungeonHelper.getPlayer().gold / 2);
                     AbstractRelic r = AbstractDungeon.returnRandomScreenlessRelic(AbstractRelic.RelicTier.UNCOMMON);
                     AbstractDungeon.getCurrRoom().spawnRelicAndObtain((float) (Settings.WIDTH / 2), (float) (Settings.HEIGHT / 2), r);
                     transitionKey("LeaveA");
                 })
                 .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[4], FontHelper.colorString(this.attackCard.name, "r")), attackCard).enabledCondition(()->CardHelper.hasCardWithType(AbstractCard.CardType.ATTACK)), (e) -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.attackCard));
-                    AbstractDungeon.player.masterDeck.removeCard(this.attackCard);
+                    CardsHelper.md().removeCard(this.attackCard);
                     transitionKey("LeaveB");
                 }));
 

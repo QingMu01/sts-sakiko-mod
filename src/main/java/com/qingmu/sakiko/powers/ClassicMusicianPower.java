@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class ClassicMusicianPower extends AbstractPower {
                 }
 
                 AbstractCard tmp = card.makeSameInstanceOf();
-                AbstractDungeon.player.limbo.addToBottom(tmp);
+                DungeonHelper.getPlayer().limbo.addToBottom(tmp);
                 tmp.current_x = card.current_x;
                 tmp.current_y = card.current_y;
                 tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;

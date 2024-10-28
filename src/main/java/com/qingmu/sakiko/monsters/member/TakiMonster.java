@@ -20,6 +20,7 @@ import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.powers.monster.TakiInferiorityPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class TakiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0)),
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
                         new GainBlockAction(this, this, this.baseBlock)
                 }).build());
         // 10概率普通攻击
@@ -106,7 +107,7 @@ public class TakiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
                 }).build());
         // 20概率重击
         intentActions.add(new IntentAction.Builder()
@@ -115,7 +116,7 @@ public class TakiMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 20概率连击
         intentActions.add(new IntentAction.Builder()

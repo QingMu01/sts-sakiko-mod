@@ -11,6 +11,7 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,11 +23,11 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
     private final boolean isTurnEnd;
 
     public ReadyToPlayMusicAction(int amount) {
-        this(amount, AbstractDungeon.player, false);
+        this(amount, DungeonHelper.getPlayer(), false);
     }
 
     public ReadyToPlayMusicAction(int amount, boolean isTurnEnd) {
-        this(amount, AbstractDungeon.player, isTurnEnd);
+        this(amount, DungeonHelper.getPlayer(), isTurnEnd);
     }
 
     public ReadyToPlayMusicAction(int amount, AbstractCreature source) {

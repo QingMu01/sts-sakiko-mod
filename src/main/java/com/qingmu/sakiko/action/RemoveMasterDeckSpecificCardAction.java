@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 import java.util.Iterator;
 
@@ -17,7 +18,7 @@ public class RemoveMasterDeckSpecificCardAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        Iterator<AbstractCard> iterator = AbstractDungeon.player.masterDeck.group.iterator();
+        Iterator<AbstractCard> iterator = CardsHelper.md().group.iterator();
         while (iterator.hasNext()) {
             AbstractCard c = iterator.next();
             if (c.uuid.equals(card.uuid)){

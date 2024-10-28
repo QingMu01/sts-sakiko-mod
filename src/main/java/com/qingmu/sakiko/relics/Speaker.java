@@ -1,10 +1,9 @@
 package com.qingmu.sakiko.relics;
 
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.qingmu.sakiko.action.common.DrawMusicAction;
-import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Speaker extends AbstractSakikoRelic {
@@ -27,12 +26,12 @@ public class Speaker extends AbstractSakikoRelic {
 
     @Override
     public void atBattleStart() {
-        this.addToBot(new RelicAboveCreatureAction(AbstractDungeon.player, this));
+        this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
         this.addToBot(new DrawMusicAction(1));
     }
 
     @Override
     public boolean canSpawn() {
-        return AbstractDungeon.player instanceof TogawaSakiko;
+        return DungeonHelper.isSakiko();
     }
 }

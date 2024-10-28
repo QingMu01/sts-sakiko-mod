@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.qingmu.sakiko.action.RemoveMasterDeckSpecificCardAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class AveMujicaModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onExhausted(AbstractCard card) {
-        Iterator<AbstractCard> iterator = AbstractDungeon.player.masterDeck.group.iterator();
+        Iterator<AbstractCard> iterator = CardsHelper.md().group.iterator();
         while (iterator.hasNext()) {
             AbstractCard c = iterator.next();
             if (c.uuid.equals(card.uuid)) {

@@ -9,12 +9,12 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.DoublePlayPower;
 import com.qingmu.sakiko.powers.FeverReadyPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import power.musicStart;
 import power.songs;
@@ -79,11 +79,11 @@ public class AnonMusicCardPatch {
             this.addToBot(new AbstractGameAction() {
                 @Override
                 public void update() {
-                    new musicStart(AbstractDungeon.player).musicEffect(AbstractDungeon.player, 0);
-                    if (!AbstractDungeon.player.hasPower(DoublePlayPower.POWER_ID)) {
+                    new musicStart(DungeonHelper.getPlayer()).musicEffect(DungeonHelper.getPlayer(), 0);
+                    if (!DungeonHelper.getPlayer().hasPower(DoublePlayPower.POWER_ID)) {
                         songs.SongsList[0] = "";
                     }else {
-                        if (AbstractDungeon.player.getPower(DoublePlayPower.POWER_ID).amount <= 0){
+                        if (DungeonHelper.getPlayer().getPower(DoublePlayPower.POWER_ID).amount <= 0){
                             songs.SongsList[0] = "";
                         }
                     }
@@ -91,8 +91,8 @@ public class AnonMusicCardPatch {
                         songs.SongsList[i - 1] = songs.SongsList[i];
                     }
                     songs.SongsList[songs.SongsList.length - 1] = "";
-                    if (AbstractDungeon.player.hasPower(songs.POWER_ID)) {
-                        AbstractDungeon.player.getPower(songs.POWER_ID).updateDescription();
+                    if (DungeonHelper.getPlayer().hasPower(songs.POWER_ID)) {
+                        DungeonHelper.getPlayer().getPower(songs.POWER_ID).updateDescription();
                     }
                     this.isDone = true;
                 }

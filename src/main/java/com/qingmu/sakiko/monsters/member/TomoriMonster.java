@@ -23,6 +23,7 @@ import com.qingmu.sakiko.monsters.AbstractMemberMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.powers.monster.TomoriBlessingPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
@@ -71,13 +72,13 @@ public class TomoriMonster extends AbstractMemberMonster {
         // 玩家有祝福的情况下20概率上祝福否则60概率
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
-                .setPredicate(m -> AbstractDungeon.player.hasPower(TomoriBlessingPower.POWER_ID) ? AbstractDungeon.aiRng.randomBoolean(0.2f) : AbstractDungeon.aiRng.randomBoolean(0.6f))
+                .setPredicate(m -> DungeonHelper.getPlayer().hasPower(TomoriBlessingPower.POWER_ID) ? AbstractDungeon.aiRng.randomBoolean(0.2f) : AbstractDungeon.aiRng.randomBoolean(0.6f))
                 .setIntent(Intent.BUFF)
                 .setRemovable(m -> false)
                 .setActions(() -> new AbstractGameAction[]{
                         new PlaySoundAction(SoundHelper.TOMORI_MAGIC),
                         new AnimateJumpAction(this),
-                        new ApplyPowerAction(AbstractDungeon.player, this, new TomoriBlessingPower(AbstractDungeon.player, 1))
+                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new TomoriBlessingPower(DungeonHelper.getPlayer(), 1))
                 })
                 .build());
         return specialIntentActions;
@@ -90,13 +91,13 @@ public class TomoriMonster extends AbstractMemberMonster {
         intentActions.add(new IntentAction.Builder()
                 .setWeight(15)
                 .setIntent(Intent.DEBUFF)
-                .setActions(() -> new AbstractGameAction[]{new ApplyPowerAction(AbstractDungeon.player, this, new WeakPower(AbstractDungeon.player, this.powerful, true), this.powerful)})
+                .setActions(() -> new AbstractGameAction[]{new ApplyPowerAction(DungeonHelper.getPlayer(), this, new WeakPower(DungeonHelper.getPlayer(), this.powerful, true), this.powerful)})
                 .build());
         // 15概率上脆弱
         intentActions.add(new IntentAction.Builder()
                 .setWeight(15)
                 .setIntent(Intent.DEBUFF)
-                .setActions(() -> new AbstractGameAction[]{new ApplyPowerAction(AbstractDungeon.player, this, new FrailPower(AbstractDungeon.player, this.powerful, true), this.powerful)})
+                .setActions(() -> new AbstractGameAction[]{new ApplyPowerAction(DungeonHelper.getPlayer(), this, new FrailPower(DungeonHelper.getPlayer(), this.powerful, true), this.powerful)})
                 .build());
         // 20概率防御
         intentActions.add(new IntentAction.Builder()
@@ -111,7 +112,7 @@ public class TomoriMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(0))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(0))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
                 }).build());
         // 15概率重击
         intentActions.add(new IntentAction.Builder()
@@ -120,7 +121,7 @@ public class TomoriMonster extends AbstractMemberMonster {
                 .setDamageAmount(this.damage.get(1))
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),
-                        new DamageAction(AbstractDungeon.player, this.damage.get(1))
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
                 }).build());
         // 15概率连击
         intentActions.add(new IntentAction.Builder()

@@ -1,12 +1,12 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.stances.FeverStance;
 import com.qingmu.sakiko.stances.ObliviousStance;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FullMoon extends AbstractSakikoCard {
@@ -30,12 +30,12 @@ public class FullMoon extends AbstractSakikoCard {
     @Override
     public void applyPowers() {
         super.applyPowers();
-        this.appendDescription(GameActionManager.turn);
+        this.appendDescription(DungeonHelper.getTurn());
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        if (GameActionManager.turn >= this.magicNumber) {
+        if (DungeonHelper.getTurn() >= this.magicNumber) {
             this.addToBot(new ChangeStanceAction(ObliviousStance.STANCE_ID));
         } else {
             this.addToBot(new ChangeStanceAction(FeverStance.STANCE_ID));

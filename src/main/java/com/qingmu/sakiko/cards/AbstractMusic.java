@@ -20,8 +20,9 @@ import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.FeverReadyPower;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public abstract class AbstractMusic extends AbstractSakikoCard {
@@ -81,7 +82,7 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
     }
 
     public void applyPowersToMusicNumber() {
-        AbstractPlayer player = AbstractDungeon.player;
+        AbstractPlayer player = DungeonHelper.getPlayer();
         this.isModifiedMusicNumber = false;
         float tmp = this.baseMusicNumber;
         AbstractStance stance = player.stance;
@@ -133,8 +134,8 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
 
     @Override
     public void onChoseThisOption() {
-        this.use(AbstractDungeon.player, AbstractDungeon.getRandomMonster());
-        MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player).addToBottom(this);
+        this.use(DungeonHelper.getPlayer(), AbstractDungeon.getRandomMonster());
+        CardsHelper.mq().addToBottom(this);
         this.addToBot(new ReadyToPlayMusicAction(1));
     }
 

@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.vfx.AbstractGameEffect;
 import com.megacrit.cardcrawl.vfx.GainGoldTextEffect;
 import com.megacrit.cardcrawl.vfx.ShineLinesEffect;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class LossGoldEffect extends AbstractGameEffect {
 
@@ -79,7 +80,7 @@ public class LossGoldEffect extends AbstractGameEffect {
     }
 
     public LossGoldEffect(float x, float y) {
-        this(AbstractDungeon.player, x, y, AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY, true);
+        this(DungeonHelper.getPlayer(), x, y, DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY, true);
     }
 
     @Override

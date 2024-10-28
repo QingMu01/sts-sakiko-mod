@@ -15,6 +15,7 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
 import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 public class AutoPlayPileCardAction extends AbstractGameAction {
 
@@ -49,7 +50,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
             if (this.allowShuffle) {
                 int count = 0;
                 if (this.type == DrawPileType.MUSIC_PILE) {
-                    for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+                    for (AbstractCard card : CardsHelper.dsp().group) {
                         if (card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
                             count++;
                         }
@@ -59,7 +60,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
                         this.addToTop(new ShuffleMusicDeckAction());
                     }
                 } else {
-                    for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+                    for (AbstractCard card : CardsHelper.dsp().group) {
                         if (!(card instanceof AbstractMusic) && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)) {
                             count++;
                         }
@@ -80,7 +81,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         if (this.exhaustCards) {
             CardModifierManager.addModifier(card, new OptionExhaustModifier());
         }
-        AbstractDungeon.player.limbo.group.add(card);
+        DungeonHelper.getPlayer().limbo.group.add(card);
         card.current_y = -200.0F * Settings.scale;
         card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 200.0F, (Settings.WIDTH / 2.0F) + 200.0F);
         card.target_y = MathUtils.random((Settings.HEIGHT / 2.0F) - 50.0F, (Settings.HEIGHT / 2.0F) + 50.0F);

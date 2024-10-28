@@ -15,6 +15,7 @@ import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnOblivion;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ObliviousAction extends CardSelectorAction {
@@ -27,11 +28,11 @@ public class ObliviousAction extends CardSelectorAction {
 
     // 忘却 默认方法
     public ObliviousAction(int amount, boolean allowUnderAmount) {
-        super(AbstractDungeon.player, uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, cardList -> {
+        super(DungeonHelper.getPlayer(), uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, cardList -> {
             for (AbstractCard card : cardList) {
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
                 CardModifierManager.addModifier(card, new ObliviousModifier());
-                AbstractDungeon.player.limbo.addToBottom(card);
+                DungeonHelper.getPlayer().limbo.addToBottom(card);
                 card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 100.0F, (Settings.WIDTH / 2.0F) + 100.0F);
                 card.target_y = MathUtils.random((Settings.HEIGHT / 2.0F) - 50.0F, (Settings.HEIGHT / 2.0F) + 50.0F);
                 card.calculateCardDamage(m);

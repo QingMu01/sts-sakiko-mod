@@ -1,9 +1,9 @@
 package com.qingmu.sakiko.relics;
 
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class AncientMask extends AbstractSakikoRelic {
@@ -28,7 +28,7 @@ public class AncientMask extends AbstractSakikoRelic {
         if ((m.isDying || m.currentHealth <= 0) && !m.halfDead && !m.hasPower("Minion")) {
             this.flash();
             this.addToBot(new RelicAboveCreatureAction(m, this));
-            AbstractDungeon.player.heal(8);
+            DungeonHelper.getPlayer().heal(8);
         }
     }
 }

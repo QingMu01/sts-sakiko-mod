@@ -9,8 +9,8 @@ import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.map.MapEdge;
 import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
-import com.qingmu.sakiko.characters.TogawaSakiko;
 import com.qingmu.sakiko.events.InvasionEvent;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.InvasionChangeSaved;
 import com.qingmu.sakiko.utils.MemberHelper;
 
@@ -30,7 +30,7 @@ public class MonsterRoomAppendInvasionPatch {
     @SpirePatch(clz = MonsterRoom.class, method = "onPlayerEntry")
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
-            if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && (AbstractDungeon.player instanceof TogawaSakiko)) {
+            if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && DungeonHelper.isSakiko()) {
                 if (AbstractDungeon.floorNum > 35 && MemberHelper.getCount() < 4) {
                     setEvent();
                 } else if (MemberHelper.getCount() < 4){
@@ -54,7 +54,7 @@ public class MonsterRoomAppendInvasionPatch {
             ArrayList<MapEdge> curEdges = cur.getEdges();
             for (MapEdge edge : curEdges)
                 node.addEdge(edge);
-            AbstractDungeon.player.releaseCard();
+            DungeonHelper.getPlayer().releaseCard();
             AbstractDungeon.overlayMenu.hideCombatPanels();
             AbstractDungeon.previousScreen = null;
             AbstractDungeon.dynamicBanner.hide();

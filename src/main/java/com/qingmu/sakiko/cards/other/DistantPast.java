@@ -36,7 +36,7 @@ public class DistantPast extends AbstractSakikoCard {
         this.addToBot(new DrawCardAction(1));
         AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
         if (monster != null) {
-            this.addToBot(new ApplyPowerAction(monster, AbstractDungeon.player, new FakeKirameiPower(monster, this.magicNumber), this.magicNumber));
+            this.addToBot(new ApplyPowerAction(monster, DungeonHelper.getPlayer(), new FakeKirameiPower(monster, this.magicNumber), this.magicNumber));
         }
     }
 

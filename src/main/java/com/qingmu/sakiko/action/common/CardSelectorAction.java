@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
@@ -64,23 +65,23 @@ public class CardSelectorAction extends AbstractGameAction {
 
     // 单目标选择
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> endOfSelect, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, filter, processor, endOfSelect, target);
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, filter, processor, endOfSelect, target);
     }
 
     // 单目标选择，无过滤器、有回调
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, e -> true, processor, callback, target);
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, e -> true, processor, callback, target);
     }
 
     // 单目标选择，无过滤器、无回调
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, e -> true, processor, callback -> {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, e -> true, processor, callback -> {
         }, target);
     }
 
     // 单目标选择，有过滤器、无回调
     public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(AbstractDungeon.player, prompt, amount, allowUnderAmount, filter, processor, callback -> {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, filter, processor, callback -> {
         }, target);
     }
 

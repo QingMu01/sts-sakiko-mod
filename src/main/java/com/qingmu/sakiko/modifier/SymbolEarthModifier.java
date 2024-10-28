@@ -7,10 +7,10 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.Collections;
@@ -48,7 +48,7 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
         if (this.isLastModified(card, ID)) {
-            this.addToBot(new GainBlockAction(AbstractDungeon.player, this.getTotalMusicNumber(card, this), true));
+            this.addToBot(new GainBlockAction(DungeonHelper.getPlayer(), this.getTotalMusicNumber(card, this), true));
         }
     }
 

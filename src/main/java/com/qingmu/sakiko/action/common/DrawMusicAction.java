@@ -7,12 +7,13 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,8 +26,8 @@ public class DrawMusicAction extends AbstractGameAction {
     private int discardMusicCount;
 
     public DrawMusicAction(int amount) {
-        this.setValues(AbstractDungeon.player, source, amount);
-        this.musicDrawPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        this.setValues(DungeonHelper.getPlayer(), source, amount);
+        this.musicDrawPile = MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(DungeonHelper.getPlayer());
         this.actionType = ActionType.DRAW;
         if (Settings.FAST_MODE) {
             this.duration = Settings.ACTION_DUR_XFAST;
@@ -37,13 +38,13 @@ public class DrawMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        for (AbstractCard card : AbstractDungeon.player.discardPile.group) {
+        for (AbstractCard card : CardsHelper.dsp().group) {
             if (card instanceof AbstractMusic && !card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)){
                 this.discardMusicCount++;
             }
         }
-        if (AbstractDungeon.player.hasPower("No Draw")) {
-            AbstractDungeon.player.getPower("No Draw").flash();
+        if (DungeonHelper.getPlayer().hasPower("No Draw")) {
+            DungeonHelper.getPlayer().getPower("No Draw").flash();
             this.isDone = true;
             return;
         }
@@ -64,13 +65,13 @@ public class DrawMusicAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-        if (AbstractDungeon.player.hand.size() == BaseMod.MAX_HAND_SIZE) {
-            AbstractDungeon.player.createHandIsFullDialog();
+        if (CardsHelper.h().size() == BaseMod.MAX_HAND_SIZE) {
+            DungeonHelper.getPlayer().createHandIsFullDialog();
             this.isDone = true;
             return;
         }
         this.draw();
-        AbstractDungeon.player.hand.refreshHandLayout();
+        CardsHelper.h().refreshHandLayout();
     }
 
     private void draw() {
@@ -84,15 +85,15 @@ public class DrawMusicAction extends AbstractGameAction {
         c.targetDrawScale = 0.75F;
         c.triggerWhenDrawn();
         this.musicDrawPile.removeCard(c);
-        AbstractDungeon.player.hand.addToHand(c);
+        CardsHelper.h().addToHand(c);
         logger.info("Draw Music Card: {}", c.name);
-        for (AbstractPower p : AbstractDungeon.player.powers) {
+        for (AbstractPower p : DungeonHelper.getPlayer().powers) {
             p.onCardDraw(c);
         }
-        for (AbstractRelic r : AbstractDungeon.player.relics) {
+        for (AbstractRelic r : DungeonHelper.getPlayer().relics) {
             r.onCardDraw(c);
         }
-        AbstractDungeon.player.onCardDrawOrDiscard();
+        DungeonHelper.getPlayer().onCardDrawOrDiscard();
         --this.amount;
     }
 }
