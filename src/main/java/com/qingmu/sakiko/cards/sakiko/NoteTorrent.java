@@ -60,6 +60,9 @@ public class NoteTorrent extends AbstractSakikoCard {
         @Override
         public boolean removeAtEndOfTurn(AbstractCard card) {
             AbstractCard copy = card.makeCopy();
+            if (card.upgraded){
+                copy.upgrade();
+            }
             card.baseDamage = copy.baseDamage;
             card.baseBlock = copy.baseBlock;
             card.baseMagicNumber = copy.baseMagicNumber;
