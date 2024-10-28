@@ -205,8 +205,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.addCustomScreen(new MusicDrawPileViewScreen());
         // 注册音乐牌奖励
         BaseMod.registerCustomReward(SakikoEnum.RewardType.MUSIC_TYPE,
-                (rewardSave) -> new MusicCardReward(rewardSave.id),
-                (customReward) -> new RewardSave(customReward.type.toString(), ((MusicCardReward) customReward).id));
+                (rewardSave) -> new MusicCardReward(),
+                (customReward) -> new RewardSave(customReward.type.toString(), null));
 
         // 注册1层事件
         BaseMod.addEvent(new AddEventParams.Builder(SoyoEvent.ID, SoyoEvent.class)

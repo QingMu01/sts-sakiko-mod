@@ -5,6 +5,7 @@ import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -16,6 +17,10 @@ public class LouderModifier extends AbstractMusicCardModifier {
 
     public static final String ID = ModNameHelper.make(LouderModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
+
+    public LouderModifier(AbstractMusic sourceCard, AbstractCard targetCard) {
+        super(sourceCard, targetCard);
+    }
 
     @Override
     public String modifyName(String cardName, AbstractCard card) {
@@ -36,7 +41,7 @@ public class LouderModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new LouderModifier();
+        return new LouderModifier(this.sourceCard, this.targetCard);
     }
 
     @Override

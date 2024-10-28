@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.qingmu.sakiko.action.effect.ShowAndExhaustCardEffect;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -26,7 +27,8 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     private int amount;
 
-    public FireBirdModifier(int amount) {
+    public FireBirdModifier(AbstractMusic sourceCard, AbstractCard targetCard, int amount) {
+        super(sourceCard, targetCard);
         this.amount = amount;
     }
 
@@ -83,6 +85,8 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
     public void onRemove(AbstractCard card) {
         if (AbstractDungeon.player.hand.contains(card)) {
             this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
+        } else if (AbstractDungeon.player.limbo.contains(card)) {
+            this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.hand));
         } else if (AbstractDungeon.player.discardPile.contains(card)) {
             AbstractDungeon.effectList.add(new ShowAndExhaustCardEffect(card));
             this.addToBot(new ExhaustSpecificCardAction(card, AbstractDungeon.player.discardPile));
@@ -94,7 +98,7 @@ public class FireBirdModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new FireBirdModifier(this.amount);
+        return new FireBirdModifier(this.sourceCard, this.targetCard, this.amount);
     }
 
     @Override

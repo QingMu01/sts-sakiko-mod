@@ -28,7 +28,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
         // act3 基本属性
         if (AbstractDungeon.id.equals(TheBeyond.ID) || AbstractDungeon.id.equals(TheEnding.ID)) {
             this.baseAttack += 4; // 16
-            this.baseHp += 80; // 220
+            this.baseHp += 100; // 220
             this.baseSlash += 12; // 34
             this.multiCount += 1; // 6*4
             this.baseBlock += 6; // 18

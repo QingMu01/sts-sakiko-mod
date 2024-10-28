@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -22,7 +23,8 @@ public class SymbolAirModifier extends AbstractMusicCardModifier {
     private final int needDraw;
     private int amount;
 
-    public SymbolAirModifier(int needDraw, int amount) {
+    public SymbolAirModifier(AbstractMusic sourceCard, AbstractCard targetCard, int needDraw, int amount) {
+        super(sourceCard, targetCard);
         this.needDraw = needDraw;
         this.amount = amount;
     }
@@ -58,7 +60,7 @@ public class SymbolAirModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new SymbolAirModifier(this.needDraw, this.amount);
+        return new SymbolAirModifier(this.sourceCard, this.targetCard, this.needDraw, this.amount);
     }
 
     @Override

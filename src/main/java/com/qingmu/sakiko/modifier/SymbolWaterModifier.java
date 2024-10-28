@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -25,7 +26,8 @@ public class SymbolWaterModifier extends AbstractMusicCardModifier {
 
     public int heal;
 
-    public SymbolWaterModifier(int heal) {
+    public SymbolWaterModifier(AbstractMusic sourceCard, AbstractCard targetCard, int heal) {
+        super(sourceCard, targetCard);
         this.heal = heal;
     }
 
@@ -70,7 +72,7 @@ public class SymbolWaterModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new SymbolWaterModifier(this.heal);
+        return new SymbolWaterModifier(this.sourceCard, this.targetCard, this.heal);
     }
 
     @Override

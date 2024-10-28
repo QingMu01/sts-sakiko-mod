@@ -1,12 +1,12 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -41,7 +41,7 @@ public class FukkenPower extends AbstractPower implements ModifiedMusicNumber {
     }
 
     @Override
-    public float modifyMusicNumber(AbstractMusic music, float musicNumber) {
-        return music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + this.amount : musicNumber;
+    public float modifyMusicNumber(AbstractCard card, float musicNumber) {
+        return card.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + this.amount : musicNumber;
     }
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PlayerFlowTipsPatch {
     @SpireInsertPatch(locator = Locator.class, localvars = {"tips"})
     public static void insert(AbstractPlayer __instance, SpriteBatch sb, @ByRef ArrayList<PowerTip>[] tips) {
-        if (__instance instanceof TogawaSakiko || __instance.hasRelic("PrismaticShard")) {
+        if (__instance instanceof TogawaSakiko) {
             tips[0].add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FLOW_BAR), BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FLOW_BAR)));
         }
     }

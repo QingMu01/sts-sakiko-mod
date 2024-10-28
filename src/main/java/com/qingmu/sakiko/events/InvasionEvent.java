@@ -49,7 +49,7 @@ public class InvasionEvent extends PhasedEvent {
                     .addRewards(true, room -> {
                         // 离开，提示获得成员
                         room.rewards.add(new RewardItem(50, false));
-                        room.rewards.add(new MusicCardReward(String.valueOf(AbstractDungeon.floorNum)));
+                        room.rewards.add(new MusicCardReward());
                         room.rewards.add(new RewardItem(BaseMod.getCustomRelic(name.replace("Monster", ""))));
                     });
             // 成员战斗

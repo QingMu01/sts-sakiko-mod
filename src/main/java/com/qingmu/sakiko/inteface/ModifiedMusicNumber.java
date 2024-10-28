@@ -1,13 +1,13 @@
 package com.qingmu.sakiko.inteface;
 
-import com.qingmu.sakiko.cards.AbstractMusic;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 
 public interface ModifiedMusicNumber {
-    default float modifyMusicNumber(AbstractMusic music, float musicNumber) {
+    default float modifyMusicNumber(AbstractCard card, float musicNumber) {
         return musicNumber;
     }
 
-    default float finalModifyMusicNumber(AbstractMusic music, float musicNumber) {
+    default float finalModifyMusicNumber(AbstractCard card, float musicNumber) {
         return musicNumber;
     }
 }

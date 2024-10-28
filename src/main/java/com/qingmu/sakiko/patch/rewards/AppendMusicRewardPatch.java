@@ -17,15 +17,13 @@ public class AppendMusicRewardPatch {
     @SpirePatch(clz = CombatRewardScreen.class, method = "setupItemReward")
     public static class SetupItemReward {
         public static void Postfix(CombatRewardScreen __instance) {
-            if (AbstractDungeon.player instanceof TogawaSakiko || AbstractDungeon.player.hasRelic("PrismaticShard")){
+            if (AbstractDungeon.player instanceof TogawaSakiko){
                 if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoomBoss.class)  || AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoomElite.class)) {
-                    __instance.rewards.add(new MusicCardReward(String.valueOf(AbstractDungeon.floorNum)));
+                    __instance.rewards.add(new MusicCardReward());
                 }
             }
         }
-
     }
-
 }
 
 

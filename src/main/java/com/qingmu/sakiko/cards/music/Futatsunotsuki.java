@@ -36,7 +36,7 @@ public class Futatsunotsuki extends AbstractMusic {
         int realMusicNumber = this.musicNumber;
         this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, true, card -> !(card instanceof AbstractMusic) && !CardModifierManager.hasModifier(card, DoubleTapModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new DoubleTapModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new DoubleTapModifier(this, card, realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
     }

@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.modifier;
 
 import basemod.abstracts.AbstractCardModifier;
-import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
@@ -10,6 +9,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -21,10 +21,9 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
     public static String ID = ModNameHelper.make(SymbolEarthModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
-    private final int block;
 
-    public SymbolEarthModifier(int block) {
-        this.block = block;
+    public SymbolEarthModifier(AbstractMusic sourceCard, AbstractCard targetCard) {
+        super(sourceCard, targetCard);
     }
 
     @Override
@@ -35,7 +34,7 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
         return this.isLastModified(card, ID)
-                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalBlock(card))
+                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.getTotalMusicNumber(card, this))
                 : rawDescription;
     }
 
@@ -48,25 +47,19 @@ public class SymbolEarthModifier extends AbstractMusicCardModifier {
 
     @Override
     public void onUse(AbstractCard card, AbstractCreature target, UseCardAction action) {
-        this.addToBot(new GainBlockAction(AbstractDungeon.player, this.block, true));
+        if (this.isLastModified(card, ID)) {
+            this.addToBot(new GainBlockAction(AbstractDungeon.player, this.getTotalMusicNumber(card, this), true));
+        }
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new SymbolEarthModifier(this.block);
+        return new SymbolEarthModifier(this.sourceCard, this.targetCard);
     }
 
     @Override
     public String identifier(AbstractCard card) {
         return ID;
-    }
-
-    private static int getTotalBlock(AbstractCard card) {
-        int totalBlock = 0;
-        for (AbstractCardModifier modifier : CardModifierManager.getModifiers(card, ID)) {
-            totalBlock += ((SymbolEarthModifier) modifier).block;
-        }
-        return totalBlock;
     }
 
 }

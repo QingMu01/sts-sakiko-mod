@@ -26,7 +26,7 @@ public class RandomRemoveDebuffAction extends AbstractGameAction {
         int count = 0;
         Iterator<AbstractPower> iterator = debuff.iterator();
         while (iterator.hasNext()){
-            int random = AbstractDungeon.cardRng.random(0, debuff.size() - 1);
+            int random = AbstractDungeon.cardRandomRng.random(0, debuff.size() - 1);
             this.addToBot(new RemoveSpecificPowerAction(this.target, this.target, debuff.get(random)));
             count++;
             if (count >= this.amount) break;

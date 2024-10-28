@@ -28,12 +28,6 @@ public class Elements extends AbstractSakikoCard {
 
     public ArrayList<AbstractCard> pickup = new ArrayList<>(MUSIC_LIST);
 
-    static {
-        for (AbstractCard card : MUSIC_LIST) {
-            CardModifierManager.addModifier(card, new OptionExhaustModifier());
-        }
-    }
-
     public Elements() {
         super(ID, IMG_PATH, TYPE, CardColor.COLORLESS, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 0, MUSIC_LIST.toArray(new AbstractCard[0]));

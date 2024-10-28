@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -24,7 +25,8 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     public int usedCount;
 
-    public DoubleTapModifier(int usedCount) {
+    public DoubleTapModifier(AbstractMusic sourceCard, AbstractCard targetCard, int usedCount) {
+        super(sourceCard, targetCard);
         this.usedCount = usedCount;
     }
 
@@ -90,7 +92,7 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new DoubleTapModifier(this.usedCount);
+        return new DoubleTapModifier(this.sourceCard, this.targetCard, this.usedCount);
     }
 
     @Override

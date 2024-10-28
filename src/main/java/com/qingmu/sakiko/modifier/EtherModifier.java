@@ -6,6 +6,7 @@ import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -19,7 +20,8 @@ public class EtherModifier extends AbstractMusicCardModifier {
 
     public int costDown;
 
-    public EtherModifier(int costDown) {
+    public EtherModifier(AbstractMusic sourceCard, AbstractCard targetCard, int costDown) {
+        super(sourceCard, targetCard);
         this.costDown = costDown;
     }
 
@@ -60,7 +62,7 @@ public class EtherModifier extends AbstractMusicCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new EtherModifier(this.costDown);
+        return new EtherModifier(this.sourceCard, this.targetCard, this.costDown);
     }
 
     @Override

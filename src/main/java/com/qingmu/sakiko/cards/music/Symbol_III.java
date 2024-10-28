@@ -37,7 +37,7 @@ public class Symbol_III extends AbstractMusic {
         int realMusicNumber = this.musicNumber;
         this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new SymbolWaterModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new SymbolWaterModifier(this, card, realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
     }

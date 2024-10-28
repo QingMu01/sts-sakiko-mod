@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.actions.unique.RemoveDebuffsAction;
 import com.megacrit.cardcrawl.actions.utility.HideHealthBarAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -20,7 +19,7 @@ import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.action.RenameMonsterAction;
 import com.qingmu.sakiko.action.monster.CrychicHonorAction;
-import com.qingmu.sakiko.action.monster.ExhaustSpecialCardByIdAction;
+import com.qingmu.sakiko.action.monster.ExhaustDemonSakikoCardAction;
 import com.qingmu.sakiko.cards.music.monster.AbolitionCase;
 import com.qingmu.sakiko.cards.music.monster.AveMujica_Boss;
 import com.qingmu.sakiko.cards.music.monster.BlackBirthday_Boss;
@@ -210,9 +209,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
             }
             case 2: {
                 // 三阶段 中攻击性，清除二阶段塞牌，塞歌牌提高攻击力
-                this.addToBot(new ExhaustSpecialCardByIdAction(DistantPast.ID, CardGroup.CardGroupType.HAND));
-                this.addToBot(new ExhaustSpecialCardByIdAction(DistantPast.ID, CardGroup.CardGroupType.DISCARD_PILE));
-                this.addToBot(new ExhaustSpecialCardByIdAction(DistantPast.ID, CardGroup.CardGroupType.DRAW_PILE));
+                this.addToBot(new ExhaustDemonSakikoCardAction());
                 intentActions.add(new IntentAction.Builder()
                         .setWeight(30)
                         .setMoveName(MOVES[5])
@@ -250,10 +247,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
             }
             case 3: {
                 // 四阶段 高攻击性
-                this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.HAND));
-                this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.DISCARD_PILE));
-                this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, CardGroup.CardGroupType.DRAW_PILE));
-                this.addToBot(new ExhaustSpecialCardByIdAction(AbolitionCase.ID, SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE));
+                this.addToBot(new ExhaustDemonSakikoCardAction());
                 intentActions.add(new IntentAction.Builder()
                         .setWeight(50)
                         .setIntent(Intent.ATTACK)

@@ -85,7 +85,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK_DEBUFF)
                 .setDamageAmount(this.damage.get(0))
                 .setRepeatInterval(4)
-                .setPredicate(monster -> !AbstractDungeon.player.hasPower(VulnerablePower.POWER_ID) && AbstractDungeon.cardRandomRng.randomBoolean())
+                .setPredicate(monster -> !AbstractDungeon.player.hasPower(VulnerablePower.POWER_ID) && AbstractDungeon.aiRng.randomBoolean())
                 .setRemovable(m -> false)
                 .setActions(() -> new AbstractGameAction[]{
                         new AnimateSlowAttackAction(this),

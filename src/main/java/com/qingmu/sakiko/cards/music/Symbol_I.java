@@ -24,6 +24,7 @@ public class Symbol_I extends AbstractMusic {
 
     public Symbol_I() {
         super(ID, IMG_PATH, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
 
         this.initMusicAttr(3, 2);
@@ -31,11 +32,9 @@ public class Symbol_I extends AbstractMusic {
 
     @Override
     public void play() {
-        // callback中取得的数据是被被重置后的，在这里提前获取计算完成后的数据副本
-        int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isAttackCard, card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], this.musicNumber), 1, false, CardSelectorAction::isAttackCard, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new SymbolFireModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new SymbolFireModifier(this, card));
             }
         }, CardGroup.CardGroupType.HAND));
     }

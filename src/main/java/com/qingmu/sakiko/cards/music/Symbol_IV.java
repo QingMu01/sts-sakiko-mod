@@ -24,6 +24,7 @@ public class Symbol_IV extends AbstractMusic {
 
     public Symbol_IV() {
         super(ID, IMG_PATH, RARITY, TARGET);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
 
         this.initMusicAttr(3, 3);
@@ -31,10 +32,9 @@ public class Symbol_IV extends AbstractMusic {
 
     @Override
     public void play() {
-        int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], this.musicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new SymbolEarthModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new SymbolEarthModifier(this, card));
             }
         }, CardGroup.CardGroupType.HAND));
 

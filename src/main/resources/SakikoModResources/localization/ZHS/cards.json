@@ -81,10 +81,7 @@
   },
   "SakikoMod:Ensemble": {
     "NAME": "合奏",
-    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL 每有一位 sakikomod:队友 ，额外造成一次伤害。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （造成%d次伤害）"
-    ]
+    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL 每有一位 sakikomod:队友 ，额外造成一次伤害。"
   },
   "SakikoMod:Boomerang": {
     "NAME": "回旋镖",
@@ -128,10 +125,7 @@
   },
   "SakikoMod:DollDance": {
     "NAME": "人偶之舞",
-    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。 NL 本回合，每次姿态转换会使这张牌额外造成1次伤害。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （造成%d次伤害）"
-    ]
+    "DESCRIPTION": "对随机敌人造成 !D! 点伤害 !M! 次。 NL 本回合，每次姿态转换会使这张牌额外造成1次伤害。"
   },
   "SakikoMod:MoonLaughNight": {
     "NAME": "月笑夜",
@@ -215,10 +209,7 @@
   },
   "SakikoMod:LoftMoon": {
     "NAME": "阁楼之月",
-    "DESCRIPTION": "抽 !M! 张牌。 NL 待演奏区中每有一张牌，额外抽1张牌。",
-    "EXTENDED_DESCRIPTION": [
-      " NL （当前抽取%d张牌）"
-    ]
+    "DESCRIPTION": "抽 !M! 张牌。 NL 待演奏区中每有一张牌，额外抽1张牌。"
   },
   "SakikoMod:Reproduce": {
     "NAME": "再生产",
@@ -316,8 +307,8 @@
   },
   "SakikoMod:Nobility": {
     "NAME": "贵族品性",
-    "DESCRIPTION": "你每次 sakikomod:演奏 时，抽 !M! 张牌。",
-    "UPGRADE_DESCRIPTION": " 固有 NL 你每次 sakikomod:演奏 时，抽 !M! 张牌。"
+    "DESCRIPTION": "你每三次 sakikomod:演奏 ，抽 !M! 张牌。",
+    "UPGRADE_DESCRIPTION": " 固有 NL 你每三次 sakikomod:演奏 ，抽 !M! 张牌。"
   },
   "SakikoMod:Sekaikan": {
     "NAME": "世界观",
@@ -362,7 +353,7 @@
   "SakikoMod:Symbol_I": {
     "NAME": "Symbol I:Fire",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张攻击牌，使其基础伤害在本场战斗提高 !SakikoMod:MN! 点。"
+    "DESCRIPTION": " sakikomod:音乐能力 ， sakikomod:演奏 ：从手牌选择一张攻击牌，使其伤害提高这张牌的数值。 NL （当前提供 !SakikoMod:MN! 点）"
   },
   "SakikoMod:Symbol_II": {
     "NAME": "Symbol II:Air",
@@ -372,17 +363,17 @@
   "SakikoMod:Symbol_III": {
     "NAME": "Symbol III:Water",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其数值变为原本的一半，打出时，恢复 !SakikoMod:MN! 点生命值。 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其数值变为原本的一半，打出时，恢复 !SakikoMod:MN! 点生命值。 NL 消耗 。"
   },
   "SakikoMod:Symbol_IV": {
     "NAME": "Symbol IV:Earth",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，打出时，获得 !SakikoMod:MN! 点 格挡 。"
+    "DESCRIPTION": " sakikomod:音乐能力 ， sakikomod:演奏 ：从手牌选择一张牌，打出选择的牌时，获得这张卡数值的 格挡 。 NL （当前提供 !SakikoMod:MN! 点）"
   },
   "SakikoMod:Ether": {
     "NAME": "Ether",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其费用在本场战斗降低 !SakikoMod:MN! 点。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其费用在本场战斗降低 !SakikoMod:MN! 点。 NL 消耗 。"
   },
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
@@ -468,7 +459,7 @@
   "SakikoMod:FireBird_R": {
     "NAME": "Fire Bird",
     "MINI_TITLE": "Roselia",
-    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其获得在回合结束后 消耗 。这张牌接下来 !SakikoMod:MN! 次打出后返回手牌。 NL 消耗 。"
+    "DESCRIPTION": " sakikomod:演奏 ：从手牌选择一张牌，使其在回合结束后被 消耗 。选择的牌接下来 !SakikoMod:MN! 次打出后返回手牌。 NL 消耗 。"
   },
   "SakikoMod:ShuwarinDreamin_PP": {
     "NAME": "Shuwarin Dreamin",
@@ -522,7 +513,7 @@
   "SakikoMod:Mayoiuta_MYGO": {
     "NAME": "迷星叫",
     "MINI_TITLE": "MyGO!!!!!",
-    "DESCRIPTION": " sakikomod:演奏 ：选择一位原版角色，随机将其一张牌加入手牌。这张牌的费用变为0，数值设置为 !SakikoMod:MN! 。"
+    "DESCRIPTION": " sakikomod:演奏 ：选择一位原版角色，将其一张随机牌加入手牌。这张牌的费用变为0，数值锁定为这张牌的数值。（当前为 !SakikoMod:MN! ）。"
   },
   "SakikoMod:Remember": {
     "NAME": "回忆",
@@ -536,7 +527,7 @@
   },
   "SakikoMod:Elements": {
     "NAME": "专辑：元素",
-    "DESCRIPTION": "从 *元素 系列曲中选择一张，将其变为 消耗 后加入手牌。"
+    "DESCRIPTION": "从 *元素 系列曲中选择一张加入手牌。"
   },
   "SakikoMod:Haruhikage_Rana": {
     "NAME": "春日影",
@@ -573,7 +564,7 @@
   },
   "SakikoMod:DistantPast": {
     "NAME": "遥远的过去",
-    "DESCRIPTION": " 不能被打出 。 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。回合结束时，若卡组中的同名卡少于六张，则在弃牌堆加入两张复制品。 NL 虚无 。",
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。被 消耗 时，若卡组中的同名卡少于六张，则在弃牌堆加入两张复制品。 NL 虚无 。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出。"
     ]

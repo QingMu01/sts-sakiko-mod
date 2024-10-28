@@ -2,6 +2,7 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageRandomEnemyAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -34,7 +35,6 @@ public class DollDance extends AbstractSakikoCard {
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
-        this.appendDescription(this.magicNumber);
     }
 
     @Override
@@ -56,4 +56,10 @@ public class DollDance extends AbstractSakikoCard {
         this.submitActionsToBot(actions);
     }
 
+    @Override
+    public AbstractCard makeStatEquivalentCopy() {
+        DollDance copy = (DollDance)super.makeStatEquivalentCopy();
+        copy.changeStanceCount = this.changeStanceCount;
+        return copy;
+    }
 }

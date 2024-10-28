@@ -1,13 +1,13 @@
 package com.qingmu.sakiko.modifier;
 
 import basemod.abstracts.AbstractCardModifier;
-import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -19,10 +19,9 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
     public static String ID = ModNameHelper.make(SymbolFireModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
-    public int damage;
 
-    public SymbolFireModifier(int damage) {
-        this.damage = damage;
+    public SymbolFireModifier(AbstractMusic sourceCard, AbstractCard targetCard) {
+        super(sourceCard, targetCard);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
         return this.isLastModified(card, ID)
-                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], getTotalDamage(card))
+                ? String.format(rawDescription + " NL " + TUTORIAL_STRING.TEXT[0], this.getTotalMusicNumber(card, this))
                 : rawDescription;
     }
 
@@ -46,12 +45,14 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
 
     @Override
     public float modifyBaseDamage(float damage, DamageInfo.DamageType type, AbstractCard card, AbstractMonster target) {
-        return damage + this.damage;
+        return this.isLastModified(card, ID)
+                ? damage + this.getTotalMusicNumber(card, this)
+                : damage;
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new SymbolFireModifier(this.damage);
+        return new SymbolFireModifier(this.sourceCard, this.targetCard);
     }
 
     @Override
@@ -59,11 +60,4 @@ public class SymbolFireModifier extends AbstractMusicCardModifier {
         return ID;
     }
 
-    private static int getTotalDamage(AbstractCard card) {
-        int totalDamage = 0;
-        for (AbstractCardModifier modifier : CardModifierManager.getModifiers(card, ID)) {
-            totalDamage += ((SymbolFireModifier) modifier).damage;
-        }
-        return totalDamage;
-    }
 }

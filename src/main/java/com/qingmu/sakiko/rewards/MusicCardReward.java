@@ -15,16 +15,14 @@ public class MusicCardReward extends CustomReward {
     private static final String[] TEXT = uiStrings.TEXT;
     private static final RewardType TYPE = SakikoEnum.RewardType.MUSIC_TYPE;
 
-    public final String id;
-    public MusicCardReward(String id) {
+    public MusicCardReward() {
         super(ImageMaster.loadImage(ICON), TEXT[0], TYPE);
-        this.cards = MusicCardFinder.findReward();
-        this.id = id;
     }
 
     @Override
     public boolean claimReward() {
         if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.COMBAT_REWARD) {
+            this.cards = this.cards == null || this.cards.isEmpty() ? MusicCardFinder.findReward() : this.cards;
             AbstractDungeon.cardRewardScreen.open(this.cards, this, TEXT[1]);
             AbstractDungeon.previousScreen = AbstractDungeon.CurrentScreen.COMBAT_REWARD;
         }

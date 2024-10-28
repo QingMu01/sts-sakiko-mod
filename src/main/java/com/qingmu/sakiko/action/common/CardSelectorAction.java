@@ -110,6 +110,10 @@ public class CardSelectorAction extends AbstractGameAction {
     @Override
     public void update() {
         if (this.duration == Settings.ACTION_DUR_FAST) {
+            if (this.amount <= 0){
+                this.isDone = true;
+                return;
+            }
             if (this.targets.length == 0) {
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.player.dialogX, this.player.dialogY, 1.5F, uiStrings.EXTRA_TEXT[1], true));
                 this.callback.accept(this.selected);
@@ -318,6 +322,8 @@ public class CardSelectorAction extends AbstractGameAction {
             return AbstractDungeon.player.exhaustPile;
         } else if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
             return MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
+        } else if (target == SakikoEnum.CardGroupEnum.PLAY_MUSIC_QUEUE) {
+            return MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
         } else return new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
     }
 
@@ -372,9 +378,9 @@ public class CardSelectorAction extends AbstractGameAction {
     @SpirePatch(clz = GridCardSelectScreen.class, method = "update")
     public static class GridCardSelectScreenPatch {
         @SpireInsertPatch(locator = Locator.class)
-        public static SpireReturn<Void> postfix(GridCardSelectScreen __instance){
+        public static SpireReturn<Void> postfix(GridCardSelectScreen __instance) {
             int numCards = ReflectionHacks.getPrivate(__instance, GridCardSelectScreen.class, "numCards");
-            if (__instance.selectedCards.size() == numCards){
+            if (__instance.selectedCards.size() == numCards) {
                 __instance.confirmButton.show();
             }
             return SpireReturn.Continue();
@@ -383,7 +389,7 @@ public class CardSelectorAction extends AbstractGameAction {
         private static class Locator extends SpireInsertLocator {
             @Override
             public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher matcher = new Matcher.FieldAccessMatcher(GridCardSelectScreen.class,"numCards");
+                Matcher matcher = new Matcher.FieldAccessMatcher(GridCardSelectScreen.class, "numCards");
                 return LineFinder.findInOrder(ctBehavior, matcher);
             }
         }

@@ -28,6 +28,6 @@ public class Mayoiuta_MYGO extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new ChooseOneAction(new ArrayList<>(Arrays.asList(new ChooseRed(this.musicNumber), new ChooseGreen(this.musicNumber), new ChooseBlue(this.musicNumber), new ChoosePurple(this.musicNumber)))));
+        this.addToTop(new ChooseOneAction(new ArrayList<>(Arrays.asList(new ChooseRed(this, this.musicNumber), new ChooseGreen(this, this.musicNumber), new ChooseBlue(this, this.musicNumber), new ChoosePurple(this, this.musicNumber)))));
     }
 }

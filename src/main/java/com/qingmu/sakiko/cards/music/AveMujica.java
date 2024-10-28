@@ -38,7 +38,7 @@ public class AveMujica extends AbstractMusic {
     public void play() {
         this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> !CardModifierManager.hasModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new AveMujicaModifier(this));
+                CardModifierManager.addModifier(card, new AveMujicaModifier(this, card));
             }
         }, CardGroup.CardGroupType.HAND));
     }

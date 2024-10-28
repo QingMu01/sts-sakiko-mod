@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.vfx.cardManip.PurgeCardEffect;
 import com.qingmu.sakiko.action.RemoveMasterDeckSpecificCardAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -20,10 +21,8 @@ public class AveMujicaModifier extends AbstractMusicCardModifier {
     public static String ID = ModNameHelper.make(AveMujicaModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
-    private AbstractCard card;
-
-    public AveMujicaModifier(AbstractCard card) {
-        this.card = card;
+    public AveMujicaModifier(AbstractMusic sourceCard, AbstractCard targetCard) {
+        super(sourceCard, targetCard);
     }
 
     @Override
@@ -46,14 +45,14 @@ public class AveMujicaModifier extends AbstractMusicCardModifier {
             if (c.uuid.equals(card.uuid)) {
                 AbstractDungeon.effectList.add(new PurgeCardEffect(c));
                 iterator.remove();
-                this.addToBot(new RemoveMasterDeckSpecificCardAction(this.card));
+                this.addToBot(new RemoveMasterDeckSpecificCardAction(this.sourceCard));
             }
         }
     }
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new AveMujicaModifier(this.card);
+        return new AveMujicaModifier(this.sourceCard, this.targetCard);
     }
 
     @Override

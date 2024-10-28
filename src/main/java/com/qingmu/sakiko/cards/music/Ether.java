@@ -28,6 +28,7 @@ public class Ether extends AbstractMusic {
 
         this.initMusicAttr(1, 1);
 
+        this.setExhaust(true, true);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class Ether extends AbstractMusic {
         int realMusicNumber = this.musicNumber;
         this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isCostEffectiveButNotZero, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new EtherModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new EtherModifier(this, card, realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
     }

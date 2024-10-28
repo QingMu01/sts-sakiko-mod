@@ -60,7 +60,7 @@ public class FeverStance extends AbstractSakikoStance implements ModifiedMusicNu
 
 
     @Override
-    public float finalModifyMusicNumber(AbstractMusic music, float musicNumber) {
+    public float finalModifyMusicNumber(AbstractCard card, float musicNumber) {
         return musicNumber * 2.0f;
     }
 

@@ -5,9 +5,11 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,6 +49,12 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
 
             if (encoreSize == this.queue.size()) {
                 this.amount = 0;
+            }
+        }
+
+        for (AbstractPower power : this.source.powers) {
+            if (power instanceof TriggerOnPlayMusic){
+                ((TriggerOnPlayMusic) power).triggerOnReadyPlay();
             }
         }
     }

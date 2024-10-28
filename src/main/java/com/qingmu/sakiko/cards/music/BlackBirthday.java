@@ -35,7 +35,7 @@ public class BlackBirthday extends AbstractMusic {
     public void play() {
         this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> card.canUpgrade() && !CardModifierManager.hasModifier(card, BlackBirthdayModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new BlackBirthdayModifier(this));
+                CardModifierManager.addModifier(card, new BlackBirthdayModifier(this, card));
             }
         }, CardGroup.CardGroupType.HAND));
     }

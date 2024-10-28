@@ -34,7 +34,7 @@ public class FireBird_R extends AbstractMusic {
         int realMusicNumber = this.musicNumber;
         this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], 1, false, card -> !CardSelectorAction.isMusicCard(card) && !CardModifierManager.hasModifier(card, FireBirdModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new FireBirdModifier(realMusicNumber));
+                CardModifierManager.addModifier(card, new FireBirdModifier(this, card, realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
     }

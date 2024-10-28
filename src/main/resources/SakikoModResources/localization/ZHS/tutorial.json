@@ -43,7 +43,7 @@
   },
   "SakikoMod:SymbolFireModifier": {
     "TEXT": [
-      "（基础伤害提高 %d）"
+      "（伤害提高 %d）"
     ],
     "LABEL": [
       "[火]•"

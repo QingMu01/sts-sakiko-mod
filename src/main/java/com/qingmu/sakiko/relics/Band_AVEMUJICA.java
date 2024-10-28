@@ -1,7 +1,7 @@
 package com.qingmu.sakiko.relics;
 
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -24,7 +24,7 @@ public class Band_AVEMUJICA extends AbstractSakikoRelic implements ModifiedMusic
     }
 
     @Override
-    public float modifyMusicNumber(AbstractMusic music, float musicNumber) {
-        return music.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? ++musicNumber : musicNumber;
+    public float modifyMusicNumber(AbstractCard card, float musicNumber) {
+        return card.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? ++musicNumber : musicNumber;
     }
 }

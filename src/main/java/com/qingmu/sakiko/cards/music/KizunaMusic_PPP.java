@@ -40,7 +40,7 @@ public class KizunaMusic_PPP extends AbstractMusic {
     public void play() {
         AbstractGameAction[] actions = new AbstractGameAction[this.magicNumber];
         for (int i = 0; i < actions.length; i++) {
-            actions[i] = new GainBlockAction(this.m_source, this.m_source, this.block);
+            actions[i] = new GainBlockAction(this.m_source, this.m_source, this.block,true);
         }
         this.submitActionsToTop(actions);
     }
