@@ -122,6 +122,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
         if (AbstractDungeon.getCurrRoom().cannotLose) {
             if (this.canPhaseSwitch()) {
                 this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
+                IntentAction.normalizeWeights(this.effectiveIntentAction);
             } else {
                 super.die(triggerRelics);
             }

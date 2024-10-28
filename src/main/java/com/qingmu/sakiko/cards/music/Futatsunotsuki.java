@@ -9,6 +9,8 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.DoubleTapModifier;
+import com.qingmu.sakiko.utils.CardModifierHelper;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Futatsunotsuki extends AbstractMusic {
@@ -34,7 +36,7 @@ public class Futatsunotsuki extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, true, card -> !(card instanceof AbstractMusic) && !CardModifierManager.hasModifier(card, DoubleTapModifier.ID), card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], realMusicNumber, true, card -> CardsHelper.notMusic(card) && CardsHelper.notStatusOrCurse(card) && CardModifierHelper.notModifier(card, DoubleTapModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new DoubleTapModifier(this, card, realMusicNumber));
             }

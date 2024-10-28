@@ -9,6 +9,7 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.SymbolEarthModifier;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Symbol_IV extends AbstractMusic {
@@ -32,7 +33,7 @@ public class Symbol_IV extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], this.musicNumber), 1, false, CardSelectorAction::notStatusOrCurseCard, card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], this.musicNumber), 1, false, CardsHelper::notStatusOrCurse, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new SymbolEarthModifier(this, card));
             }

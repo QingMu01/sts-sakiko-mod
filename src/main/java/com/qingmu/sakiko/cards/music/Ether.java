@@ -9,6 +9,7 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.EtherModifier;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Ether extends AbstractMusic {
@@ -34,7 +35,7 @@ public class Ether extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardSelectorAction::isCostEffectiveButNotZero, card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(String.format(uiStrings.TEXT[0], realMusicNumber), 1, false, CardsHelper::isCostEffectiveAndNotZero, card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new EtherModifier(this, card, realMusicNumber));
             }

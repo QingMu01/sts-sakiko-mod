@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.OptionExhaustModifier;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 public class AutoPlayPileCardAction extends AbstractGameAction {
 
@@ -27,7 +28,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         this.type = type;
         this.allowShuffle = allowShuffle;
         this.exhaustCards = exhaustCards;
-        this.targetPile = CardSelectorAction.getCardGroup(type == DrawPileType.MUSIC_PILE ? SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE : CardGroup.CardGroupType.DRAW_PILE);
+        this.targetPile = CardsHelper.getCardGroup(type == DrawPileType.MUSIC_PILE ? SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE : CardGroup.CardGroupType.DRAW_PILE);
     }
 
     public AutoPlayPileCardAction(int amount, boolean exhaustCards, DrawPileType type) {

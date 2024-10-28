@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class FontBitmapHelp {
+public class FontBitmapHelper {
 
     private static final int FONT_SIZE_128 = 84;
     private static final int TEXTURE_SIZE_128 = 128;

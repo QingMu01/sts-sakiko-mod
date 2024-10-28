@@ -9,6 +9,8 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.FireBirdModifier;
+import com.qingmu.sakiko.utils.CardModifierHelper;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FireBird_R extends AbstractMusic {
@@ -32,7 +34,7 @@ public class FireBird_R extends AbstractMusic {
     @Override
     public void play() {
         int realMusicNumber = this.musicNumber;
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], 1, false, card -> !CardSelectorAction.isMusicCard(card) && !CardModifierManager.hasModifier(card, FireBirdModifier.ID), card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], 1, false, card -> CardsHelper.notMusic(card) && CardsHelper.notStatusOrCurse(card) && CardModifierHelper.notModifier(card, FireBirdModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new FireBirdModifier(this, card, realMusicNumber));
             }

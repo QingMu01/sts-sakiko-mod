@@ -12,6 +12,7 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.AveMujicaModifier;
+import com.qingmu.sakiko.utils.CardModifierHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class AveMujica extends AbstractMusic {
@@ -36,7 +37,7 @@ public class AveMujica extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> !CardModifierManager.hasModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> CardModifierHelper.notModifier(card, AveMujicaModifier.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(CurseOfTheBell.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new AveMujicaModifier(this, card));
             }

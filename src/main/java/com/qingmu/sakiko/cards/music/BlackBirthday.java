@@ -9,6 +9,7 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.BlackBirthdayModifier;
+import com.qingmu.sakiko.utils.CardModifierHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BlackBirthday extends AbstractMusic {
@@ -33,7 +34,7 @@ public class BlackBirthday extends AbstractMusic {
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> card.canUpgrade() && !CardModifierManager.hasModifier(card, BlackBirthdayModifier.ID), card -> null, cardList -> {
+        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> card.canUpgrade() && CardModifierHelper.notModifier(card, BlackBirthdayModifier.ID), card -> null, cardList -> {
             for (AbstractCard card : cardList) {
                 CardModifierManager.addModifier(card, new BlackBirthdayModifier(this, card));
             }

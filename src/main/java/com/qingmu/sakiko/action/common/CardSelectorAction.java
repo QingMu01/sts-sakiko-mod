@@ -1,6 +1,9 @@
 package com.qingmu.sakiko.action.common;
 
 import basemod.ReflectionHacks;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -9,13 +12,13 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.select.GridCardSelectScreen;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.patch.filed.CardSelectorFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 import javassist.CtBehavior;
 import org.apache.logging.log4j.LogManager;
@@ -110,7 +113,7 @@ public class CardSelectorAction extends AbstractGameAction {
     @Override
     public void update() {
         if (this.duration == Settings.ACTION_DUR_FAST) {
-            if (this.amount <= 0){
+            if (this.amount <= 0) {
                 this.isDone = true;
                 return;
             }
@@ -121,10 +124,10 @@ public class CardSelectorAction extends AbstractGameAction {
                 logger.info("Empty target?");
                 return;
             }
-            if (Arrays.stream(targets).allMatch(target -> getCardGroup(target).isEmpty())) {
+            if (Arrays.stream(targets).allMatch(target -> CardsHelper.getCardGroup(target).isEmpty())) {
                 StringBuilder targetDesc = new StringBuilder();
                 for (int i = 0; i < targets.length; i++) {
-                    if (getCardGroup(targets[i]).isEmpty()) {
+                    if (CardsHelper.getCardGroup(targets[i]).isEmpty()) {
                         targetDesc.append(getTargetName((targets[i])));
                         if (i + 1 != targets.length) {
                             targetDesc.append("、");
@@ -298,34 +301,19 @@ public class CardSelectorAction extends AbstractGameAction {
     private void moveCard(AbstractCard card, CardGroup.CardGroupType target) {
         if (target == null) {
             CardGroup.CardGroupType source = CardSelectorFiled.location.get(card);
-            getCardGroup(source).addToTop(card);
+            CardsHelper.getCardGroup(source).addToTop(card);
         } else if (target == CardGroup.CardGroupType.DRAW_PILE || target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            getCardGroup(CardSelectorFiled.location.get(card)).moveToDeck(card, false);
+            CardsHelper.getCardGroup(CardSelectorFiled.location.get(card)).moveToDeck(card, false);
         } else if (target == CardGroup.CardGroupType.HAND) {
-            getCardGroup(CardSelectorFiled.location.get(card)).moveToHand(card);
+            CardsHelper.getCardGroup(CardSelectorFiled.location.get(card)).moveToHand(card);
         } else if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            getCardGroup(CardSelectorFiled.location.get(card)).moveToDiscardPile(card);
+            CardsHelper.getCardGroup(CardSelectorFiled.location.get(card)).moveToDiscardPile(card);
         } else if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            getCardGroup(CardSelectorFiled.location.get(card)).moveToExhaustPile(card);
+            CardsHelper.getCardGroup(CardSelectorFiled.location.get(card)).moveToExhaustPile(card);
         }
         CardSelectorFiled.location.set(card, null);
     }
 
-    public static CardGroup getCardGroup(CardGroup.CardGroupType target) {
-        if (target == CardGroup.CardGroupType.DRAW_PILE) {
-            return AbstractDungeon.player.drawPile;
-        } else if (target == CardGroup.CardGroupType.HAND) {
-            return AbstractDungeon.player.hand;
-        } else if (target == CardGroup.CardGroupType.DISCARD_PILE) {
-            return AbstractDungeon.player.discardPile;
-        } else if (target == CardGroup.CardGroupType.EXHAUST_PILE) {
-            return AbstractDungeon.player.exhaustPile;
-        } else if (target == SakikoEnum.CardGroupEnum.DRAW_MUSIC_PILE) {
-            return MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(AbstractDungeon.player);
-        } else if (target == SakikoEnum.CardGroupEnum.PLAY_MUSIC_QUEUE) {
-            return MusicBattleFiledPatch.MusicQueue.musicQueue.get(AbstractDungeon.player);
-        } else return new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-    }
 
     public static String getTargetName(CardGroup.CardGroupType target) {
         if (target == CardGroup.CardGroupType.DRAW_PILE) {
@@ -342,39 +330,36 @@ public class CardSelectorAction extends AbstractGameAction {
         return "";
     }
 
-    public static boolean isStatusOrCurseCard(AbstractCard card) {
-        return card.type == AbstractCard.CardType.STATUS || card.type == AbstractCard.CardType.CURSE;
+    @SpirePatch(clz = AbstractCard.class, method = SpirePatch.CLASS)
+    public static class CardSelectorFiled {
+
+        public static SpireField<CardGroup.CardGroupType> location = new SpireField<>(() -> null);
+
     }
 
-    public static boolean notStatusOrCurseCard(AbstractCard card) {
-        return !isStatusOrCurseCard(card);
+
+    // 在选牌时显示来源
+    @SpirePatch(clz = AbstractCard.class, method = "render", paramtypez = {SpriteBatch.class})
+    public static class CardSelectorDisplaySourcePatch {
+
+        public static void Postfix(AbstractCard __instance, SpriteBatch sb) {
+            CardGroup.CardGroupType location = CardSelectorFiled.location.get(__instance);
+            String source = CardSelectorAction.getTargetName(location);
+
+            float offsetY = -420.0F * Settings.scale * __instance.drawScale / 2.0F;
+            BitmapFont.BitmapFontData fontData = FontHelper.cardTitleFont.getData();
+            float originalScale = fontData.scaleX;
+            float scaleMultiplier = 0.8F;
+            fontData.setScale(scaleMultiplier * __instance.drawScale * 0.85F);
+            Color color = Settings.CREAM_COLOR.cpy();
+            color.a = __instance.transparency;
+            FontHelper.renderRotatedText(sb, FontHelper.cardTitleFont, source, __instance.current_x, __instance.current_y, 0.0F, offsetY, __instance.angle, true, color);
+            fontData.setScale(originalScale);
+        }
     }
 
-    public static boolean isCostEffective(AbstractCard card) {
-        return notStatusOrCurseCard(card) && (card.cost >= 0 || card.costForTurn >= 0);
-    }
 
-    public static boolean isCostEffectiveButNotZero(AbstractCard card) {
-        return notStatusOrCurseCard(card) && (card.cost > 0 || card.costForTurn > 0);
-    }
-
-    public static boolean isAttackCard(AbstractCard card) {
-        return card.type == AbstractCard.CardType.ATTACK;
-    }
-
-    public static boolean isSkillCard(AbstractCard card) {
-        return card.type == AbstractCard.CardType.SKILL;
-    }
-
-    public static boolean isPowerCard(AbstractCard card) {
-        return card.type == AbstractCard.CardType.POWER;
-    }
-
-    public static boolean isMusicCard(AbstractCard card) {
-        return card instanceof AbstractMusic || card.type == SakikoEnum.CardTypeEnum.MUSIC;
-    }
-
-    // 处理确认按钮，防止其他mod强制二次确认
+    // 在选到指定数量后显示确认按钮，防止其他mod强制二次确认
     @SpirePatch(clz = GridCardSelectScreen.class, method = "update")
     public static class GridCardSelectScreenPatch {
         @SpireInsertPatch(locator = Locator.class)

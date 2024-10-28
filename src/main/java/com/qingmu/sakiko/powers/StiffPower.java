@@ -10,8 +10,8 @@ import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.inteface.ModifyBlockLastWithCard;
+import com.qingmu.sakiko.utils.CardModifierHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.ModifierHelp;
 
 public class StiffPower extends AbstractPower implements ModifyBlockLastWithCard {
 
@@ -44,7 +44,7 @@ public class StiffPower extends AbstractPower implements ModifyBlockLastWithCard
 
     @Override
     public float atDamageFinalGive(float damage, DamageInfo.DamageType type, AbstractCard card) {
-        if (card instanceof AbstractMusic || ModifierHelp.hasMusicCardModifier(card)) {
+        if (card instanceof AbstractMusic || CardModifierHelper.hasMusicCardModifier(card)) {
             return damage;
         } else {
             return (float) (damage / Math.pow(2, this.amount));
@@ -53,7 +53,7 @@ public class StiffPower extends AbstractPower implements ModifyBlockLastWithCard
 
     @Override
     public float modifyBlockLast(float blockAmount, AbstractCard card) {
-        if (card instanceof AbstractMusic || ModifierHelp.hasMusicCardModifier(card)) {
+        if (card instanceof AbstractMusic || CardModifierHelper.hasMusicCardModifier(card)) {
             return blockAmount;
         } else {
             return (float) (blockAmount / Math.pow(2, this.amount));

@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BurningBirthPower extends AbstractPower {
@@ -50,7 +51,7 @@ public class BurningBirthPower extends AbstractPower {
             int count = 0;
             int stateOrCurse = 0;
             for (AbstractCard card : cardList) {
-                if (CardSelectorAction.isStatusOrCurseCard(card)) {
+                if (CardsHelper.isStatusOrCurse(card)) {
                     stateOrCurse++;
                 } else if (card.costForTurn > 0) {
                     count += card.costForTurn;
