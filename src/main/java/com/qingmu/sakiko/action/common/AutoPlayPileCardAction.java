@@ -81,7 +81,7 @@ public class AutoPlayPileCardAction extends AbstractGameAction {
         if (this.exhaustCards) {
             CardModifierManager.addModifier(card, new OptionExhaustModifier());
         }
-        DungeonHelper.getPlayer().limbo.group.add(card);
+        DungeonHelper.getPlayer().limbo.addToBottom(card);
         card.current_y = -200.0F * Settings.scale;
         card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 200.0F, (Settings.WIDTH / 2.0F) + 200.0F);
         card.target_y = MathUtils.random((Settings.HEIGHT / 2.0F) - 50.0F, (Settings.HEIGHT / 2.0F) + 50.0F);

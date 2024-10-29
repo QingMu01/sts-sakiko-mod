@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -73,6 +74,7 @@ public class ClassicMusicianPower extends AbstractPower {
                 }
                 tmp.purgeOnUse = true;
                 AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, card.energyOnUse, true, true), true);
+                this.addToBot(new UnlimboAction(tmp));
             }
         }
 

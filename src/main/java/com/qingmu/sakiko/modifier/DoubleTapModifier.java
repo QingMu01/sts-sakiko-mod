@@ -3,6 +3,7 @@ package com.qingmu.sakiko.modifier;
 import basemod.abstracts.AbstractCardModifier;
 import basemod.helpers.CardModifierManager;
 import basemod.helpers.TooltipInfo;
+import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
@@ -66,6 +67,7 @@ public class DoubleTapModifier extends AbstractMusicCardModifier {
         } else {
             AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(copy, true, card.energyOnUse, true, true), true);
         }
+        this.addToBot(new UnlimboAction(copy));
     }
 
     @Override

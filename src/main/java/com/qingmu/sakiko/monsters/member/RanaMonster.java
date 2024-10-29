@@ -106,10 +106,11 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setPredicate(m -> !MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty() && AbstractDungeon.monsterRng.randomBoolean())
                 .setActions(() -> new AbstractGameAction[]{
                         new ReadyToPlayMusicAction(1, this),
-                        new PlayBGMAction(MusicHelper.HARUHIKAGE, false, this)
+                        new PlayBGMAction(MusicHelper.HARUHIKAGE, this)
                 }).build());
         return specialIntentActions;
     }
+
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
@@ -156,7 +157,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setIntent(Intent.ATTACK)
                 .setDamageAmount(this.damage.get(2))
                 .setMultiplier(this.multiCount)
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
+                .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                 .build());
         return intentActions;
     }

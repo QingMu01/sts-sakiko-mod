@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.utils;
+package com.qingmu.sakiko.saved;
 
 import basemod.abstracts.CustomSavable;
 

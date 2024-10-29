@@ -44,6 +44,7 @@ public class GameActionManagerPatch {
     public static class ClearPatch {
         // 进入下一个房间前执行的操作，清空本场战斗保留的数据
         public static void Postfix(GameActionManager __instance) {
+            // 还原各类参数
             SakikoConst.MUSIC_QUEUE_LIMIT_USED = SakikoConst.MUSIC_QUEUE_LIMIT;
             SakikoConst.STANCE_CHANGE_THRESHOLD_USED = SakikoConst.STANCE_CHANGE_THRESHOLD;
             SakikoConst.FLOW_THRESHOLD_USED = SakikoConst.FLOW_THRESHOLD;
