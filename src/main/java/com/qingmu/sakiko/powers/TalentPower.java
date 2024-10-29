@@ -4,6 +4,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.action.common.DrawMusicAction;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class TalentPower extends AbstractPower {
@@ -12,18 +13,23 @@ public class TalentPower extends AbstractPower {
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
-    public TalentPower(AbstractCreature owner) {
+    public TalentPower(AbstractCreature owner, int amount) {
         this.name = NAME;
         this.ID = POWER_ID;
         this.owner = owner;
         this.type = PowerType.BUFF;
-        this.amount = -1;
+        this.amount = amount;
         this.loadRegion("curiosity");
         this.updateDescription();
     }
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+    }
+
+    @Override
+    public void atStartOfTurnPostDraw() {
+        this.addToBot(new DrawMusicAction(this.amount));
     }
 }

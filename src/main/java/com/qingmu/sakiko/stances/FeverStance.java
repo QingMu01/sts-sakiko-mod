@@ -11,6 +11,8 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.stances.NeutralStance;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.stance.WrathParticleEffect;
+import com.qingmu.sakiko.action.common.DrawMusicAction;
+import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.SakikoStanceAuraEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
@@ -28,16 +30,17 @@ public class FeverStance extends AbstractSakikoStance implements ModifiedMusicNu
     @Override
     public void onEnterStance() {
         AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.ORANGE, true));
+        this.submitActionsToBot(new DrawMusicAction(3), new ReadyToPlayMusicAction(3));
     }
 
     @Override
-    public void atStartOfTurn() {
+    public void onEndOfTurn() {
         this.submitActionsToBot(new ChangeStanceAction(NeutralStance.STANCE_ID));
     }
 
     @Override
     public void onPlayCard(AbstractCard card) {
-        if (card instanceof AbstractMusic){
+        if (card instanceof AbstractMusic) {
             CardModifierManager.addModifier(card, new ImmediatelyPlayModifier());
         }
     }

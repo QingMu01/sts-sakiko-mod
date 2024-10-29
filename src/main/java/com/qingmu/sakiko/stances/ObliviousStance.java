@@ -14,6 +14,8 @@ import com.megacrit.cardcrawl.stances.NeutralStance;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.ThoughtBubble;
 import com.megacrit.cardcrawl.vfx.stance.WrathParticleEffect;
+import com.qingmu.sakiko.action.common.DrawMusicAction;
+import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.action.effect.SakikoStanceAuraEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.characters.TogawaSakiko;
@@ -36,6 +38,7 @@ public class ObliviousStance extends AbstractSakikoStance {
     public void onEnterStance() {
         CardCrawlGame.sound.play("STANCE_ENTER_WRATH");
         AbstractDungeon.effectsQueue.add(new BorderFlashEffect(Color.GRAY, true));
+        this.submitActionsToBot(new DrawMusicAction(3), new ReadyToPlayMusicAction(3));
         if (DungeonHelper.isSakiko()) {
             ((TogawaSakiko) DungeonHelper.getPlayer()).switchMask(true);
             AbstractDungeon.effectList.add(new ThoughtBubble(DungeonHelper.getPlayer().dialogX, DungeonHelper.getPlayer().dialogY, 2.0F, DESCRIPTIONS[1], true));
@@ -44,7 +47,7 @@ public class ObliviousStance extends AbstractSakikoStance {
 
     @Override
     public void onPlayCard(AbstractCard card) {
-        if (card instanceof AbstractMusic){
+        if (card instanceof AbstractMusic) {
             CardModifierManager.addModifier(card, new ImmediatelyPlayModifier());
         }
     }

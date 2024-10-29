@@ -2,6 +2,7 @@ package com.qingmu.sakiko.relics;
 
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.stances.NeutralStance;
@@ -35,6 +36,12 @@ public class DoubleKeyboard extends AbstractSakikoRelic {
         if (DungeonHelper.getStance().ID.equals(NeutralStance.STANCE_ID)){
             this.addToBot(new ChangeStanceAction(CreatorStance.STANCE_ID));
         }
+    }
+
+    @Override
+    public void obtain() {
+        this.instantObtain(AbstractDungeon.player, 0, true);
+        this.flash();
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SakikoConst {
+
     public static final List<String> BAND_MEMBER_LIST = Arrays.asList(UikaMonster.ID, MutsumiMonster.ID, UmiriMonster.ID, NyamuchiMonster.ID, TomoriMonster.ID,AnonMonster.ID,SoyoMonster.ID,TakiMonster.ID,RanaMonster.ID);
 
     public static final List<String> AVE_MUJICA = Arrays.asList(Uika.ID, Mutsumi.ID, Nyamuchi.ID, Umiri.ID);
@@ -23,8 +24,8 @@ public class SakikoConst {
     public static int FLOW_THRESHOLD_USED = 10;
 
     // 维持忘却的阈值
-    public static final int OBLIVIOUS_STANCE_THRESHOLD = 3;
-    public static int OBLIVIOUS_STANCE_THRESHOLD_USED = 3;
+    public static final int OBLIVIOUS_STANCE_THRESHOLD = 4;
+    public static int OBLIVIOUS_STANCE_THRESHOLD_USED = 4;
 
     // 音乐队列大小
     public static final int MUSIC_QUEUE_LIMIT = 3;

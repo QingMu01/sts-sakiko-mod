@@ -2,6 +2,7 @@ package com.qingmu.sakiko.monsters;
 
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 
 public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
@@ -44,9 +45,11 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
         this.baseSlash = AbstractDungeon.monsterHpRng.random(this.baseSlash - 2, this.baseSlash + 2);
         this.baseBlock = AbstractDungeon.monsterHpRng.random(this.baseBlock, this.baseBlock + 3);
 
-        AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
-        if (monster != null) {
-            this.isMinion = true;
+        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom){
+            AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
+            if (monster != null) {
+                this.isMinion = true;
+            }
         }
     }
 

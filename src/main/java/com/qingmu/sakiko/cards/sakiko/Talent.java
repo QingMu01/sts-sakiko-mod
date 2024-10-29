@@ -21,8 +21,10 @@ public class Talent extends AbstractSakikoCard {
 
     public Talent() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 0);
-        this.setUpgradeAttr(0, 0, 0, 0);
+        this.initBaseAttr(1, 0, 0, 1);
+        this.setUpgradeAttr(1, 0, 0, 0);
+
+        this.setInnate(false, true);
 
         this.keywords.add(SakikoConst.KEYWORD_FEVER);
         this.keywords.add(SakikoConst.KEYWORD_OBLIVIOUS);
@@ -30,6 +32,6 @@ public class Talent extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new TalentPower(p)));
+        this.addToBot(new ApplyPowerAction(p, p, new TalentPower(p, this.magicNumber), this.magicNumber));
     }
 }

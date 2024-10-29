@@ -21,7 +21,8 @@
   "SakikoMod:FukkenPower": {
     "NAME": "复权",
     "DESCRIPTIONS": [
-      "强化AveMujica所属的 #y音乐 牌的效果。"
+      "强化 #y音乐 牌的效果。回合结束时，下降 #b",
+      " 层。（由本回合演奏次数决定）"
     ]
   },
   "SakikoMod:FeverPower": {
@@ -101,7 +102,8 @@
   "SakikoMod:TalentPower": {
     "NAME": "才华横溢",
     "DESCRIPTIONS": [
-      "你的心流槽不会在回合结束时清空。"
+      "回合开始时，从 #y歌单 抽 #b",
+      " 张牌。"
     ]
   },
   "SakikoMod:FormerGloryPower": {

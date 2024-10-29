@@ -298,7 +298,8 @@
   },
   "SakikoMod:Talent": {
     "NAME": "才华横溢",
-    "DESCRIPTION": "你的 sakikomod:心流槽 不会在回合结束时清空。"
+    "DESCRIPTION": "回合开始时，从 sakikomod:歌单 抽 !M! 张牌。",
+    "UPGRADE_DESCRIPTION": " 固有 。 NL 回合开始时，从 sakikomod:歌单 抽 !M! 张牌。"
   },
   "SakikoMod:Masquerade": {
     "NAME": "假面舞会",

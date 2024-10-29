@@ -1,44 +1,18 @@
 package com.qingmu.sakiko.patch.action;
 
-import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.powers.TalentPower;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
-import javassist.CtBehavior;
 
 import java.util.Comparator;
 
 public class GameActionManagerPatch {
-
-    @SpirePatch(clz = GameActionManager.class, method = "getNextAction")
-    public static class GetNextActionPatch {
-
-        // 切换回合时执行的操作，清空当前回合记录过的信息
-        @SpireInsertPatch(locator = Locator.class)
-        public static void insert(GameActionManager __instance) {
-            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).clear();
-            if (DungeonHelper.getPlayer().hasPower(TalentPower.POWER_ID)) {
-                DungeonHelper.getPlayer().getPower(TalentPower.POWER_ID).flash();
-            } else {
-                MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(DungeonHelper.getPlayer(), 0);
-            }
-
-        }
-
-        public static class Locator extends SpireInsertLocator {
-            @Override
-            public int[] Locate(CtBehavior ctBehavior) throws Exception {
-                Matcher matcher = new Matcher.FieldAccessMatcher(GameActionManager.class, "turn");
-                return LineFinder.findInOrder(ctBehavior, matcher);
-            }
-        }
-    }
 
     @SpirePatch(clz = GameActionManager.class, method = "clear")
     public static class ClearPatch {
@@ -60,8 +34,12 @@ public class GameActionManagerPatch {
 
     @SpirePatch(clz = GameActionManager.class, method = "callEndOfTurnActions")
     public static class CallEndOfTurnActionsPatch {
-        // 回合结束时自动演奏安可曲
         public static void Postfix(GameActionManager __instance) {
+            // 清空当前回合记录过的信息
+            MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).clear();
+            MusicBattleFiledPatch.BattalInfoFiled.stanceChangedThisTurn.set(DungeonHelper.getPlayer(), 0);
+
+            // 回合结束时自动演奏安可曲
             CardGroup cardGroup = CardsHelper.mq();
             long count = cardGroup.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)).count();
             if (count > 0) {
