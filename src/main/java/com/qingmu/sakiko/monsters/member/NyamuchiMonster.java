@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
@@ -55,7 +54,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        if (this.hasPower(MinionPower.POWER_ID)) {
+        if (this.isMinion) {
             this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
         } else {
             this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
@@ -66,66 +65,102 @@ public class NyamuchiMonster extends AbstractMemberMonster {
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        // 20概率普通攻击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
-                }).build());
-        // 20概率防御
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.DEFEND)
-                .setActions(() -> new AbstractGameAction[]{new GainBlockAction(this, this.baseBlock)})
-                .build());
-        // 20概率重击
-        intentActions.add(new IntentAction.Builder()
-                .setMoveName(MOVES[1])
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(1))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateFastAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
-                }).build());
-        // 40概率强化
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(40)
-                .setIntent(Intent.BUFF)
-                .setRepeatInterval(5)
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)),
-                        // 强化后下一个行动为蓄力
-                }).setCallback(ia -> {
-                    this.multiCount++;
-                    this.specialIntent.add(0, new SpecialIntentAction.Builder()
-                            .setPredicate(m -> true)
-                            .setIntent(Intent.UNKNOWN)
-                            .setActions(() -> new AbstractGameAction[]{new WaitAction(0.1f)})
-                            // 蓄力后下一个行动为连击
-                            .setCallback(ia1 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
-                                    .setMoveName(MOVES[2])
-                                    .setPredicate(m -> true)
-                                    .setIntent(Intent.ATTACK)
-                                    .setDamageAmount(this.damage.get(2))
-                                    .setMultiplier(this.multiCount)
-                                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
-                                    // 设置一个空回合
-                                    .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
-                                            .setMoveName(MOVES[0])
-                                            .setIntent(Intent.STUN)
-                                            .setActions(() -> new AbstractGameAction[]{
-                                                    new TalkAction(this, DIALOG[2], 1.0F, 2.0F)
-                                            })
-                                            .build()))
-                                    .build()
-                            )).build()
-                    );
-                }).build());
+        if (this.isMinion) {
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(100)
+                    .setIntent(Intent.BUFF)
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)),
+                            // 强化后下一个行动为蓄力
+                    }).setCallback(ia -> {
+                        this.multiCount++;
+                        this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                .setPredicate(m -> true)
+                                .setIntent(Intent.UNKNOWN)
+                                .setActions(() -> new AbstractGameAction[]{new WaitAction(0.1f)})
+                                // 蓄力后下一个行动为连击
+                                .setCallback(ia1 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                        .setMoveName(MOVES[2])
+                                        .setPredicate(m -> true)
+                                        .setIntent(Intent.ATTACK)
+                                        .setDamageAmount(this.damage.get(2))
+                                        .setMultiplier(this.multiCount)
+                                        .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                                        // 设置一个空回合
+                                        .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                                .setMoveName(MOVES[0])
+                                                .setIntent(Intent.STUN)
+                                                .setActions(() -> new AbstractGameAction[]{
+                                                        new TalkAction(this, DIALOG[2], 1.0F, 2.0F)
+                                                })
+                                                .build()))
+                                        .build()
+                                )).build()
+                        );
+                    }).build());
+        } else {
+            // 20概率普通攻击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(0))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
+                    }).build());
+            // 20概率防御
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.DEFEND)
+                    .setActions(() -> new AbstractGameAction[]{new GainBlockAction(this, this.baseBlock)})
+                    .build());
+            // 20概率重击
+            intentActions.add(new IntentAction.Builder()
+                    .setMoveName(MOVES[1])
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateFastAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
+                    }).build());
+            // 40概率强化
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(40)
+                    .setIntent(Intent.BUFF)
+                    .setRepeatInterval(5)
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new ApplyPowerAction(this, this, new StrengthPower(this, this.powerful)),
+                            // 强化后下一个行动为蓄力
+                    }).setCallback(ia -> {
+                        this.multiCount++;
+                        this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                .setPredicate(m -> true)
+                                .setIntent(Intent.UNKNOWN)
+                                .setActions(() -> new AbstractGameAction[]{new WaitAction(0.1f)})
+                                // 蓄力后下一个行动为连击
+                                .setCallback(ia1 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                        .setMoveName(MOVES[2])
+                                        .setPredicate(m -> true)
+                                        .setIntent(Intent.ATTACK)
+                                        .setDamageAmount(this.damage.get(2))
+                                        .setMultiplier(this.multiCount)
+                                        .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                                        // 设置一个空回合
+                                        .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                                .setMoveName(MOVES[0])
+                                                .setIntent(Intent.STUN)
+                                                .setActions(() -> new AbstractGameAction[]{
+                                                        new TalkAction(this, DIALOG[2], 1.0F, 2.0F)
+                                                })
+                                                .build()))
+                                        .build()
+                                )).build()
+                        );
+                    }).build());
+        }
         return intentActions;
     }
 }

@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
@@ -71,7 +70,7 @@ public class UmiriMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        if (this.hasPower(MinionPower.POWER_ID)) {
+        if (this.isMinion) {
             this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
         } else {
             this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));

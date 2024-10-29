@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
-import com.megacrit.cardcrawl.powers.MinionPower;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.constant.SoundHelper;
@@ -63,7 +63,7 @@ public class TakiMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        if (this.hasPower(MinionPower.POWER_ID)) {
+        if (this.isMinion) {
             this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
         } else {
             this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
@@ -79,9 +79,15 @@ public class TakiMonster extends AbstractMemberMonster {
                 .setPredicate(m -> m.hasPower(TakiInferiorityPower.POWER_ID) ? AbstractDungeon.aiRng.randomBoolean(0.05f) : AbstractDungeon.aiRng.randomBoolean(0.6f))
                 .setIntent(Intent.BUFF)
                 .setRemovable(m -> false)
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateJumpAction(this),
-                        new ApplyPowerAction(this, this, new TakiInferiorityPower(this, powerful))
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new AnimateJumpAction(this));
+                    for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                        if (!monster.isDead && !monster.isDying) {
+                            actions.add(new ApplyPowerAction(monster, this, new TakiInferiorityPower(monster, powerful)));
+                        }
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
                 })
                 .build());
         return specialIntentActions;
@@ -90,49 +96,84 @@ public class TakiMonster extends AbstractMemberMonster {
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        // 30概率攻击+防御
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(30)
-                .setIntent(Intent.ATTACK_DEFEND)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
-                        new GainBlockAction(this, this, this.baseBlock)
-                }).build());
-        // 10概率普通攻击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(10)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
-                }).build());
-        // 20概率重击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(1))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
-                }).build());
-        // 20概率连击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(2))
-                .setMultiplier(this.multiCount)
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2),this.multiCount))
-                .build());
-        // 20概率格挡
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.DEFEND)
-                .setActions(() -> new AbstractGameAction[]{
-                        new GainBlockAction(this, this, this.baseBlock)
-                }).build());
+        if (this.isMinion) {
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(50)
+                    .setIntent(Intent.DEFEND)
+                    .setActions(() -> {
+                        ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                        actions.add(new AnimateJumpAction(this));
+                        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                            if (!monster.isDead && !monster.isDying) {
+                                if (monster.id.equals(TomoriMonster.ID)) {
+                                    actions.add(new GainBlockAction(monster, this, this.baseBlock * 2,true));
+                                } else {
+                                    actions.add(new GainBlockAction(monster, this, this.baseBlock,true));
+                                }
+                            }
+                        }
+                        return actions.toArray(new AbstractGameAction[0]);
+                    }).build());
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(25)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
+                    }).build());
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(25)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(2))
+                    .setMultiplier(this.multiCount)
+                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                    .build());
+        } else {
+            // 30概率攻击+防御
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(30)
+                    .setIntent(Intent.ATTACK_DEFEND)
+                    .setDamageAmount(this.damage.get(0))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
+                            new GainBlockAction(this, this, this.baseBlock)
+                    }).build());
+            // 10概率普通攻击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(10)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(0))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0))
+                    }).build());
+            // 20概率重击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
+                    }).build());
+            // 20概率连击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(2))
+                    .setMultiplier(this.multiCount)
+                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                    .build());
+            // 20概率格挡
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.DEFEND)
+                    .setActions(() -> new AbstractGameAction[]{
+                            new GainBlockAction(this, this, this.baseBlock)
+                    }).build());
+        }
         return intentActions;
     }
 }

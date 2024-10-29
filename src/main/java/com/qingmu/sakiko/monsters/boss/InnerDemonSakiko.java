@@ -18,12 +18,14 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.action.RenameMonsterAction;
+import com.qingmu.sakiko.action.common.PlayBGMAction;
 import com.qingmu.sakiko.action.monster.CrychicHonorAction;
 import com.qingmu.sakiko.action.monster.ExhaustDemonSakikoCardAction;
 import com.qingmu.sakiko.cards.music.monster.AbolitionCase;
 import com.qingmu.sakiko.cards.music.monster.AveMujica_Boss;
 import com.qingmu.sakiko.cards.music.monster.BlackBirthday_Boss;
 import com.qingmu.sakiko.cards.other.DistantPast;
+import com.qingmu.sakiko.constant.MusicHelper;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
@@ -31,10 +33,7 @@ import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.monsters.member.*;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.powers.monster.AveMujicaDictatorshipPower;
-import com.qingmu.sakiko.powers.monster.FakeKirameiPower;
-import com.qingmu.sakiko.powers.monster.IdealFukkenPower;
-import com.qingmu.sakiko.powers.monster.MusicalAbilityPower;
+import com.qingmu.sakiko.powers.monster.*;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -55,6 +54,8 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
 
     private int moveCount = 0;
 
+    private boolean repeatSummon = false;
+
     public InnerDemonSakiko(float x, float y) {
         super(MOVES[0] + NAME, ID, IMG, x, y);
         this.type = EnemyType.BOSS;
@@ -72,6 +73,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     public void usePreBattleAction() {
         AbstractDungeon.getCurrRoom().cannotLose = true;
         BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
+        this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2), 2));
     }
 
     @Override
@@ -98,6 +100,10 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
             if (AbstractDungeon.getCurrRoom().cannotLose) {
                 // 阶段转换
                 this.phase++;
+                // 静音bgm
+                CardCrawlGame.music.justFadeOutTempBGM();
+                this.isPlayBGM = false;
+                // 设置属性
                 if (this.phase == 1) {
                     this.addToBot(new TalkAction(this, DIALOG[1], 2.0F, 2.0F));
                 } else if (this.phase == 2) {
@@ -108,9 +114,11 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                     this.addToBot(new TalkAction(this, DIALOG[7], 2.0F, 2.0F));
                 }
                 this.halfDead = true;
-                AbstractDungeon.getCurrRoom().monsters.monsters.removeIf(monster -> monster.hasPower(MinionPower.POWER_ID));
                 // 清除debuff
-                this.powers.removeIf(power -> !power.ID.equals(IdealFukkenPower.POWER_ID) && !power.ID.equals(FakeKirameiPower.POWER_ID) && !power.ID.equals(InvinciblePower.POWER_ID));
+                this.powers.removeIf(power -> !power.ID.equals(IdealFukkenPower.POWER_ID)
+                        && !power.ID.equals(FakeKirameiPower.POWER_ID)
+                        && !power.ID.equals(StrengthPower.POWER_ID)
+                );
                 // 清除歌单
                 MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).clear();
                 // 清除爪牙
@@ -147,16 +155,19 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                     this.halfDead = false;
                     if (this.phase == 1) {
                         this.maxHealth = 800;
+                        this.addToBot(new PlayBGMAction(MusicHelper.AME, this));
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
                     } else if (this.phase == 2) {
                         this.maxHealth = 1000;
-                        this.addToBot(new TalkAction(this, DIALOG[4], 2.0F, 2.0F));
+                        this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2, true), 2));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
                     } else if (this.phase == 3) {
-                        this.maxHealth = 1000;
+                        this.maxHealth = 1200;
+                        this.addToBot(new PlayBGMAction(MusicHelper.MOONLIGHT, this));
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
+                        this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
                     }
                 })
                 .build()
@@ -339,12 +350,16 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setIntent(Intent.UNKNOWN)
                 .setActions(() -> {
                     List<AbstractGameAction> actions = new ArrayList<>();
+                    // 演出效果
+                    actions.add(new PlayBGMAction(MusicHelper.NINGENUTA, this));
                     actions.add(new SFXAction("MONSTER_COLLECTOR_SUMMON"));
                     actions.add(new TalkAction(this, DIALOG[0], 2.0F, 2.0F));
-                    actions.add(new SpawnMonsterAction(new TomoriMonster(this.hb_x - (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true));
-                    actions.add(new SpawnMonsterAction(new TakiMonster(this.hb_x + (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true));
-                    actions.add(new SpawnMonsterAction(new SoyoMonster(this.hb_x - (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
-                    actions.add(new SpawnMonsterAction(new MutsumiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+
+                    //召唤队友
+                    actions.add(new SpawnMonsterAction(new TomoriMonster(this.hb_x - this.hb_w - (50 * Settings.scale), this.hb_y + this.hb_h + (80 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new TakiMonster(this.hb_x + this.hb_w + (50 * Settings.scale), this.hb_y + this.hb_h + (80 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new SoyoMonster(this.hb_x - this.hb_w - (50 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new MutsumiMonster(this.hb_x + this.hb_w + (50 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
                     actions.add(new CrychicHonorAction(this));
                     return actions.toArray(new AbstractGameAction[0]);
                 })
@@ -376,14 +391,25 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setMoveName(MOVES[6])
                 .setIntent(Intent.UNKNOWN)
                 .setRemovable(m -> false)
-                .setActions(() -> new AbstractGameAction[]{
-                        new SFXAction("MONSTER_COLLECTOR_SUMMON"),
-                        new SpawnMonsterAction(new UikaMonster(this.hb_x - (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
-                        new SpawnMonsterAction(new MutsumiMonster(this.hb_x + (250 * Settings.scale), this.hb_y + (290 * Settings.scale)), true),
-                        new SpawnMonsterAction(new UmiriMonster(this.hb_x - (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true),
-                        new SpawnMonsterAction(new NyamuchiMonster(this.hb_x + (250 * Settings.scale), this.hb_y - (50 * Settings.scale)), true),
-                        new ApplyPowerAction(this, this, new AveMujicaDictatorshipPower(this))
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new PlayBGMAction(MusicHelper.AVEMUJICA, this));
+                    actions.add(new SFXAction("MONSTER_COLLECTOR_SUMMON"));
+                    if (this.repeatSummon) {
+                        actions.add(new TalkAction(this, DIALOG[8], 2.0F, 2.0F));
+                    } else {
+                        actions.add(new TalkAction(this, DIALOG[4], 2.0F, 2.0F));
+                    }
+                    actions.add(new SpawnMonsterAction(new UikaMonster(this.hb_x - this.hb_w - (50 * Settings.scale), this.hb_y + this.hb_h + (80 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new MutsumiMonster(this.hb_x + this.hb_w + (50 * Settings.scale), this.hb_y + this.hb_h + (80 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new UmiriMonster(this.hb_x - this.hb_w - (50 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+                    actions.add(new SpawnMonsterAction(new NyamuchiMonster(this.hb_x + this.hb_w + (50 * Settings.scale), this.hb_y - (50 * Settings.scale)), true));
+                    if (!this.hasPower(AveMujicaDictatorshipPower.POWER_ID)){
+                        actions.add(new ApplyPowerAction(this, this, new AveMujicaDictatorshipPower(this)));
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
                 })
+                .setCallback(ia -> this.repeatSummon = true)
                 .build());
         // 四阶段 五福临门
         specialIntentActions.add(new SpecialIntentAction.Builder()

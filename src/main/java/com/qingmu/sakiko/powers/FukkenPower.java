@@ -1,14 +1,15 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FukkenPower extends AbstractPower implements ModifiedMusicNumber {
@@ -32,7 +33,6 @@ public class FukkenPower extends AbstractPower implements ModifiedMusicNumber {
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
 
         this.updateDescription();
-
     }
 
     @Override
@@ -42,6 +42,14 @@ public class FukkenPower extends AbstractPower implements ModifiedMusicNumber {
 
     @Override
     public float modifyMusicNumber(AbstractCard card, float musicNumber) {
-        return card.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + this.amount : musicNumber;
+        return musicNumber + this.amount;
+    }
+
+    @Override
+    public void atEndOfTurn(boolean isPlayer) {
+        if (isPlayer) {
+            this.flash();
+            this.addToBot(new ReducePowerAction(this.owner, this.owner, this, DungeonHelper.getPlayedNum_Turn()));
+        }
     }
 }

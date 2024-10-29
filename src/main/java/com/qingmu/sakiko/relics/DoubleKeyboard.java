@@ -1,9 +1,12 @@
 package com.qingmu.sakiko.relics;
 
 import basemod.BaseMod;
+import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.megacrit.cardcrawl.stances.NeutralStance;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.stances.CreatorStance;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -28,19 +31,15 @@ public class DoubleKeyboard extends AbstractSakikoRelic {
     }
 
     @Override
+    public void atTurnStart() {
+        if (DungeonHelper.getStance().ID.equals(NeutralStance.STANCE_ID)){
+            this.addToBot(new ChangeStanceAction(CreatorStance.STANCE_ID));
+        }
+    }
+
+    @Override
     public boolean canSpawn() {
         return DungeonHelper.getPlayer().hasRelic(ClassicPiano.ID);
-    }
-
-    @Override
-    public void obtain() {
-        this.instantObtain(DungeonHelper.getPlayer(), 0, true);
-        this.flash();
-    }
-
-    @Override
-    public void atBattleStart() {
-        SakikoConst.STANCE_CHANGE_THRESHOLD_USED -= 2;
     }
 
 }

@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.MinionPower;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.action.common.PlaySoundAction;
@@ -67,7 +66,7 @@ public class SoyoMonster extends AbstractMemberMonster {
     @Override
     public void die() {
         super.die();
-        if (this.hasPower(MinionPower.POWER_ID)) {
+        if (this.isMinion) {
             this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
         } else {
             this.addToBot(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
@@ -78,52 +77,76 @@ public class SoyoMonster extends AbstractMemberMonster {
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        // 20概率给予缠绕
-        intentActions.add(new IntentAction.Builder()
-                .setMoveName(MOVES[0])
-                .setWeight(20)
-                .setIntent(Intent.MAGIC)
-                .setRepeatInterval(3)
-                .setActions(() -> new AbstractGameAction[]{
-                        new PlaySoundAction(SoundHelper.SOYO_MAGIC),
-                        new AnimateJumpAction(this),
-                        new ApplyPowerAction(DungeonHelper.getPlayer(), this, new SoyoConstrictedPower(DungeonHelper.getPlayer(), this, this.powerful)),
-                        new ApplyHeavyAction(DungeonHelper.getPlayer(), this, this.powerful),
-                        new ApplyHeavyAction(this, DungeonHelper.getPlayer(), this.powerful)
-                }).build());
-        // 20概率重击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(1))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
-                }).build());
-        // 20概率攻击并格挡
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK_DEFEND)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
-                        new GainBlockAction(this, this.baseBlock)
-                }).build());
-        // 20概率专注格挡
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.DEFEND)
-                .setActions(() -> {
-                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
-                    actions.add(new AnimateSlowAttackAction(this));
-                    for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-                        if (!monster.isDead && !monster.isDying) {
-                            actions.add(new GainBlockAction(monster, this, this.baseBlock * 2));
+        if (this.isMinion) {
+            intentActions.add(new IntentAction.Builder()
+                    .setMoveName(MOVES[0])
+                    .setWeight(50)
+                    .setIntent(Intent.MAGIC)
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateJumpAction(this),
+                            new ApplyPowerAction(DungeonHelper.getPlayer(), this, new SoyoConstrictedPower(DungeonHelper.getPlayer(), this, this.powerful)),
+                    }).build());
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(50)
+                    .setIntent(Intent.DEFEND)
+                    .setActions(() -> {
+                        ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                        actions.add(new AnimateSlowAttackAction(this));
+                        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                            if (!monster.isDead && !monster.isDying) {
+                                actions.add(new GainBlockAction(monster, this, this.baseBlock * 2,true));
+                            }
                         }
-                    }
-                    return actions.toArray(new AbstractGameAction[0]);
-                }).build());
+                        return actions.toArray(new AbstractGameAction[0]);
+                    }).build());
+        } else {
+            // 20概率给予缠绕
+            intentActions.add(new IntentAction.Builder()
+                    .setMoveName(MOVES[0])
+                    .setWeight(20)
+                    .setIntent(Intent.MAGIC)
+                    .setRepeatInterval(3)
+                    .setActions(() -> new AbstractGameAction[]{
+                            new PlaySoundAction(SoundHelper.SOYO_MAGIC),
+                            new AnimateJumpAction(this),
+                            new ApplyPowerAction(DungeonHelper.getPlayer(), this, new SoyoConstrictedPower(DungeonHelper.getPlayer(), this, this.powerful)),
+                            new ApplyHeavyAction(DungeonHelper.getPlayer(), this, this.powerful),
+                            new ApplyHeavyAction(this, DungeonHelper.getPlayer(), this.powerful)
+                    }).build());
+            // 20概率重击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
+                    }).build());
+            // 20概率攻击并格挡
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK_DEFEND)
+                    .setDamageAmount(this.damage.get(0))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0)),
+                            new GainBlockAction(this, this.baseBlock)
+                    }).build());
+            // 20概率专注格挡
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.DEFEND)
+                    .setActions(() -> {
+                        ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                        actions.add(new AnimateSlowAttackAction(this));
+                        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                            if (!monster.isDead && !monster.isDying) {
+                                actions.add(new GainBlockAction(monster, this, this.baseBlock * 2));
+                            }
+                        }
+                        return actions.toArray(new AbstractGameAction[0]);
+                    }).build());
+        }
         return intentActions;
     }
 }

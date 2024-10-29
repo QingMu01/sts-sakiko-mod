@@ -15,8 +15,8 @@ public class SakikoConst {
 
 
     // 姿态转换阈值
-    public static final int STANCE_CHANGE_THRESHOLD = 5;
-    public static int STANCE_CHANGE_THRESHOLD_USED = 5;
+    public static final int STANCE_CHANGE_THRESHOLD = 3;
+    public static int STANCE_CHANGE_THRESHOLD_USED = 3;
 
     // 心流替换阈值
     public static final int FLOW_THRESHOLD = 10;

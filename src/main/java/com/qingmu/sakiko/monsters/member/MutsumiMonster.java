@@ -48,7 +48,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
     @Override
     public void usePreBattleAction() {
         super.usePreBattleAction();
-        if (this.hasPower(MinionPower.POWER_ID)) {
+        if (this.isMinion) {
             this.addToBot(new VFXAction(this, new InflameEffect(this), 0.2F));
         } else {
             this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
@@ -74,7 +74,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
                 .setIntent(Intent.STRONG_DEBUFF)
-                .setPredicate(monster -> DungeonHelper.getTurn() == 1)
+                .setPredicate(monster -> !this.isMinion)
                 .setActions(() -> new AbstractGameAction[]{
                         new MakeTempCardInDiscardAction(new VoidCard(), 1),
                         new MakeTempCardInDiscardAction(new Slimed(), 2)
@@ -98,39 +98,58 @@ public class MutsumiMonster extends AbstractMemberMonster {
     @Override
     protected List<IntentAction> initEffectiveIntentActions() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        // 20概率塞2粘液
-        intentActions.add(new IntentAction.Builder()
-                .setMoveName(MOVES[2])
-                .setWeight(20)
-                .setIntent(Intent.DEBUFF)
-                .setActions(() -> new AbstractGameAction[]{new MakeTempCardInDiscardAction(new Slimed(), powerful)})
-                .build());
-        // 30概率普通攻击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(30)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(0))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), true)
-                }).build());
-        // 20概率重击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(20)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(1))
-                .setActions(() -> new AbstractGameAction[]{
-                        new AnimateSlowAttackAction(this),
-                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1), true)
-                }).build());
-        // 30概率连击
-        intentActions.add(new IntentAction.Builder()
-                .setWeight(30)
-                .setIntent(Intent.ATTACK)
-                .setDamageAmount(this.damage.get(2))
-                .setMultiplier(this.multiCount)
-                .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
-                .build());
+        if (this.isMinion) {
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(50)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1))
+                    })
+                    .build());
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(50)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(2))
+                    .setMultiplier(this.multiCount)
+                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                    .build());
+        } else {
+            // 20概率塞2粘液
+            intentActions.add(new IntentAction.Builder()
+                    .setMoveName(MOVES[2])
+                    .setWeight(20)
+                    .setIntent(Intent.DEBUFF)
+                    .setActions(() -> new AbstractGameAction[]{new MakeTempCardInDiscardAction(new Slimed(), powerful)})
+                    .build());
+            // 30概率普通攻击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(30)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(0))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), true)
+                    }).build());
+            // 20概率重击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(20)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1), true)
+                    }).build());
+            // 30概率连击
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(30)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(2))
+                    .setMultiplier(this.multiCount)
+                    .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
+                    .build());
+        }
         return intentActions;
     }
 }
