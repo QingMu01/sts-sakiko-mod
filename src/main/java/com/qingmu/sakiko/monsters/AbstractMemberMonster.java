@@ -1,10 +1,14 @@
 package com.qingmu.sakiko.monsters;
 
 import com.megacrit.cardcrawl.dungeons.*;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 
 public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
 
     protected int baseHp = 80, baseAttack = 8, baseSlash = 12, baseMulti = 6, multiCount = 2, baseBlock = 7, powerful = 2;
+
+    protected boolean isMinion = false;
 
     public AbstractMemberMonster(String name, String id, String img, float x, float y) {
         super(name, id, img, x, y);
@@ -39,6 +43,11 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
         this.baseAttack = AbstractDungeon.monsterHpRng.random(this.baseAttack - 1, this.baseAttack + 1);
         this.baseSlash = AbstractDungeon.monsterHpRng.random(this.baseSlash - 2, this.baseSlash + 2);
         this.baseBlock = AbstractDungeon.monsterHpRng.random(this.baseBlock, this.baseBlock + 3);
+
+        AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
+        if (monster != null) {
+            this.isMinion = true;
+        }
     }
 
 }

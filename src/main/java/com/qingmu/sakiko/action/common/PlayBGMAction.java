@@ -10,25 +10,27 @@ public class PlayBGMAction extends AbstractGameAction {
     private boolean isForce;
     private AbstractSakikoMonster monster;
 
-    public PlayBGMAction(MusicHelper musicHelper, boolean isForce, AbstractSakikoMonster monster) {
+    public PlayBGMAction(MusicHelper musicHelper, AbstractSakikoMonster monster, boolean isForce) {
         this.musicHelper = musicHelper;
         this.isForce = isForce;
         this.monster = monster;
     }
 
     public PlayBGMAction(MusicHelper musicHelper, AbstractSakikoMonster monster) {
-        this(musicHelper, false, monster);
+        this(musicHelper, monster, false);
     }
 
     @Override
     public void update() {
         if (this.isForce) {
-            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name());
+            CardCrawlGame.music.silenceBGMInstantly();
+            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name(), true);
             this.isDone = true;
             return;
         }
         if (!this.monster.isPlayBGM) {
-            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name());
+            CardCrawlGame.music.silenceBGMInstantly();
+            CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name(), true);
             this.monster.isPlayBGM = true;
         }
         this.isDone = true;
