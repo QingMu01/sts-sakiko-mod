@@ -337,9 +337,16 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     public void registerMemberCollect() {
         // 添加成员入侵事件
-        BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class).playerClass(QINGMU_SAKIKO)
+        BaseMod.addEvent(new AddEventParams.Builder(InvasionEvent.ID, InvasionEvent.class)
+                .playerClass(QINGMU_SAKIKO)
+                .dungeonID(TheEnding.ID)
                 .spawnCondition(() -> false).bonusCondition(() -> false)
                 .endsWithRewardsUI(true).create());
+        // 注册结局事件
+        BaseMod.addEvent(new AddEventParams.Builder(EndingSakiko.ID, EndingSakiko.class)
+                .dungeonID(TheEnding.ID)
+                .spawnCondition(() -> false).bonusCondition(() -> false)
+                .create());
         // 添加乐队成员
         BaseMod.addMonster(UikaMonster.ID, UikaMonster.NAME, () -> new UikaMonster(0.0F, 0.0F));
         BaseMod.addMonster(MutsumiMonster.ID, MutsumiMonster.NAME, () -> new MutsumiMonster(0.0F, 0.0F));

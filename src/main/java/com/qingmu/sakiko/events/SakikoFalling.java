@@ -48,7 +48,7 @@ public class SakikoFalling extends PhasedEvent {
                     }
                 }));
 
-        registerPhase("select", new TextPhase(originaleventStrings.DESCRIPTIONS[1])
+        registerPhase("select", new TextPhase(DESCRIPTIONS[1])
                 .addOption(new TextPhase.OptionInfo(originaleventStrings.OPTIONS[1] + FontHelper.colorString(this.skillCard == null ? "None" : this.skillCard.name, "r"), this.skillCard).enabledCondition(() -> this.skill, originaleventStrings.OPTIONS[2]), e -> {
                     AbstractDungeon.effectList.add(new PurgeCardEffect(this.skillCard));
                     CardsHelper.md().removeCard(this.skillCard);

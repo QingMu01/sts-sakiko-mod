@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.action.ResetFakeIntentAction;
 import com.qingmu.sakiko.patch.ui.ChaosMonsterInfoPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -48,6 +49,11 @@ public class MashiroGiftPower extends AbstractPower {
             ChaosMonsterInfoPatch.FakeMonsterInfoPatch.fakeMonsterInfo.set(monster, fakeMonsterInfo);
             monster.healthBarUpdatedEvent();
         }));
+    }
+
+    @Override
+    public void onRemove() {
+        this.addToTop(new ResetFakeIntentAction());
     }
 
     @Override
