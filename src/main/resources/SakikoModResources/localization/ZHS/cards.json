@@ -42,7 +42,7 @@
   },
   "SakikoMod:QuaerereLumina": {
     "NAME": "探寻光明",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 获得 !M! 层 sakikomod:复权 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:ImpenetrableThorns": {
     "NAME": "拒绝的刺",
@@ -89,7 +89,7 @@
   },
   "SakikoMod:Climax": {
     "NAME": "渐入佳境",
-    "DESCRIPTION": "造成 !D! 点伤害，获得当前 姿态 进入或离开的特殊效果。"
+    "DESCRIPTION": "造成 !D! 点伤害。NL sakikomod:创作者 ：触发 sakikomod:演奏 。 NL sakikomod:演奏者 ：从 sakikomod:歌单 抽3张牌。"
   },
   "SakikoMod:SaffronWings": {
     "NAME": "藏红之翼",
@@ -129,7 +129,7 @@
   },
   "SakikoMod:MoonLaughNight": {
     "NAME": "月笑夜",
-    "DESCRIPTION": "造成!D!点伤害，你每有一层 sakikomod:复权 ，这张牌的伤害提高 !M! 。"
+    "DESCRIPTION": "造成!D!点伤害，你每有一点 sakikomod:复权 ，这张牌的伤害提高 !M! 。"
   },
   "SakikoMod:NoteTorrent": {
     "NAME": "音符洪流",
@@ -187,7 +187,7 @@
   },
   "SakikoMod:Oshiawaseni": {
     "NAME": "祝你幸福",
-    "DESCRIPTION": "获得 !B! 点 格挡 ，获得 !M! 层 sakikomod:复权 。"
+    "DESCRIPTION": "获得 !B! 点 格挡 ，获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
@@ -213,7 +213,7 @@
   },
   "SakikoMod:Reproduce": {
     "NAME": "再生产",
-    "DESCRIPTION": "从 sakikomod:歌单 顶部消耗一张牌，获得 !M! sakikomod:闪耀 。 NL 消耗 。",
+    "DESCRIPTION": "从 sakikomod:歌单 顶部消耗一张牌，获得 !M! 点 sakikomod:闪耀 。 NL 消耗 。",
     "EXTENDED_DESCRIPTION": [
       "我的歌单中没有 #r音乐牌 可供再生产了。"
     ]
@@ -276,7 +276,7 @@
   },
   "SakikoMod:FirstOne": {
     "NAME": "最初降临之人",
-    "DESCRIPTION": "获得 !M! 点 sakikomod:复权 。"
+    "DESCRIPTION": "回合开始时，获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:BandLeader": {
     "NAME": "乐队领袖",
@@ -326,8 +326,8 @@
   },
   "SakikoMod:HolyHymn": {
     "NAME": "神圣高杰的赞美之歌",
-    "DESCRIPTION": "你每次转换 姿态 时，获得 !M! 层 sakikomod:复权 。 NL 虚无 。",
-    "UPGRADE_DESCRIPTION": "你每次转换 姿态 时，获得 !M! 层 sakikomod:复权 。"
+    "DESCRIPTION": "你每次转换 姿态 时，获得 !M! 点 sakikomod:复权 。 NL 虚无 。",
+    "UPGRADE_DESCRIPTION": "你每次转换 姿态 时，获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:MakeKingOfTingEX": {
     "NAME": "挺王制成EX",
@@ -530,6 +530,12 @@
     "NAME": "专辑：元素",
     "DESCRIPTION": "从 *元素 系列曲中选择一张加入手牌。"
   },
+  "SakikoMod:MutsumiSupport": {
+    "NAME": "园艺部的农产品",
+    "MINI_TITLE": "若叶睦的帮助",
+    "DESCRIPTION": "不知道里面装了什么，使用后随机获得 [E] 、恢复 !M! 生命值、随机普通药水或者其他什么东西。 NL 保留 消耗 。",
+    "UPGRADE_DESCRIPTION": "不知道里面装了什么，使用后随机获得 [E] [E] 、恢复 !M! 生命值、随机药水或者其他什么东西。 NL 保留 消耗 。"
+  },
   "SakikoMod:Haruhikage_Rana": {
     "NAME": "春日影",
     "MINI_TITLE": "乐奈",
@@ -565,23 +571,23 @@
   },
   "SakikoMod:DistantPast": {
     "NAME": "遥远的过去",
-    "DESCRIPTION": " 不能被打出 。 NL 抽到时，抽一张牌，给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。被 消耗 时，若卡组中的同名卡少于六张，则在弃牌堆加入两张复制品。 NL 虚无 。",
+    "DESCRIPTION": " 不能被打出 。 NL 抽到时，抽一张牌，给予心魔祥子 !M! 点 sakikomod:记忆中的闪耀 。被 消耗 时，若卡组中的同名卡少于六张，则在弃牌堆加入两张复制品。 NL 虚无 。",
     "EXTENDED_DESCRIPTION": [
       "这张牌不能被打出。"
     ]
   },
   "SakikoMod:AbolitionCase": {
     "NAME": "废案",
-    "DESCRIPTION": " sakikomod:安可曲 NL 抽到时自动打出这张牌。这张牌位于待演奏区时，你每次 sakikomod:演奏 给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
+    "DESCRIPTION": " sakikomod:安可曲 NL 抽到时自动打出这张牌。这张牌位于待演奏区时，你每次 sakikomod:演奏 给予心魔祥子 !M! 点 sakikomod:理想中的复权 。"
   },
   "SakikoMod:AveMujica_Boss": {
     "NAME": "Ave Mujica",
     "MINI_TITLE": "心魔祥子",
-    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:记忆中的闪耀 。"
+    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 点 sakikomod:记忆中的闪耀 。"
   },
   "SakikoMod:BlackBirthday_Boss": {
     "NAME": "Black Birthday",
     "MINI_TITLE": "心魔祥子",
-    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 层 sakikomod:理想中的复权 。"
+    "DESCRIPTION": " sakikomod:演奏 ：给予心魔祥子 !M! 点 sakikomod:理想中的复权 。"
   }
 }

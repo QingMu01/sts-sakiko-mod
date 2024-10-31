@@ -26,7 +26,7 @@ public class Umiri extends AbstractBandMember {
     }
 
     @Override
-    public void atBattleStart() {
+    public void atTurnStart() {
         this.flash();
         this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new FukkenPower(DungeonHelper.getPlayer(), 1),1));
     }

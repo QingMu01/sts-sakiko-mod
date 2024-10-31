@@ -31,7 +31,7 @@ public class Adventus extends AbstractSakikoCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY, damageAmount -> {
             if (damageAmount > 0) {
-                this.addToBot(new DrawCardAction(1, new AdventusAction(p, damageAmount)));
+                this.addToBot(new DrawCardAction(1, new AdventusAction(p, damageAmount, this)));
             }
         }));
     }

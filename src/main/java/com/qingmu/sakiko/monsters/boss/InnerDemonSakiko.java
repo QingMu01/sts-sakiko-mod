@@ -31,7 +31,6 @@ import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.monsters.member.*;
-import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.monster.*;
 import com.qingmu.sakiko.utils.CardsHelper;
@@ -72,7 +71,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     @Override
     public void usePreBattleAction() {
         AbstractDungeon.getCurrRoom().cannotLose = true;
-        BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2), 2));
     }
 

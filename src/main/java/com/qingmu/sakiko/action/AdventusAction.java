@@ -10,10 +10,12 @@ import com.qingmu.sakiko.constant.SakikoEnum;
 public class AdventusAction extends AbstractGameAction {
 
     private final AbstractPlayer player;
+    private final AbstractCard card;
 
-    public AdventusAction(AbstractPlayer player, int damageAmount) {
+    public AdventusAction(AbstractPlayer player, int damageAmount, AbstractCard card) {
         this.player = player;
         this.amount = damageAmount;
+        this.card = card;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class AdventusAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-        if (this.player.drawPile.isEmpty() && this.player.discardPile.size() == this.player.discardPile.group.stream().filter(card -> card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT)).count()) {
+        if (this.player.drawPile.isEmpty() && this.player.discardPile.group.stream().allMatch(card -> card.hasTag(SakikoEnum.CardTagEnum.MOONLIGHT))) {
             this.isDone = true;
             return;
         }
@@ -35,7 +37,7 @@ public class AdventusAction extends AbstractGameAction {
             this.amount -= Math.max(card.costForTurn, 0);
         }
         if (this.amount > 0) {
-            this.addToBot(new DrawCardAction(1, new AdventusAction(this.player, this.amount)));
+            this.addToBot(new DrawCardAction(1, new AdventusAction(this.player, this.amount, this.card)));
         }
         this.isDone = true;
     }

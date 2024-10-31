@@ -6,7 +6,7 @@
 
     <groupId>com.qingmu</groupId>
     <artifactId>sakiko-mod</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -45,6 +45,13 @@
             <version>0.8.52</version>
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/3248151544/AnonMod.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>spireTogether</groupId>
+            <artifactId>spireTogether</artifactId>
+            <version>6.4.16</version>
+            <scope>system</scope>
+            <systemPath>${Steam.path}/workshop/content/646570/2384072973/TogetherInSpire.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -223,6 +223,13 @@
       " 个回合，你的 #y心之壁 层数不再会因为激活而下降。"
     ]
   },
+  "SakikoMod:FirstOnePower": {
+    "NAME": "最初降临之人",
+    "DESCRIPTIONS": [
+      "回合开始时，获得 #b",
+      " 点 #y复权 。"
+    ]
+  },
   "SakikoMod:NingenUtaPower": {
     "NAME": "想要成为人类之歌",
     "DESCRIPTIONS": [

@@ -84,7 +84,11 @@ public class TakiMonster extends AbstractMemberMonster {
                     actions.add(new AnimateJumpAction(this));
                     for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                         if (!monster.isDead && !monster.isDying) {
-                            actions.add(new ApplyPowerAction(monster, this, new TakiInferiorityPower(monster, powerful)));
+                            if (this.isMinion) {
+                                actions.add(new ApplyPowerAction(monster, this, new TakiInferiorityPower(monster, 1), 1));
+                            } else {
+                                actions.add(new ApplyPowerAction(monster, this, new TakiInferiorityPower(monster, powerful), powerful));
+                            }
                         }
                     }
                     return actions.toArray(new AbstractGameAction[0]);
@@ -106,9 +110,9 @@ public class TakiMonster extends AbstractMemberMonster {
                         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                             if (!monster.isDead && !monster.isDying) {
                                 if (monster.id.equals(TomoriMonster.ID)) {
-                                    actions.add(new GainBlockAction(monster, this, this.baseBlock * 2,true));
+                                    actions.add(new GainBlockAction(monster, this, this.baseBlock * 2, true));
                                 } else {
-                                    actions.add(new GainBlockAction(monster, this, this.baseBlock,true));
+                                    actions.add(new GainBlockAction(monster, this, this.baseBlock, true));
                                 }
                             }
                         }

@@ -2,14 +2,11 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.stances.AbstractStance;
-import com.megacrit.cardcrawl.stances.CalmStance;
-import com.megacrit.cardcrawl.stances.DivinityStance;
 import com.qingmu.sakiko.action.common.DrawMusicAction;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
@@ -44,16 +41,10 @@ public class Climax extends AbstractSakikoCard {
     private AbstractGameAction getStanceAction(AbstractStance stance) {
         AbstractGameAction action = new WaitAction(0.1f);
         if (stance instanceof PlayerStance) {
-            action = new ReadyToPlayMusicAction(3);
-        }
-        if (stance instanceof CreatorStance) {
             action = new DrawMusicAction(3);
         }
-        if (stance instanceof CalmStance) {
-            action = new GainEnergyAction(2);
-        }
-        if (stance instanceof DivinityStance) {
-            action = new GainEnergyAction(3);
+        if (stance instanceof CreatorStance) {
+            action = new ReadyToPlayMusicAction(3);
         }
         return action;
     }

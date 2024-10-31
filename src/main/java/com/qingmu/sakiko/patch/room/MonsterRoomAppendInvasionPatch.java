@@ -1,20 +1,13 @@
 package com.qingmu.sakiko.patch.room;
 
 import basemod.BaseMod;
-import basemod.CustomEventRoom;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.events.AbstractImageEvent;
-import com.megacrit.cardcrawl.events.RoomEventDialog;
-import com.megacrit.cardcrawl.map.MapEdge;
-import com.megacrit.cardcrawl.map.MapRoomNode;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.qingmu.sakiko.events.InvasionEvent;
 import com.qingmu.sakiko.saved.InvasionChangeSaved;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.MemberHelper;
-
-import java.util.ArrayList;
 
 
 public class MonsterRoomAppendInvasionPatch {
@@ -32,47 +25,16 @@ public class MonsterRoomAppendInvasionPatch {
         public static void Postfix(MonsterRoom __instance) {
             if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && DungeonHelper.isSakiko()) {
                 if (AbstractDungeon.floorNum > 35 && MemberHelper.getCount() < 4) {
-                    setEvent();
+                    DungeonHelper.setRoomEvent(InvasionEvent.ID);
                 } else if (MemberHelper.getCount() < 4){
-                    if (AbstractDungeon.eventRng.randomBoolean(invasion.chance)) {
+                    if (AbstractDungeon.miscRng.randomBoolean(invasion.chance)) {
                         invasion.chance = 0;
-                        setEvent();
+                        DungeonHelper.setRoomEvent(InvasionEvent.ID);
                     } else {
                         invasion.chance += upgradeChance;
                     }
                 }
             }
         }
-
-        private static void setEvent() {
-            RoomEventDialog.optionList.clear();
-            // 要触发的事件ID，需要先在Mod主类注册
-            AbstractDungeon.eventList.add(0, InvasionEvent.ID);
-            MapRoomNode cur = AbstractDungeon.currMapNode;
-            MapRoomNode node = new MapRoomNode(cur.x, cur.y);
-            node.room = new CustomEventRoom();
-            ArrayList<MapEdge> curEdges = cur.getEdges();
-            for (MapEdge edge : curEdges)
-                node.addEdge(edge);
-            DungeonHelper.getPlayer().releaseCard();
-            AbstractDungeon.overlayMenu.hideCombatPanels();
-            AbstractDungeon.previousScreen = null;
-            AbstractDungeon.dynamicBanner.hide();
-            AbstractDungeon.dungeonMapScreen.closeInstantly();
-            AbstractDungeon.closeCurrentScreen();
-            AbstractDungeon.topPanel.unhoverHitboxes();
-            AbstractDungeon.fadeIn();
-            AbstractDungeon.effectList.clear();
-            AbstractDungeon.topLevelEffects.clear();
-            AbstractDungeon.topLevelEffectsQueue.clear();
-            AbstractDungeon.effectsQueue.clear();
-            AbstractDungeon.dungeonMapScreen.dismissable = true;
-            AbstractDungeon.nextRoom = node;
-            AbstractDungeon.setCurrMapNode(node);
-            AbstractDungeon.getCurrRoom().onPlayerEntry();
-            AbstractDungeon.scene.nextRoom(node.room);
-            AbstractDungeon.rs = (node.room.event instanceof AbstractImageEvent) ? AbstractDungeon.RenderScene.EVENT : AbstractDungeon.RenderScene.NORMAL;
-        }
-
     }
 }

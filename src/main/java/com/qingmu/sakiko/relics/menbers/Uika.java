@@ -4,7 +4,7 @@ import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.qingmu.sakiko.constant.SakikoConst;
-import com.qingmu.sakiko.powers.FukkenPower;
+import com.qingmu.sakiko.powers.KirameiPower;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -15,7 +15,7 @@ public class Uika extends AbstractBandMember {
 
     public Uika() {
         super(ID, IMG_PATH);
-        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_FUKKEN),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_FUKKEN)));
+        this.tips.add(new PowerTip(BaseMod.getKeywordTitle(SakikoConst.KEYWORD_KIRAMEI),BaseMod.getKeywordDescription(SakikoConst.KEYWORD_KIRAMEI)));
     }
 
     @Override
@@ -26,6 +26,6 @@ public class Uika extends AbstractBandMember {
     @Override
     public void atBattleStart() {
         this.flash();
-        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new FukkenPower(DungeonHelper.getPlayer(), 1),1));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(),DungeonHelper.getPlayer(),new KirameiPower(DungeonHelper.getPlayer(),1)));
     }
 }

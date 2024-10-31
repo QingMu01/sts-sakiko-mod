@@ -17,6 +17,7 @@ public class ResiliencePower extends AbstractPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     private boolean justApplied;
+    private int count = 0;
 
     public ResiliencePower(AbstractCreature owner, int amount, boolean justApplied) {
         this.name = NAME;
@@ -43,16 +44,17 @@ public class ResiliencePower extends AbstractPower {
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
         this.addToBot(new HealAction(this.owner, this.owner, this.amount));
-        this.amount = Math.min(this.owner.maxHealth, this.amount * 2);
+        this.count++;
+        this.amount += this.count * 2;
         this.updateDescription();
         return super.onAttacked(info, damageAmount);
     }
 
     @Override
     public void atEndOfTurn(boolean isPlayer) {
-        if (this.justApplied){
+        if (this.justApplied) {
             this.justApplied = false;
-        }else {
+        } else {
             this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
     }

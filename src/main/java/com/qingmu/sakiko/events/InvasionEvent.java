@@ -8,7 +8,9 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
+import com.qingmu.sakiko.cards.colorless.MutsumiSupport;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.monsters.member.MutsumiMonster;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -44,18 +46,21 @@ public class InvasionEvent extends PhasedEvent {
 
     private TextPhase getMemberSelectPhase() {
         TextPhase textPhase = new TextPhase(DESCRIPTIONS[1]);
-        optionMember.forEach((name, index) -> textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> {
+        optionMember.forEach((name, index) -> {
             CombatPhase combatPhase = new CombatPhase(SakikoConst.BAND_MEMBER_LIST.get(index))
                     .addRewards(true, room -> {
-                        // 离开，提示获得成员
+                        // 离开，获得成员
                         room.rewards.add(new RewardItem(50, false));
                         room.rewards.add(new MusicCardReward());
                         room.rewards.add(new RewardItem(BaseMod.getCustomRelic(name.replace("Monster", ""))));
                     });
-            // 成员战斗
             registerPhase("MemberFight_" + name, combatPhase);
-            transitionKey("MemberFight_" + name);
-        }));
+            if (name.equals(MutsumiMonster.ID)) {
+                textPhase.addOption(new TextPhase.OptionInfo(OPTIONS[index + 3], new MutsumiSupport(),BaseMod.getCustomRelic(name.replace("Monster", ""))), (e) -> transitionKey("MemberFight_" + name));
+            } else {
+                textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> transitionKey("MemberFight_" + name));
+            }
+        });
         return textPhase;
     }
 }

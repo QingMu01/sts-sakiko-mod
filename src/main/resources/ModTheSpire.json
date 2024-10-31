@@ -3,9 +3,9 @@
   "name": "sakikoMod",
   "author_list": ["QingMu"],
   "description": "添加了BangDream企划中，Ave Mujica乐队所属的角色——丰川祥子。",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "sts_version": "12-22-2020",
   "mts_version": "3.30.3",
   "dependencies": ["basemod"],
-  "optional_dependencies": ["AnonMod"]
+  "optional_dependencies": ["AnonMod","spireTogether"]
 }

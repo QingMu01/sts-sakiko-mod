@@ -61,7 +61,7 @@ public class MemberHelper {
     public static Map<String, Integer> initSelectedMembers(int count) {
         Map<String, Integer> tmp = new HashMap<>();
         do {
-            int i = AbstractDungeon.eventRng.random(0, SakikoConst.BAND_MEMBER_LIST.size() - 1);
+            int i = AbstractDungeon.miscRng.random(0, SakikoConst.BAND_MEMBER_LIST.size() - 1);
             String s = SakikoConst.BAND_MEMBER_LIST.get(i);
             if (!DungeonHelper.getPlayer().hasRelic(s.replace("Monster", "")))
                 tmp.put(s, i);
