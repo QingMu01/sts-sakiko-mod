@@ -20,6 +20,8 @@ public class BandBusiness extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
+    private boolean isEnabled = true;
+
     public BandBusiness() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(-2, 0, 0, 1);
@@ -32,11 +34,17 @@ public class BandBusiness extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (CardsHelper.h().contains(this)) {
+        if (CardsHelper.h().contains(this) && !CardsHelper.mq().isEmpty() && this.isEnabled) {
             this.addToBot(new GainEnergyAction(this.magicNumber));
             this.addToBot(new DiscardSpecificCardAction(this));
         }
     }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.isEnabled = true;
+    }
+
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {

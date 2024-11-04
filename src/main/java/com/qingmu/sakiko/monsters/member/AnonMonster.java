@@ -81,7 +81,7 @@ public class AnonMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         // 20概率爱堕
         intentActions.add(new IntentAction.Builder()

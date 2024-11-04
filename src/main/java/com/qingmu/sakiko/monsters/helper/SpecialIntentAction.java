@@ -43,9 +43,9 @@ public class SpecialIntentAction extends IntentAction {
         private Consumer<? super IntentAction> callback = (action) -> {
         };
         // 执行条件
-        protected Predicate<AbstractSakikoMonster> predicate = monster -> true;
+        private Predicate<AbstractSakikoMonster> predicate = monster -> true;
         // 执行后是否需要移除
-        protected Predicate<AbstractSakikoMonster> removable = monster -> true;
+        private Predicate<AbstractSakikoMonster> removable = monster -> true;
 
         public Builder() {
             super();

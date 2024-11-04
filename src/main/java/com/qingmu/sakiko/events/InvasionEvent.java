@@ -8,9 +8,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.EventStrings;
 import com.megacrit.cardcrawl.rewards.RewardItem;
-import com.qingmu.sakiko.cards.colorless.MutsumiSupport;
 import com.qingmu.sakiko.constant.SakikoConst;
-import com.qingmu.sakiko.monsters.member.MutsumiMonster;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.utils.MemberHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -39,7 +37,10 @@ public class InvasionEvent extends PhasedEvent {
         registerPhase("MemberSelect", getMemberSelectPhase());
 
         // 普通战斗
-        registerPhase("NormalFight", new CombatPhase(AbstractDungeon.monsterList.get(0)).addRewards(true, room -> room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20))));
+        registerPhase("NormalFight", new CombatPhase(AbstractDungeon.monsterList.get(0)).addRewards(true, room -> {
+            AbstractDungeon.monsterList.remove(0);
+            room.addGoldToRewards(AbstractDungeon.treasureRng.random(10, 20));
+        }));
 
         transitionKey(0);
     }
@@ -55,11 +56,7 @@ public class InvasionEvent extends PhasedEvent {
                         room.rewards.add(new RewardItem(BaseMod.getCustomRelic(name.replace("Monster", ""))));
                     });
             registerPhase("MemberFight_" + name, combatPhase);
-            if (name.equals(MutsumiMonster.ID)) {
-                textPhase.addOption(new TextPhase.OptionInfo(OPTIONS[index + 3], new MutsumiSupport(),BaseMod.getCustomRelic(name.replace("Monster", ""))), (e) -> transitionKey("MemberFight_" + name));
-            } else {
-                textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> transitionKey("MemberFight_" + name));
-            }
+            textPhase.addOption(OPTIONS[index + 3], BaseMod.getCustomRelic(name.replace("Monster", "")), (e) -> transitionKey("MemberFight_" + name));
         });
         return textPhase;
     }

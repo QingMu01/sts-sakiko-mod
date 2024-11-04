@@ -1,6 +1,6 @@
 package com.qingmu.sakiko.powers.monster;
 
-import com.megacrit.cardcrawl.actions.common.HealAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -43,7 +43,15 @@ public class ResiliencePower extends AbstractPower {
 
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        this.addToBot(new HealAction(this.owner, this.owner, this.amount));
+        this.addToBot(new AbstractGameAction() {
+            @Override
+            public void update() {
+                if (owner.currentHealth - damageAmount > 0){
+                    owner.heal(amount);
+                }
+                this.isDone = true;
+            }
+        });
         this.count++;
         this.amount += this.count * 2;
         this.updateDescription();

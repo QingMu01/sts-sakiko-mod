@@ -23,15 +23,17 @@ public class MonsterRoomAppendInvasionPatch {
     @SpirePatch(clz = MonsterRoom.class, method = "onPlayerEntry")
     public static class checkChange {
         public static void Postfix(MonsterRoom __instance) {
-            if (AbstractDungeon.getCurrRoom().getClass().equals(MonsterRoom.class) && DungeonHelper.isSakiko()) {
-                if (AbstractDungeon.floorNum > 35 && MemberHelper.getCount() < 4) {
-                    DungeonHelper.setRoomEvent(InvasionEvent.ID);
-                } else if (MemberHelper.getCount() < 4){
-                    if (AbstractDungeon.miscRng.randomBoolean(invasion.chance)) {
-                        invasion.chance = 0;
+            if (AbstractDungeon.getCurrRoom().getMapSymbol().equals("M") && DungeonHelper.isSakiko()) {
+                if (MemberHelper.getCount() < 4) {
+                    if (AbstractDungeon.floorNum > 35) {
                         DungeonHelper.setRoomEvent(InvasionEvent.ID);
                     } else {
-                        invasion.chance += upgradeChance;
+                        if (AbstractDungeon.miscRng.randomBoolean(invasion.chance)) {
+                            invasion.chance = 0;
+                            DungeonHelper.setRoomEvent(InvasionEvent.ID);
+                        } else {
+                            invasion.chance += upgradeChance;
+                        }
                     }
                 }
             }

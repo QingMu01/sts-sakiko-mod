@@ -2,6 +2,7 @@ package com.qingmu.sakiko.powers.monster;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -41,7 +42,7 @@ public class CrychicKizunaPower extends AbstractPower {
 
     @Override
     public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        if (info.type == DamageInfo.DamageType.THORNS || this.owner.isPlayer || damageAmount <= 0) {
+        if (AbstractDungeon.actionManager.currentAction instanceof DamageAllEnemiesAction || info.type == DamageInfo.DamageType.THORNS || this.owner.isPlayer || damageAmount <= 0){
             return damageAmount;
         } else {
             List<AbstractMonster> monsters = AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(m -> !m.isDead && m.hasPower(POWER_ID)).collect(Collectors.toList());
@@ -56,11 +57,18 @@ public class CrychicKizunaPower extends AbstractPower {
                     int baseValue = damageAmount / powerCount;
                     // 计算余数
                     int remainder = damageAmount % powerCount;
+                    // 剩余的伤害，不通过action重新分配，而是直接返回
+                    int selfDamage = 0;
                     // 分配值
                     for (int i = 0; i < powerCount; i++) {
-                        this.addToBot(new DamageAction(monsters.get(i), new DamageInfo(this.owner, baseValue + (i < remainder ? 1 : 0), DamageInfo.DamageType.THORNS), true));
+                        AbstractMonster monster = monsters.get(i);
+                        if (monster == this.owner){
+                            selfDamage = baseValue + (i < remainder ? 1 : 0);
+                        }else {
+                            this.addToBot(new DamageAction(monsters.get(i), new DamageInfo(info.owner, baseValue + (i < remainder ? 1 : 0), DamageInfo.DamageType.THORNS), true));
+                        }
                     }
-                    return 0;
+                    return selfDamage;
                 }
             }
         }

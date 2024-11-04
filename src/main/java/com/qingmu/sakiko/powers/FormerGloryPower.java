@@ -43,7 +43,7 @@ public class FormerGloryPower extends AbstractPower implements TriggerOnPlayMusi
     }
 
     @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusic(AbstractMusic music) {
         this.flash();
         this.addToBot(new DamageRandomEnemyAction(new DamageInfo(this.owner, this.amount, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
     }

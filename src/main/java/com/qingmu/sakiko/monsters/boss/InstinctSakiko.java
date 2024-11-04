@@ -3,6 +3,8 @@ package com.qingmu.sakiko.monsters.boss;
 import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
+import com.megacrit.cardcrawl.actions.animations.AnimateShakeAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -22,7 +24,10 @@ import com.megacrit.cardcrawl.vfx.combat.BloodShotEffect;
 import com.megacrit.cardcrawl.vfx.combat.HeartBuffEffect;
 import com.megacrit.cardcrawl.vfx.combat.HeartMegaDebuffEffect;
 import com.megacrit.cardcrawl.vfx.combat.ViceCrushEffect;
+import com.qingmu.sakiko.action.common.ForceWaitAction;
+import com.qingmu.sakiko.action.common.SummonFriendlyMonsterAction;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
+import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
@@ -49,7 +54,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     private HeartAnimListener animListener = new HeartAnimListener();
 
     public InstinctSakiko(float x, float y) {
-        super(NAME, ID, IMG, x, y);
+        super(NAME, ID, IMG, x, y, 476.0F, 410.0F);
         this.loadAnimation("images/npcs/heart/skeleton.atlas", "images/npcs/heart/skeleton.json", 1.0F);
         AnimationState.TrackEntry e = this.state.setAnimation(0, "idle", true);
         e.setTimeScale(1.5F);
@@ -92,27 +97,48 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     }
 
     @Override
-    public void damage(DamageInfo info) {
-        super.damage(info);
-        if (this.phase == 0 && this.currentHealth <= this.maxHealth / 2) {
+    protected boolean canPhaseSwitch() {
+        if (currentHealth <= this.maxHealth / 2 && this.phase == 0) {
             this.phase++;
-            this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
-            this.atlas = null;
-            this.state.removeListener(this.animListener);
-            this.setHp(1000);
-            this.addToBot(new HealAction(this, this, 1000));
-            this.addToBot(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
         }
+        return this.phase == 0;
     }
 
     @Override
-    protected List<IntentAction> phaseSwitchAndUpdateIntentActions() {
+    protected void phaseSwitchLogic() {
+        this.atlas = null;
+        this.state.removeListener(this.animListener);
+        this.hb.resize(200, 220);
+        this.maxHealth = 1000;
+        this.powers.removeIf(p -> p.type == AbstractPower.PowerType.DEBUFF);
+        this.specialIntentList.add(0, new SpecialIntentAction.Builder()
+                .setIntent(Intent.UNKNOWN)
+                .setPredicate(m -> true)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new HealAction(this, this, this.maxHealth));
+                    actions.add(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
+                    actions.add(new ForceWaitAction(1.5f));
+                    actions.add(new SummonFriendlyMonsterAction(new LinkedAnon(0, 0)));
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
+                .setCallback(ia -> this.halfDead = false)
+                .build());
+        this.getMove(0);
+        this.createIntent();
+    }
+
+    @Override
+    protected List<IntentAction> updateIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
-        return super.phaseSwitchAndUpdateIntentActions();
+        intentActions.add(new IntentAction.Builder()
+
+                .build());
+        return intentActions;
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         // 一阶段，拟态心脏
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         intentActions.add(new IntentAction.Builder()
@@ -148,6 +174,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     @Override
     protected List<SpecialIntentAction> initSpecialIntent() {
         ArrayList<SpecialIntentAction> specialIntentActions = new ArrayList<>();
+        // 心脏五福临门
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setPredicate(m -> true)
                 .setIntent(Intent.STRONG_DEBUFF)
@@ -163,6 +190,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                         new MakeTempCardInDrawPileAction(new VoidCard(), 1, true, false, false, Settings.WIDTH * 0.8F, Settings.HEIGHT / 2.0F),
                 })
                 .build());
+        // 心脏强化
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setPredicate(m -> this.moveCount == 2)
                 .setIntent(Intent.BUFF)
@@ -199,6 +227,36 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     ++this.buffCount;
                 })
                 .build());
+        // 事已至此，先吃饭吧
+        specialIntentActions.add(new SpecialIntentAction.Builder()
+                .setMoveName(MOVES[0])
+                .setPredicate(m -> this.phase != 0 && this.currentHealth < this.maxHealth / 2)
+                .setIntent(Intent.BUFF)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
+                    actions.add(new AnimateJumpAction(this));
+                    actions.add(new AnimateShakeAction(this, 0.5f, 0.5f));
+                    actions.add(new AnimateJumpAction(this));
+                    actions.add(new HealAction(this, this, this.maxHealth / 2 - this.currentHealth));
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
+                .build());
+        // 攻击联机爱音
+//        specialIntentActions.add(new SpecialIntentAction.Builder()
+//                .setMoveName(MOVES[1])
+//                .setPredicate(m -> {
+//                    MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+//                    if (monsterGroup != null) {
+//                        AbstractMonster target = monsterGroup.getMonster(LinkedAnon.ID);
+//                        return target != null && !target.isDead && !target.isDying && AbstractDungeon.aiRng.randomBoolean(0.4f);
+//                    }
+//                    return false;
+//                })
+//                .setIntent(Intent.ATTACK)
+//                .setDamageAmount(this.damage.get(0))
+//                .setActions()
+//                .build());
         return specialIntentActions;
     }
 

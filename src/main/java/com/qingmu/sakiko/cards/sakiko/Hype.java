@@ -2,6 +2,7 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
+import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -24,6 +25,8 @@ public class Hype extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
+    private boolean isEnabled = true;
+
     public Hype() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(-2, 0, 0, 0);
@@ -39,7 +42,8 @@ public class Hype extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (CardsHelper.h().contains(this)) {
+        if (CardsHelper.h().contains(this) && this.isEnabled) {
+            this.isEnabled = false;
             AbstractMonster m = AbstractDungeon.getRandomMonster();
             AbstractCard tmp = music.makeSameInstanceOf();
             DungeonHelper.getPlayer().limbo.addToBottom(tmp);
@@ -50,12 +54,18 @@ public class Hype extends AbstractSakikoCard {
             tmp.calculateCardDamage(m);
             tmp.purgeOnUse = true;
             AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, music.energyOnUse, true, true), true);
+            this.addToBot(new UnlimboAction(tmp));
             if (this.upgraded) {
-                this.addToBot(new DiscardSpecificCardAction(this));
+                this.addToTop(new DiscardSpecificCardAction(this));
             } else {
-                this.addToBot(new ExhaustSpecificCardAction(this, CardsHelper.h()));
+                this.addToTop(new ExhaustSpecificCardAction(this, CardsHelper.h()));
             }
         }
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        this.isEnabled = true;
     }
 
     @Override

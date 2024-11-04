@@ -3,9 +3,12 @@ package com.qingmu.sakiko.relics;
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
+import com.qingmu.sakiko.action.common.SummonFriendlyMonsterAction;
 import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.stances.CreatorStance;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -35,5 +38,12 @@ public class ClassicPiano extends AbstractSakikoRelic {
         this.flash();
         this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
         this.addToBot(new ChangeStanceAction(CreatorStance.STANCE_ID));
+    }
+
+    @Override
+    public void onRightClick() {
+        if (Settings.isDebug) {
+            this.addToBot(new SummonFriendlyMonsterAction(new InnerDemonSakiko(-Settings.WIDTH, 0)));
+        }
     }
 }

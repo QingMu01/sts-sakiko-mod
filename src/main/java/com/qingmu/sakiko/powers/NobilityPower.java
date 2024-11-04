@@ -47,7 +47,7 @@ public class NobilityPower extends AbstractPower implements TriggerOnPlayMusic {
     }
 
     @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusic(AbstractMusic music) {
         this.playedCount++;
         if (this.playedCount >= 3){
             this.playedCount = 0;

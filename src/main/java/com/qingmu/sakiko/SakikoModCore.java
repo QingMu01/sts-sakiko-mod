@@ -189,6 +189,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.loadCustomStringsFile(MonsterStrings.class, "SakikoModResources/localization/" + lang + "/monsters.json");
         BaseMod.loadCustomStringsFile(EventStrings.class, "SakikoModResources/localization/" + lang + "/events.json");
         BaseMod.loadCustomStringsFile(StanceStrings.class, "SakikoModResources/localization/" + lang + "/stances.json");
+        BaseMod.loadCustomStringsFile(PotionStrings.class, "SakikoModResources/localization/" + lang + "/potions.json");
     }
 
     @Override
@@ -241,7 +242,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receiveStartGame() {
-        if (AbstractDungeon.floorNum == 0) {
+        if (AbstractDungeon.floorNum == 0 && BaseMod.getSaveFields().get("chance") != null) {
             ((InvasionChangeSaved) BaseMod.getSaveFields().get("chance")).chance = 0;
         }
 

@@ -39,7 +39,7 @@ public class DoublePlayPower extends AbstractPower implements TriggerOnPlayMusic
     }
 
     @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
+    public void triggerOnPlayMusic(AbstractMusic music) {
         if (this.amount > 0) {
             this.flash();
             this.reducePower(1);

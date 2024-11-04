@@ -24,12 +24,14 @@ public class PlayBGMAction extends AbstractGameAction {
     public void update() {
         if (this.isForce) {
             CardCrawlGame.music.silenceBGMInstantly();
+            CardCrawlGame.music.silenceTempBgmInstantly();
             CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name(), true);
             this.isDone = true;
             return;
         }
         if (!this.monster.isPlayBGM) {
             CardCrawlGame.music.silenceBGMInstantly();
+            CardCrawlGame.music.silenceTempBgmInstantly();
             CardCrawlGame.music.playTempBgmInstantly(this.musicHelper.name(), true);
             this.monster.isPlayBGM = true;
         }

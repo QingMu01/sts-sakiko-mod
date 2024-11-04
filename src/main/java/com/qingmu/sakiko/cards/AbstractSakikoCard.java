@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.patch.filed.CardStringsMiniTitleField;
 import com.qingmu.sakiko.utils.ActionHelper;
 
@@ -20,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractSakikoCard extends CustomCard {
+public abstract class AbstractSakikoCard extends CustomCard implements TriggerOnPlayMusic {
 
     private final CardStrings CARD_STRINGS = CardCrawlGame.languagePack.getCardStrings(this.cardID);
 
@@ -241,8 +242,4 @@ public abstract class AbstractSakikoCard extends CustomCard {
         fontData.setScale(originalScale);
     }
 
-
-    // 演奏时触发的钩子
-    public void triggerOnPlayMusic(AbstractMusic music) {
-    }
 }

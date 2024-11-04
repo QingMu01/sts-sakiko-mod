@@ -89,7 +89,7 @@
   },
   "SakikoMod:Climax": {
     "NAME": "渐入佳境",
-    "DESCRIPTION": "造成 !D! 点伤害。NL sakikomod:创作者 ：触发 sakikomod:演奏 。 NL sakikomod:演奏者 ：从 sakikomod:歌单 抽3张牌。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL sakikomod:创作者 ： sakikomod:演奏 !M! 张牌。 NL sakikomod:演奏者 ：从 sakikomod:歌单 抽 !M! 张牌。"
   },
   "SakikoMod:SaffronWings": {
     "NAME": "藏红之翼",
@@ -276,7 +276,7 @@
   },
   "SakikoMod:FirstOne": {
     "NAME": "最初降临之人",
-    "DESCRIPTION": "回合开始时，获得 !M! 点 sakikomod:复权 。"
+    "DESCRIPTION": "获得 !M! 点 sakikomod:复权 。"
   },
   "SakikoMod:BandLeader": {
     "NAME": "乐队领袖",

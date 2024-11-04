@@ -75,30 +75,39 @@ public class SoyoMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         if (this.isMinion) {
             intentActions.add(new IntentAction.Builder()
                     .setMoveName(MOVES[0])
-                    .setWeight(50)
+                    .setWeight(40)
                     .setIntent(Intent.MAGIC)
                     .setActions(() -> new AbstractGameAction[]{
                             new AnimateJumpAction(this),
                             new ApplyPowerAction(DungeonHelper.getPlayer(), this, new SoyoConstrictedPower(DungeonHelper.getPlayer(), this, this.powerful)),
                     }).build());
             intentActions.add(new IntentAction.Builder()
-                    .setWeight(50)
+                    .setWeight(30)
                     .setIntent(Intent.DEFEND)
                     .setActions(() -> {
                         ArrayList<AbstractGameAction> actions = new ArrayList<>();
                         actions.add(new AnimateSlowAttackAction(this));
                         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                             if (!monster.isDead && !monster.isDying) {
-                                actions.add(new GainBlockAction(monster, this, this.baseBlock * 2,true));
+                                actions.add(new GainBlockAction(monster, this, this.baseBlock,true));
                             }
                         }
                         return actions.toArray(new AbstractGameAction[0]);
                     }).build());
+            intentActions.add(new IntentAction.Builder()
+                    .setWeight(30)
+                    .setIntent(Intent.ATTACK)
+                    .setDamageAmount(this.damage.get(1))
+                    .setActions(() -> new AbstractGameAction[]{
+                            new AnimateSlowAttackAction(this),
+                            new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1)),
+                    }).build());
+
         } else {
             // 20概率给予缠绕
             intentActions.add(new IntentAction.Builder()

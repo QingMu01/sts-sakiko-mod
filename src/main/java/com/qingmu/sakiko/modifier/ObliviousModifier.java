@@ -2,7 +2,6 @@ package com.qingmu.sakiko.modifier;
 
 import basemod.abstracts.AbstractCardModifier;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -12,9 +11,6 @@ public class ObliviousModifier extends AbstractCardModifier {
     @Override
     public void onInitialApplication(AbstractCard card) {
         card.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS_FLAG);
-        if (card instanceof AbstractMusic && !card.tags.contains(SakikoEnum.CardTagEnum.ENCORE)){
-            card.tags.add(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG);
-        }
     }
 
     @Override

@@ -13,7 +13,6 @@ import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.LocalizedStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
@@ -93,9 +92,7 @@ public class Band_CRYCHIC extends AbstractSakikoRelic implements CustomBottleRel
             this.card = (AbstractMusic) CardsHelper.md().group.get(this.cardIndex);
             if (this.card != null) {
                 this.card.cryChicSelect = true;
-                if (!this.card.hasTag(SakikoEnum.CardTagEnum.ENCORE)){
-                    CardModifierManager.addModifier(this.card, new ImmediatelyPlayModifier());
-                }
+                CardModifierManager.addModifier(this.card, new ImmediatelyPlayModifier());
                 setDescriptionAfterLoading();
             }
         }

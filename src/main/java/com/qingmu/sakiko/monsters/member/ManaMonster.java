@@ -80,7 +80,7 @@ public class ManaMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         intentActions.add(new IntentAction.Builder()
                 .setWeight(33)

@@ -35,6 +35,7 @@ public class A2Z_PP extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
         super.applyPowers();
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
@@ -42,6 +43,7 @@ public class A2Z_PP extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
         super.calculateCardDamage(mo);
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override

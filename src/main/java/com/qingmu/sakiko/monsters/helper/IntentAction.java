@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class IntentAction {
 
-    private byte moveByte = 0;
+    public byte moveByte = -2;
 
     public final String ID;
     // 图标
@@ -66,41 +66,29 @@ public class IntentAction {
     }
 
     public void setIntent(AbstractMonster monster) {
-        if (this.moveName == null) {
-            if (this.intent.name().contains("ATTACK")) {
-                if (this.isMultiDamage) {
-                    monster.setMove(moveByte, this.intent, this.damageAmount, this.multiplier, true);
-                } else {
-                    monster.setMove(moveByte, this.intent, this.damageAmount);
-                }
+        if (this.intent.name().contains("ATTACK")) {
+            if (this.isMultiDamage) {
+                monster.setMove(this.moveName, this.moveByte, this.intent, this.damageAmount, this.multiplier, true);
             } else {
-                monster.setMove(moveByte, this.intent);
+                monster.setMove(this.moveName, this.moveByte, this.intent, this.damageAmount);
             }
         } else {
-            if (this.intent.name().contains("ATTACK")) {
-                if (this.isMultiDamage) {
-                    monster.setMove(this.moveName, (byte) 0, this.intent, this.damageAmount, this.multiplier, true);
-                } else {
-                    monster.setMove(this.moveName, (byte) 1, this.intent, this.damageAmount);
-                }
-            } else {
-                monster.setMove(this.moveName, (byte) 2, this.intent);
-            }
+            monster.setMove(this.moveName, this.moveByte, this.intent);
         }
+        monster.createIntent();
     }
 
-    public void doIntentAction(AbstractSakikoMonster monster, boolean rollNext) {
-        for (AbstractGameAction action : this.actions.get()) {
-            ActionHelper.actionToBot(action);
-        }
+    public void doIntentAction(AbstractSakikoMonster monster) {
+        ActionHelper.actionListToBot(this.actions.get());
         if (callback != null) {
             callback.accept(this);
         }
         this.repeatInterval = this.repeatInterval_original;
-        if (rollNext) {
+        if (this.rollNext.test(monster)) {
             ActionHelper.actionToBot(new RollMoveAction(monster));
         }
     }
+
 
     public static void normalizeWeights(List<IntentAction> list) {
         float total = 0.0F;

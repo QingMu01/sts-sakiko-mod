@@ -80,7 +80,7 @@ public class UmiriMonster extends AbstractMemberMonster {
 
     @Override
     protected List<SpecialIntentAction> initSpecialIntent() {
-        List<SpecialIntentAction> specialIntentActions = super.initSpecialIntent();
+        List<SpecialIntentAction> specialIntentActions = new ArrayList<>();
         // 强化自身，增加攻击段数
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
@@ -94,7 +94,7 @@ public class UmiriMonster extends AbstractMemberMonster {
                 })
                 .setCallback(action -> {
                     this.multiCount++;
-                    for (IntentAction ai : this.effectiveIntentAction) {
+                    for (IntentAction ai : this.intentList) {
                         if (ai.ID.equals("umiri_multi")) {
                             ai.multiplier = this.multiCount;
                         }
@@ -105,7 +105,7 @@ public class UmiriMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         // 35概率重击
         intentActions.add(new IntentAction.Builder()

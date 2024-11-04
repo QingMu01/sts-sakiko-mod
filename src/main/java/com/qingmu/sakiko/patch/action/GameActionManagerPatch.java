@@ -1,14 +1,19 @@
 package com.qingmu.sakiko.patch.action;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
+import javassist.CtBehavior;
 
 import java.util.Comparator;
 
@@ -32,6 +37,7 @@ public class GameActionManagerPatch {
         }
     }
 
+    // 回合结束时的操作
     @SpirePatch(clz = GameActionManager.class, method = "callEndOfTurnActions")
     public static class CallEndOfTurnActionsPatch {
         public static void Postfix(GameActionManager __instance) {
@@ -45,6 +51,26 @@ public class GameActionManagerPatch {
             if (count > 0) {
                 cardGroup.group.sort(Comparator.comparing(card -> !card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
                 __instance.addToBottom(new ReadyToPlayMusicAction((int) count, true));
+            }
+        }
+    }
+
+    // 装填友方怪物动作
+    @SpirePatch(clz = GameActionManager.class, method = "getNextAction")
+    public static class FriendlyMonsterActionPatch {
+        @SpireInsertPatch(locator = Locator.class)
+        public static void insert(GameActionManager __instance) {
+            MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+            if (monsterGroup != null) {
+                monsterGroup.queueMonsters();
+            }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.FieldAccessMatcher(AbstractRoom.class, "skipMonsterTurn");
+                return LineFinder.findInOrder(ctBehavior, matcher);
             }
         }
     }

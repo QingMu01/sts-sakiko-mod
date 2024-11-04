@@ -14,6 +14,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
     public AbstractMemberMonster(String name, String id, String img, float x, float y) {
         super(name, id, img, x, y);
         this.type = EnemyType.NORMAL;
+
     }
 
     protected void setDefaultAttribute() {
@@ -45,7 +46,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
         this.baseSlash = AbstractDungeon.monsterHpRng.random(this.baseSlash - 2, this.baseSlash + 2);
         this.baseBlock = AbstractDungeon.monsterHpRng.random(this.baseBlock, this.baseBlock + 3);
 
-        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom){
+        if (AbstractDungeon.getCurrRoom() instanceof MonsterRoom) {
             AbstractMonster monster = AbstractDungeon.getCurrRoom().monsters.getMonster(InnerDemonSakiko.ID);
             if (monster != null) {
                 this.isMinion = true;

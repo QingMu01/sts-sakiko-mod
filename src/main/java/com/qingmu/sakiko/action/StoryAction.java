@@ -1,13 +1,17 @@
 package com.qingmu.sakiko.action;
 
+import basemod.BaseMod;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.watcher.MasterRealityPower;
 import com.megacrit.cardcrawl.screens.CardRewardScreen;
+import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToDiscardEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndAddToHandEffect;
 import com.qingmu.sakiko.action.effect.ShowCardAndToDrawMusicPileEffect;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
@@ -21,11 +25,15 @@ public class StoryAction extends AbstractGameAction {
     private final boolean isUpgraded;
 
     public StoryAction(boolean isUpgraded) {
-        this.duration = Settings.ACTION_DUR_FAST;
-        this.amount = 1;
-        this.isUpgraded = isUpgraded;
+        this(1, isUpgraded);
+    }
 
+    public StoryAction(int amount, boolean isUpgraded) {
         this.actionType = ActionType.CARD_MANIPULATION;
+
+        this.duration = Settings.ACTION_DUR_FAST;
+        this.amount = amount;
+        this.isUpgraded = isUpgraded;
     }
 
     @Override
@@ -37,17 +45,21 @@ public class StoryAction extends AbstractGameAction {
         } else {
             if (!this.retrieveCard) {
                 if (AbstractDungeon.cardRewardScreen.discoveryCard != null) {
-                    AbstractCard disCard = AbstractDungeon.cardRewardScreen.discoveryCard.makeStatEquivalentCopy();
-                    if (DungeonHelper.getPlayer().hasPower("MasterRealityPower")) {
-                        disCard.upgrade();
-                    }
-
-                    disCard.current_x = -1000.0F * Settings.xScale;
-                    if (this.amount == 1) {
+                    int handSize = CardsHelper.h().size();
+                    for (int i = 0; i < this.amount; i++) {
+                        AbstractCard copy = AbstractDungeon.cardRewardScreen.discoveryCard.makeStatEquivalentCopy();
+                        if (DungeonHelper.getPlayer().hasPower(MasterRealityPower.POWER_ID)) {
+                            copy.upgrade();
+                        }
+                        copy.current_x = -1000.0F * Settings.xScale + i * AbstractCard.IMG_HEIGHT_S;
                         if (this.isUpgraded) {
-                            AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
+                            if (++handSize <= BaseMod.MAX_HAND_SIZE) {
+                                AbstractDungeon.effectList.add(new ShowCardAndAddToHandEffect(copy, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
+                            } else {
+                                AbstractDungeon.effectList.add(new ShowCardAndAddToDiscardEffect(copy, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
+                            }
                         } else {
-                            AbstractDungeon.effectList.add(new ShowCardAndToDrawMusicPileEffect(disCard, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F, true, true, false));
+                            AbstractDungeon.effectList.add(new ShowCardAndToDrawMusicPileEffect(copy, (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F, true, true, false));
                         }
                     }
                     AbstractDungeon.cardRewardScreen.discoveryCard = null;

@@ -85,7 +85,7 @@ public class TomoriMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         if (this.isMinion) {
             intentActions.add(new IntentAction.Builder()

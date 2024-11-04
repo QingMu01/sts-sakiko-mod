@@ -69,7 +69,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
 
     @Override
     protected List<SpecialIntentAction> initSpecialIntent() {
-        List<SpecialIntentAction> specialIntentActions = super.initSpecialIntent();
+        List<SpecialIntentAction> specialIntentActions = new ArrayList<>();
         // 首次行动必定塞牌
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[0])
@@ -96,7 +96,7 @@ public class MutsumiMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         if (this.isMinion) {
             intentActions.add(new IntentAction.Builder()

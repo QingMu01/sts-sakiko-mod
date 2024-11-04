@@ -112,7 +112,7 @@ public class RanaMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         // 30概率偷钱小连招
         intentActions.add(new IntentAction.Builder()
@@ -124,7 +124,7 @@ public class RanaMonster extends AbstractMemberMonster {
                         new AnimateJumpAction(this),
                         new ApplyPowerAction(this, this, new IntangiblePower(this, 1)),
                         // 无实体抢劫
-                }).setCallback((ia -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                }).setCallback((ia -> this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                         .setPredicate(m -> true)
                         .setMoveName(MOVES[0])
                         .setIntent(Intent.ATTACK_BUFF)

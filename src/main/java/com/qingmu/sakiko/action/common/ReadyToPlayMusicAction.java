@@ -8,9 +8,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,6 +60,28 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
                 ((TriggerOnPlayMusic) power).triggerOnReadyPlay();
             }
         }
+        // 全是普通牌钩子 演奏时触发
+        for (AbstractCard card : CardsHelper.dp().group) {
+            if (card instanceof AbstractSakikoCard) {
+                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
+            }
+        }
+        for (AbstractCard card : CardsHelper.h().group) {
+            if (card instanceof AbstractSakikoCard) {
+                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
+            }
+        }
+        for (AbstractCard card : CardsHelper.dsp().group) {
+            if (card instanceof AbstractSakikoCard) {
+                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
+            }
+        }
+        for (AbstractCard card : CardsHelper.ep().group) {
+            if (card instanceof AbstractSakikoCard) {
+                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
+            }
+        }
+
     }
 
     @Override

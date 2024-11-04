@@ -31,6 +31,7 @@ public class KillKiss extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.applyPowers();
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class KillKiss extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.calculateCardDamage(mo);
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override

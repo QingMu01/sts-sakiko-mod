@@ -8,8 +8,11 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.EventStrings;
+import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardAndObtainEffect;
 import com.qingmu.sakiko.cards.colorless.Elements;
+import com.qingmu.sakiko.potion.ProteinBar;
+import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -29,19 +32,22 @@ public class AlbumSell extends PhasedEvent {
     public AlbumSell() {
         super(ID, NAME, IMG_PATH);
         registerPhase(0, new TextPhase(DESCRIPTIONS[0])
-                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[2], elementsPrice, elements.name), elements).enabledCondition(() -> DungeonHelper.getPlayer().gold >= elementsPrice, String.format(OPTIONS[3], elementsPrice)), e -> {
+                .addOption(new TextPhase.OptionInfo(String.format(OPTIONS[0], elementsPrice, elements.name), elements).enabledCondition(() -> DungeonHelper.getPlayer().gold >= elementsPrice, String.format(OPTIONS[2], elementsPrice)), e -> {
                     DungeonHelper.getPlayer().loseGold(elementsPrice);
                     AbstractDungeon.effectList.add(new ShowCardAndObtainEffect(elements, Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
+                    transitionKey("LeaveA");
+                })
+                .addOption(OPTIONS[1], e -> {
+                    CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.MED, ScreenShake.ShakeDur.MED, false);
+                    AbstractDungeon.getCurrRoom().rewards.clear();
+                    AbstractDungeon.getCurrRoom().rewards.add(new MusicCardReward());
+                    AbstractDungeon.getCurrRoom().rewards.add(new RewardItem(new ProteinBar()));
+                    AbstractDungeon.combatRewardScreen.open();
                     transitionKey("LeaveB");
                 })
-                .addOption(OPTIONS[0], e -> transitionKey("LeaveA"))
         );
-
-        registerPhase("LeaveA", new TextPhase(DESCRIPTIONS[1]).addOption(OPTIONS[1], e -> {
-            CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.MED, ScreenShake.ShakeDur.MED, false);
-            openMap();
-        }));
-        registerPhase("LeaveB", new TextPhase(DESCRIPTIONS[2]).addOption(OPTIONS[1], e -> openMap()));
+        registerPhase("LeaveA", new TextPhase(DESCRIPTIONS[2]).addOption(OPTIONS[3], e -> openMap()));
+        registerPhase("LeaveB", new TextPhase(DESCRIPTIONS[3]).addOption(OPTIONS[3], e -> openMap()));
         transitionKey(0);
     }
 }

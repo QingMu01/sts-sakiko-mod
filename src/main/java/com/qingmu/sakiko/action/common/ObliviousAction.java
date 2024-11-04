@@ -12,8 +12,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnOblivion;
+import com.qingmu.sakiko.modifier.ImmediatelyPlayModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
@@ -33,6 +35,9 @@ public class ObliviousAction extends CardSelectorAction {
             for (AbstractCard card : cardList) {
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
                 CardModifierManager.addModifier(card, new ObliviousModifier());
+                if (card instanceof AbstractMusic) {
+                    CardModifierManager.addModifier(card, new ImmediatelyPlayModifier());
+                }
                 DungeonHelper.getPlayer().limbo.addToBottom(card);
                 card.target_x = MathUtils.random((Settings.WIDTH / 2.0F) - 100.0F, (Settings.WIDTH / 2.0F) + 100.0F);
                 card.target_y = MathUtils.random((Settings.HEIGHT / 2.0F) - 50.0F, (Settings.HEIGHT / 2.0F) + 50.0F);

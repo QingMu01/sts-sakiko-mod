@@ -78,11 +78,13 @@ public class UseMusicCardActionPatch {
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if (___targetCard instanceof AbstractMusic && (CardsHelper.h().group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
                 // 处理打出时立即演奏
-                if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID) || ___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
+                if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID)) {
                     CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
-                    __instance.isDone = true;
-                    ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
-                    return SpireReturn.Return();
+                    if (!___targetCard.hasTag(SakikoEnum.CardTagEnum.ENCORE)){
+                        __instance.isDone = true;
+                        ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
+                        return SpireReturn.Return();
+                    }
                 }
                 CardGroup cardGroup = CardsHelper.mq();
                 cardGroup.addToTop(___targetCard);
@@ -95,7 +97,7 @@ public class UseMusicCardActionPatch {
                 DungeonHelper.getPlayer().cardInUse = null;
                 CardsHelper.h().refreshHandLayout();
                 ___targetCard.lighten(false);
-                ___targetCard.setAngle(0.0F,true);
+                ___targetCard.setAngle(0.0F, true);
                 ___targetCard.unfadeOut();
                 ___targetCard.stopGlowing();
                 ___targetCard.untip();

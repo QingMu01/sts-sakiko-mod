@@ -21,8 +21,7 @@
   "SakikoMod:FukkenPower": {
     "NAME": "复权",
     "DESCRIPTIONS": [
-      "强化 #y音乐 牌的效果。回合结束时，下降 #b",
-      " 层。（由本回合演奏次数决定）"
+      "强化 #y音乐 牌的效果。对非AveMujica的音乐效果减半。"
     ]
   },
   "SakikoMod:FeverPower": {
@@ -145,7 +144,7 @@
   "SakikoMod:NobilityPower": {
     "NAME": "贵族品性",
     "DESCRIPTIONS": [
-      "每次 #y演奏 时，抽 #b",
+      "每三次 #y演奏 ，抽 #b",
       " 张牌。"
     ]
   },

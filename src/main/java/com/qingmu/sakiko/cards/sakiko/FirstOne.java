@@ -4,7 +4,7 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.powers.monster.FirstOnePower;
+import com.qingmu.sakiko.powers.FukkenPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class FirstOne extends AbstractSakikoCard {
@@ -26,6 +26,6 @@ public class FirstOne extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new FirstOnePower(p, this.magicNumber), this.magicNumber));
+        this.addToBot(new ApplyPowerAction(p, p, new FukkenPower(p, this.magicNumber), this.magicNumber));
     }
 }

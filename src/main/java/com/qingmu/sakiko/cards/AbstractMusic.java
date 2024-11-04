@@ -20,6 +20,7 @@ import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
+import com.qingmu.sakiko.modifier.AbstractMusicCardModifier;
 import com.qingmu.sakiko.powers.FeverReadyPower;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
@@ -186,6 +187,14 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
 
     // 存在待演奏区时，演奏时触发的钩子
     public void triggerInBufferPlayedMusic(AbstractMusic music) {
+    }
+
+    public boolean enchantedSupport() {
+        return false;
+    }
+
+    public AbstractMusicCardModifier enchant() {
+        return null;
     }
 
     @SpireOverride

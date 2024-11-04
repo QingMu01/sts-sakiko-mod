@@ -26,8 +26,8 @@ public class Climax extends AbstractSakikoCard {
 
     public Climax() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 5, 0, 0);
-        this.setUpgradeAttr(1, 3, 0, 0);
+        this.initBaseAttr(1, 5, 0, 1);
+        this.setUpgradeAttr(1, 3, 0, 1);
     }
 
     @Override
@@ -41,10 +41,10 @@ public class Climax extends AbstractSakikoCard {
     private AbstractGameAction getStanceAction(AbstractStance stance) {
         AbstractGameAction action = new WaitAction(0.1f);
         if (stance instanceof PlayerStance) {
-            action = new DrawMusicAction(3);
+            action = new DrawMusicAction(this.magicNumber);
         }
         if (stance instanceof CreatorStance) {
-            action = new ReadyToPlayMusicAction(3);
+            action = new ReadyToPlayMusicAction(this.magicNumber);
         }
         return action;
     }

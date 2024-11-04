@@ -1,19 +1,13 @@
 package com.qingmu.sakiko.powers;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.powers.ArtifactPower;
-import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -45,37 +39,11 @@ public class FukkenPower extends AbstractPower implements ModifiedMusicNumber, T
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + this.playedCount + DESCRIPTIONS[1];
-    }
-
-    @Override
-    public void triggerOnPlayMusicCard(AbstractMusic music) {
-        this.playedCount++;
+        this.description = DESCRIPTIONS[0];
     }
 
     @Override
     public float modifyMusicNumber(AbstractCard card, float musicNumber) {
-        return musicNumber + this.amount;
-    }
-
-    @Override
-    public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer) {
-            this.flash();
-            if (this.owner.hasPower(ArtifactPower.POWER_ID)) {
-                this.addToBot(new ReducePowerAction(this.owner, this.owner, ArtifactPower.POWER_ID, 1));
-            } else {
-                if (this.playedCount > 0) {
-                    this.addToBot(new ReducePowerAction(this.owner, this.owner, this, this.playedCount));
-                }
-            }
-            this.playedCount = 0;
-        }
-    }
-
-    @Override
-    public void renderAmount(SpriteBatch sb, float x, float y, Color c) {
-        super.renderAmount(sb, x, y, c);
-        FontHelper.renderFontRightTopAligned(sb, FontHelper.powerAmountFont, Integer.toString(this.playedCount), x, y + 15 * Settings.scale, this.fontScale, c);
+        return card.hasTag(SakikoEnum.CardTagEnum.AVE_MUJICA) ? musicNumber + this.amount : musicNumber + (this.amount / 2.0f);
     }
 }

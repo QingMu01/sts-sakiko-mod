@@ -16,8 +16,7 @@ public class ImmediatelyPlayModifier extends AbstractCardModifier {
 
     @Override
     public void onRemove(AbstractCard card) {
-        if (!card.tags.contains(SakikoEnum.CardTagEnum.ENCORE))
-            card.tags.remove(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG);
+        card.tags.remove(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG);
     }
 
     @Override

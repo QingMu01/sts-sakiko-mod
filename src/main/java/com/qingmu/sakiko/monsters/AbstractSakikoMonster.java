@@ -8,8 +8,15 @@ import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.vfx.combat.BlockedWordEffect;
+import com.megacrit.cardcrawl.vfx.combat.DeckPoofEffect;
+import com.megacrit.cardcrawl.vfx.combat.HbBlockBrokenEffect;
+import com.megacrit.cardcrawl.vfx.combat.StrikeEffect;
 import com.qingmu.sakiko.action.effect.ObtainMusicCardEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
@@ -32,10 +39,10 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     protected boolean canPlayMusic = false;
 
     // 普通意图
-    protected List<IntentAction> effectiveIntentAction;
+    protected List<IntentAction> intentList;
 
     // 特殊意图，具有特殊判定的优先选择列表
-    protected List<SpecialIntentAction> specialIntent;
+    protected List<SpecialIntentAction> specialIntentList;
 
     // 即将进行的行动
     public IntentAction intentAction;
@@ -53,17 +60,23 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
         super(name, id, 100, 0.0F, 0.0F, 200.0F, 220.0F, img, x, y);
     }
 
+    public AbstractSakikoMonster(String name, String id, String img, float x, float y, float hbw, float hbh) {
+        super(name, id, 100, 0.0F, 0.0F, hbw, hbh, img, x, y);
+    }
+
     // 初始化意图与行动
-    protected abstract List<IntentAction> initEffectiveIntentActions();
+    protected abstract List<IntentAction> initIntent();
 
     // 能否转换阶段
     protected boolean canPhaseSwitch() {
         return false;
     }
 
+    protected void phaseSwitchLogic() {}
+
     // 切换阶段，更新意图与行动
-    protected List<IntentAction> phaseSwitchAndUpdateIntentActions() {
-        return this.effectiveIntentAction;
+    protected List<IntentAction> updateIntent() {
+        return this.intentList;
     }
 
     protected List<SpecialIntentAction> initSpecialIntent() {
@@ -72,8 +85,8 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     protected IntentAction getRandomEffectiveIntent(int random) {
         // 特殊特殊队列优先选择
-        if (!this.specialIntent.isEmpty()) {
-            Iterator<SpecialIntentAction> iterator = this.specialIntent.iterator();
+        if (!this.specialIntentList.isEmpty()) {
+            Iterator<SpecialIntentAction> iterator = this.specialIntentList.iterator();
             while (iterator.hasNext()) {
                 SpecialIntentAction next = iterator.next();
                 if ((!this.actionHistory.contains(next) || next.repeatInterval <= 0) && next.predicate.test(this)) {
@@ -84,7 +97,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
                 }
             }
         }
-        IntentAction roll = IntentAction.roll(this.effectiveIntentAction, random);
+        IntentAction roll = IntentAction.roll(this.intentList, random);
         if (roll != null && (!this.actionHistory.contains(roll) || roll.repeatInterval <= 0)) {
             return roll;
         } else {
@@ -94,41 +107,147 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     @Override
     public final void takeTurn() {
-        this.intentAction.doIntentAction(this, this.intentAction.rollNext.test(this));
-
+        try {
+            this.intentAction.doIntentAction(this);
+        } catch (NullPointerException e) {
+            // 针对联机时可能出现未初始化的问题，再次执行意图初始化
+            if (this.intentList == null) {
+                this.intentList = this.initIntent();
+                IntentAction.normalizeWeights(this.intentList);
+            }
+            if (this.specialIntentList == null) {
+                this.specialIntentList = this.initSpecialIntent();
+            }
+            // 尝试寻找匹配的联机意图
+            for (IntentAction action : this.intentList) {
+                if (this.nextMove == -2) {
+                    this.intentAction = this.getRandomEffectiveIntent(0);
+                    break;
+                } else if (action.moveByte == this.nextMove) {
+                    this.intentAction = action;
+                    break;
+                }
+            }
+            // 未找到的时候，随机一个意图，可能导致不同步
+            if (this.intentAction == null) {
+                this.intentAction = this.getRandomEffectiveIntent(AbstractDungeon.aiRng.random(99));
+            }
+            this.intentAction.doIntentAction(this);
+        }
         for (IntentAction action : this.actionHistory) {
             action.repeatInterval -= 1;
         }
-
         this.actionHistory.add(this.intentAction);
     }
 
     @Override
     protected final void getMove(int i) {
         // 部分action会在初始化时，对房间怪物进行检测，故意图的初始化只能在这里进行
-        if (this.effectiveIntentAction == null) {
+        if (this.intentList == null) {
             // 初始化意与行动映射
-            this.effectiveIntentAction = this.initEffectiveIntentActions();
-            IntentAction.normalizeWeights(this.effectiveIntentAction);
+            this.intentList = this.initIntent();
+            IntentAction.normalizeWeights(this.intentList);
 
             // 初始化特殊意图
-            this.specialIntent = this.initSpecialIntent();
+            this.specialIntentList = this.initSpecialIntent();
         }
         this.intentAction = this.getRandomEffectiveIntent(i);
         this.intentAction.setIntent(this);
     }
 
     @Override
-    public void die(boolean triggerRelics) {
-        if (AbstractDungeon.getCurrRoom().cannotLose) {
-            if (this.canPhaseSwitch()) {
-                this.effectiveIntentAction = this.phaseSwitchAndUpdateIntentActions();
-                IntentAction.normalizeWeights(this.effectiveIntentAction);
-            } else {
-                super.die(triggerRelics);
+    public void damage(DamageInfo info) {
+        if (info.output > 0 && hasPower("IntangiblePlayer")) {
+            info.output = 1;
+        }
+        int damageAmount = info.output;
+        if (this.isDying || this.isEscaping) return;
+        if (damageAmount < 0) {
+            damageAmount = 0;
+        }
+        boolean hadBlock = (this.currentBlock != 0);
+        boolean weakenedToZero = (damageAmount == 0);
+        damageAmount = this.decrementBlock(info, damageAmount);
+        if (info.owner == AbstractDungeon.player) {
+            for (AbstractRelic r : AbstractDungeon.player.relics) {
+                damageAmount = r.onAttackToChangeDamage(info, damageAmount);
             }
-        } else {
-            super.die(triggerRelics);
+        }
+        if (info.owner != null) {
+            for (AbstractPower p : info.owner.powers) {
+                damageAmount = p.onAttackToChangeDamage(info, damageAmount);
+            }
+        }
+        for (AbstractPower p : this.powers) {
+            damageAmount = p.onAttackedToChangeDamage(info, damageAmount);
+        }
+        if (info.owner == AbstractDungeon.player) {
+            for (AbstractRelic r : AbstractDungeon.player.relics) {
+                r.onAttack(info, damageAmount, this);
+            }
+        }
+        for (AbstractPower p : this.powers) {
+            p.wasHPLost(info, damageAmount);
+        }
+        if (info.owner != null) {
+            for (AbstractPower p : info.owner.powers) {
+                p.onAttack(info, damageAmount, this);
+            }
+        }
+        for (AbstractPower p : this.powers) {
+            damageAmount = p.onAttacked(info, damageAmount);
+        }
+
+        this.lastDamageTaken = Math.min(damageAmount, this.currentHealth);
+
+        boolean probablyInstantKill = (this.currentHealth == 0);
+        if (damageAmount > 0) {
+            if (info.owner != this) {
+                useStaggerAnimation();
+            }
+            if (damageAmount >= 99 && !CardCrawlGame.overkill) {
+                CardCrawlGame.overkill = true;
+            }
+            this.currentHealth -= damageAmount;
+
+            if (!probablyInstantKill) {
+                AbstractDungeon.effectList.add(new StrikeEffect(this, this.hb.cX, this.hb.cY, damageAmount));
+            }
+            if (this.currentHealth < 0) {
+                this.currentHealth = 0;
+            }
+            healthBarUpdatedEvent();
+        } else if (!probablyInstantKill) {
+            if (weakenedToZero && this.currentBlock == 0) {
+                if (hadBlock) {
+                    AbstractDungeon.effectList.add(new BlockedWordEffect(this, this.hb.cX, this.hb.cY, TEXT[30]));
+                } else {
+                    AbstractDungeon.effectList.add(new StrikeEffect(this, this.hb.cX, this.hb.cY, 0));
+                }
+            } else if (Settings.SHOW_DMG_BLOCK) {
+                AbstractDungeon.effectList.add(new BlockedWordEffect(this, this.hb.cX, this.hb.cY, TEXT[30]));
+            }
+        }
+        // 转换阶段
+        if (this.canPhaseSwitch()) {
+            this.phaseSwitchLogic();
+            this.intentList = this.updateIntent();
+            IntentAction.normalizeWeights(this.intentList);
+            return;
+        }
+
+        if (this.currentHealth <= 0) {
+            die();
+            if (AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
+                AbstractDungeon.actionManager.cleanCardQueue();
+                AbstractDungeon.effectList.add(new DeckPoofEffect(64.0F * Settings.scale, 64.0F * Settings.scale, true));
+                AbstractDungeon.effectList.add(new DeckPoofEffect(Settings.WIDTH - 64.0F * Settings.scale, 64.0F * Settings.scale, false));
+                AbstractDungeon.overlayMenu.hideCombatPanels();
+            }
+            if (this.currentBlock > 0) {
+                loseBlock();
+                AbstractDungeon.effectList.add(new HbBlockBrokenEffect(this.hb.cX - this.hb.width / 2.0F + BLOCK_ICON_X, this.hb.cY - this.hb.height / 2.0F + BLOCK_ICON_Y));
+            }
         }
     }
 

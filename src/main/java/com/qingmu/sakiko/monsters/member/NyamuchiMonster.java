@@ -63,7 +63,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
     }
 
     @Override
-    protected List<IntentAction> initEffectiveIntentActions() {
+    protected List<IntentAction> initIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         if (this.isMinion) {
             intentActions.add(new IntentAction.Builder()
@@ -75,12 +75,12 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                             // 强化后下一个行动为蓄力
                     }).setCallback(ia -> {
                         this.multiCount++;
-                        this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                        this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                 .setPredicate(m -> true)
                                 .setIntent(Intent.UNKNOWN)
                                 .setActions(() -> new AbstractGameAction[]{new WaitAction(0.1f)})
                                 // 蓄力后下一个行动为连击
-                                .setCallback(ia1 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                .setCallback(ia1 -> this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                         .setMoveName(MOVES[2])
                                         .setPredicate(m -> true)
                                         .setIntent(Intent.ATTACK)
@@ -88,7 +88,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                                         .setMultiplier(this.multiCount)
                                         .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                                         // 设置一个空回合
-                                        .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                        .setCallback(ia2 -> this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                                 .setMoveName(MOVES[0])
                                                 .setIntent(Intent.STUN)
                                                 .setActions(() -> new AbstractGameAction[]{
@@ -136,12 +136,12 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                             // 强化后下一个行动为蓄力
                     }).setCallback(ia -> {
                         this.multiCount++;
-                        this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                        this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                 .setPredicate(m -> true)
                                 .setIntent(Intent.UNKNOWN)
                                 .setActions(() -> new AbstractGameAction[]{new WaitAction(0.1f)})
                                 // 蓄力后下一个行动为连击
-                                .setCallback(ia1 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                .setCallback(ia1 -> this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                         .setMoveName(MOVES[2])
                                         .setPredicate(m -> true)
                                         .setIntent(Intent.ATTACK)
@@ -149,7 +149,7 @@ public class NyamuchiMonster extends AbstractMemberMonster {
                                         .setMultiplier(this.multiCount)
                                         .setActions(() -> this.generateMultiAttack(this.damage.get(2), this.multiCount))
                                         // 设置一个空回合
-                                        .setCallback(ia2 -> this.specialIntent.add(0, new SpecialIntentAction.Builder()
+                                        .setCallback(ia2 -> this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                                                 .setMoveName(MOVES[0])
                                                 .setIntent(Intent.STUN)
                                                 .setActions(() -> new AbstractGameAction[]{

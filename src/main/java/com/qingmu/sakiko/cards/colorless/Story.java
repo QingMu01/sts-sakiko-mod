@@ -17,7 +17,7 @@ public class Story extends AbstractSakikoCard {
 
     public Story(boolean isUpgrade) {
         super(ID, IMG_PATH, TYPE, CardColor.COLORLESS, RARITY, TARGET);
-        this.initBaseAttr(0, 0, 0, 0);
+        this.initBaseAttr(0, 0, 0, 1);
         this.setUpgradeAttr(0, 0, 0, 0);
         this.setExhaust(true, true);
         if (isUpgrade) {
@@ -31,7 +31,7 @@ public class Story extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new StoryAction(this.upgraded));
+        this.addToBot(new StoryAction(this.magicNumber, this.upgraded));
     }
 
 }

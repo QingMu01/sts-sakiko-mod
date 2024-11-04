@@ -24,10 +24,10 @@ public class ChangeStanceActionPatch {
             if ((count % SakikoConst.STANCE_CHANGE_THRESHOLD_USED) + 1 >= SakikoConst.STANCE_CHANGE_THRESHOLD_USED) {
                 if (PowerHelper.getPowerAmount(FukkenPower.POWER_ID) >= SakikoConst.FLOW_THRESHOLD_USED) {
                     ___id[0] = ObliviousStance.STANCE_ID;
-                    ___newStance[0] = AbstractSakikoStance.stanceMap.get(ObliviousStance.STANCE_ID);
+                    ___newStance[0] = AbstractSakikoStance.stanceMap.get(ObliviousStance.STANCE_ID).makeCopy();
                 } else {
                     ___id[0] = FeverStance.STANCE_ID;
-                    ___newStance[0] = AbstractSakikoStance.stanceMap.get(FeverStance.STANCE_ID);
+                    ___newStance[0] = AbstractSakikoStance.stanceMap.get(FeverStance.STANCE_ID).makeCopy();
                 }
             }
         }

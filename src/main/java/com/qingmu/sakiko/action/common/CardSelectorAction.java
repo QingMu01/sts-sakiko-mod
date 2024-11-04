@@ -116,11 +116,11 @@ public class CardSelectorAction extends AbstractGameAction {
         if (this.duration == Settings.ACTION_DUR_FAST) {
             if (this.amount <= 0) {
                 this.isDone = true;
+                logger.info("invalid parameter?");
                 return;
             }
             if (this.targets.length == 0) {
                 AbstractDungeon.effectList.add(new ThoughtBubble(this.player.dialogX, this.player.dialogY, 1.5F, uiStrings.EXTRA_TEXT[1], true));
-                this.callback.accept(this.selected);
                 this.isDone = true;
                 logger.info("Empty target?");
                 return;
@@ -169,8 +169,8 @@ public class CardSelectorAction extends AbstractGameAction {
                 this.callback.accept(this.selected);
                 this.releaseCards(candidate.group);
                 this.releaseCards(cantSelectedList);
-                this.player.hand.refreshHandLayout();
                 AbstractDungeon.gridSelectScreen.selectedCards.clear();
+                this.player.hand.refreshHandLayout();
                 this.isDone = true;
                 return;
             }
@@ -201,8 +201,8 @@ public class CardSelectorAction extends AbstractGameAction {
             this.callback.accept(this.selected);
             this.releaseCards(candidate.group);
             this.releaseCards(cantSelectedList);
-            this.player.hand.refreshHandLayout();
             AbstractDungeon.gridSelectScreen.targetGroup.clear();
+            this.player.hand.refreshHandLayout();
         }
     }
 

@@ -71,7 +71,6 @@ public class DungeonHelper {
         AbstractDungeon.rs = (node.room.event instanceof AbstractImageEvent) ? AbstractDungeon.RenderScene.EVENT : AbstractDungeon.RenderScene.NORMAL;
     }
 
-
     public static boolean isSakiko() {
         return getPlayer() instanceof TogawaSakiko;
     }

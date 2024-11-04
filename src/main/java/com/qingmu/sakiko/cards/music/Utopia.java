@@ -33,7 +33,7 @@ public class Utopia extends AbstractMusic {
         int powed = (int) Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount));
         this.baseDamage = this.musicNumber * powed;
         super.applyPowers();
-        this.isDamageModified = this.baseDamage != this.damage;
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
         this.appendDescription(powed);
     }
 
@@ -42,7 +42,7 @@ public class Utopia extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = (int) (this.musicNumber * Math.pow(2, Math.min(MemberHelper.getCount(), this.playedCount)));
         super.calculateCardDamage(mo);
-        this.isDamageModified = this.baseDamage != this.damage;
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override

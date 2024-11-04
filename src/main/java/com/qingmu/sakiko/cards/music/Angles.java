@@ -36,6 +36,7 @@ public class Angles extends AbstractMusic {
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
@@ -48,6 +49,7 @@ public class Angles extends AbstractMusic {
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
         this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override

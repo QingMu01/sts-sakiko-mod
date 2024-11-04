@@ -37,6 +37,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.applyPowers();
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
         if (krkrdkdk != null) {
             krkrdkdk.amount /= this.magicNumber;
         }
@@ -51,6 +52,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.calculateCardDamage(mo);
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
         if (krkrdkdk != null) {
             krkrdkdk.amount /= this.magicNumber;
         }

@@ -4,8 +4,10 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.MutsumiSupportAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@SakikoModEnable(enable = false)
 public class MutsumiSupport extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(MutsumiSupport.class.getSimpleName());
