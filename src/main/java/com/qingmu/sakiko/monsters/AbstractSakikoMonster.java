@@ -67,21 +67,18 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
     // 初始化意图与行动
     protected abstract List<IntentAction> initIntent();
 
-    // 能否转换阶段
-    protected boolean canPhaseSwitch() {
-        return false;
-    }
+    // 初始化特殊意图
+    protected abstract List<SpecialIntentAction> initSpecialIntent();
 
-    protected void phaseSwitchLogic() {}
+    // 能否转换阶段
+    protected abstract boolean canPhaseSwitch();
+
+    // 触发切换阶段时执行的逻辑
+    protected abstract void phaseSwitchLogic();
 
     // 切换阶段，更新意图与行动
-    protected List<IntentAction> updateIntent() {
-        return this.intentList;
-    }
+    protected abstract List<IntentAction> updateIntent();
 
-    protected List<SpecialIntentAction> initSpecialIntent() {
-        return new ArrayList<>();
-    }
 
     protected IntentAction getRandomEffectiveIntent(int random) {
         // 特殊特殊队列优先选择

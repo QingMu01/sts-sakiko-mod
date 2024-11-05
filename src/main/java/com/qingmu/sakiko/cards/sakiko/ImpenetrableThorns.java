@@ -21,8 +21,8 @@ public class ImpenetrableThorns extends AbstractSakikoCard {
 
     public ImpenetrableThorns() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 6, 0, 4);
-        this.setUpgradeAttr(1, 3, 0, 2);
+        this.initBaseAttr(1, 6, 0, 3);
+        this.setUpgradeAttr(1, 3, 0, 1);
 
         this.isMultiDamage = true;
     }
@@ -31,7 +31,7 @@ public class ImpenetrableThorns extends AbstractSakikoCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.submitActionsToBot(
                 new DamageAllEnemiesAction(p, this.multiDamage, this.damageTypeForTurn, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
-                new ApplyPowerAction(p, p, new KokoroNoKabePower(p,this.magicNumber), this.magicNumber)
+                new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.multiDamage.length * this.magicNumber), this.multiDamage.length * this.magicNumber)
         );
     }
 }

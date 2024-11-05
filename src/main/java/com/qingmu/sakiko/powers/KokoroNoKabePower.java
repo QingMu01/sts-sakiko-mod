@@ -61,6 +61,13 @@ public class KokoroNoKabePower extends AbstractPower {
         this.addToBot(new ActiveKabeAction(this.owner, false));
     }
 
+    @Override
+    public void atEndOfRound() {
+        if (!this.owner.isPlayer) {
+            this.addToBot(new ActiveKabeAction(this.owner, true));
+        }
+    }
+
     /*
      * 被攻击后触发的钩子
      * @DamageInfo 攻击信息，存有伤害来源、类型、攻击伤害等信息

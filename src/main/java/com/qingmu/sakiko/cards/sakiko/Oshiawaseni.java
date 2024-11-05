@@ -20,8 +20,8 @@ public class Oshiawaseni extends AbstractSakikoCard {
 
     public Oshiawaseni() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 7, 1);
-        this.setUpgradeAttr(1, 0, 2, 1);
+        this.initBaseAttr(1, 0, 5, 1);
+        this.setUpgradeAttr(1, 0, 3, 1);
     }
 
     @Override

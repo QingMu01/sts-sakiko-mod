@@ -34,11 +34,11 @@
   },
   "SakikoMod:SoloPlay": {
     "NAME": "独奏",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL sakikomod:演奏 !M! 张牌。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 从 sakikomod:歌单 打出 !M! 张牌。"
   },
   "SakikoMod:Spying": {
     "NAME": "情报收集",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL sakikomod:激活 你的 sakikomod:心之壁 ，如果目标的意图是攻击，则本次激活不会使层数下降。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL sakikomod:激活 你的 sakikomod:心之壁 。 NL 如果目标的意图是攻击，则本次激活不会使层数下降。"
   },
   "SakikoMod:QuaerereLumina": {
     "NAME": "探寻光明",
@@ -46,7 +46,7 @@
   },
   "SakikoMod:ImpenetrableThorns": {
     "NAME": "拒绝的刺",
-    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL 获得 !M! 层 sakikomod:心之壁 。"
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。 NL 每攻击一个敌人，获得 !M! 层 sakikomod:心之壁 。"
   },
   "SakikoMod:Disallow": {
     "NAME": "驳回",
@@ -54,7 +54,7 @@
   },
   "SakikoMod:NotePunch": {
     "NAME": "音符冲击",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 待演奏区中每有一张牌，本次攻击的伤害提高 !M! 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌在手牌时，每打出一张 sakikomod:音乐 牌，本次攻击的伤害提高 !M! 。"
   },
   "SakikoMod:CurtainCall": {
     "NAME": "谢幕",
@@ -109,7 +109,7 @@
   },
   "SakikoMod:Veritas": {
     "NAME": "真理",
-    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌被 消耗 时，这张牌在本局游戏中的基础伤害提高 !M! 。"
+    "DESCRIPTION": "造成 !D! 点伤害。 NL 这张牌被 消耗 时，在本局游戏中的基础伤害提高 !M! 。"
   },
   "SakikoMod:LastStage": {
     "NAME": "最后的舞台",
@@ -150,7 +150,8 @@
   },
   "SakikoMod:Osananajimi": {
     "NAME": "儿时牵绊",
-    "DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。"
+    "DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。 消耗 。",
+    "UPGRADE_DESCRIPTION": "从手牌中选择 !M! 张牌丢弃，使其变为 sakikomod:白月光 。 保留 消耗 。"
   },
   "SakikoMod:GrievousNews": {
     "NAME": "噩耗来袭",
@@ -191,8 +192,7 @@
   },
   "SakikoMod:AveMusica": {
     "NAME": "赞颂音乐",
-    "DESCRIPTION": " sakikomod:演奏者 ：从 sakikomod:歌单 抽 !M! 张牌。 NL 否则，进入 sakikomod:演奏者 。",
-    "UPGRADE_DESCRIPTION": " 保留 NL sakikomod:演奏者 ：从 sakikomod:歌单 抽 !M! 张牌。 NL 否则，进入 sakikomod:演奏者 。"
+    "DESCRIPTION": " sakikomod:演奏者 ：从 sakikomod:歌单 抽 !M! 张牌。 NL 否则，进入 sakikomod:演奏者 。"
   },
   "SakikoMod:DisharmonyNote": {
     "NAME": "不和谐音符",
@@ -228,7 +228,7 @@
   },
   "SakikoMod:GravityRadar": {
     "NAME": "重力雷达",
-    "DESCRIPTION": " 固有 NL 从抽卡堆选择 !M! 张卡弃入弃牌堆，并使其变为白月光。 消耗 。"
+    "DESCRIPTION": " 固有 NL 从抽卡堆选择 !M! 张卡弃入弃牌堆，并使其变为白月光。 NL 消耗 。"
   },
   "SakikoMod:Hype": {
     "NAME": "话题炒作",
@@ -335,7 +335,7 @@
   },
   "SakikoMod:VoidOrder": {
     "NAME": "弃入虚空的秩序",
-    "DESCRIPTION": "回合结束时，最多保留 !M! 张牌。被保留的牌的费用将随机化。"
+    "DESCRIPTION": "回合结束时，随机保留 !M! 张手牌。"
   },
   "SakikoMod:DollFrom": {
     "NAME": "人偶形态",

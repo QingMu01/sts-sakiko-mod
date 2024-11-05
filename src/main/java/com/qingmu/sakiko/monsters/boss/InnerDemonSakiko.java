@@ -14,13 +14,16 @@ import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.combat.InflameEffect;
 import com.qingmu.sakiko.action.RenameMonsterAction;
+import com.qingmu.sakiko.action.common.ExprAction;
 import com.qingmu.sakiko.action.common.PlayBGMAction;
+import com.qingmu.sakiko.action.effect.OverrideBackgroundEffect;
 import com.qingmu.sakiko.action.monster.CrychicHonorAction;
 import com.qingmu.sakiko.action.monster.ExhaustDemonSakikoCardAction;
 import com.qingmu.sakiko.cards.music.monster.AbolitionCase;
@@ -35,11 +38,13 @@ import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.monsters.member.*;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.monster.*;
+import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InnerDemonSakiko extends AbstractSakikoMonster {
@@ -56,6 +61,12 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     private int moveCount = 0;
 
     private boolean repeatSummon = false;
+
+    private OverrideBackgroundEffect bg = new OverrideBackgroundEffect(Arrays.asList(
+            ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p1.png"),
+            ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p2.png"),
+            ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p3.png"),
+            ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p4.png")));
 
     public InnerDemonSakiko(float x, float y) {
         super(MOVES[0] + NAME, ID, IMG, x, y);
@@ -74,6 +85,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     public void usePreBattleAction() {
         AbstractDungeon.getCurrRoom().cannotLose = true;
         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2), 2));
+        ActionHelper.effectToList(bg);
     }
 
     @Override
@@ -164,14 +176,17 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         this.addToBot(new PlayBGMAction(MusicHelper.AME, this));
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
+                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
                     } else if (this.phase == 2) {
                         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2, true), 2));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
+                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
                     } else if (this.phase == 3) {
                         this.addToBot(new PlayBGMAction(MusicHelper.MOONLIGHT, this));
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
+                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
                     }
                 })
                 .build());

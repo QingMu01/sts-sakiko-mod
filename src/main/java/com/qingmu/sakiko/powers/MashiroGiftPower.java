@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.action.ResetFakeIntentAction;
-import com.qingmu.sakiko.patch.ui.ChaosMonsterInfoPatch;
+import com.qingmu.sakiko.patch.monster.ChaosMonsterInfoPatch;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class MashiroGiftPower extends AbstractPower {

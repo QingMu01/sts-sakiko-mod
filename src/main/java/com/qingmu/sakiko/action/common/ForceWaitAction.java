@@ -6,6 +6,7 @@ public class ForceWaitAction extends AbstractGameAction {
 
     public ForceWaitAction(float dur) {
         this.duration = dur;
+        this.actionType = AbstractGameAction.ActionType.WAIT;
     }
 
     @Override

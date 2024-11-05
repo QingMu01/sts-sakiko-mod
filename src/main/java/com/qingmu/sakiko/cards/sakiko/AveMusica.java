@@ -22,7 +22,7 @@ public class AveMusica extends AbstractSakikoCard {
     public AveMusica() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 0);
+        this.setUpgradeAttr(1, 0, 0, 1);
 
         this.setSelfRetain(false,true);
     }

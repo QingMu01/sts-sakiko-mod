@@ -16,12 +16,14 @@ public class ApplyPowerActionPatch {
 
     @SpireInsertPatch(locator = Locator.class)
     public static void insert(ApplyPowerAction __instance) {
-        for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-            if (!monster.isDead && !monster.isDying) {
-                for (AbstractPower power : monster.powers) {
-                    if (power instanceof TriggerOnPlayerGotPower) {
-                        AbstractPower powerToApply = ReflectionHacks.getPrivate(__instance, ApplyPowerAction.class, "powerToApply");
-                        ((TriggerOnPlayerGotPower) power).triggerOnPlayerGotPower(powerToApply);
+        if (__instance.target.isPlayer && __instance.source.isPlayer) {
+            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
+                if (!monster.isDead && !monster.isDying) {
+                    for (AbstractPower power : monster.powers) {
+                        if (power instanceof TriggerOnPlayerGotPower) {
+                            AbstractPower powerToApply = ReflectionHacks.getPrivate(__instance, ApplyPowerAction.class, "powerToApply");
+                            ((TriggerOnPlayerGotPower) power).triggerOnPlayerGotPower(powerToApply);
+                        }
                     }
                 }
             }

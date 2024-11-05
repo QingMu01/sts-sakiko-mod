@@ -4,6 +4,11 @@ import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.MonsterRoom;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
+import com.qingmu.sakiko.monsters.helper.IntentAction;
+import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
 
@@ -52,6 +57,26 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
                 this.isMinion = true;
             }
         }
+    }
+
+    @Override
+    protected List<SpecialIntentAction> initSpecialIntent() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    protected boolean canPhaseSwitch() {
+        return false;
+    }
+
+    @Override
+    protected void phaseSwitchLogic() {
+
+    }
+
+    @Override
+    protected List<IntentAction> updateIntent() {
+        return this.intentList;
     }
 
 }

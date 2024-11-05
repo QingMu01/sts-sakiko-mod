@@ -24,7 +24,7 @@ public class Adventus extends AbstractSakikoCard {
     public Adventus() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 2, 0, 0);
-        this.setUpgradeAttr(1, 1, 0, 0);
+        this.setUpgradeAttr(1, 2, 0, 0);
     }
 
     @Override

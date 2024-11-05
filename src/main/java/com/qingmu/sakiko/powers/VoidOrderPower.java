@@ -1,7 +1,6 @@
 package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -10,8 +9,8 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.sakiko.VoidOrder;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class VoidOrderPower extends AbstractPower {
@@ -47,20 +46,12 @@ public class VoidOrderPower extends AbstractPower {
     @Override
     public void atEndOfTurn(boolean isPlayer) {
         if (isPlayer) {
-            this.addToBot(new CardSelectorAction(uiStrings.TEXT[0], this.amount, true, card -> CardGroup.CardGroupType.HAND, cardList -> {
-                for (AbstractCard card : cardList) {
-                    if (card.cost >= 0) {
-                        int newCost = AbstractDungeon.cardRandomRng.random(3);
-                        if (card.cost != newCost) {
-                            card.cost = newCost;
-                            card.costForTurn = card.cost;
-                            card.isCostModified = true;
-                        }
-                        card.freeToPlayOnce = false;
-                    }
-                    card.retain = true;
-                }
-            }, CardGroup.CardGroupType.HAND));
+            this.flash();
+            CardGroup group = CardsHelper.h();
+            int retainSize = Math.min(group.size(), this.amount);
+            for (int i = 0; i < retainSize; i++) {
+                group.group.get(AbstractDungeon.cardRandomRng.random(group.size() - 1)).retain = true;
+            }
         }
     }
 }

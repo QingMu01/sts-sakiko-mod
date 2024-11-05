@@ -114,7 +114,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveEditCards() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
-                .setDefaultSeen(false)
+                .setDefaultSeen(true)
                 .any(AbstractSakikoCard.class, (info, card) -> {
                     if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
                         SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);

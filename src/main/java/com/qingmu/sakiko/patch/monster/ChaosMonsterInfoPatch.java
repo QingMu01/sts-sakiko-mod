@@ -1,4 +1,4 @@
-package com.qingmu.sakiko.patch.ui;
+package com.qingmu.sakiko.patch.monster;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.monsters.AbstractFriendlyMonster;
 import com.qingmu.sakiko.powers.MashiroGiftPower;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -43,6 +44,7 @@ public class ChaosMonsterInfoPatch {
     public static class CreateIntentPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static void insert(AbstractMonster __instance, @ByRef int[] ___intentBaseDmg, @ByRef int[] ___intentMultiAmt, @ByRef boolean[] ___isMultiDmg) {
+            if (__instance instanceof AbstractFriendlyMonster) return;
             if (DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 __instance.intent = AbstractMonster.Intent.values()[AbstractDungeon.aiRng.random(AbstractMonster.Intent.values().length - 1)];
                 ___intentBaseDmg[0] = AbstractDungeon.aiRng.random(80);
@@ -69,6 +71,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractMonster.class, method = "updateIntentTip")
     public static class RandomIntentTips {
         public static SpireReturn<Void> Prefix(AbstractMonster __instance, @ByRef PowerTip[] ___intentTip) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 String[] header = uiStrings.TEXT;
                 String[] body = uiStrings.EXTRA_TEXT;
@@ -85,6 +88,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractCreature.class, method = "renderHealthText")
     public static class ChaosHpPatch {
         public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float y, Color ___hbTextColor, float ___healthHideTimer) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
                 ___hbTextColor.a *= ___healthHideTimer;
@@ -97,6 +101,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractCreature.class, method = "renderOrangeHealthBar")
     public static class ChaosOrangeHpPatch {
         public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float x, float y, Color ___orangeHbBarColor, float ___healthBarWidth) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 sb.setColor(___orangeHbBarColor);
                 sb.draw(ImageMaster.HEALTH_BAR_L, x - HEALTH_BAR_HEIGHT, y + HEALTH_BAR_OFFSET_Y, HEALTH_BAR_HEIGHT, HEALTH_BAR_HEIGHT);
@@ -110,6 +115,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractCreature.class, method = "renderGreenHealthBar")
     public static class ChaosGreenHpPatch {
         public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float x, float y, Color ___greenHbBarColor, float ___healthBarWidth) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 sb.setColor(___greenHbBarColor);
                 FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
@@ -125,6 +131,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractCreature.class, method = "renderRedHealthBar")
     public static class ChaosRedHpPatch {
         public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float x, float y, Color ___blueHbBarColor, Color ___redHbBarColor, float ___targetHealthBarWidth) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
                 if (__instance.currentBlock > 0) {
@@ -158,6 +165,7 @@ public class ChaosMonsterInfoPatch {
         @SpirePatch(clz = AbstractCreature.class, method = "renderBlockOutline")
         public static class ChaosBlockOutLinePatch {
             public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float x, float y, Color ___blockOutlineColor) {
+                if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
                 if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                     sb.setColor(___blockOutlineColor);
                     sb.setBlendFunction(770, 1);
@@ -173,6 +181,7 @@ public class ChaosMonsterInfoPatch {
         @SpirePatch(clz = AbstractCreature.class, method = "renderBlockIconAndValue")
         public static class ChaosBlockValue {
             public static SpireReturn<Void> Prefix(AbstractCreature __instance, SpriteBatch sb, float x, float y, Color ___blockColor, Color ___blockTextColor, float ___blockScale, float ___blockOffset) {
+                if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
                 if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID) && __instance.currentBlock > 0) {
                     FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
                     sb.setColor(___blockColor);
@@ -188,6 +197,7 @@ public class ChaosMonsterInfoPatch {
     @SpirePatch(clz = AbstractCreature.class, method = "healthBarUpdatedEvent")
     public static class FakeUpdateEvent {
         public static SpireReturn<Void> Prefix(AbstractCreature __instance, @ByRef float[] ___healthBarAnimTimer, @ByRef float[] ___targetHealthBarWidth, @ByRef float[] ___healthBarWidth) {
+            if (__instance instanceof AbstractFriendlyMonster) return SpireReturn.Continue();
             if (!__instance.isPlayer && DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
                 ___healthBarAnimTimer[0] = 1.2F;
@@ -210,6 +220,7 @@ public class ChaosMonsterInfoPatch {
     public static class FakeDamageInfoPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static void insert(AbstractMonster __instance, DamageInfo info) {
+            if (__instance instanceof AbstractFriendlyMonster) return;
             if (DungeonHelper.getPlayer().hasPower(MashiroGiftPower.POWER_ID)) {
                 FakeMonsterInfo fakeMonsterInfo = FakeMonsterInfoPatch.fakeMonsterInfo.get(__instance);
                 fakeMonsterInfo.updateCurrentHp(info.output);

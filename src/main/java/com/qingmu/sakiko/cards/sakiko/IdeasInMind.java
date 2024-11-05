@@ -20,7 +20,7 @@ public class IdeasInMind extends AbstractSakikoCard {
 
     public IdeasInMind() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 5, 0);
+        this.initBaseAttr(1, 0, 6, 0);
         this.setUpgradeAttr(1, 0, 3, 0);
     }
 

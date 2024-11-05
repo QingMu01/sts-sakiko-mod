@@ -8,7 +8,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 import com.qingmu.sakiko.action.common.SummonFriendlyMonsterAction;
 import com.qingmu.sakiko.constant.SakikoConst;
-import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
+import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
 import com.qingmu.sakiko.stances.CreatorStance;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -43,7 +43,9 @@ public class ClassicPiano extends AbstractSakikoRelic {
     @Override
     public void onRightClick() {
         if (Settings.isDebug) {
-            this.addToBot(new SummonFriendlyMonsterAction(new InnerDemonSakiko(-Settings.WIDTH, 0)));
+            LinkedAnon linkedAnon = new LinkedAnon(0, 0);
+            linkedAnon.drawX -= (DungeonHelper.getPlayer().drawX + (Settings.WIDTH - linkedAnon.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale;
+            this.addToBot(new SummonFriendlyMonsterAction(linkedAnon, true, -Settings.WIDTH));
         }
     }
 }

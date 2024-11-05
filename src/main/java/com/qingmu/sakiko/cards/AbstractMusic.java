@@ -154,6 +154,7 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
 
     @Override
     public void displayUpgrades() {
+        super.displayUpgrades();
         if (this.upgradedMusicNumber) {
             this.musicNumber = this.baseMusicNumber;
             this.isModifiedMusicNumber = true;

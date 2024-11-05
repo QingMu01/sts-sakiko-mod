@@ -18,12 +18,15 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.HeartAnimListener;
 import com.megacrit.cardcrawl.localization.MonsterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.vfx.BorderFlashEffect;
 import com.megacrit.cardcrawl.vfx.combat.BloodShotEffect;
 import com.megacrit.cardcrawl.vfx.combat.HeartBuffEffect;
 import com.megacrit.cardcrawl.vfx.combat.HeartMegaDebuffEffect;
 import com.megacrit.cardcrawl.vfx.combat.ViceCrushEffect;
+import com.qingmu.sakiko.action.common.AnimationDamageAction;
 import com.qingmu.sakiko.action.common.ForceWaitAction;
 import com.qingmu.sakiko.action.common.SummonFriendlyMonsterAction;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
@@ -31,6 +34,8 @@ import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
+import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
+import com.qingmu.sakiko.powers.monster.InstinctPower;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -47,6 +52,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
 
     protected int baseAttack = 8, baseSlash = 12, baseMulti = 6, multiCount = 10;
     private int bloodHitCount;
+    private int buffLimit;
     private int moveCount = 0;
     private int buffCount = 0;
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
@@ -71,10 +77,12 @@ public class InstinctSakiko extends AbstractSakikoMonster {
             this.damage.add(new DamageInfo(this, 45));
             this.damage.add(new DamageInfo(this, 2));
             this.bloodHitCount = 15;
+            this.buffLimit = 6;
         } else {
             this.damage.add(new DamageInfo(this, 40));
             this.damage.add(new DamageInfo(this, 2));
             this.bloodHitCount = 12;
+            this.buffLimit = 4;
         }
     }
 
@@ -117,9 +125,10 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .setActions(() -> {
                     ArrayList<AbstractGameAction> actions = new ArrayList<>();
                     actions.add(new HealAction(this, this, this.maxHealth));
+                    actions.add(new ApplyPowerAction(this, this, new InstinctPower(this, this.buffLimit), this.buffLimit));
                     actions.add(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
                     actions.add(new ForceWaitAction(1.5f));
-                    actions.add(new SummonFriendlyMonsterAction(new LinkedAnon(0, 0)));
+                    actions.add(new SummonFriendlyMonsterAction(new LinkedAnon(-(DungeonHelper.getPlayer().drawX + (Settings.WIDTH - this.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale, 0), true, -Settings.WIDTH));
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .setCallback(ia -> this.halfDead = false)
@@ -243,20 +252,23 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 })
                 .build());
         // 攻击联机爱音
-//        specialIntentActions.add(new SpecialIntentAction.Builder()
-//                .setMoveName(MOVES[1])
-//                .setPredicate(m -> {
-//                    MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
-//                    if (monsterGroup != null) {
-//                        AbstractMonster target = monsterGroup.getMonster(LinkedAnon.ID);
-//                        return target != null && !target.isDead && !target.isDying && AbstractDungeon.aiRng.randomBoolean(0.4f);
-//                    }
-//                    return false;
-//                })
-//                .setIntent(Intent.ATTACK)
-//                .setDamageAmount(this.damage.get(0))
-//                .setActions()
-//                .build());
+        specialIntentActions.add(new SpecialIntentAction.Builder()
+                .setMoveName(MOVES[1])
+                .setPredicate(m -> {
+                    MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+                    if (monsterGroup != null) {
+                        AbstractMonster target = monsterGroup.getMonster(LinkedAnon.ID);
+                        return target != null && !target.isDead && !target.isDying && AbstractDungeon.aiRng.randomBoolean(0.4f);
+                    }
+                    return false;
+                })
+                .setIntent(Intent.MAGIC)
+                .setDamageAmount(this.damage.get(0))
+                .setActions(() -> new AbstractGameAction[]{
+                        new AnimateJumpAction(this),
+                        new AnimationDamageAction(FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID), this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
+                })
+                .build());
         return specialIntentActions;
     }
 

@@ -8,12 +8,31 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import com.qingmu.sakiko.monsters.helper.IntentAction;
+
+import java.util.List;
 
 public abstract class AbstractFriendlyMonster extends AbstractSakikoMonster {
 
     public AbstractFriendlyMonster(String name, String id, String img, float x, float y) {
         super(name, id, img, x, y);
     }
+
+    @Override
+    protected boolean canPhaseSwitch() {
+        return false;
+    }
+
+    @Override
+    protected void phaseSwitchLogic() {
+
+    }
+
+    @Override
+    protected List<IntentAction> updateIntent() {
+        return this.intentList;
+    }
+
     @Override
     public void render(SpriteBatch sb) {
         if (!this.isDead && !this.escaped) {
@@ -21,7 +40,7 @@ public abstract class AbstractFriendlyMonster extends AbstractSakikoMonster {
                 this.animation.renderSprite(sb, this.drawX + this.animX, this.drawY + this.animY + AbstractDungeon.sceneOffsetY);
             } else if (this.atlas == null) {
                 sb.setColor(this.tint.color);
-                sb.draw(this.img, this.drawX - (float)this.img.getWidth() * Settings.scale / 2.0F + this.animX, this.drawY + this.animY + AbstractDungeon.sceneOffsetY, (float)this.img.getWidth() * Settings.scale, (float)this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
+                sb.draw(this.img, this.drawX - (float) this.img.getWidth() * Settings.scale / 2.0F + this.animX, this.drawY + this.animY + AbstractDungeon.sceneOffsetY, (float) this.img.getWidth() * Settings.scale, (float) this.img.getHeight() * Settings.scale, 0, 0, this.img.getWidth(), this.img.getHeight(), this.flipHorizontal, this.flipVertical);
             } else {
                 this.state.update(Gdx.graphics.getDeltaTime());
                 this.state.apply(this.skeleton);
