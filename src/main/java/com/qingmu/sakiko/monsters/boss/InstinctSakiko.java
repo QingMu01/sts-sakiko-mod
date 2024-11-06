@@ -3,14 +3,13 @@ package com.qingmu.sakiko.monsters.boss;
 import com.badlogic.gdx.graphics.Color;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.animations.AnimateJumpAction;
 import com.megacrit.cardcrawl.actions.animations.AnimateShakeAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.HealAction;
-import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
+import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.actions.unique.CanLoseAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.status.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -28,7 +27,11 @@ import com.megacrit.cardcrawl.vfx.combat.HeartMegaDebuffEffect;
 import com.megacrit.cardcrawl.vfx.combat.ViceCrushEffect;
 import com.qingmu.sakiko.action.common.AnimationDamageAction;
 import com.qingmu.sakiko.action.common.ForceWaitAction;
+import com.qingmu.sakiko.action.common.PlayBGMAction;
 import com.qingmu.sakiko.action.common.SummonFriendlyMonsterAction;
+import com.qingmu.sakiko.action.effect.OverrideBackgroundEffect;
+import com.qingmu.sakiko.constant.ColorHelp;
+import com.qingmu.sakiko.constant.MusicHelper;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
@@ -51,6 +54,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     private static final String[] MOVES = monsterStrings.MOVES;
 
     protected int baseAttack = 8, baseSlash = 12, baseMulti = 6, multiCount = 10;
+    private int multi = this.multiCount;
     private int bloodHitCount;
     private int buffLimit;
     private int moveCount = 0;
@@ -58,6 +62,8 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
     private HeartAnimListener animListener = new HeartAnimListener();
+
+    private OverrideBackgroundEffect bg = new OverrideBackgroundEffect("SakikoModResources/img/bg/bg_ansk.png");
 
     public InstinctSakiko(float x, float y) {
         super(NAME, ID, IMG, x, y, 476.0F, 410.0F);
@@ -82,13 +88,14 @@ public class InstinctSakiko extends AbstractSakikoMonster {
             this.damage.add(new DamageInfo(this, 40));
             this.damage.add(new DamageInfo(this, 2));
             this.bloodHitCount = 12;
-            this.buffLimit = 4;
+            this.buffLimit = 8;
         }
     }
 
     @Override
     public void usePreBattleAction() {
         BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
+        AbstractDungeon.getCurrRoom().cannotLose = true;
         CardCrawlGame.music.unsilenceBGM();
         AbstractDungeon.scene.fadeOutAmbiance();
         AbstractDungeon.getCurrRoom().playBgmInstantly("BOSS_ENDING");
@@ -106,17 +113,37 @@ public class InstinctSakiko extends AbstractSakikoMonster {
 
     @Override
     protected boolean canPhaseSwitch() {
-        if (currentHealth <= this.maxHealth / 2 && this.phase == 0) {
+        if (this.currentHealth <= this.maxHealth / 2 && this.phase == 0) {
             this.phase++;
+            if (this.currentHealth <= 0) {
+                this.halfDead = true;
+            }
+            return true;
         }
-        return this.phase == 0;
+        return false;
+    }
+
+    @Override
+    public void die() {
+        if (!AbstractDungeon.getCurrRoom().cannotLose) {
+            super.die();
+            this.addToBot(new TalkAction(this, DIALOG[4], 1.0F, 2.0F));
+            this.onBossVictoryLogic();
+            this.onFinalBossVictoryLogic();
+            CardCrawlGame.stopClock = true;
+        } else {
+            this.phaseSwitchLogic();
+        }
     }
 
     @Override
     protected void phaseSwitchLogic() {
         this.atlas = null;
         this.state.removeListener(this.animListener);
-        this.hb.resize(200, 220);
+        this.updateHitbox(this.hb_x, DungeonHelper.getPlayer().hb_y, 200, 220);
+        this.refreshHitboxLocation();
+        this.refreshIntentHbLocation();
+        this.healthBarUpdatedEvent();
         this.maxHealth = 1000;
         this.powers.removeIf(p -> p.type == AbstractPower.PowerType.DEBUFF);
         this.specialIntentList.add(0, new SpecialIntentAction.Builder()
@@ -124,11 +151,14 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .setPredicate(m -> true)
                 .setActions(() -> {
                     ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new VFXAction(this.bg));
+                    actions.add(new PlayBGMAction(MusicHelper.OTEME, this));
                     actions.add(new HealAction(this, this, this.maxHealth));
                     actions.add(new ApplyPowerAction(this, this, new InstinctPower(this, this.buffLimit), this.buffLimit));
                     actions.add(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
                     actions.add(new ForceWaitAction(1.5f));
                     actions.add(new SummonFriendlyMonsterAction(new LinkedAnon(-(DungeonHelper.getPlayer().drawX + (Settings.WIDTH - this.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale, 0), true, -Settings.WIDTH));
+                    actions.add(new CanLoseAction());
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .setCallback(ia -> this.halfDead = false)
@@ -141,9 +171,90 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     protected List<IntentAction> updateIntent() {
         ArrayList<IntentAction> intentActions = new ArrayList<>();
         intentActions.add(new IntentAction.Builder()
-
+                .setID("multi")
+                .setWeight(50)
+                .setIntent(Intent.ATTACK)
+                .setMultiplier(this.multi)
+                .setDamageAmount(this.damage.get(1))
+                .setActions(() -> this.generateMultiAttack(this.damage.get(1), this.multi))
+                .build());
+        intentActions.add(new IntentAction.Builder()
+                .setWeight(25)
+                .setIntent(Intent.ATTACK)
+                .setDamageAmount(this.damage.get(1))
+                .setMultiplier(this.bloodHitCount)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new VFXAction(new BloodShotEffect(this.hb.cX, this.hb.cY, DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY, this.bloodHitCount), 0.25F));
+                    for (int i = 0; i < this.bloodHitCount; i++) {
+                        actions.add(new DamageAction(DungeonHelper.getPlayer(), this.damage.get(1), AbstractGameAction.AttackEffect.BLUNT_HEAVY, true));
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
+                .build());
+        intentActions.add(new IntentAction.Builder()
+                .setWeight(25)
+                .setIntent(Intent.ATTACK)
+                .setDamageAmount(this.damage.get(0))
+                .setActions(() -> new AbstractGameAction[]{
+                        new VFXAction(new ViceCrushEffect(DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY), 0.5F),
+                        new DamageAction(DungeonHelper.getPlayer(), this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
+                })
+                .build());
+        intentActions.add(new IntentAction.Builder()
+                .setWeight(25)
+                .setIntent(Intent.BUFF)
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    int additionalAmount = 0;
+                    if (this.hasPower("Strength") && this.getPower("Strength").amount < 0) {
+                        additionalAmount = -this.getPower("Strength").amount;
+                    }
+                    actions.add(new VFXAction(new BorderFlashEffect(ColorHelp.SAKIKO_COLOR.cpy())));
+                    actions.add(new VFXAction(new HeartBuffEffect(this.hb.cX, this.hb.cY)));
+                    actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, additionalAmount + 2), additionalAmount + 2));
+                    actions.add(new ReducePowerAction(this, this, InstinctPower.POWER_ID, 1));
+                    switch (GameActionManager.turn % 4) {
+                        case 0:
+                            actions.add(new ApplyPowerAction(this, this, new ArtifactPower(this, 3), 3));
+                            break;
+                        case 1:
+                            actions.add(new ApplyPowerAction(this, this, new BeatOfDeathPower(this, 1), 1));
+                            break;
+                        case 2:
+                            if (!this.hasPower(PainfulStabsPower.POWER_ID)){
+                                actions.add(new ApplyPowerAction(this, this, new PainfulStabsPower(this)));
+                                break;
+                            }
+                        case 3:
+                            actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, 10), 10));
+                            break;
+                        default:
+                            actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, 50), 50));
+                    }
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
                 .build());
         return intentActions;
+    }
+
+    @Override
+    protected IntentAction getRandomEffectiveIntent(int random) {
+        if (this.phase != 0) {
+            for (IntentAction action : this.intentList) {
+                if (action.ID.equals("multi")) {
+                    int buff = 0;
+                    for (AbstractPower power : this.powers) {
+                        if (power.type == AbstractPower.PowerType.BUFF && !power.ID.equals(InstinctPower.POWER_ID) && !power.ID.equals(InvinciblePower.POWER_ID) && !power.ID.equals(BeatOfDeathPower.POWER_ID)) {
+                            buff++;
+                        }
+                    }
+                    action.multiplier = this.multiCount + buff;
+                    this.multi = action.multiplier;
+                }
+            }
+        }
+        return super.getRandomEffectiveIntent(random);
     }
 
     @Override
@@ -201,7 +312,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                 .build());
         // 心脏强化
         specialIntentActions.add(new SpecialIntentAction.Builder()
-                .setPredicate(m -> this.moveCount == 2)
+                .setPredicate(m -> this.phase == 0 && this.moveCount == 2)
                 .setIntent(Intent.BUFF)
                 .setRemovable(m -> false)
                 .setActions(() -> {
@@ -247,7 +358,12 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     actions.add(new AnimateJumpAction(this));
                     actions.add(new AnimateShakeAction(this, 0.5f, 0.5f));
                     actions.add(new AnimateJumpAction(this));
-                    actions.add(new HealAction(this, this, this.maxHealth / 2 - this.currentHealth));
+                    actions.add(new HealAction(this, this, 10));
+                    actions.add(new HealAction(DungeonHelper.getPlayer(), this, 10));
+                    AbstractMonster monster = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID);
+                    if (monster != null) {
+                        actions.add(new HealAction(monster, this, 10));
+                    }
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .build());
@@ -263,10 +379,10 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     return false;
                 })
                 .setIntent(Intent.MAGIC)
-                .setDamageAmount(this.damage.get(0))
+                .setDamageAmount(DungeonHelper.getPlayer().maxHealth / 2)
                 .setActions(() -> new AbstractGameAction[]{
-                        new AnimateJumpAction(this),
-                        new AnimationDamageAction(FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID), this.damage.get(0), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
+                        new TalkAction(this, DIALOG[1], 1.0F, 2.0F),
+                        new AnimationDamageAction(FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID), new DamageInfo(this, DungeonHelper.getPlayer().maxHealth / 2), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
                 })
                 .build());
         return specialIntentActions;

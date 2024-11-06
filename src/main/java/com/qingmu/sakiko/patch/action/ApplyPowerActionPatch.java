@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @SpirePatch(clz = ApplyPowerAction.class, method = "update")
 public class ApplyPowerActionPatch {
 
+    // 玩家为自己施加正面能力时触发
     @SpireInsertPatch(locator = Locator.class)
     public static void insert(ApplyPowerAction __instance) {
         if (__instance.target.isPlayer && __instance.source.isPlayer) {

@@ -3,6 +3,7 @@ package com.qingmu.sakiko.patch.action;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
@@ -72,6 +73,46 @@ public class GameActionManagerPatch {
                 Matcher matcher = new Matcher.FieldAccessMatcher(AbstractRoom.class, "skipMonsterTurn");
                 return LineFinder.findInOrder(ctBehavior, matcher);
             }
+        }
+    }
+
+    // 友方怪物回合结束逻辑
+    @SpirePatch(clz = GameActionManager.class, method = "getNextAction")
+    public static class FriendlyMonsterTurnEndLogicPatch {
+        @SpireInsertPatch(locator = Locator.class)
+        public static void insert(GameActionManager __instance) {
+            MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+            if (monsterGroup != null) {
+                monsterGroup.applyEndOfTurnPowers();
+            }
+        }
+
+        private static class Locator extends SpireInsertLocator {
+            @Override
+            public int[] Locate(CtBehavior ctBehavior) throws Exception {
+                Matcher matcher = new Matcher.FieldAccessMatcher(AbstractRoom.class, "skipMonsterTurn");
+                return new int[]{LineFinder.findAllInOrder(ctBehavior, matcher)[1]};
+            }
+        }
+    }
+
+    // 友方怪物回合开始触发钩子
+    @SpirePatch(clz = GameActionManager.class, method = "getNextAction")
+    public static class FriendlyMonsterStartTurnActionPatch {
+        @SpireInsertPatch(locator = Locator.class)
+        public static void insert(GameActionManager __instance) {
+            MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+            if (monsterGroup != null) {
+                monsterGroup.applyPreTurnLogic();
+            }
+        }
+    }
+
+    private static class Locator extends SpireInsertLocator {
+        @Override
+        public int[] Locate(CtBehavior ctBehavior) throws Exception {
+            Matcher matcher = new Matcher.MethodCallMatcher(AbstractPlayer.class, "hasPower");
+            return LineFinder.findInOrder(ctBehavior, matcher);
         }
     }
 }

@@ -45,7 +45,7 @@ public class InstinctPower extends AbstractPower implements TriggerOnPlayerGotPo
     @Override
     public void onInitialApplication() {
         for (AbstractPower power : DungeonHelper.getPlayer().powers) {
-            if (power.type.equals(PowerType.BUFF)){
+            if (power.type == PowerType.BUFF){
                 this.addToBot(new RemoveSpecificPowerAction(DungeonHelper.getPlayer(), this.owner, power));
             }
         }

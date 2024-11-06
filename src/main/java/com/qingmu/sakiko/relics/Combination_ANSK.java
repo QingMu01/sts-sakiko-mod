@@ -4,12 +4,15 @@ import basemod.abstracts.CustomSavable;
 import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.dungeons.TheEnding;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.monsters.ending.CorruptHeart;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
+import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
+import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -36,19 +39,25 @@ public class Combination_ANSK extends AbstractSakikoRelic implements CustomSavab
 
     @Override
     public void onEnterRoom(AbstractRoom room) {
-        if (this.isSleep && room instanceof MonsterRoomBoss) {
-            if (AbstractDungeon.bossKey.equals(CorruptHeart.ID)) {
-                AbstractDungeon.bossList.add(0, InstinctSakiko.ID);
-                AbstractDungeon.bossKey = InstinctSakiko.ID;
-            }
+        if (this.isSleep && room instanceof MonsterRoomBoss && AbstractDungeon.id.equals(TheEnding.ID)) {
+            AbstractDungeon.bossList.add(0, InstinctSakiko.ID);
+            AbstractDungeon.bossKey = InstinctSakiko.ID;
+            this.pulse = true;
+            this.beginPulse();
+        } else {
+            this.pulse = false;
         }
     }
 
     @Override
     public int onPlayerGainedBlock(float blockAmount) {
-        AbstractMonster anon = AbstractDungeon.getCurrRoom().monsters.getMonster("");
-        if (anon != null && !anon.isDying) {
-            this.addToBot(new GainBlockAction(anon, DungeonHelper.getPlayer(), (int) blockAmount));
+        MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+        if (monsterGroup != null) {
+            AbstractMonster monster = monsterGroup.getMonster(LinkedAnon.ID);
+            if (monster != null){
+                this.flash();
+                this.addToBot(new GainBlockAction(monster, DungeonHelper.getPlayer(), (int) (blockAmount / 2)));
+            }
         }
         return super.onPlayerGainedBlock(blockAmount);
     }

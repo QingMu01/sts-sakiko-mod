@@ -106,10 +106,8 @@ public class IntentAction {
     }
 
     public static IntentAction roll(List<IntentAction> list, float roll) {
-        float currentWeight = 0.0F;
         for (IntentAction i : list) {
-            currentWeight += i.weight;
-            if (roll < currentWeight)
+            if (roll < i.weight)
                 return i;
         }
         return null;

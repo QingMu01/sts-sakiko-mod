@@ -62,29 +62,47 @@ public class CardSelectorAction extends AbstractGameAction {
 
     private final boolean allowUnderAmount;
 
+    private final boolean randomSelect;
 
     // 单目标选择
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> endOfSelect, CardGroup.CardGroupType target) {
-        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, filter, processor, endOfSelect, target);
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> endOfSelect, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, false, filter, processor, endOfSelect, target);
     }
 
-    // 单目标选择，无过滤器、有回调
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType target) {
-        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, e -> true, processor, callback, target);
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> endOfSelect, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, randomSelect, filter, processor, endOfSelect, target);
     }
 
-    // 单目标选择，无过滤器、无回调
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, e -> true, processor, callback -> {
+    // 无过滤器、有回调
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, false, e -> true, processor, callback, target);
+    }
+
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, randomSelect, e -> true, processor, callback, target);
+    }
+
+    // 无过滤器、无回调
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, false, e -> true, processor, callback -> {
         }, target);
     }
 
-    // 单目标选择，有过滤器、无回调
-    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType target) {
-        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, filter, processor, callback -> {
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, randomSelect, e -> true, processor, callback -> {
         }, target);
     }
 
+    // 有过滤器、无回调
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, false, filter, processor, callback -> {
+        }, target);
+    }
+
+    public CardSelectorAction(String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, CardGroup.CardGroupType... target) {
+        this(DungeonHelper.getPlayer(), prompt, amount, allowUnderAmount, randomSelect, filter, processor, callback -> {
+        }, target);
+    }
 
     /*
      * @param p: 玩家
@@ -95,11 +113,12 @@ public class CardSelectorAction extends AbstractGameAction {
      * @callback: 回调函数
      * @targets: 目标卡组列表
      * */
-    public CardSelectorAction(AbstractPlayer p, String prompt, int amount, boolean allowUnderAmount, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... targets) {
+    public CardSelectorAction(AbstractPlayer p, String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... targets) {
         this.player = p;
         this.prompt = prompt;
         this.amount = amount;
         this.allowUnderAmount = allowUnderAmount;
+        this.randomSelect = randomSelect;
 
         this.filter = filter;
         this.processor = processor;
@@ -152,13 +171,19 @@ public class CardSelectorAction extends AbstractGameAction {
                 logger.info("no candidate");
                 return;
             }
-            for (AbstractCard card : this.candidate.group) {
-                card.stopGlowing();
-                card.unhover();
-                card.unfadeOut();
-                card.applyPowers();
-                card.setAngle(0.0F, true);
-                card.targetDrawScale = 1.0F;
+            if (randomSelect) {
+                this.amount = Math.min(this.amount, this.candidate.size());
+                for (int i = 0; i < this.amount; i++) {
+                    AbstractCard card = this.candidate.group.get(AbstractDungeon.cardRandomRng.random(this.candidate.size() - 1));
+                    if (this.selected.contains(card)) {
+                        i--;
+                    } else {
+                        this.selected.add(card);
+                        this.moveCard(card, this.processor.apply(card));
+                    }
+                }
+                this.endAction();
+                return;
             }
             if (!this.allowUnderAmount && this.candidate.size() <= this.amount) {
                 for (AbstractCard selectedCard : this.candidate.group) {
@@ -166,13 +191,16 @@ public class CardSelectorAction extends AbstractGameAction {
                     this.moveCard(selectedCard, apply);
                 }
                 this.selected.addAll(this.candidate.group);
-                this.callback.accept(this.selected);
-                this.releaseCards(candidate.group);
-                this.releaseCards(cantSelectedList);
-                AbstractDungeon.gridSelectScreen.selectedCards.clear();
-                this.player.hand.refreshHandLayout();
-                this.isDone = true;
+                this.endAction();
                 return;
+            }
+            for (AbstractCard card : this.candidate.group) {
+                card.stopGlowing();
+                card.unhover();
+                card.unfadeOut();
+                card.applyPowers();
+                card.setAngle(0.0F, true);
+                card.targetDrawScale = 1.0F;
             }
             String desc = String.format(uiStrings.EXTRA_TEXT[2], this.amount);
             if (this.prompt != null && !this.prompt.isEmpty()) {
@@ -198,12 +226,17 @@ public class CardSelectorAction extends AbstractGameAction {
         }
         this.tickDuration();
         if (this.isDone) {
-            this.callback.accept(this.selected);
-            this.releaseCards(candidate.group);
-            this.releaseCards(cantSelectedList);
-            AbstractDungeon.gridSelectScreen.targetGroup.clear();
-            this.player.hand.refreshHandLayout();
+            this.endAction();
         }
+    }
+
+    private void endAction() {
+        this.callback.accept(this.selected);
+        this.releaseCards(candidate.group);
+        this.releaseCards(cantSelectedList);
+        AbstractDungeon.gridSelectScreen.selectedCards.clear();
+        this.player.hand.refreshHandLayout();
+        this.isDone = true;
     }
 
     private void lockedTargetCardGroup(CardGroup.CardGroupType target) {

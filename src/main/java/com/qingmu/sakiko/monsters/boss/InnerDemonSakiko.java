@@ -56,23 +56,34 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     private static final String[] MOVES = monsterStrings.MOVES;
 
     private int baseAttack = 25, baseSlash = 60, baseMultiDamage = 5, multiCount = 12, baseBlock = 20, baseHp = 600;
+
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
     private int moveCount = 0;
 
     private boolean repeatSummon = false;
 
-    private OverrideBackgroundEffect bg = new OverrideBackgroundEffect(Arrays.asList(
+    private final OverrideBackgroundEffect bg = new OverrideBackgroundEffect(Arrays.asList(
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p1.png"),
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p2.png"),
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p3.png"),
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p4.png")));
+
+//    private final ShaderProgram shaderProgram;
+//    private final Texture noise = ImageMaster.loadImage("SakikoModResources/shader/rain/noise.png");
+    private float timer = 0f;
 
     public InnerDemonSakiko(float x, float y) {
         super(MOVES[0] + NAME, ID, IMG, x, y);
         this.type = EnemyType.BOSS;
         this.canPlayMusic = true;
         this.setHp(this.baseHp);
+
+//        this.shaderProgram = new ShaderProgram(Gdx.files.internal("SakikoModResources/shader/rain/vertexShader.vert"), Gdx.files.internal("SakikoModResources/shader/rain/fragmentShader.frag"));
+//
+//        if (!this.shaderProgram.isCompiled()) {
+//            throw new IllegalArgumentException("Error compiling shader: " + this.shaderProgram.getLog());
+//        }
 
         this.damage.add(new DamageInfo(this, this.baseAttack));
         // 重击
@@ -176,17 +187,34 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         this.addToBot(new PlayBGMAction(MusicHelper.AME, this));
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
-                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
+                        this.addToBot(new ExprAction(() -> {
+                            bg.changeBackground();
+//                            bg.setShaderProgram((texture) -> {
+//                                this.timer += Gdx.graphics.getDeltaTime() / 5.0f;
+//                                this.shaderProgram.begin();
+//                                texture.bind(0);
+//                                this.noise.bind();
+//                                this.shaderProgram.setUniformf("u_resolution", Settings.WIDTH, Settings.HEIGHT, 0.0f);
+//                                this.shaderProgram.setUniformf("u_time", this.timer);
+//                                this.shaderProgram.setUniformi("u_texture", 0);
+//                                this.shaderProgram.setUniformi("iChannel0", 0);
+//                                this.shaderProgram.end();
+//                                return this.shaderProgram;
+//                            });
+                        }));
                     } else if (this.phase == 2) {
                         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2, true), 2));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
-                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
+                        this.addToBot(new ExprAction(() -> {
+                            bg.stopShader();
+                            bg.changeBackground();
+                        }));
                     } else if (this.phase == 3) {
                         this.addToBot(new PlayBGMAction(MusicHelper.MOONLIGHT, this));
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
-                        this.addToBot(new ExprAction(() -> bg.changeBackground()));
+                        this.addToBot(new ExprAction(bg::changeBackground));
                     }
                 })
                 .build());
