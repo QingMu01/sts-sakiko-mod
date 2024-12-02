@@ -22,7 +22,7 @@ public class Disallow extends AbstractSakikoCard {
 
     public Disallow() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 6, 0, 0);
+        this.initBaseAttr(1, 8, 0, 0);
         this.setUpgradeAttr(1, 3, 0, 0);
 
     }

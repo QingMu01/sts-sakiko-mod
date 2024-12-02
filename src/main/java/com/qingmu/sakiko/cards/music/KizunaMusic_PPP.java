@@ -13,12 +13,12 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/KizunaMusic_PPP.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public KizunaMusic_PPP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(3, 1, 1, 0);
+        this.initMusicAttr(2, 1, 2, 1);
     }
 
     @Override

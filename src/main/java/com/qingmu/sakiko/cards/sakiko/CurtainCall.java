@@ -42,7 +42,6 @@ public class CurtainCall extends AbstractSakikoCard {
         this.baseDamage += size * this.magicNumber;
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
     }
 
     @Override

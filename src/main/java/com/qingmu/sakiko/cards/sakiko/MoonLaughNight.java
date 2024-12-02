@@ -5,10 +5,11 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.powers.FukkenPower;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
-import com.qingmu.sakiko.utils.PowerHelper;
 
 public class MoonLaughNight extends AbstractSakikoCard {
 
@@ -22,26 +23,33 @@ public class MoonLaughNight extends AbstractSakikoCard {
 
     public MoonLaughNight() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 8, 0, 3);
-        this.setUpgradeAttr(1, 3, 0, 1);
+        this.initBaseAttr(1, 8, 0, 2);
+        this.setUpgradeAttr(1, 3, 0, 0);
     }
 
     @Override
     public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(FukkenPower.POWER_ID) * this.magicNumber;
+        AbstractPower fk = DungeonHelper.getPlayer().getPower(FukkenPower.POWER_ID);
+        if (fk != null) {
+            fk.amount *= this.magicNumber;
+        }
         super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+        if (fk != null) {
+            fk.amount /= this.magicNumber;
+        }
+
     }
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += PowerHelper.getPowerAmount(FukkenPower.POWER_ID) * this.magicNumber;
+        AbstractPower fk = DungeonHelper.getPlayer().getPower(FukkenPower.POWER_ID);
+        if (fk != null) {
+            fk.amount *= this.magicNumber;
+        }
         super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+        if (fk != null) {
+            fk.amount /= this.magicNumber;
+        }
     }
 
     @Override

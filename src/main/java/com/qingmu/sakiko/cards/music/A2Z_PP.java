@@ -1,8 +1,8 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
-import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
+import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -13,41 +13,26 @@ public class A2Z_PP extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/A2Z_PP.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
-    private static final CardTarget TARGET = CardTarget.ALL_ENEMY;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
+    private static final CardTarget TARGET = CardTarget.NONE;
 
     public A2Z_PP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
-        this.initMusicAttr(6, 2, 2, 1);
-
-        this.isMultiDamage = true;
-    }
-
-    @Override
-    public void triggerInBufferPlayedMusic(AbstractMusic music) {
-        this.amount++;
-    }
-
-    @Override
-    public void applyPowers() {
-        this.applyPowersToMusicNumber();
-        this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
-        super.applyPowers();
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        this.applyPowersToMusicNumber();
-        this.baseDamage = this.musicNumber + (this.amount * this.magicNumber);
-        super.calculateCardDamage(mo);
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
+        this.initMusicAttr(1, 1);
     }
 
     @Override
     public void play() {
-        this.addToTop(new DamageAllEnemiesAction(this.m_source, this.multiDamage, this.damageTypeForTurn, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+    }
+
+    @Override
+    public void triggerOnEnterQueue() {
+        this.amount = this.musicNumber;
+        this.addToBot(new ApplyPowerAction(this.m_source, this.m_source, new StrengthPower(this.m_source, this.amount), this.amount));
+    }
+
+    @Override
+    public void triggerOnExitQueue() {
+        this.addToBot(new ReducePowerAction(this.m_source, this.m_source, StrengthPower.POWER_ID, this.amount));
     }
 }

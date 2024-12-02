@@ -58,7 +58,7 @@ public abstract class AbstractSakikoStance extends AbstractStance {
                 @Override
                 public void update() {
                     for (AbstractGameAction action : actions) {
-                        this.addToTop(action);
+                        this.addToBot(action);
                     }
                     this.isDone = true;
                 }

@@ -17,7 +17,7 @@ public class UnrepentantDecisionAction extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (this.player.powers.isEmpty()) {
+        if (this.player.powers.size() <= 1) {
             this.isDone = true;
             return;
         }
@@ -30,7 +30,15 @@ public class UnrepentantDecisionAction extends AbstractGameAction {
         int total = 0;
         for (AbstractPower power : this.player.powers) {
             if (power != targetPower) {
-                total += power.amount;
+                if (power.canGoNegative) {
+                    total += power.amount;
+                } else {
+                    if (power.amount > 0) {
+                        total += power.amount;
+                    } else {
+                        total += 1;
+                    }
+                }
                 this.addToBot(new RemoveSpecificPowerAction(this.player, this.player, power));
             }
         }

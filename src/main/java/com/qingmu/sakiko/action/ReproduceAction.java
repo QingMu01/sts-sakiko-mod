@@ -11,6 +11,7 @@ import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.KirameiPower;
 
 public class ReproduceAction extends AbstractGameAction {
+
     private AbstractPlayer player;
 
     public ReproduceAction(AbstractPlayer player, int amount) {

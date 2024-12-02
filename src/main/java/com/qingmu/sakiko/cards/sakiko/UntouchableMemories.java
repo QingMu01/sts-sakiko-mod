@@ -24,7 +24,7 @@ public class UntouchableMemories extends AbstractSakikoCard {
         this.tags.add(SakikoEnum.CardTagEnum.OBLIVIOUS);
 
         this.initBaseAttr(1, 9, 0, 1);
-        this.setUpgradeAttr(1, 4, 0, 0);
+        this.setUpgradeAttr(1, 2, 0, 0);
     }
 
     @Override

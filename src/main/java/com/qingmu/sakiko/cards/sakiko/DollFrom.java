@@ -21,10 +21,9 @@ public class DollFrom extends AbstractSakikoCard {
 
     public DollFrom() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(3, 0, 0, 1);
-        this.setUpgradeAttr(3, 0, 0, 0);
-
-        this.setEthereal(true, false);
+        this.initBaseAttr(3, 0, 0, 2);
+        this.setUpgradeAttr(3, 0, 0, 1);
+        this.setEthereal(true, true);
     }
 
     @Override

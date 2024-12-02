@@ -31,7 +31,6 @@ public class LinkedAnon extends AbstractFriendlyMonster {
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
 
-    protected int baseAttack = 8, baseSlash = 12, baseMulti = 6, multiCount = 10;
     private static final String IMG = "SakikoModResources/img/monster/anon.png";
 
     public LinkedAnon(float x, float y) {

@@ -29,6 +29,6 @@ public class Encore extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new EncorePower(p, this.magicNumber), this.magicNumber));
+        this.addToBot(new ApplyPowerAction(p, p, new EncorePower(p, this.magicNumber, false), this.magicNumber));
     }
 }

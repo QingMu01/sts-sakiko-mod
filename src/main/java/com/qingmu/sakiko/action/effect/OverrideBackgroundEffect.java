@@ -38,13 +38,10 @@ public class OverrideBackgroundEffect extends AbstractGameEffect {
     // 公开变量
     public Color currBgColor; // 当前渲染背景的颜色
     public Color nextBgColor; // 下一个背景的颜色
-    public float timer; // 自定义计时器
-    public float speed; // 速度
-
-    // 绘制子区域的起始点
-    public int srcX, srcY;
-    // 绘制子区域的宽高
-    public int srcWidth, srcHeight;
+    // 绘制区域的起点
+    public float startX, startY;
+    // 绘制区域的终点
+    public float endX, endY;
 
     protected TriFunction<SpriteBatch, Texture, OverrideBackgroundEffect, Boolean> transition;
 
@@ -73,12 +70,10 @@ public class OverrideBackgroundEffect extends AbstractGameEffect {
         this.nextBgColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         this.fadeinAlpha = 0.0f;
         this.fadeoutAlpha = this.currBgColor.a;
-        this.timer = 1.0f;
-        this.speed = 1.0f;
-        this.srcX = 0;
-        this.srcY = 0;
-        this.srcWidth = Settings.WIDTH;
-        this.srcHeight = Settings.HEIGHT;
+
+        this.startX = this.startY = 0;
+        this.endX = Settings.WIDTH;
+        this.endY = Settings.HEIGHT;
     }
 
     public void setShaderProgram(Function<Texture, ShaderProgram> shader) {
@@ -152,10 +147,10 @@ public class OverrideBackgroundEffect extends AbstractGameEffect {
             sb.setShader(sp);
             sb.enableBlending();
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            sb.draw(this.currentBackground, 0, 0, this.currentBackground.getWidth() / 2.0f, this.currentBackground.getHeight() / 2.0f, Settings.WIDTH, Settings.HEIGHT, 1.0f, 1.0f, 0.0f, this.srcX, this.srcY, this.srcWidth, this.srcHeight, false, false);
+            sb.draw(this.currentBackground, this.startX, this.startY, this.endX, this.endY);
             sb.setShader(null);
         } else {
-            sb.draw(this.currentBackground, 0, 0, this.currentBackground.getWidth() / 2.0f, this.currentBackground.getHeight() / 2.0f, Settings.WIDTH, Settings.HEIGHT, 1.0f, 1.0f, 0.0f, this.srcX, this.srcY, this.srcWidth, this.srcHeight, false, false);
+            sb.draw(this.currentBackground, this.startX, this.startY, this.endX, this.endY);
         }
         if (this.changeBG) {
             if (this.transition.apply(sb, this.nextBackground, this)) {

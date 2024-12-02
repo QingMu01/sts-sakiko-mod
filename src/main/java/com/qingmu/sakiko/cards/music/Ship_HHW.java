@@ -12,13 +12,14 @@ public class Ship_HHW extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Ship_HHW.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
 
     public Ship_HHW() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.initMusicAttr(1, 1);
+
+        this.setExhaust(true, true);
     }
 
     @Override

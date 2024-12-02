@@ -21,7 +21,8 @@
   "SakikoMod:FukkenPower": {
     "NAME": "复权",
     "DESCRIPTIONS": [
-      "强化 #y音乐 牌的效果。对非AveMujica的音乐效果减半。"
+      "你和队友造成的伤害提高 #b",
+      " %。回合开始时，下降一层。"
     ]
   },
   "SakikoMod:FeverPower": {
@@ -48,7 +49,8 @@
   "SakikoMod:ZekkouchouPower": {
     "NAME": "绝好调",
     "DESCRIPTIONS": [
-      "你的下一次演奏发挥两倍效果。"
+      "你的下 #b",
+      " 次演奏发挥两倍效果。"
     ]
   },
   "SakikoMod:BlockedPower": {
@@ -60,7 +62,7 @@
   "SakikoMod:FallApartPower": {
     "NAME": "分崩离析",
     "DESCRIPTIONS": [
-      "你的队友数量视为 #r0 。"
+      "队友现在不再发挥作用。"
     ]
   },
   "SakikoMod:LeaderPower": {
@@ -80,7 +82,7 @@
   "SakikoMod:KingOfTingPower": {
     "NAME": "挺王之力",
     "DESCRIPTIONS": [
-      "你进入 #y演奏者 时，获得 #b",
+      "你每次失去生命值时，获得 #b",
       " 点 #y闪耀 。"
     ]
   },
@@ -108,8 +110,7 @@
   "SakikoMod:FormerGloryPower": {
     "NAME": "昔日荣光",
     "DESCRIPTIONS": [
-      "每次 #y演奏 时，对随机敌人造成 #r",
-      " 点伤害。"
+      " #y复权 也将提高格挡量，回合开始时，额外失去 #b1 层 #y复权 。"
     ]
   },
   "SakikoMod:HolyHymnPower": {
@@ -151,15 +152,15 @@
   "SakikoMod:StiffPower": {
     "NAME": "僵硬",
     "DESCRIPTIONS": [
-      "你的非 #y音乐 牌，造成的伤害与获得格挡减少到 #r",
-      " %。"
+      "回合结束时，若打出牌的种类少于三种，则失去 #b",
+      " 点 #y闪耀 。"
     ]
   },
   "SakikoMod:DollPower": {
     "NAME": "人偶",
     "DESCRIPTIONS": [
-      "你的 #y音乐 牌在 #y演奏 时，获得 #b",
-      " 倍效果增强。"
+      "在同一回合，首次打出三种不同类型的牌后，获得 #b",
+      " 点 #y闪耀 。"
     ]
   },
   "SakikoMod:EncorePower": {
@@ -202,6 +203,20 @@
       " 次演奏无效化，转而获得 #b1 层 #y无实体 。"
     ]
   },
+  "SakikoMod:SymbolWaterPower": {
+    "NAME": "Symbol: Water",
+    "DESCRIPTIONS": [
+      "本回合，阻止你下 #b",
+      " 次受到的生命损失。"
+    ]
+  },
+  "SakikoMod:EtherPower": {
+    "NAME": "Ether",
+    "DESCRIPTIONS": [
+      "你抽到的下 #b",
+      " 张牌，在其打出前，耗能变为 #g0 。"
+    ]
+  },
   "SakikoMod:AnonDasuruPower": {
     "NAME": "爱堕",
     "DESCRIPTIONS": [
@@ -219,20 +234,27 @@
     "NAME": "春日影",
     "DESCRIPTIONS": [
       "接下来 #b",
-      " 个回合，你的 #y心之壁 层数不再会因为激活而下降。"
-    ]
-  },
-  "SakikoMod:FirstOnePower": {
-    "NAME": "最初降临之人",
-    "DESCRIPTIONS": [
-      "回合开始时，获得 #b",
-      " 点 #y复权 。"
+      " 个回合，你的 #y心之壁 层数不再会因为激活而下降。",
+      "且你不再受到 #y心之壁 的伤害。"
     ]
   },
   "SakikoMod:NingenUtaPower": {
     "NAME": "想要成为人类之歌",
     "DESCRIPTIONS": [
       "你首次获得增益状态时，额外获得 #b1 层。"
+    ]
+  },
+  "SakikoMod:RemoveKabePower": {
+    "NAME": "消融",
+    "DESCRIPTIONS": [
+      "回合结束后，移除你的 #y心之壁 。"
+    ]
+  },
+  "SakikoMod:AshPower": {
+    "NAME": "余烬",
+    "DESCRIPTIONS": [
+      "燃烧殆尽的舞台少女留下的残骸，回合结束时，失去 #b",
+      " 点 #y闪耀 。"
     ]
   },
   "SakikoMod:SoyoConstrictedPower": {
@@ -271,7 +293,7 @@
     ]
   },
   "SakikoMod:CrychicKizunaPower": {
-    "NAME": "Crychic的牵绊",
+    "NAME": "命运共同体",
     "DESCRIPTIONS": [
       "持有此状态的单位会共同承受伤害。"
     ]
@@ -285,15 +307,14 @@
   "SakikoMod:MusicalAbilityPower": {
     "NAME": "音乐才华",
     "DESCRIPTIONS": [
-      "你每打出 #b12 张非音乐牌，进行一次 #y演奏 。距离下次演奏还差 #b",
-      " 张牌。"
+      "你每打出 #b8 张非音乐牌，进行一次 #y演奏 。"
     ]
   },
   "SakikoMod:ResiliencePower": {
     "NAME": "坚韧意志",
     "DESCRIPTIONS": [
       "受到攻击时，回复 #g",
-      " 点生命值。"
+      " 点生命值。随机获得一层 #y死亡律动 、 #y锋利外甲 、 #y荆棘 。"
     ]
   },
   "SakikoMod:InstinctPower": {
@@ -301,6 +322,22 @@
     "DESCRIPTIONS": [
       "此单位与玩家之间不会持有 #y相同 的正面能力。玩家最多为自己施加 #r",
       " 个正面能力，超过时最左边的能力转移给此单位。"
+    ]
+  },
+  "SakikoMod:MemberPower": {
+    "NAME": "队友",
+    "DESCRIPTIONS": [
+      "怪物会优先攻击这个单位。"
+    ]
+  },
+  "SakikoMod:FireBirdPower": {
+    "NAME": "火之鸟",
+    "DESCRIPTIONS": [
+      "每经过一个时间节点，执行一次特殊意图。出牌后开始计时。 NL 下一节点： #b",
+      " 秒后",
+      "，强制结束玩家回合，召唤队友。",
+      "，造成一次强烈的负面影响。",
+      "，玩家回合开始时，受到一次 #r超高 伤害。"
     ]
   }
 }

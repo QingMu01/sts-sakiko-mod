@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.KillKissAction;
+import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -23,7 +24,7 @@ public class KillKiss extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(4, 2, 1, 1);
+        this.initMusicAttr(4, 2, 3, 1);
     }
 
     @Override
@@ -39,14 +40,18 @@ public class KillKiss extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.calculateCardDamage(mo);
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
     public void play() {
         this.submitActionsToTop(
                 new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
-                new KillKissAction(this)
+                new KillKissAction(this.m_source, this)
         );
+    }
+
+    @Override
+    public void interruptReady() {
+        this.addToTop(new PlayerPlayedMusicAction(this));
     }
 }

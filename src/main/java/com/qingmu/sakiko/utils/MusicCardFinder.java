@@ -1,12 +1,15 @@
 package com.qingmu.sakiko.utils;
 
+import basemod.helpers.CardModifierManager;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.qingmu.sakiko.SakikoModCore;
-import com.qingmu.sakiko.cards.AbstractMusic;
+import com.megacrit.cardcrawl.relics.AbstractRelic;
+import com.megacrit.cardcrawl.relics.QuestionCard;
 import com.qingmu.sakiko.constant.SakikoEnum;
+import com.qingmu.sakiko.modifier.MoonLightModifier;
 import com.qingmu.sakiko.patch.filed.CardPoolsFiled;
+import com.qingmu.sakiko.patch.filed.MoonLightCardsFiled;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +19,12 @@ public class MusicCardFinder {
 
     public static ArrayList<AbstractCard> findReward() {
         ArrayList<AbstractCard> retVal = new ArrayList<>();
-        int numCards = 4;
+        int numCards = 3;
+        AbstractRelic relic = DungeonHelper.getPlayer().getRelic(QuestionCard.ID);
+        if (relic != null) {
+            numCards += 1;
+            relic.flash();
+        }
         for (int i = 0; i < numCards; i++) {
             AbstractCard.CardRarity rarity = rollRarity();
             AbstractCard card = null;
@@ -31,28 +39,32 @@ public class MusicCardFinder {
                     }
                 }
             }
-            if (card instanceof AbstractMusic) {
-                if (card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD)) {
-                    if (SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
-                        retVal.add(card);
-                    } else {
-                        i--;
-                    }
-                } else {
-                    retVal.add(card);
-                }
-            }
+            retVal.add(card);
         }
         ArrayList<AbstractCard> retVal2 = new ArrayList<>();
-        for (AbstractCard c : retVal)
-            retVal2.add(c.makeCopy());
+        for (AbstractCard c : retVal) {
+            AbstractCard copy = c.makeCopy();
+            for (AbstractCard moonlight : MoonLightCardsFiled.moonLightPool.get(DungeonHelper.getPlayer()).group) {
+                if (copy.cardID.equals(moonlight.cardID) && !CardModifierManager.hasModifier(copy, MoonLightModifier.ID)) {
+                    CardModifierManager.addModifier(copy, new MoonLightModifier(false));
+                }
+            }
+            retVal2.add(copy);
+        }
         return retVal2;
     }
 
     public static AbstractCard returnTrulyRandomCardInCombat() {
         ArrayList<AbstractCard> list = new ArrayList<>();
-        Iterator<AbstractCard> var2 = CardPoolsFiled.srcUncommonMusicPool.get(CardCrawlGame.dungeon).group.iterator();
+        Iterator<AbstractCard> var2 = CardPoolsFiled.srcCommonMusicPool.get(CardCrawlGame.dungeon).group.iterator();
         AbstractCard c;
+        while (var2.hasNext()) {
+            c = var2.next();
+            if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
+                list.add(c);
+            }
+        }
+        var2 = CardPoolsFiled.srcUncommonMusicPool.get(CardCrawlGame.dungeon).group.iterator();
         while (var2.hasNext()) {
             c = var2.next();
             if (!c.hasTag(AbstractCard.CardTags.HEALING)) {
@@ -66,10 +78,14 @@ public class MusicCardFinder {
                 list.add(c);
             }
         }
-        if (!SakikoModCore.SAKIKO_CONFIG.getBool("enableAnonCard")) {
-            list.removeIf(card -> card.hasTag(SakikoEnum.CardTagEnum.ANON_MOD));
+        AbstractCard card = list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
+        for (AbstractCard moonlight : MoonLightCardsFiled.moonLightPool.get(DungeonHelper.getPlayer()).group) {
+            if (card.cardID.equals(moonlight.cardID) && !CardModifierManager.hasModifier(card, MoonLightModifier.ID)) {
+                CardModifierManager.addModifier(card, new MoonLightModifier(false));
+            }
         }
-        return list.get(AbstractDungeon.cardRandomRng.random(list.size() - 1));
+
+        return card;
     }
 
     private static AbstractCard.CardRarity rollRarity() {
@@ -78,11 +94,14 @@ public class MusicCardFinder {
     }
 
     private static AbstractCard.CardRarity getCardRarityFallback(int roll) {
-        return roll < 10 ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+        if (roll < 15) return SakikoEnum.CardRarityEnum.MUSIC_RARE;
+        return roll < 65 ? SakikoEnum.CardRarityEnum.MUSIC_COMMON : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
     }
 
     private static AbstractCard getCard(AbstractCard.CardRarity rarity) {
-        if (rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
+        if (rarity == SakikoEnum.CardRarityEnum.MUSIC_COMMON) {
+            return CardPoolsFiled.commonMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
+        } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON) {
             return CardPoolsFiled.uncommonMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);
         } else if (rarity == SakikoEnum.CardRarityEnum.MUSIC_RARE) {
             return CardPoolsFiled.rareMusicPool.get(CardCrawlGame.dungeon).getRandomCard(true);

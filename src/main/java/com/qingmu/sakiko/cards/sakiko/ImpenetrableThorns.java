@@ -1,12 +1,11 @@
 package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.ImpenetrableThornsAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.powers.KokoroNoKabePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class ImpenetrableThorns extends AbstractSakikoCard {
@@ -31,7 +30,7 @@ public class ImpenetrableThorns extends AbstractSakikoCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.submitActionsToBot(
                 new DamageAllEnemiesAction(p, this.multiDamage, this.damageTypeForTurn, AbstractGameAction.AttackEffect.SLASH_HORIZONTAL),
-                new ApplyPowerAction(p, p, new KokoroNoKabePower(p, this.multiDamage.length * this.magicNumber), this.multiDamage.length * this.magicNumber)
+                new ImpenetrableThornsAction(p, p, this.magicNumber)
         );
     }
 }

@@ -21,16 +21,24 @@ import com.qingmu.sakiko.utils.ActionHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+import java.util.function.Consumer;
+
 public class ObliviousAction extends CardSelectorAction {
 
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(ObliviousAction.class.getSimpleName()));
 
     public ObliviousAction(int amount) {
-        this(amount, false);
+        this(amount, false, card -> {
+        });
+    }
+
+    public ObliviousAction(int amount, boolean allowUnderAmount) {
+        this(amount, allowUnderAmount, card -> {
+        });
     }
 
     // 忘却 默认方法
-    public ObliviousAction(int amount, boolean allowUnderAmount) {
+    public ObliviousAction(int amount, boolean allowUnderAmount, Consumer<AbstractCard> callback) {
         super(uiStrings.TEXT[0], amount, allowUnderAmount, card -> !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS), card -> CardGroup.CardGroupType.UNSPECIFIED, cardList -> {
             for (AbstractCard card : cardList) {
                 AbstractMonster m = AbstractDungeon.getRandomMonster();
@@ -50,6 +58,7 @@ public class ObliviousAction extends CardSelectorAction {
                 if (card instanceof TriggerOnOblivion) {
                     ((TriggerOnOblivion) card).triggerOnOblivion();
                 }
+                callback.accept(card);
                 ActionHelper.actionToBot(new UnlimboAction(card));
             }
         }, CardGroup.CardGroupType.HAND, CardGroup.CardGroupType.DISCARD_PILE);

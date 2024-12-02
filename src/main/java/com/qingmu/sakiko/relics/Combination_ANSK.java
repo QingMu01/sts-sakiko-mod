@@ -12,7 +12,6 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
 import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
 import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
-import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -51,7 +50,7 @@ public class Combination_ANSK extends AbstractSakikoRelic implements CustomSavab
 
     @Override
     public int onPlayerGainedBlock(float blockAmount) {
-        MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+        MonsterGroup monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
         if (monsterGroup != null) {
             AbstractMonster monster = monsterGroup.getMonster(LinkedAnon.ID);
             if (monster != null){

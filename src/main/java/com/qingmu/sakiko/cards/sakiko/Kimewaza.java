@@ -18,8 +18,8 @@ public class Kimewaza extends AbstractSakikoCard {
 
     public Kimewaza() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(4, 0, 0, 0);
-        this.setUpgradeAttr(3, 0, 0, 0);
+        this.initBaseAttr(3, 0, 0, 0);
+        this.setUpgradeAttr(2, 0, 0, 0);
         this.setExhaust(true, true);
     }
 

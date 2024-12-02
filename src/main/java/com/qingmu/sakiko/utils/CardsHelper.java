@@ -2,6 +2,10 @@ package com.qingmu.sakiko.utils;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.cards.curses.AscendersBane;
+import com.megacrit.cardcrawl.cards.curses.CurseOfTheBell;
+import com.megacrit.cardcrawl.cards.curses.Necronomicurse;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -30,6 +34,10 @@ public class CardsHelper {
 
     public static CardGroup mq() {
         return MusicBattleFiledPatch.MusicQueue.musicQueue.get(DungeonHelper.getPlayer());
+    }
+
+    public static CardGroup mq(AbstractCreature creature) {
+        return MusicBattleFiledPatch.MusicQueue.musicQueue.get(creature);
     }
 
     public static CardGroup dmp() {
@@ -161,6 +169,22 @@ public class CardsHelper {
 
     public static boolean notStatusOrCurse(AbstractCard card) {
         return !isStatusOrCurse(card);
+    }
+
+    public static boolean isInBottle(AbstractCard card) {
+        if (card instanceof AbstractMusic) {
+            return ((AbstractMusic) card).cryChicSelect;
+        } else {
+            return card.inBottleFlame || card.inBottleLightning || card.inBottleTornado;
+        }
+    }
+
+    public static boolean canBeRemoved(AbstractCard card) {
+        return !card.cardID.equals(AscendersBane.ID) && !card.cardID.equals(Necronomicurse.ID) && !card.cardID.equals(CurseOfTheBell.ID);
+    }
+
+    public static boolean notInBottle(AbstractCard card) {
+        return !isInBottle(card);
     }
 
     public static CardGroup getCurseCards(CardGroup cardGroup) {

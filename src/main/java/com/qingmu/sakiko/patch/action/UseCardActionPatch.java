@@ -9,7 +9,6 @@ import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.utils.ActionHelper;
@@ -22,7 +21,7 @@ public class UseCardActionPatch {
         // 移除带有回忆标签的卡
         @SpireInsertPatch(locator = UseMusicCardActionPatch.MusicCardUpdatePatch.Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
-            if ((CardModifierManager.hasModifier(___targetCard, RememberModifier.ID) || CardModifierManager.hasModifier(___targetCard, LouderModifier.ID)) && !(___targetCard instanceof AbstractMusic)) {
+            if (CardModifierManager.hasModifier(___targetCard, RememberModifier.ID) && !(___targetCard instanceof AbstractMusic)) {
                 if (___targetCard.type == AbstractCard.CardType.POWER) {
                     CardsHelper.h().empower(___targetCard);
                 } else {

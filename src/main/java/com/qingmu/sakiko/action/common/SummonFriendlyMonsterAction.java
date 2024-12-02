@@ -1,86 +1,95 @@
 package com.qingmu.sakiko.action.common;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.MathHelper;
+import com.megacrit.cardcrawl.localization.TutorialStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
+import com.megacrit.cardcrawl.vfx.ThoughtBubble;
+import com.qingmu.sakiko.monsters.AbstractFriendlyMonster;
 import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
+import com.qingmu.sakiko.utils.DungeonHelper;
+import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SummonFriendlyMonsterAction extends AbstractGameAction {
+
+    private static final TutorialStrings TUTORIAL_STRINGS = CardCrawlGame.languagePack.getTutorialString(ModNameHelper.make(SummonFriendlyMonsterAction.class.getSimpleName()));
+
     private boolean used;
-    private final AbstractMonster m;
-    private final int targetSlot;
-    private boolean useSmartPositioning;
+    private final String monsterId;
+    private AbstractFriendlyMonster m;
+    private int monsterHp;
+
     private MonsterGroup monsterGroup;
 
     private final boolean useAnimation;
     private boolean animationEnded = false;
-    private boolean moveDirection;
-    private float startX, startY;
-    private float endX, endY;
+    private float endX;
 
-    public SummonFriendlyMonsterAction(AbstractMonster m) {
-        this(m, -99, false, 0, 0);
-        this.useSmartPositioning = true;
+    private static final float PADDING_X = 20.0f;
+    private static final float PADDING_Y = 160.0f;
+
+    public SummonFriendlyMonsterAction(String monsterId, int monsterHp) {
+        this(monsterId, false);
+        this.monsterHp = monsterHp;
     }
 
-    public SummonFriendlyMonsterAction(AbstractMonster m, boolean useAnimation, float startX) {
-        this(m, -99, useAnimation, startX, m.drawY);
-        this.useSmartPositioning = true;
-    }
-
-    public SummonFriendlyMonsterAction(AbstractMonster m, int slot, boolean useAnimation, float startX, float startY) {
-        this.m = m;
+    public SummonFriendlyMonsterAction(String monsterId, boolean useAnimation) {
+        this.monsterId = monsterId;
         this.used = false;
         this.actionType = ActionType.SPECIAL;
         this.useAnimation = useAnimation;
-        if (this.useAnimation) {
-            this.startX = startX;
-            this.startY = startY;
-            this.endX = m.drawX;
-            this.endY = m.drawY;
-            m.drawX = startX;
-            m.drawY = startY;
-            this.moveDirection = this.startX < this.endX;
-        }
         this.duration = 0.1f;
-        this.targetSlot = slot;
-        this.useSmartPositioning = false;
-        this.monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
-
+        this.monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
     }
 
     @Override
     public void update() {
-        // 召唤动作
+        if (this.monsterGroup != null && !this.used && this.monsterGroup.monsters.size() == 4) {
+            this.isDone = true;
+            AbstractDungeon.effectList.add(new ThoughtBubble(DungeonHelper.getPlayer().dialogX, DungeonHelper.getPlayer().dialogY, 1.5F, TUTORIAL_STRINGS.TEXT[0], true));
+            return;
+        }
         if (!this.used) {
+            int slot;
+            if (this.monsterGroup == null) {
+                slot = 0;
+            } else {
+                slot = this.monsterGroup.monsters.size();
+            }
+            float targetX;
+            float targetY;
+            if (slot == 0) {
+                targetX = this.CPX(DungeonHelper.getPlayer().hb_w + PADDING_X);
+                targetY = 0;
+            } else {
+                targetX = this.CPX(DungeonHelper.getPlayer().hb_w * ((float) slot - 1.75f) + PADDING_X * slot);
+                targetY = this.CPY(DungeonHelper.getPlayer().hb_h + PADDING_Y);
+            }
+            if (this.useAnimation) {
+                this.m = this.getMonster(this.monsterId, targetX, targetY);
+                this.endX = this.m.drawX;
+                this.m.drawX = -Settings.WIDTH;
+            } else {
+                this.m = this.getMonster(this.monsterId, targetX, targetY);
+            }
+            if (this.monsterHp > 0) {
+                this.m.setHp(this.monsterHp);
+            }
             this.m.init();
             this.m.applyPowers();
-            if (!this.useSmartPositioning) {
-                this.addFriendlyMonster(this.targetSlot, this.m);
-            } else {
-                if (this.monsterGroup != null) {
-                    int position = 0;
-                    for (AbstractMonster mo : monsterGroup.monsters) {
-                        if (this.m.drawX > mo.drawX) {
-                            ++position;
-                        }
-                    }
-                    this.addFriendlyMonster(position, this.m);
-                } else {
-                    this.addFriendlyMonster(0, this.m);
-                }
-            }
+            this.addFriendlyMonster(slot, this.m);
             this.m.showHealthBar();
             this.used = true;
         } else if (this.useAnimation && !this.animationEnded) {
             // 移动动画
-            if (this.m.drawX == this.endX && this.m.drawY == this.endY) {
+            if (this.m.drawX == this.endX) {
                 this.animationEnded = true;
             } else {
                 this.m.drawX = MathHelper.cardLerpSnap(this.m.drawX, this.endX);
-                this.m.drawY = MathHelper.cardLerpSnap(this.m.drawY, this.endY);
                 return;
             }
         }
@@ -97,5 +106,19 @@ public class SummonFriendlyMonsterAction extends AbstractGameAction {
             this.monsterGroup = new MonsterGroup(m);
             FriendlyMonsterGroupFiled.friendlyMonsterGroup.set(AbstractDungeon.getCurrRoom(), this.monsterGroup);
         }
+    }
+
+    private AbstractFriendlyMonster getMonster(String id, float x, float y) {
+        return AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.get(id).apply(x, y);
+    }
+
+    private float CPX(float padding) {
+        float a = DungeonHelper.getPlayer().drawX;
+        float b = Settings.WIDTH * 0.75F * Settings.xScale;
+        return -Math.abs(a - b + padding) / Settings.xScale;
+    }
+
+    private float CPY(float padding) {
+        return (padding / Settings.yScale);
     }
 }

@@ -23,6 +23,8 @@ public class GoToDemonSakikoPatch {
             AbstractDungeon.nextRoomTransitionStart();
             __instance.hide();
             return SpireReturn.Return();
-        } else return SpireReturn.Continue();
+        } else {
+            return SpireReturn.Continue();
+        }
     }
 }

@@ -38,10 +38,15 @@ import com.qingmu.sakiko.constant.ColorHelp;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.events.*;
 import com.qingmu.sakiko.inteface.SakikoModEnable;
+import com.qingmu.sakiko.monsters.AbstractFriendlyMonster;
 import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.monsters.boss.InstinctSakiko;
+import com.qingmu.sakiko.monsters.friendly.*;
 import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.potion.ProteinBar;
 import com.qingmu.sakiko.relics.AbstractSakikoRelic;
+import com.qingmu.sakiko.rewards.CardRemoveReward;
+import com.qingmu.sakiko.rewards.CardUpgradeReward;
 import com.qingmu.sakiko.rewards.MusicCardReward;
 import com.qingmu.sakiko.saved.InvasionChangeSaved;
 import com.qingmu.sakiko.screens.MusicDrawPileViewScreen;
@@ -89,10 +94,12 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public static SpireConfig SAKIKO_CONFIG;
 
     private static final Color SAKIKO_COLOR = ColorHelp.SAKIKO_COLOR.cpy();
+    private static final Color MUTSUMI_COLOR = ColorHelp.MUTSUMI_COLOR.cpy();
 
     public SakikoModCore() {
         BaseMod.subscribe(this);
         BaseMod.addColor(QINGMU_SAKIKO_CARD, SAKIKO_COLOR, SAKIKO_COLOR, SAKIKO_COLOR, SAKIKO_COLOR, SAKIKO_COLOR, SAKIKO_COLOR, SAKIKO_COLOR, BG_ATTACK_512, BG_SKILL_512, BG_POWER_512, ENERGY_ORB, BG_ATTACK_1024, BG_SKILL_1024, BG_POWER_1024, BIG_ORB, SMALL_ORB);
+//        BaseMod.addColor(QINGMU_MUTSUMI_CARD, MUTSUMI_COLOR, MUTSUMI_COLOR, MUTSUMI_COLOR, MUTSUMI_COLOR, MUTSUMI_COLOR, MUTSUMI_COLOR, MUTSUMI_COLOR, BG_ATTACK_512, BG_SKILL_512, BG_POWER_512, ENERGY_ORB, BG_ATTACK_1024, BG_SKILL_1024, BG_POWER_1024, BIG_ORB, SMALL_ORB);
     }
 
     public static void initialize() {
@@ -114,8 +121,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     public void receiveEditCards() {
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.cards")
-                .setDefaultSeen(true)
                 .any(AbstractSakikoCard.class, (info, card) -> {
+                    UnlockTracker.unlockCard(card.cardID);
                     if (card.getClass().isAnnotationPresent(SakikoModEnable.class)) {
                         SakikoModEnable annotation = card.getClass().getAnnotation(SakikoModEnable.class);
                         if (annotation.enable()) {
@@ -133,19 +140,14 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         new AutoAdd("sakikoMod")
                 .packageFilter("com.qingmu.sakiko.relics")
                 .any(AbstractSakikoRelic.class, (info, relic) -> {
+                    UnlockTracker.markRelicAsSeen(relic.relicId);
                     if (relic.getClass().isAnnotationPresent(SakikoModEnable.class)) {
                         SakikoModEnable annotation = relic.getClass().getAnnotation(SakikoModEnable.class);
                         if (annotation.enable()) {
                             BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                            if (info.seen) {
-                                UnlockTracker.markRelicAsSeen(relic.relicId);
-                            }
                         }
                     } else {
                         BaseMod.addRelicToCustomPool(relic, QINGMU_SAKIKO_CARD);
-                        if (info.seen) {
-                            UnlockTracker.markRelicAsSeen(relic.relicId);
-                        }
                     }
                 });
     }
@@ -153,6 +155,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
     @Override
     public void receiveEditCharacters() {
         BaseMod.addCharacter(new TogawaSakiko(CardCrawlGame.playerName), MY_CHARACTER_BUTTON, MY_CHARACTER_PORTRAIT, QINGMU_SAKIKO);
+//        BaseMod.addCharacter(new WakabaMutsumi(CardCrawlGame.playerName), MY_CHARACTER_BUTTON, MY_CHARACTER_PORTRAIT, QINGMU_MUTSUMI);
     }
 
     @Override
@@ -200,6 +203,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         this.registerMemberCollect();
         // 注册Boss战斗
         this.registerBoss();
+        // 注册可召唤队友
+        this.registerFriendlyMonster();
         // 设置解锁进阶
         this.unlockedAscension();
         // 添加歌单预览页面
@@ -208,7 +213,12 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.registerCustomReward(SakikoEnum.RewardType.MUSIC_TYPE,
                 (rewardSave) -> new MusicCardReward(),
                 (customReward) -> new RewardSave(customReward.type.toString(), null));
-
+        BaseMod.registerCustomReward(SakikoEnum.RewardType.CARD_REMOVE,
+                (rewardSave) -> new CardRemoveReward(),
+                (customReward) -> new RewardSave(customReward.type.toString(), null));
+        BaseMod.registerCustomReward(SakikoEnum.RewardType.CARD_UPGRADE,
+                (rewardSave) -> new CardUpgradeReward(),
+                (customReward) -> new RewardSave(customReward.type.toString(), null));
         // 注册1层事件
         BaseMod.addEvent(new AddEventParams.Builder(SoyoEvent.ID, SoyoEvent.class)
                 .playerClass(QINGMU_SAKIKO)
@@ -238,6 +248,8 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
                 .eventType(EventUtils.EventType.OVERRIDE)
                 .overrideEvent(Falling.ID)
                 .create());
+        // 注册药水
+        BaseMod.addPotion(ProteinBar.class, null, null, null, ProteinBar.ID, QINGMU_SAKIKO);
     }
 
     @Override
@@ -261,7 +273,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
 
     @Override
     public void receiveCardUsed(AbstractCard card) {
-        if (card instanceof AbstractSakikoCard) {
+        if (card instanceof AbstractSakikoCard && ((AbstractSakikoCard) card).refreshDesc) {
             AbstractSakikoCard sakikoCard = (AbstractSakikoCard) card;
             if (sakikoCard.upgraded) {
                 sakikoCard.rawDescription = sakikoCard.UPGRADE_DESCRIPTION == null ? sakikoCard.DESCRIPTION : sakikoCard.UPGRADE_DESCRIPTION.isEmpty() ? sakikoCard.DESCRIPTION : sakikoCard.UPGRADE_DESCRIPTION;
@@ -379,5 +391,17 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         BaseMod.addBoss(TheEnding.ID, InstinctSakiko.ID, "", "");
     }
 
+    public void registerFriendlyMonster() {
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(LinkedAnon.ID, LinkedAnon::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(AnonMonsterFriendly.ID, AnonMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(MutsumiMonsterFriendly.ID, MutsumiMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(NyamuchiMonsterFriendly.ID, NyamuchiMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(RanaMonsterFriendly.ID, RanaMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(SoyoMonsterFriendly.ID, SoyoMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(TakiMonsterFriendly.ID, TakiMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(TomoriMonsterFriendly.ID, TomoriMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(UikaMonsterFriendly.ID, UikaMonsterFriendly::new);
+        AbstractFriendlyMonster.FRIENDLY_MONSTER_MAP.put(UmiriMonsterFriendly.ID, UmiriMonsterFriendly::new);
+    }
 }
 

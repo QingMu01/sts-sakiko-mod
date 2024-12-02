@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards;
 
 import basemod.abstracts.CustomCard;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,8 +14,11 @@ import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
+import com.qingmu.sakiko.modifier.MoonLightModifier;
 import com.qingmu.sakiko.patch.filed.CardStringsMiniTitleField;
+import com.qingmu.sakiko.patch.filed.MoonLightCardsFiled;
 import com.qingmu.sakiko.utils.ActionHelper;
+import com.qingmu.sakiko.utils.DungeonHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +33,8 @@ public abstract class AbstractSakikoCard extends CustomCard implements TriggerOn
     public final String DESCRIPTION = CARD_STRINGS.DESCRIPTION;
     public final String UPGRADE_DESCRIPTION = CARD_STRINGS.UPGRADE_DESCRIPTION;
     public final String[] EXTENDED_DESCRIPTION = CARD_STRINGS.EXTENDED_DESCRIPTION;
+
+    public boolean refreshDesc = true;
 
     protected String MINI_TITLE = CardStringsMiniTitleField.miniTitle.get(CARD_STRINGS);
 
@@ -212,6 +218,19 @@ public abstract class AbstractSakikoCard extends CustomCard implements TriggerOn
         } else {
             this.timer = 0.0f;
         }
+    }
+
+    @Override
+    public AbstractCard makeCopy() {
+        AbstractCard card = super.makeCopy();
+        if (DungeonHelper.getPlayer() != null) {
+            for (AbstractCard moonlight : MoonLightCardsFiled.moonLightPool.get(DungeonHelper.getPlayer()).group) {
+                if (card.cardID.equals(moonlight.cardID) && !CardModifierManager.hasModifier(card, MoonLightModifier.ID)) {
+                    CardModifierManager.addModifier(card, new MoonLightModifier(false));
+                }
+            }
+        }
+        return card;
     }
 
     @Override

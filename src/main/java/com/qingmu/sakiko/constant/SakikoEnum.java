@@ -15,10 +15,16 @@ public class SakikoEnum {
     public static class CharacterEnum {
         @SpireEnum
         public static AbstractPlayer.PlayerClass QINGMU_SAKIKO;
+        @SpireEnum
+        public static AbstractPlayer.PlayerClass QINGMU_MUTSUMI;
         @SpireEnum(name = "QINGMU_SAKIKO_COLOR")
         public static AbstractCard.CardColor QINGMU_SAKIKO_CARD;
+        @SpireEnum(name = "QINGMU_MUTSUMI_COLOR")
+        public static AbstractCard.CardColor QINGMU_MUTSUMI_CARD;
         @SpireEnum(name = "QINGMU_SAKIKO_COLOR")
         public static CardLibrary.LibraryType QINGMU_SAKIKO_LIBRARY;
+        @SpireEnum(name = "QINGMU_MUTSUMI_COLOR")
+        public static CardLibrary.LibraryType QINGMU_MUTSUMI_LIBRARY;
     }
 
     /*
@@ -35,6 +41,8 @@ public class SakikoEnum {
     public static class CardRarityEnum {
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_BASIC;
+        @SpireEnum
+        public static AbstractCard.CardRarity MUSIC_COMMON;
         @SpireEnum
         public static AbstractCard.CardRarity MUSIC_UNCOMMON;
         @SpireEnum
@@ -89,5 +97,9 @@ public class SakikoEnum {
     public static class RewardType {
         @SpireEnum
         public static RewardItem.RewardType MUSIC_TYPE;
+        @SpireEnum
+        public static RewardItem.RewardType CARD_REMOVE;
+        @SpireEnum
+        public static RewardItem.RewardType CARD_UPGRADE;
     }
 }

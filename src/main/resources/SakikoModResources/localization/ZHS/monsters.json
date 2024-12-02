@@ -1,6 +1,6 @@
 {
   "SakikoMod:UikaMonster": {
-    "NAME": "初华",
+    "NAME": "三角初华",
     "DIALOG": [
       "小祥...?",
       "我，无畏 @悲伤@ ...",
@@ -11,7 +11,7 @@
     ]
   },
   "SakikoMod:MutsumiMonster": {
-    "NAME": "睦",
+    "NAME": "若叶睦",
     "DIALOG": [
       "祥...?",
       "我，无畏 @死亡@ ..."
@@ -23,7 +23,7 @@
     ]
   },
   "SakikoMod:NyamuchiMonster": {
-    "NAME": "喵梦",
+    "NAME": "祐天寺若麦",
     "DIALOG": [
       "祥子...?",
       "我，无畏 @爱情@ ...",
@@ -36,7 +36,7 @@
     ]
   },
   "SakikoMod:UmiriMonster": {
-    "NAME": "海铃",
+    "NAME": "八幡海铃",
     "DIALOG": [
       "祥子同学...?",
       "我，无畏 @恐惧@ ..."
@@ -46,7 +46,7 @@
     ]
   },
   "SakikoMod:TomoriMonster": {
-    "NAME": "灯",
+    "NAME": "高松灯",
     "DIALOG": [
       "小祥...?",
       "能和我......组一辈子乐队吗？"
@@ -56,7 +56,7 @@
     ]
   },
   "SakikoMod:AnonMonster": {
-    "NAME": "爱音",
+    "NAME": "千早爱音",
     "DIALOG": [
       "祥子同学...?",
       "我，无畏 @契约@ ..."
@@ -66,7 +66,7 @@
     ]
   },
   "SakikoMod:RanaMonster": {
-    "NAME": "乐奈",
+    "NAME": "要乐奈",
     "DIALOG": [
       "无聊的女孩子...",
       "来开live！"
@@ -78,7 +78,7 @@
     ]
   },
   "SakikoMod:TakiMonster": {
-    "NAME": "立希",
+    "NAME": "椎名立希",
     "DIALOG": [
       "祥子...?",
       "......"
@@ -88,7 +88,7 @@
     ]
   },
   "SakikoMod:SoyoMonster": {
-    "NAME": "素世",
+    "NAME": "长崎素世",
     "DIALOG": [
       "小祥...?",
       "我大概，一辈子也忘不掉Crychic了..."
@@ -98,7 +98,7 @@
     ]
   },
   "SakikoMod:ManaMonster": {
-    "NAME": "真奈",
+    "NAME": "纯田真奈",
     "DIALOG": [
       "真奈也来帮忙！",
       "真奈撑不住啦！",
@@ -140,7 +140,8 @@
       "你以为是心脏？其实是我本能哒！",
       " #r@S--O--X!!!!!@ ",
       "呃啊，事到如今，还是先吃饭吧。",
-      "可恶的粉色邪恶小鬼！你给我记住！"
+      "可恶的粉色邪恶小鬼！你给我记住！",
+      "好硬！"
     ],
     "MOVES": [
       "事已至此，先吃饭吧。",
@@ -159,6 +160,79 @@
       "场外援助",
       "永生不死",
       "抹茶巴菲"
+    ]
+  },
+  "SakikoMod:AnonMonsterFriendly": {
+    "NAME": "爱音",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "行动力"
+    ]
+  },
+  "SakikoMod:MutsumiMonsterFriendly": {
+    "NAME": "睦",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "园艺部的援助"
+    ]
+  },
+  "SakikoMod:NyamuchiMonsterFriendly": {
+    "NAME": "喵梦亲",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "应对方案"
+    ]
+  },
+  "SakikoMod:RanaMonsterFriendly": {
+    "NAME": "乐奈",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "吉他精"
+    ]
+  },
+  "SakikoMod:SoyoMonsterFriendly": {
+    "NAME": "素世",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "惊世智慧"
+    ]
+  },
+  "SakikoMod:TakiMonsterFriendly": {
+    "NAME": "立希",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "熬夜作曲"
+    ]
+  },
+  "SakikoMod:TomoriMonsterFriendly": {
+    "NAME": "灯",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "电波系天才"
+    ]
+  },
+  "SakikoMod:UikaMonsterFriendly": {
+    "NAME": "初华",
+    "DIALOG": [
+      "演出还没有结束哦~"
+    ],
+    "MOVES": [
+      "专业偶像"
+    ]
+  },
+  "SakikoMod:UmiriMonsterFriendly": {
+    "NAME": "海铃",
+    "DIALOG": [
+    ],
+    "MOVES": [
+      "可靠的雇佣兵"
     ]
   }
 }

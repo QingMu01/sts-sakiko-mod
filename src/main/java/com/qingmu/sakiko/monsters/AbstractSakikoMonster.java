@@ -131,8 +131,13 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
             }
             this.intentAction.doIntentAction(this);
         }
-        for (IntentAction action : this.actionHistory) {
-            action.repeatInterval -= 1;
+        Iterator<IntentAction> iterator = this.actionHistory.iterator();
+        while (iterator.hasNext()) {
+            IntentAction next = iterator.next();
+            next.repeatInterval -= 1;
+            if (next.repeatInterval <= 0) {
+                iterator.remove();
+            }
         }
         this.actionHistory.add(this.intentAction);
     }
@@ -248,7 +253,7 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
         }
     }
 
-    // 获取即将演奏的音乐
+    // 将指定音乐加入待演奏区
     public void obtainMusic(AbstractMusic music) {
         music.m_target = DungeonHelper.getPlayer();
         music.m_source = this;

@@ -17,7 +17,7 @@ public class TheDebut extends AbstractSakikoCard {
 
 
     private static final CardType TYPE = CardType.ATTACK;
-    private static final CardRarity RARITY = CardRarity.UNCOMMON;
+    private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public TheDebut() {

@@ -1,10 +1,11 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.action.common.DrawMusicAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.powers.ZekkouchouPower;
 import com.qingmu.sakiko.stances.PlayerStance;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -23,14 +24,12 @@ public class AveMusica extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
         this.setUpgradeAttr(1, 0, 0, 1);
-
-        this.setSelfRetain(false,true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (p.stance.ID.equals(PlayerStance.STANCE_ID)) {
-            this.addToBot(new DrawMusicAction(this.magicNumber));
+            this.addToBot(new ApplyPowerAction(p, p, new ZekkouchouPower(p, this.magicNumber), this.magicNumber));
         } else {
             this.addToBot(new ChangeStanceAction(PlayerStance.STANCE_ID));
         }

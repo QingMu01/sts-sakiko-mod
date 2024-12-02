@@ -76,6 +76,7 @@ public class IntentAction {
             monster.setMove(this.moveName, this.moveByte, this.intent);
         }
         monster.createIntent();
+        monster.applyPowers();
     }
 
     public void doIntentAction(AbstractSakikoMonster monster) {

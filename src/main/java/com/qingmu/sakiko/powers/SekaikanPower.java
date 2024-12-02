@@ -6,11 +6,10 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.cards.colorless.Story;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class SekaikanPower extends AbstractPower {
+public class SekaikanPower extends AbstractSakikoPower {
     public static final String POWER_ID = ModNameHelper.make(SekaikanPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
@@ -22,16 +21,14 @@ public class SekaikanPower extends AbstractPower {
     private boolean isUpgrade;
 
     public SekaikanPower(AbstractCreature owner, int amount,boolean isUpgrade) {
-        this.name = NAME;
-        this.ID = POWER_ID + isUpgrade;
+        super(POWER_ID + isUpgrade, NAME, PowerType.BUFF);
+
         this.isUpgrade = isUpgrade;
         this.owner = owner;
-        this.type = AbstractPower.PowerType.BUFF;
         this.amount = amount;
+
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-
-        this.updateDescription();
     }
 
     @Override

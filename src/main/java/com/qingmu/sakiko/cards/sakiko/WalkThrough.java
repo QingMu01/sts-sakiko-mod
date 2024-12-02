@@ -42,8 +42,6 @@ public class WalkThrough extends AbstractSakikoCard {
         this.baseDamage += MemberHelper.getCount() * this.magicNumber;
         super.calculateCardDamage(mo);
         this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.baseDamage != this.damage);
-
     }
 
     @Override

@@ -24,12 +24,12 @@ public class FearNoForgotten extends AbstractSakikoCard {
         this.initBaseAttr(0, 0, 0, 1);
         this.setUpgradeAttr(0, 0, 0, 0);
 
-        this.setExhaust(true, true);
-        this.setInnate(false, true);
+        this.setInnate(true, true);
+        this.setExhaust(true, false);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ObliviousAction(this.magicNumber));
+        this.addToBot(new ObliviousAction(this.magicNumber, true));
     }
 }

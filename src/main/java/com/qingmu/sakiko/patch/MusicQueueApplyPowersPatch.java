@@ -3,6 +3,8 @@ package com.qingmu.sakiko.patch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 
@@ -21,6 +23,13 @@ public class MusicQueueApplyPowersPatch {
         public static void Postfix() {
             if (DungeonHelper.getPlayer() != null) {
                 CardsHelper.mq().applyPowers();
+            }
+
+            MonsterGroup monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
+            if (monsterGroup != null){
+                for (AbstractMonster monster : monsterGroup.monsters) {
+                    monster.applyPowers();
+                }
             }
         }
     }

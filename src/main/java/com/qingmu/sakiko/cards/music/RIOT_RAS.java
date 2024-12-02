@@ -1,9 +1,9 @@
 package com.qingmu.sakiko.cards.music;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -19,45 +19,33 @@ public class RIOT_RAS extends AbstractMusic {
 
     public RIOT_RAS() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
-        this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
-
-        this.initMusicAttr(8, 5);
+        this.initMusicAttr(8, 4);
     }
 
     @Override
-    public void triggerInBufferPlayedMusic(AbstractMusic music) {
-        this.amount++;
-    }
-
-    @Override
-    public void applyAmount() {
-        this.appendDescription(this.amount + 1);
-    }
-
-    @Override
-    public void applyPowers() {
-        this.applyPowersToMusicNumber();
-        this.baseDamage = this.musicNumber;
-        super.applyPowers();
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        this.applyPowersToMusicNumber();
-        this.baseDamage = this.musicNumber;
-        super.calculateCardDamage(mo);
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        super.use(p, m);
+        this.amount = this.musicNumber;
     }
 
     @Override
     public void play() {
-        AbstractGameAction[] actions = new AbstractGameAction[this.amount + 1];
-        actions[0] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
-        for (int i = 1; i < actions.length; i++) {
-            actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
+    }
+
+    @Override
+    public int onLoseHpLast(int damageAmount) {
+        if (this.amount > 0 && damageAmount > 0) {
+            AbstractDungeon.effectsQueue.add(new PlasmaOrbActivateEffect(this.hb.cX, this.hb.cY));
+            int tmp = this.amount - damageAmount;
+            if (tmp > 0) {
+                this.amount = tmp;
+                return 0;
+            } else {
+                this.amount = 0;
+                return -tmp;
+            }
+        } else {
+            return damageAmount;
         }
-        this.submitActionsToTop(actions);
     }
 }

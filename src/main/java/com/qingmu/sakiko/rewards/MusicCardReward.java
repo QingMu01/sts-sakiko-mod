@@ -10,10 +10,13 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 import com.qingmu.sakiko.utils.MusicCardFinder;
 
 public class MusicCardReward extends CustomReward {
-    private static final String ICON = "SakikoModResources/img/ui/musicReward.png";
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make("MusicCardReward"));
+
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(MusicCardReward.class.getSimpleName()));
     private static final String[] TEXT = uiStrings.TEXT;
+
     private static final RewardType TYPE = SakikoEnum.RewardType.MUSIC_TYPE;
+
+    private static final String ICON = "SakikoModResources/img/ui/musicReward.png";
 
     public MusicCardReward() {
         super(ImageMaster.loadImage(ICON), TEXT[0], TYPE);

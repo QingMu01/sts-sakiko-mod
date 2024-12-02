@@ -4,24 +4,23 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
-import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
-import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class ReadyToPlayMusicAction extends AbstractGameAction {
 
     public static final Logger logger = LogManager.getLogger(ReadyToPlayMusicAction.class.getName());
 
     private final CardGroup queue;
+    private final List<AbstractGameAction> actions = new ArrayList<>();
     private final boolean isTurnEnd;
 
     public ReadyToPlayMusicAction(int amount) {
@@ -41,47 +40,17 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
         this.source = source;
         this.amount = Math.min(amount, this.queue.size());
         this.isTurnEnd = isTurnEnd;
-
-        if (!this.isTurnEnd){
+        if (!this.isTurnEnd) {
             int encoreSize = 0;
             for (AbstractCard card : this.queue.group) {
                 if (card.hasTag(SakikoEnum.CardTagEnum.ENCORE)) {
                     encoreSize++;
                 }
             }
-
             if (encoreSize == this.queue.size()) {
                 this.amount = 0;
             }
         }
-
-        for (AbstractPower power : this.source.powers) {
-            if (power instanceof TriggerOnPlayMusic){
-                ((TriggerOnPlayMusic) power).triggerOnReadyPlay();
-            }
-        }
-        // 全是普通牌钩子 演奏时触发
-        for (AbstractCard card : CardsHelper.dp().group) {
-            if (card instanceof AbstractSakikoCard) {
-                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
-            }
-        }
-        for (AbstractCard card : CardsHelper.h().group) {
-            if (card instanceof AbstractSakikoCard) {
-                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
-            }
-        }
-        for (AbstractCard card : CardsHelper.dsp().group) {
-            if (card instanceof AbstractSakikoCard) {
-                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
-            }
-        }
-        for (AbstractCard card : CardsHelper.ep().group) {
-            if (card instanceof AbstractSakikoCard) {
-                ((TriggerOnPlayMusic) card).triggerOnReadyPlay();
-            }
-        }
-
     }
 
     @Override
@@ -90,23 +59,21 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-
+        this.queue.group.sort(Comparator.comparing(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
         AbstractMusic music = (AbstractMusic) this.queue.getBottomCard();
         this.queue.removeCard(music);
-        logger.info("ready submit play: {}", music);
-        if (this.source.isPlayer) {
-            if (music.hasTag(SakikoEnum.CardTagEnum.ENCORE) && !this.isTurnEnd) {
-                this.queue.addToTop(music);
-                this.addToBot(new ReadyToPlayMusicAction(this.amount, this.source));
-                logger.info("submit play {} failed, its encore music ,but not turn end. sort and retry.", music);
-                this.isDone = true;
-                return;
-            }
-            this.addToBot(new PlayerPlayedMusicAction(music));
+        if (music.hasTag(SakikoEnum.CardTagEnum.ENCORE) && !this.isTurnEnd) {
+            logger.info("submit play {} failed, the music queue all has encore tags.", music);
         } else {
-            this.addToBot(new MonsterPlayedMusicAction(music, this.source));
+            logger.info("ready submit play: {}", music);
+            if (this.source.isPlayer) {
+                if (this.amount > 1)
+                    this.addToTop(new ReadyToPlayMusicAction(this.amount - 1, this.source, this.isTurnEnd));
+                this.addToTop(new PlayerPlayedMusicAction(music));
+            } else {
+                this.addToTop(new MonsterPlayedMusicAction(music, this.source));
+            }
         }
-        AbstractDungeon.effectsQueue.add(new PlasmaOrbActivateEffect(music.hb.cX, music.hb.cY));
-        this.amount--;
+        this.isDone = true;
     }
 }

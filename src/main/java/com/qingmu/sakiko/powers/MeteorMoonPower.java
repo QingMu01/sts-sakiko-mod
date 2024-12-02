@@ -11,14 +11,13 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.stances.AbstractStance;
 import com.megacrit.cardcrawl.stances.NeutralStance;
 import com.qingmu.sakiko.action.CheckMonsterAllDeadAction;
 import com.qingmu.sakiko.stances.ObliviousStance;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class MeteorMoonPower extends AbstractPower {
+public class MeteorMoonPower extends AbstractSakikoPower {
     public static final String POWER_ID = ModNameHelper.make(MeteorMoonPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
@@ -28,14 +27,13 @@ public class MeteorMoonPower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/MeteorMoonPower128.png";
 
     public MeteorMoonPower(AbstractCreature owner) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = -1;
+
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-        this.updateDescription();
     }
 
     @Override

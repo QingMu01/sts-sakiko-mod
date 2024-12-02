@@ -1,10 +1,15 @@
 package com.qingmu.sakiko.cards.sakiko;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.ReproduceAction;
+import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.qingmu.sakiko.powers.KirameiPower;
+import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class Reproduce extends AbstractSakikoCard {
@@ -20,18 +25,36 @@ public class Reproduce extends AbstractSakikoCard {
     public Reproduce() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 2);
-        this.setUpgradeAttr(1, 0, 0, 1);
+        this.setUpgradeAttr(1, 0, 0, 0);
         this.setExhaust(true, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ReproduceAction(p, this.magicNumber));
+        if (this.upgraded) {
+            this.addToTop(new CardSelectorAction(NAME, 1, false, CardsHelper::isMusic, card -> CardGroup.CardGroupType.EXHAUST_PILE, cardList -> {
+                if (!cardList.isEmpty()) {
+                    this.addToBot(new ApplyPowerAction(p, p, new KirameiPower(p, this.magicNumber), this.magicNumber));
+                }
+            }, CardGroup.CardGroupType.HAND));
+        } else {
+            this.addToBot(new ReproduceAction(p, this.magicNumber));
+        }
     }
 
     @Override
     public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return !MusicBattleFiledPatch.DrawMusicPile.drawMusicPile.get(p).isEmpty();
+        if (this.upgraded) {
+            for (AbstractCard card : CardsHelper.h().group) {
+                if (CardsHelper.isMusic(card)) {
+                    return true;
+                }
+            }
+            this.cantUseMessage = EXTENDED_DESCRIPTION[1];
+        } else {
+            this.cantUseMessage = EXTENDED_DESCRIPTION[0];
+            return !CardsHelper.dmp().isEmpty();
+        }
+        return false;
     }
 }

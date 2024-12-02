@@ -14,12 +14,12 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
+import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.CanPlayMusic;
 import com.qingmu.sakiko.inteface.TriggerOnPlayMusic;
-import com.qingmu.sakiko.modifier.LouderModifier;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -99,27 +99,43 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 }
             }
         }
+
     }
 
     @Override
     public void update() {
         boolean canPlay = true;
         for (AbstractPower power : this.source.powers) {
-            if (power instanceof CanPlayMusic){
+            if (power instanceof CanPlayMusic) {
                 canPlay = ((CanPlayMusic) power).canPlayMusic(this.music);
+                if (!canPlay) {
+                    break;
+                }
             }
         }
-        if (canPlay){
+        if (canPlay) {
             // 添加记录
             MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(DungeonHelper.getPlayer()).add(this.music);
             MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer()).add(this.music);
             logger.info("Player played music card: {}", this.music);
+            AbstractDungeon.effectsQueue.add(new PlasmaOrbActivateEffect(music.hb.cX, music.hb.cY));
             this.music.calculateCardDamage((AbstractMonster) this.music.m_target);
             this.music.play();
         }
+        for (AbstractPower power : DungeonHelper.getPlayer().powers) {
+            if (power instanceof TriggerOnPlayMusic) {
+                ((TriggerOnPlayMusic) power).afterPlayedMusic(this.music);
+            }
+        }
+        for (AbstractRelic relic : DungeonHelper.getPlayer().relics) {
+            if (relic instanceof TriggerOnPlayMusic) {
+                ((TriggerOnPlayMusic) relic).afterPlayedMusic(this.music);
+            }
+        }
         CardGroup queue = CardsHelper.mq();
+        this.music.triggerOnExitQueue();
         // 处理回忆赋予的移除
-        if (CardModifierManager.hasModifier(this.music, RememberModifier.ID) || CardModifierManager.hasModifier(this.music, LouderModifier.ID)) {
+        if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {
             logger.info("remove music card :{}", this.music);
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 this.addToTop(new ShowCardAction(this.music));

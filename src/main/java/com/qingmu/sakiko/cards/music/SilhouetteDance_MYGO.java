@@ -18,7 +18,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/SilhouetteDance_MYGO.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public SilhouetteDance_MYGO() {
@@ -52,7 +52,6 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         this.applyPowersToMusicNumber();
         this.baseDamage = this.musicNumber;
         super.calculateCardDamage(mo);
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
         if (krkrdkdk != null) {
             krkrdkdk.amount /= this.magicNumber;
         }

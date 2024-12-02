@@ -2,12 +2,12 @@ package com.qingmu.sakiko.cards.sakiko;
 
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.qingmu.sakiko.action.common.CleanMusicQueueAction;
+import com.qingmu.sakiko.action.common.DrawMusicAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class NotePunch extends AbstractSakikoCard {
@@ -20,42 +20,17 @@ public class NotePunch extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
-    private int count = 0;
 
     public NotePunch() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 7, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 1);
-    }
-
-    @Override
-    public void onPlayCard(AbstractCard c, AbstractMonster m) {
-        if (CardsHelper.h().contains(this) && CardsHelper.isMusic(c)) {
-            this.count++;
-        }
-    }
-
-    @Override
-    public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += this.count * this.magicNumber;
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        this.baseDamage += this.count * this.magicNumber;
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+        this.initBaseAttr(1, 8, 0, 0);
+        this.setUpgradeAttr(1, 4, 0, 0);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SMASH));
-        this.count = 0;
+        this.submitActionsToBot(
+                new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SMASH),
+                new CleanMusicQueueAction(p, (integer -> this.addToBot(new DrawMusicAction(integer)))));
     }
 }

@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -25,10 +26,19 @@ public class Symbol_IV extends AbstractMusic {
 
     public Symbol_IV() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
 
-        this.initMusicAttr(3, 3);
+        this.initMusicAttr(5, 3);
+
+        this.setExhaust(true, true);
+    }
+
+    @Override
+    public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseBlock = this.musicNumber;
+        super.applyPowers();
+        this.isBlockModified = (this.baseMusicNumber != this.musicNumber);
     }
 
     @Override
@@ -38,6 +48,10 @@ public class Symbol_IV extends AbstractMusic {
                 CardModifierManager.addModifier(card, new SymbolEarthModifier(this, card));
             }
         }, CardGroup.CardGroupType.HAND));
+    }
 
+    @Override
+    public void interruptReady() {
+        this.addToBot(new GainBlockAction(this.m_source, this.block));
     }
 }

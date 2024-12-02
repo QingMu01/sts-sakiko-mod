@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.qingmu.sakiko.action.NingenUtaAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.powers.NingenUtaPower;
@@ -23,15 +24,12 @@ public class NingenUta_CryChic extends AbstractMusic {
     }
 
     @Override
-    public void upgrade() {
-        if (!this.upgraded){
-            this.tags.add(SakikoEnum.CardTagEnum.MOONLIGHT);
-        }
-        super.upgrade();
+    public void play() {
+        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new NingenUtaPower(this.m_source), this.magicNumber));
     }
 
     @Override
-    public void play() {
-        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new NingenUtaPower(this.m_source), this.magicNumber));
+    public void interruptReady() {
+        this.addToBot(new NingenUtaAction(this.m_source));
     }
 }

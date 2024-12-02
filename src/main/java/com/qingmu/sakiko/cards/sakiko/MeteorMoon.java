@@ -22,8 +22,8 @@ public class MeteorMoon extends AbstractSakikoCard {
     public MeteorMoon() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
 
-        this.initBaseAttr(3, 0, 0, 0);
-        this.setUpgradeAttr(2, 0, 0, 0);
+        this.initBaseAttr(2, 0, 0, 0);
+        this.setUpgradeAttr(1, 0, 0, 0);
 
         this.setExhaust(true, true);
     }

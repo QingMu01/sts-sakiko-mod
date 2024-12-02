@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.monsters.boss;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.AnimationState;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
@@ -9,7 +10,6 @@ import com.megacrit.cardcrawl.actions.animations.AnimateShakeAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.*;
-import com.megacrit.cardcrawl.actions.unique.CanLoseAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.status.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -37,7 +37,6 @@ import com.qingmu.sakiko.monsters.friendly.LinkedAnon;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.patch.filed.BossInfoFiled;
-import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
 import com.qingmu.sakiko.powers.monster.InstinctPower;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -59,7 +58,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     private int buffLimit;
     private int moveCount = 0;
     private int buffCount = 0;
-    private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
+    private static final String IMG = "SakikoModResources/img/monster/InstinctSakiko.png";
 
     private HeartAnimListener animListener = new HeartAnimListener();
 
@@ -127,7 +126,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
     public void die() {
         if (!AbstractDungeon.getCurrRoom().cannotLose) {
             super.die();
-            this.addToBot(new TalkAction(this, DIALOG[4], 1.0F, 2.0F));
+            this.addToBot(new TalkAction(this, DIALOG[3], 1.0F, 2.0F));
             this.onBossVictoryLogic();
             this.onFinalBossVictoryLogic();
             CardCrawlGame.stopClock = true;
@@ -157,14 +156,14 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     actions.add(new ApplyPowerAction(this, this, new InstinctPower(this, this.buffLimit), this.buffLimit));
                     actions.add(new TalkAction(this, DIALOG[0], 1.0F, 2.0F));
                     actions.add(new ForceWaitAction(1.5f));
-                    actions.add(new SummonFriendlyMonsterAction(new LinkedAnon(-(DungeonHelper.getPlayer().drawX + (Settings.WIDTH - this.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale, 0), true, -Settings.WIDTH));
-                    actions.add(new CanLoseAction());
+                    actions.add(new SummonFriendlyMonsterAction(LinkedAnon.ID, true));
                     return actions.toArray(new AbstractGameAction[0]);
                 })
                 .setCallback(ia -> this.halfDead = false)
                 .build());
         this.getMove(0);
         this.createIntent();
+        AbstractDungeon.getCurrRoom().cannotLose = false;
     }
 
     @Override
@@ -213,7 +212,9 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     actions.add(new VFXAction(new BorderFlashEffect(ColorHelp.SAKIKO_COLOR.cpy())));
                     actions.add(new VFXAction(new HeartBuffEffect(this.hb.cX, this.hb.cY)));
                     actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, additionalAmount + 2), additionalAmount + 2));
-                    actions.add(new ReducePowerAction(this, this, InstinctPower.POWER_ID, 1));
+                    if (this.getPower(InstinctPower.POWER_ID).amount > 1) {
+                        actions.add(new ReducePowerAction(this, this, InstinctPower.POWER_ID, 1));
+                    }
                     switch (GameActionManager.turn % 4) {
                         case 0:
                             actions.add(new ApplyPowerAction(this, this, new ArtifactPower(this, 3), 3));
@@ -222,12 +223,12 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                             actions.add(new ApplyPowerAction(this, this, new BeatOfDeathPower(this, 1), 1));
                             break;
                         case 2:
-                            if (!this.hasPower(PainfulStabsPower.POWER_ID)){
+                            if (!this.hasPower(PainfulStabsPower.POWER_ID)) {
                                 actions.add(new ApplyPowerAction(this, this, new PainfulStabsPower(this)));
                                 break;
                             }
                         case 3:
-                            actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, 10), 10));
+                            actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, 3), 3));
                             break;
                         default:
                             actions.add(new ApplyPowerAction(this, this, new StrengthPower(this, 50), 50));
@@ -360,7 +361,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     actions.add(new AnimateJumpAction(this));
                     actions.add(new HealAction(this, this, 10));
                     actions.add(new HealAction(DungeonHelper.getPlayer(), this, 10));
-                    AbstractMonster monster = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID);
+                    AbstractMonster monster = DungeonHelper.getFriendlyMonster(LinkedAnon.ID);
                     if (monster != null) {
                         actions.add(new HealAction(monster, this, 10));
                     }
@@ -371,7 +372,7 @@ public class InstinctSakiko extends AbstractSakikoMonster {
         specialIntentActions.add(new SpecialIntentAction.Builder()
                 .setMoveName(MOVES[1])
                 .setPredicate(m -> {
-                    MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+                    MonsterGroup monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
                     if (monsterGroup != null) {
                         AbstractMonster target = monsterGroup.getMonster(LinkedAnon.ID);
                         return target != null && !target.isDead && !target.isDying && AbstractDungeon.aiRng.randomBoolean(0.4f);
@@ -379,10 +380,20 @@ public class InstinctSakiko extends AbstractSakikoMonster {
                     return false;
                 })
                 .setIntent(Intent.MAGIC)
-                .setDamageAmount(DungeonHelper.getPlayer().maxHealth / 2)
-                .setActions(() -> new AbstractGameAction[]{
-                        new TalkAction(this, DIALOG[1], 1.0F, 2.0F),
-                        new AnimationDamageAction(FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom()).getMonster(LinkedAnon.ID), new DamageInfo(this, DungeonHelper.getPlayer().maxHealth / 2), AbstractGameAction.AttackEffect.BLUNT_HEAVY)
+                .setDamageAmount(MathUtils.ceil(DungeonHelper.getPlayer().maxHealth / 2.0f))
+                .setActions(() -> {
+                    ArrayList<AbstractGameAction> actions = new ArrayList<>();
+                    actions.add(new TalkAction(this, DIALOG[1], 1.0F, 2.0F));
+                    actions.add(new AnimationDamageAction(DungeonHelper.getFriendlyMonster(LinkedAnon.ID), new DamageInfo(this, MathUtils.ceil(DungeonHelper.getPlayer().maxHealth / 2.0f)), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
+                    return actions.toArray(new AbstractGameAction[0]);
+                })
+                .setCallback(ia -> {
+                    if (AbstractDungeon.aiRng.randomBoolean()) {
+                        this.specialIntentList.add(0, new SpecialIntentAction.Builder()
+                                .setIntent(Intent.STUN)
+                                .setActions(() -> new AbstractGameAction[]{new TalkAction(this, DIALOG[4], 1.0F, 2.0F)})
+                                .build());
+                    }
                 })
                 .build());
         return specialIntentActions;

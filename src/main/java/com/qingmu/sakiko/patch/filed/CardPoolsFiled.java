@@ -8,8 +8,11 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 @SpirePatch(clz = AbstractDungeon.class, method = SpirePatch.CLASS)
 public class CardPoolsFiled {
 
+    public static SpireField<CardGroup> srcCommonMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
     public static SpireField<CardGroup> srcUncommonMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
     public static SpireField<CardGroup> srcRareMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
+
+    public static SpireField<CardGroup> commonMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
     public static SpireField<CardGroup> uncommonMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
     public static SpireField<CardGroup> rareMusicPool = new SpireField<>(() -> new CardGroup(CardGroup.CardGroupType.CARD_POOL));
 

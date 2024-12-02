@@ -4,9 +4,11 @@ import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
+import com.qingmu.sakiko.inteface.SakikoModEnable;
 import com.qingmu.sakiko.powers.MasqueradePower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
+@SakikoModEnable(enable = false)
 public class Masquerade extends AbstractSakikoCard {
 
     public static final String ID = ModNameHelper.make(Masquerade.class.getSimpleName());

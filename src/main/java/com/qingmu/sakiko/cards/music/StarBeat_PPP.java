@@ -36,7 +36,6 @@ public class StarBeat_PPP extends AbstractMusic {
         if (this.amount > 0) {
             this.amount--;
             AbstractCard copy = music.makeSameInstanceOf();
-            copy.retain = true;
             this.addToTop(new MakeTempCardInHandAction(copy, 1));
         }
     }

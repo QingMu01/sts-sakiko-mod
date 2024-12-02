@@ -9,14 +9,14 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.MinionPower;
+import com.qingmu.sakiko.powers.AbstractSakikoPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AveMujicaDictatorshipPower extends AbstractPower {
+public class AveMujicaDictatorshipPower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(AveMujicaDictatorshipPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -28,21 +28,18 @@ public class AveMujicaDictatorshipPower extends AbstractPower {
 
 
     public AveMujicaDictatorshipPower(AbstractCreature owner) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = -1;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-
-        this.updateDescription();
     }
 
     @Override
     public int onAttackedToChangeDamage(DamageInfo info, int damageAmount) {
-        if (info.type == DamageInfo.DamageType.THORNS || this.owner.isPlayer || damageAmount <= 0) {
+        if (info.type != DamageInfo.DamageType.NORMAL || this.owner.isPlayer || damageAmount <= 0) {
             return damageAmount;
         } else {
             List<AbstractMonster> monsters = AbstractDungeon.getCurrRoom().monsters.monsters.stream().filter(m->!m.isDead && m.hasPower(MinionPower.POWER_ID)).collect(Collectors.toList());

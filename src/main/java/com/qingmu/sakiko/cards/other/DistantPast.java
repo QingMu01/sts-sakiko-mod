@@ -29,7 +29,7 @@ public class DistantPast extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(-2, 0, 0, 3);
         this.setUpgradeAttr(-2, 0, 0, 0);
-        this.setExhaust(true,true);
+        this.setExhaust(true, true);
     }
 
     @Override

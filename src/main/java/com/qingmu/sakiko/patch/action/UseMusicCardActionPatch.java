@@ -77,9 +77,11 @@ public class UseMusicCardActionPatch {
         @SpireInsertPatch(locator = Locator.class)
         public static SpireReturn<Void> insert(UseCardAction __instance, AbstractCard ___targetCard) {
             if (___targetCard instanceof AbstractMusic && (CardsHelper.h().group.stream().allMatch(card -> card.canPlay(___targetCard)) || AbstractDungeon.actionManager.cardsPlayedThisTurn.contains(___targetCard))) {
+                ((AbstractMusic)___targetCard).triggerOnEnterQueue();
                 // 处理打出时立即演奏
-                if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID)) {
-                    CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
+                if (___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
+                    if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID))
+                        CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
                     if (!___targetCard.hasTag(SakikoEnum.CardTagEnum.ENCORE)){
                         __instance.isDone = true;
                         ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));

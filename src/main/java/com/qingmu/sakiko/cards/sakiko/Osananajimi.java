@@ -27,9 +27,8 @@ public class Osananajimi extends AbstractSakikoCard {
     public Osananajimi() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(1, 0, 0, 1);
-        this.setUpgradeAttr(1, 0, 0, 0);
+        this.setUpgradeAttr(1, 0, 0, 1);
         this.setExhaust(true, true);
-        this.setSelfRetain(false, true);
     }
 
     @Override

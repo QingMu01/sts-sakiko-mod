@@ -2,17 +2,15 @@ package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.ReducePowerAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class FeverPower extends AbstractPower {
+public class FeverPower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(FeverPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -23,15 +21,13 @@ public class FeverPower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/FeverPower128.png";
 
     public FeverPower(AbstractCreature owner, int amount) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = amount;
+
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-
-        this.updateDescription();
     }
 
     @Override
@@ -44,14 +40,6 @@ public class FeverPower extends AbstractPower {
         if (!card.purgeOnUse && this.amount > 0 && (card.costForTurn > 0 || card.cost == -1)) {
             this.flash();
             this.addToBot(new ReducePowerAction(this.owner, this.owner, this, 1));
-        }
-    }
-
-    @Override
-    public void reducePower(int reduceAmount) {
-        this.amount -= reduceAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
         }
     }
 }

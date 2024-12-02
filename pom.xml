@@ -6,7 +6,7 @@
 
     <groupId>com.qingmu</groupId>
     <artifactId>sakiko-mod</artifactId>
-    <version>1.0.10</version>
+    <version>1.1.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>anonmod</groupId>
             <artifactId>anonmod</artifactId>
-            <version>0.8.52</version>
+            <version>0.9.11</version>
             <scope>system</scope>
             <systemPath>${Steam.path}/workshop/content/646570/3248151544/AnonMod.jar</systemPath>
         </dependency>

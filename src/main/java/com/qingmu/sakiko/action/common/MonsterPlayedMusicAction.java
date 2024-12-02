@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.vfx.cardManip.ExhaustCardEffect;
+import com.megacrit.cardcrawl.vfx.combat.PlasmaOrbActivateEffect;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
@@ -27,8 +28,9 @@ public class MonsterPlayedMusicAction extends AbstractGameAction {
 
     @Override
     public void update() {
+        AbstractDungeon.effectsQueue.add(new PlasmaOrbActivateEffect(music.hb.cX, music.hb.cY));
         this.music.play();
-        AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
+        AbstractDungeon.effectsQueue.add(new ExhaustCardEffect(this.music));
         CardGroup queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
         queue.removeCard(this.music);
         sakikoMonster.musicSlotItem.updateLocation = true;

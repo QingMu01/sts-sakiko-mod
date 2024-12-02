@@ -16,8 +16,8 @@ public class Daylight_M extends AbstractMusic {
 
     public Daylight_M() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(1, 0);
-        this.setExhaust(true, false);
+        this.initMusicAttr(1, 1);
+        this.setExhaust(true, true);
     }
 
     @Override

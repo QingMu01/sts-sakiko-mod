@@ -45,7 +45,7 @@ public class InstinctPower extends AbstractPower implements TriggerOnPlayerGotPo
     @Override
     public void onInitialApplication() {
         for (AbstractPower power : DungeonHelper.getPlayer().powers) {
-            if (power.type == PowerType.BUFF){
+            if (power.type == PowerType.BUFF) {
                 this.addToBot(new RemoveSpecificPowerAction(DungeonHelper.getPlayer(), this.owner, power));
             }
         }
@@ -89,10 +89,12 @@ public class InstinctPower extends AbstractPower implements TriggerOnPlayerGotPo
                 }
             }
             if (playerRemove != null) {
+                playerRemove.owner = this.owner;
                 this.addToBot(new RemoveSpecificPowerAction(DungeonHelper.getPlayer(), this.owner, playerRemove));
                 this.addToBot(new ApplyPowerAction(this.owner, this.owner, playerRemove, playerRemove.amount));
             }
             if (instinctSakikoRemove != null) {
+                instinctSakikoRemove.owner = DungeonHelper.getPlayer();
                 this.addToBot(new RemoveSpecificPowerAction(this.owner, this.owner, instinctSakikoRemove));
                 this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), this.owner, instinctSakikoRemove, instinctSakikoRemove.amount));
             }

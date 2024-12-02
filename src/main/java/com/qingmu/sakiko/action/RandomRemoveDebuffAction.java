@@ -21,7 +21,7 @@ public class RandomRemoveDebuffAction extends AbstractGameAction {
     public void update() {
         List<AbstractPower> debuff = new ArrayList<>();
         for (AbstractPower power : this.target.powers) {
-            if (power.type == AbstractPower.PowerType.DEBUFF)
+            if (power.type == AbstractPower.PowerType.DEBUFF || (power.canGoNegative && power.amount < 0))
                 debuff.add(power);
         }
         int count = 0;

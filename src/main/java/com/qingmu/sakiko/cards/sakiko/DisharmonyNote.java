@@ -19,6 +19,7 @@ public class DisharmonyNote extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(0, 0, 0, 0);
         this.setUpgradeAttr(0, 0, 0, 0);
+
         this.setExhaust(true, false);
     }
 

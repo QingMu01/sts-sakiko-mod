@@ -19,12 +19,11 @@ public class Egao_HHW extends AbstractMusic {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(CardTags.HEALING);
-
         this.initMusicAttr(15, 5);
     }
 
     @Override
     public void play() {
-        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new HelloHappyPower(this.m_source, this.musicNumber)));
+        this.addToTop(new ApplyPowerAction(this.m_source, this.m_source, new HelloHappyPower(this.m_source, this.musicNumber), this.musicNumber));
     }
 }

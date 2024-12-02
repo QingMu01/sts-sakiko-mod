@@ -31,6 +31,9 @@ public class SakikoConst {
     public static final int MUSIC_QUEUE_LIMIT = 3;
     public static int MUSIC_QUEUE_LIMIT_USED = 3;
 
+    // 队友召唤ID后缀
+    public static final String MEMBER_SUFFIX = "MonsterFriendly";
+
     public static final String KEYWORD_PREFIX = "sakikomod:";
 
     public static final String KEYWORD_KIRAMEI = KEYWORD_PREFIX + "KIRAMEI";
@@ -48,15 +51,8 @@ public class SakikoConst {
     public static final String KEYWORD_FLOW_BAR = KEYWORD_PREFIX + "FLOW_BAR";
 
     public static final String KEYWORD_FIRE = KEYWORD_PREFIX + "FIRE";
-    public static final String KEYWORD_AIR = KEYWORD_PREFIX + "AIR";
-    public static final String KEYWORD_WATER = KEYWORD_PREFIX + "WATER";
     public static final String KEYWORD_EARTH = KEYWORD_PREFIX + "EARTH";
     public static final String KEYWORD_ETHER = KEYWORD_PREFIX + "ETHER";
 
-    public static final String KEYWORD_MOONS = KEYWORD_PREFIX + "MOONS";
-    public static final String KEYWORD_RESTART = KEYWORD_PREFIX + "RESTART";
-    public static final String KEYWORD_REBIRTH = KEYWORD_PREFIX + "REBIRTH";
     public static final String KEYWORD_MYGO = KEYWORD_PREFIX + "MYGO";
-    public static final String KEYWORD_LOUDER = KEYWORD_PREFIX + "LOUDER";
-    public static final String KEYWORD_FIREBIRD = KEYWORD_PREFIX + "FIREBIRD";
 }

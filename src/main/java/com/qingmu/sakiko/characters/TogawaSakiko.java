@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.characters;
 
 import basemod.abstracts.CustomPlayer;
+import basemod.helpers.CardModifierManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -9,19 +10,25 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.cutscenes.CutscenePanel;
 import com.megacrit.cardcrawl.events.city.Vampires;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.qingmu.sakiko.cards.sakiko.TwoInOne;
 import com.qingmu.sakiko.constant.ColorHelp;
+import com.qingmu.sakiko.modifier.MoonLightModifier;
+import com.qingmu.sakiko.patch.filed.MoonLightCardsFiled;
 import com.qingmu.sakiko.relics.ClassicPiano;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO;
 import static com.qingmu.sakiko.constant.SakikoEnum.CharacterEnum.QINGMU_SAKIKO_CARD;
@@ -195,6 +202,26 @@ public class TogawaSakiko extends CustomPlayer {
         panels.add(new CutscenePanel("SakikoModResources/img/characters/sakiko/page3.png"));
         return panels;
     }
+
+    @Override
+    public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> tmpPool) {
+        ArrayList<AbstractCard> cardPool = super.getCardPool(tmpPool);
+
+        Random random = new Random(Settings.seed);
+
+        // 攻击牌两张
+        List<AbstractCard> attack = getCardsByType(cardPool, AbstractCard.CardType.ATTACK, random);
+        // 技能牌两张
+        List<AbstractCard> skill = getCardsByType(cardPool, AbstractCard.CardType.SKILL, random);
+        // 能力牌一张
+        List<AbstractCard> power = getCardsByType(cardPool, AbstractCard.CardType.POWER, random);
+
+        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(attack);
+        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(skill);
+        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(power);
+        return cardPool;
+    }
+
     public void switchMask(boolean isMask) {
         if (isMask) {
             img = mask;
@@ -202,4 +229,30 @@ public class TogawaSakiko extends CustomPlayer {
             img = noMask;
         }
     }
+
+    private List<AbstractCard> getCardsByType(List<AbstractCard> cards, AbstractCard.CardType type, Random random) {
+        ArrayList<AbstractCard> typeCards = new ArrayList<>(cards);
+        typeCards.removeIf(card -> card.type != type);
+        typeCards.removeIf(card -> card.color != QINGMU_SAKIKO_CARD);
+        if (type == AbstractCard.CardType.POWER) {
+            AbstractCard card = typeCards.get(random.random(typeCards.size() - 1));
+            if (!CardModifierManager.hasModifier(card, MoonLightModifier.ID)) {
+                CardModifierManager.addModifier(card, new MoonLightModifier(false));
+            }
+            return Collections.singletonList(card);
+        } else {
+            ArrayList<AbstractCard> tmp = new ArrayList<>();
+            while (tmp.size() < 2) {
+                AbstractCard card = typeCards.get(random.random(typeCards.size() - 1));
+                if (!tmp.contains(card)) {
+                    if (!CardModifierManager.hasModifier(card, MoonLightModifier.ID)) {
+                        CardModifierManager.addModifier(card, new MoonLightModifier(false));
+                    }
+                    tmp.add(card);
+                }
+            }
+            return tmp;
+        }
+    }
+
 }

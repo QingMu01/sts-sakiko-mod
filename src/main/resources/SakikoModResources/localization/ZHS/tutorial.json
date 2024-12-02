@@ -26,9 +26,15 @@
       "敌方将要演奏的音乐。"
     ]
   },
+  "SakikoMod:SummonFriendlyMonsterAction": {
+    "TEXT": [
+      "我最多拥有 #r四名 队友。"
+    ]
+  },
   "SakikoMod:MoonLightModifier": {
     "TEXT": [
-      "临时： sakikomod:白月光 "
+      "临时： sakikomod:白月光 ",
+      " sakikomod:白月光 "
     ]
   },
   "SakikoMod:RememberModifier": {
@@ -49,22 +55,6 @@
       "[火]•"
     ]
   },
-  "SakikoMod:SymbolAirModifier": {
-    "TEXT": [
-      "（抽 %d 张牌，剩余 %d 次）"
-    ],
-    "LABEL": [
-      "[风]•"
-    ]
-  },
-  "SakikoMod:SymbolWaterModifier": {
-    "TEXT": [
-      "（回复 %d 生命值）"
-    ],
-    "LABEL": [
-      "[水]•"
-    ]
-  },
   "SakikoMod:SymbolEarthModifier": {
     "TEXT": [
       "（额外获得 %d 格挡 ）"
@@ -81,40 +71,9 @@
       "[以太]•"
     ]
   },
-  "SakikoMod:DoubleTapModifier": {
-    "TEXT": [
-      "（剩余双发次数 %d ）"
-    ],
-    "LABEL": [
-      "[双子]•"
-    ]
-  },
-  "SakikoMod:AveMujicaModifier": {
-    "LABEL": [
-      "[新起点]•"
-    ]
-  },
-  "SakikoMod:BlackBirthdayModifier": {
-    "LABEL": [
-      "[重生]•"
-    ]
-  },
   "SakikoMod:MyGoModifier": {
     "LABEL": [
       "[迷子]•"
-    ]
-  },
-  "SakikoMod:LouderModifier": {
-    "LABEL": [
-      "[原点]•"
-    ]
-  },
-  "SakikoMod:FireBirdModifier": {
-    "TEXT": [
-      "（剩余次 %d 返回手牌）"
-    ],
-    "LABEL": [
-      "[顶点]•"
     ]
   }
 }

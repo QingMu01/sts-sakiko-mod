@@ -34,7 +34,6 @@ public class EndingSakiko extends AbstractImageEvent {
     protected void buttonEffect(int i) {
         switch (i) {
             case 0: {
-                BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
                 AbstractDungeon.bossKey = InnerDemonSakiko.ID;
                 CardCrawlGame.music.fadeOutBGM();
                 CardCrawlGame.music.fadeOutTempBGM();

@@ -1,14 +1,10 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.action.BurningPrayAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BurningPray extends AbstractSakikoCard {
@@ -23,46 +19,12 @@ public class BurningPray extends AbstractSakikoCard {
 
     public BurningPray() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 7, 0, 1);
-        this.setUpgradeAttr(1, 3, 0, 1);
-    }
-
-    @Override
-    public void applyPowers() {
-        int realBaseDamage = this.baseDamage;
-        for (AbstractPower power : DungeonHelper.getPlayer().powers) {
-            if (power.amount == 0 || (!power.canGoNegative && power.amount == -1)) {
-                this.baseDamage += 1;
-            } else {
-                this.baseDamage += power.amount;
-            }
-        }
-        super.applyPowers();
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
-    }
-
-    @Override
-    public void calculateCardDamage(AbstractMonster mo) {
-        int realBaseDamage = this.baseDamage;
-        for (AbstractPower power : DungeonHelper.getPlayer().powers) {
-            if (power.amount == 0 || (!power.canGoNegative && power.amount == -1)) {
-                this.baseDamage += 1;
-            } else {
-                this.baseDamage += power.amount;
-            }
-        }
-        super.calculateCardDamage(mo);
-        this.baseDamage = realBaseDamage;
-        this.isDamageModified = (this.damage != this.baseDamage);
+        this.initBaseAttr(1, 6, 0, 12);
+        this.setUpgradeAttr(1, 0, 0, 6);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        AbstractGameAction[] actions = new AbstractGameAction[DungeonHelper.getPlayer().powers.size() + 1];
-        for (int i = 0; i < actions.length - 1; i++)
-            actions[i] = new RemoveSpecificPowerAction(p, p, DungeonHelper.getPlayer().powers.get(i));
-        actions[actions.length - 1] = new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.FIRE);
-        this.submitActionsToBot(actions);
+        this.addToBot(new BurningPrayAction(p, m, new DamageInfo(p, this.damage, this.damageTypeForTurn), this.magicNumber));
     }
 }

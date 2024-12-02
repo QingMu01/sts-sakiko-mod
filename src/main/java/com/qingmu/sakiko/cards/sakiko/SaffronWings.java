@@ -34,7 +34,7 @@ public class SaffronWings extends AbstractSakikoCard {
         int targetHealth = m.currentHealth;
         int targetBlock = m.currentBlock;
         this.addToBot(new DamageCallbackAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL, (damageAmount) -> {
-            if (damageAmount == targetHealth) {
+            if (damageAmount == targetHealth && !m.halfDead && (m.isDead || m.isDying)) {
                 int i = this.damage - damageAmount - targetBlock;
                 if (i > 0 && !m.hasPower(MinionPower.POWER_ID))
                     DungeonHelper.getPlayer().heal(i);

@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -9,6 +10,7 @@ import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.EtherModifier;
+import com.qingmu.sakiko.powers.EtherPower;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
@@ -27,7 +29,7 @@ public class Ether extends AbstractMusic {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
 
-        this.initMusicAttr(1, 1);
+        this.initMusicAttr(1, 1, 1, 0);
 
         this.setExhaust(true, true);
     }
@@ -40,5 +42,10 @@ public class Ether extends AbstractMusic {
                 CardModifierManager.addModifier(card, new EtherModifier(this, card, realMusicNumber));
             }
         }, CardGroup.CardGroupType.HAND));
+    }
+
+    @Override
+    public void interruptReady() {
+        this.addToBot(new ApplyPowerAction(this.m_source, this.m_source, new EtherPower(this.m_source, this.magicNumber), this.magicNumber));
     }
 }

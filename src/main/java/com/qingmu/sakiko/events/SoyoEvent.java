@@ -29,9 +29,9 @@ public class SoyoEvent extends PhasedEvent {
     public SoyoEvent() {
         super(ID, NAME, IMG_PATH);
         if (AbstractDungeon.ascensionLevel >= 15) {
-            this.goldReward = 150;
-        } else {
             this.goldReward = 175;
+        } else {
+            this.goldReward = 200;
         }
         this.curse = new SoyoCurse();
         registerPhase(0, new TextPhase(DESCRIPTIONS[0])

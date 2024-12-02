@@ -20,6 +20,13 @@ public class ApotheosisMusicPileSupportPatch {
                 card.applyPowers();
             }
         }
+        for (AbstractCard card : CardsHelper.mq().group) {
+            if (card.canUpgrade()) {
+                card.upgrade();
+                card.applyPowers();
+                card.superFlash();
+            }
+        }
     }
 
     public static class Locator extends SpireInsertLocator {

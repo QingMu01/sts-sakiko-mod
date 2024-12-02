@@ -1,11 +1,10 @@
 package com.qingmu.sakiko.patch.effect;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.vfx.PlayerTurnEffect;
 import com.megacrit.cardcrawl.vfx.combat.BattleStartEffect;
-import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
+import com.qingmu.sakiko.utils.DungeonHelper;
 import javassist.CtBehavior;
 
 public class FriendlyMonsterIntentEffectPatch {
@@ -13,7 +12,7 @@ public class FriendlyMonsterIntentEffectPatch {
     @SpirePatch(clz = PlayerTurnEffect.class, method = SpirePatch.CONSTRUCTOR)
     public static class PlayerTurnEffectPatch {
         public static void postfix(PlayerTurnEffect __instance) {
-            MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+            MonsterGroup monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
             if (monsterGroup != null) {
                 monsterGroup.showIntent();
             }
@@ -26,7 +25,7 @@ public class FriendlyMonsterIntentEffectPatch {
 
         @SpireInsertPatch(locator = Locator.class)
         public static void insert(BattleStartEffect __instance) {
-            MonsterGroup monsterGroup = FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+            MonsterGroup monsterGroup = DungeonHelper.getFriendlyMonsterGroup();
             if (monsterGroup != null) {
                 monsterGroup.showIntent();
             }

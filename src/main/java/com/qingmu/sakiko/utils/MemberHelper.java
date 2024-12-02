@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.powers.FallApartPower;
+import com.qingmu.sakiko.relics.*;
 import com.qingmu.sakiko.relics.menbers.AbstractBandMember;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class MemberHelper {
         return count;
     }
 
-    public static int getCrychicCount(){
+    public static int getCrychicCount() {
         int count = 0;
         AbstractPlayer p = DungeonHelper.getPlayer();
         if (p.hasPower(FallApartPower.POWER_ID)) {
@@ -56,6 +57,14 @@ public class MemberHelper {
             }
         }
         return count;
+    }
+
+    public static boolean hasBandRelic() {
+        for (AbstractRelic relic : DungeonHelper.getPlayer().relics) {
+            if (relic.relicId.equals(Band_AVEMUJICA.ID) || relic.relicId.equals(Band_CRYCHIC.ID) || relic.relicId.equals(Combination_ANSK.ID) || relic.relicId.equals(Combination_TMSK.ID) || relic.relicId.equals(Combination_UKSK.ID))
+                return true;
+        }
+        return false;
     }
 
     public static Map<String, Integer> initSelectedMembers(int count) {

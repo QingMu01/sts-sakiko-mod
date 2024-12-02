@@ -20,13 +20,13 @@ import com.qingmu.sakiko.action.common.ReadyToPlayMusicAction;
 import com.qingmu.sakiko.constant.SakikoConst;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
-import com.qingmu.sakiko.modifier.AbstractMusicCardModifier;
+import com.qingmu.sakiko.inteface.SakikoMusicCard;
 import com.qingmu.sakiko.powers.FeverReadyPower;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public abstract class AbstractMusic extends AbstractSakikoCard {
+public abstract class AbstractMusic extends AbstractSakikoCard implements SakikoMusicCard {
 
     private static final String BG_SKILL_512 = "SakikoModResources/img/512/bg_skill_512.png";
     private static final String BG_SKILL_1024 = "SakikoModResources/img/1024/bg_skill.png";
@@ -123,8 +123,6 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
         super.applyPowersToBlock();
     }
 
-    public abstract void play();
-
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         this.m_source = p;
@@ -188,14 +186,6 @@ public abstract class AbstractMusic extends AbstractSakikoCard {
 
     // 存在待演奏区时，演奏时触发的钩子
     public void triggerInBufferPlayedMusic(AbstractMusic music) {
-    }
-
-    public boolean enchantedSupport() {
-        return false;
-    }
-
-    public AbstractMusicCardModifier enchant() {
-        return null;
     }
 
     @SpireOverride

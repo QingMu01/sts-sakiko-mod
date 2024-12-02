@@ -1,10 +1,12 @@
 package com.qingmu.sakiko.cards.music;
 
 import basemod.helpers.CardModifierManager;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.powers.watcher.VigorPower;
 import com.qingmu.sakiko.action.common.CardSelectorAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
@@ -25,10 +27,11 @@ public class Symbol_I extends AbstractMusic {
 
     public Symbol_I() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
 
-        this.initMusicAttr(3, 2);
+        this.initMusicAttr(6, 3, 4, 2);
+
+        this.setExhaust(true, true);
     }
 
     @Override
@@ -40,4 +43,8 @@ public class Symbol_I extends AbstractMusic {
         }, CardGroup.CardGroupType.HAND));
     }
 
+    @Override
+    public void interruptReady() {
+        this.addToBot(new ApplyPowerAction(this.m_source, this.m_source, new VigorPower(this.m_source, this.musicNumber), this.musicNumber));
+    }
 }

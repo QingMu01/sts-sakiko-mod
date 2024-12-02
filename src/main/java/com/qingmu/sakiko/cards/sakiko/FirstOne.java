@@ -20,7 +20,7 @@ public class FirstOne extends AbstractSakikoCard {
 
     public FirstOne() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 2);
+        this.initBaseAttr(1, 0, 0, 4);
         this.setUpgradeAttr(1, 0, 0, 1);
     }
 

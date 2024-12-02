@@ -47,6 +47,7 @@ public class AnonMusicCardPatch {
 
         public AbstractAnonMusic(CustomCard anonCard) {
             super(ModNameHelper.make(anonCard.cardID), ReflectionHacks.getPrivateStatic(anonCard.getClass(), "IMG_PATH"), anonCard.rarity == CardRarity.RARE ? SakikoEnum.CardRarityEnum.MUSIC_RARE : SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON, anonCard.target);
+            this.refreshDesc = false;
             this.anonCard = anonCard;
             this.tags.add(SakikoEnum.CardTagEnum.ANON_MOD);
             this.name = anonCard.name;

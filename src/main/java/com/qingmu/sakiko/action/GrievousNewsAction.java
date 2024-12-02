@@ -4,27 +4,31 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.qingmu.sakiko.powers.KokoroNoKabePower;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 public class GrievousNewsAction extends AbstractGameAction {
 
-    private AbstractPlayer player;
+    private int repeatTimes;
 
-    public GrievousNewsAction(AbstractPlayer player) {
-        this.player = player;
+    public GrievousNewsAction(AbstractCreature source, int amount, int repeatTimes) {
+        this.setValues(null, source, amount);
+        this.repeatTimes = repeatTimes;
     }
 
     @Override
     public void update() {
-        int count = 0;
-        for (AbstractCard c : DrawCardAction.drawnCards) {
-            if (c.type == AbstractCard.CardType.CURSE || c.type == AbstractCard.CardType.STATUS) {
-                count++;
-            }
+        if (DrawCardAction.drawnCards.isEmpty()){
+            this.isDone = true;
+            return;
         }
-        if (count > 0) {
-            this.addToBot(new ApplyPowerAction(player, player, new KokoroNoKabePower(player, count), count));
+        AbstractCard card = DrawCardAction.drawnCards.get(0);
+        if (CardsHelper.isStatusOrCurse(card)) {
+            this.repeatTimes++;
+            this.addToBot(new DrawCardAction(1, new GrievousNewsAction(this.source, this.amount, this.repeatTimes)));
+        } else {
+            this.addToBot(new ApplyPowerAction(this.source, this.source, new KokoroNoKabePower(this.source, this.amount * this.repeatTimes), this.amount * this.repeatTimes));
         }
         this.isDone = true;
     }

@@ -15,7 +15,15 @@ public class RenderSceneFgPatch {
         return new ExprEditor() {
             public void edit(FieldAccess f) throws CannotCompileException {
                 if (f.getClassName().equals(AbstractDungeon.RenderScene.class.getName()) && f.getFieldName().equals("NORMAL")) {
-                    f.replace("{ $_ = $proceed($$); if (" + RenderSceneFgPatch.class.getName() + ".canRenderFg()) { $_ = " + f.getClassName() + ".NORMAL; } else { $_ = null; } }");                }
+                    f.replace("{" +
+                            "$_ = $proceed($$); " +
+                            "if (" + RenderSceneFgPatch.class.getName() + ".canRenderFg()) {" +
+                                "$_ = " + f.getClassName() + ".NORMAL; " +
+                            "} else { " +
+                                "$_ = null; " +
+                            "} " +
+                            "}");
+                }
             }
         };
     }

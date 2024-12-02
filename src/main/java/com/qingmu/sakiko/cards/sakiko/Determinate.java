@@ -21,8 +21,8 @@ public class Determinate extends AbstractSakikoCard {
 
     public Determinate() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 9, 0, 1);
-        this.setUpgradeAttr(1, 4, 0, 0);
+        this.initBaseAttr(2, 14, 0, 2);
+        this.setUpgradeAttr(2, 4, 0, 1);
     }
 
     @Override

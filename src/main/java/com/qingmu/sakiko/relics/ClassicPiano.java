@@ -43,9 +43,10 @@ public class ClassicPiano extends AbstractSakikoRelic {
     @Override
     public void onRightClick() {
         if (Settings.isDebug) {
-            LinkedAnon linkedAnon = new LinkedAnon(0, 0);
-            linkedAnon.drawX -= (DungeonHelper.getPlayer().drawX + (Settings.WIDTH - linkedAnon.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale;
-            this.addToBot(new SummonFriendlyMonsterAction(linkedAnon, true, -Settings.WIDTH));
+//            LinkedAnon linkedAnon = new LinkedAnon(0, 0);
+//            linkedAnon.drawX -= (DungeonHelper.getPlayer().drawX + (Settings.WIDTH - linkedAnon.drawX) - DungeonHelper.getPlayer().hb_w - 20) / Settings.xScale;
+//            this.addToBot(new SummonFriendlyMonsterAction(linkedAnon, true, -Settings.WIDTH));
+            this.addToBot(new SummonFriendlyMonsterAction(LinkedAnon.ID, true));
         }
     }
 }

@@ -54,7 +54,11 @@ public class MusicBattleLogicPatch {
                 }
                 if (card instanceof AbstractMusic) {
                     iterator.remove();
-                    CardsHelper.dmp().addToBottom(card);
+                    if (((AbstractMusic) card).cryChicSelect) {
+                        placeOnTop[0].add(card);
+                    } else {
+                        CardsHelper.dmp().addToBottom(card);
+                    }
                 }
             }
         }

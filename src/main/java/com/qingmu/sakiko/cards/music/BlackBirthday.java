@@ -1,15 +1,14 @@
 package com.qingmu.sakiko.cards.music;
 
-import basemod.helpers.CardModifierManager;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardGroup;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
-import com.megacrit.cardcrawl.localization.UIStrings;
-import com.qingmu.sakiko.action.common.CardSelectorAction;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.qingmu.sakiko.action.common.DamageCallbackAction;
+import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
-import com.qingmu.sakiko.modifier.BlackBirthdayModifier;
-import com.qingmu.sakiko.utils.CardModifierHelper;
+import com.qingmu.sakiko.rewards.CardRemoveReward;
+import com.qingmu.sakiko.rewards.CardUpgradeReward;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class BlackBirthday extends AbstractMusic {
@@ -18,26 +17,38 @@ public class BlackBirthday extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/BlackBirthday.png";
 
-    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(ModNameHelper.make(BlackBirthday.class.getSimpleName()));
-
     private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_RARE;
-    private static final CardTarget TARGET = CardTarget.NONE;
+    private static final CardTarget TARGET = CardTarget.ENEMY;
+
+    public boolean isPlayed = true;
 
     public BlackBirthday() {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
         this.tags.add(CardTags.HEALING);
 
-        this.initMusicAttr(1, 1);
+        this.initMusicAttr(6, 4);
         this.setExhaust(true, true);
     }
 
     @Override
     public void play() {
-        this.addToTop(new CardSelectorAction(uiStrings.TEXT[0], this.musicNumber, true, card -> card.canUpgrade() && CardModifierHelper.notModifier(card, BlackBirthdayModifier.ID), card -> null, cardList -> {
-            for (AbstractCard card : cardList) {
-                CardModifierManager.addModifier(card, new BlackBirthdayModifier(this, card));
+        this.addToTop(new DamageCallbackAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.LIGHTNING, damageAmount -> {
+            if ((this.m_target.isDying || this.m_target.currentHealth <= 0) && !this.m_target.halfDead && !this.m_target.hasPower("Minion")) {
+                if (this.isPlayed){
+                    AbstractDungeon.getCurrRoom().rewards.add(new CardUpgradeReward());
+                }else {
+                    AbstractDungeon.getCurrRoom().rewards.add(new CardRemoveReward());
+                }
             }
-        }, CardGroup.CardGroupType.HAND));
+            this.isPlayed = true;
+        }));
+    }
+
+    @Override
+    public void interruptReady() {
+        this.isPlayed = false;
+        this.addToTop(new PlayerPlayedMusicAction(this));
     }
 }

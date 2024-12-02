@@ -1,15 +1,20 @@
 package com.qingmu.sakiko.powers.monster;
 
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.powers.BeatOfDeathPower;
+import com.megacrit.cardcrawl.powers.SharpHidePower;
+import com.megacrit.cardcrawl.powers.ThornsPower;
+import com.qingmu.sakiko.action.common.ExprAction;
+import com.qingmu.sakiko.powers.AbstractSakikoPower;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class ResiliencePower extends AbstractPower {
+public class ResiliencePower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(ResiliencePower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -20,16 +25,13 @@ public class ResiliencePower extends AbstractPower {
     private int count = 0;
 
     public ResiliencePower(AbstractCreature owner, int amount, boolean justApplied) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = amount;
         this.justApplied = justApplied;
 
         this.loadRegion("malleable");
-
-        this.updateDescription();
     }
 
     public ResiliencePower(AbstractCreature owner, int amount) {
@@ -43,17 +45,21 @@ public class ResiliencePower extends AbstractPower {
 
     @Override
     public int onAttacked(DamageInfo info, int damageAmount) {
-        this.addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                if (owner.currentHealth - damageAmount > 0){
-                    owner.heal(amount);
-                }
-                this.isDone = true;
+        this.addToBot(new ExprAction(() -> {
+            if (this.owner.currentHealth - damageAmount > 0) {
+                this.owner.heal(this.amount);
             }
-        });
+        }));
         this.count++;
-        this.amount += this.count * 2;
+        this.amount += this.count;
+        int random = AbstractDungeon.aiRng.random(99);
+        if (random < 33) {
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new SharpHidePower(this.owner, 1), 1));
+        } else if (random < 66) {
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new ThornsPower(this.owner, 1), 1));
+        } else {
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new BeatOfDeathPower(this.owner, 1), 1));
+        }
         this.updateDescription();
         return super.onAttacked(info, damageAmount);
     }

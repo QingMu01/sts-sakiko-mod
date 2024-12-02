@@ -7,7 +7,7 @@ import com.qingmu.sakiko.monsters.boss.InnerDemonSakiko;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
@@ -61,7 +61,7 @@ public abstract class AbstractMemberMonster extends AbstractSakikoMonster {
 
     @Override
     protected List<SpecialIntentAction> initSpecialIntent() {
-        return Collections.emptyList();
+        return new ArrayList<>();
     }
 
     @Override

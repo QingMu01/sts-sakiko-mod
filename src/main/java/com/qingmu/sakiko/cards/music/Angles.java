@@ -15,7 +15,7 @@ public class Angles extends AbstractMusic {
 
     private static final String IMG_PATH = "SakikoModResources/img/cards/music/Angles.png";
 
-    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_UNCOMMON;
+    private static final CardRarity RARITY = SakikoEnum.CardRarityEnum.MUSIC_COMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
     public Angles() {
@@ -23,7 +23,7 @@ public class Angles extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(4, 2, 2, 0);
+        this.initMusicAttr(3, 1, 1, 1);
     }
 
     @Override
@@ -48,8 +48,6 @@ public class Angles extends AbstractMusic {
         super.calculateCardDamage(mo);
         this.magicNumber = this.baseMagicNumber;
         this.baseMagicNumber = realBaseMagicNumber;
-        this.isMagicNumberModified = (this.magicNumber != this.baseMagicNumber);
-        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
     }
 
     @Override
@@ -59,5 +57,10 @@ public class Angles extends AbstractMusic {
             actions[i] = new DamageAction(this.m_target, new DamageInfo(this.m_source, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL);
         }
         this.submitActionsToTop(actions);
+    }
+
+    @Override
+    public void interruptReady() {
+        this.baseMagicNumber++;
     }
 }

@@ -106,12 +106,14 @@ public class CardSelectorAction extends AbstractGameAction {
 
     /*
      * @param p: 玩家
+     * @prompt: 提示
      * @amount: 选择数量
-     * @anyNumber: 是否可以选择任意数量（不超过amount）
+     * @allowUnderAmount: 是否选择amount张牌
+     * @randomSelect: 是否随机选择
      * @filter: 过滤器，筛选卡牌
      * @processor: 处理器，将卡牌移动到目标卡组（null返回原位）
      * @callback: 回调函数
-     * @targets: 目标卡组列表
+     * @targets: 选牌目标卡组列表
      * */
     public CardSelectorAction(AbstractPlayer p, String prompt, int amount, boolean allowUnderAmount, boolean randomSelect, Predicate<AbstractCard> filter, Function<AbstractCard, CardGroup.CardGroupType> processor, Consumer<List<AbstractCard>> callback, CardGroup.CardGroupType... targets) {
         this.player = p;

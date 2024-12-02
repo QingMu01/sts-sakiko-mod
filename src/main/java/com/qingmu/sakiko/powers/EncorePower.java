@@ -4,20 +4,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.actions.unique.LoseEnergyAction;
 import com.megacrit.cardcrawl.actions.watcher.SkipEnemiesTurnAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.ui.panels.EnergyPanel;
 import com.megacrit.cardcrawl.vfx.combat.WhirlwindEffect;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class EncorePower extends AbstractPower {
+public class EncorePower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(EncorePower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -28,18 +26,17 @@ public class EncorePower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/EncorePower128.png";
 
     private int residue = 0;
+    private boolean isSourceMember = false;
 
-    public EncorePower(AbstractCreature owner, int amount) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+    public EncorePower(AbstractCreature owner, int amount, boolean isSourceMember) {
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = amount;
+        this.isSourceMember = isSourceMember;
+
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-
-
-        this.updateDescription();
     }
 
     @Override
@@ -67,10 +64,12 @@ public class EncorePower extends AbstractPower {
         }
     }
 
-
     @Override
     public void atStartOfTurnPostDraw() {
-        this.reducePower(1);
+        if (this.isSourceMember) {
+            this.isSourceMember = false;
+        } else
+            this.reducePower(1);
     }
 
     @Override
@@ -79,24 +78,5 @@ public class EncorePower extends AbstractPower {
         int i = (DungeonHelper.getPlayer().energy.energyMaster - 1);
         this.addToTop(new LoseEnergyAction(i));
         this.addToTop(new GainEnergyAction(this.residue));
-    }
-
-    @Override
-    public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
-        if (this.amount >= 999) {
-            this.amount = 999;
-        }
-    }
-
-    @Override
-    public void reducePower(int reduceAmount) {
-        this.amount -= reduceAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
     }
 }

@@ -9,9 +9,12 @@ import com.megacrit.cardcrawl.events.AbstractImageEvent;
 import com.megacrit.cardcrawl.events.RoomEventDialog;
 import com.megacrit.cardcrawl.map.MapEdge;
 import com.megacrit.cardcrawl.map.MapRoomNode;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.MonsterGroup;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.stances.AbstractStance;
 import com.qingmu.sakiko.characters.TogawaSakiko;
+import com.qingmu.sakiko.patch.filed.FriendlyMonsterGroupFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 
 import java.util.ArrayList;
@@ -27,12 +30,22 @@ public class DungeonHelper {
         return AbstractDungeon.player.stance;
     }
 
+    public static MonsterGroup getFriendlyMonsterGroup() {
+        return FriendlyMonsterGroupFiled.friendlyMonsterGroup.get(AbstractDungeon.getCurrRoom());
+    }
+
+    public static AbstractMonster getFriendlyMonster(String id) {
+        return getFriendlyMonsterGroup().getMonster(id);
+    }
+
     public static ArrayList<AbstractCard> getPlayedList_Turn() {
         return MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisTurn.get(DungeonHelper.getPlayer());
     }
+
     public static int getPlayedNum_Turn() {
         return getPlayedList_Turn().size();
     }
+
     public static ArrayList<AbstractCard> getPlayedList_Combat() {
         return MusicBattleFiledPatch.BattalInfoFiled.musicPlayedThisCombat.get(DungeonHelper.getPlayer());
     }

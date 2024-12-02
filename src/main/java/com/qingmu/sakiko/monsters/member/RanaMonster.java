@@ -103,7 +103,7 @@ public class RanaMonster extends AbstractMemberMonster {
                 .setIntent(Intent.MAGIC)
                 .setRemovable(m -> false)
                 .setRepeatInterval(4)
-                .setPredicate(m -> !MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty() && AbstractDungeon.monsterRng.randomBoolean())
+                .setPredicate(m -> !MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty() && AbstractDungeon.monsterRng.randomBoolean(0.3f))
                 .setActions(() -> new AbstractGameAction[]{
                         new ReadyToPlayMusicAction(1, this),
                         new PlayBGMAction(MusicHelper.HARUHIKAGE, this)

@@ -116,7 +116,7 @@
     "NAME": "Ave Mujica",
     "FLAVOR": "欢迎来到，Ave Mujica的世界。",
     "DESCRIPTIONS": [
-      "你 #y演奏 的所有AveMujica所属的音乐，生效时获得 #b1 点数值加成。"
+      "你每 #y演奏 #b3 首AveMujica所属的音乐，随机获得1点 #y力量 、 #y敏捷 、 #y闪耀 或 #y复权 。"
     ]
   },
   "SakikoMod:Band_CRYCHIC": {
@@ -133,7 +133,7 @@
     "NAME": "ANOKO",
     "FLAVOR": "可以联机做梦的妙妙道具！",
     "DESCRIPTIONS": [
-      "在篝火处休息后，将你的最大生命值翻倍。"
+      "首次在篝火处休息时，将你的最大生命值翻倍。"
     ]
   },
   "SakikoMod:Combination_TMSK": {

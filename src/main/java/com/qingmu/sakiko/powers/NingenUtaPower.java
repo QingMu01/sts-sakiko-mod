@@ -5,13 +5,12 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.inteface.ModifiedMusicNumber;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber {
+public class NingenUtaPower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(NingenUtaPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -21,13 +20,12 @@ public class NingenUtaPower extends AbstractPower implements ModifiedMusicNumber
     private Set<String> applied = new HashSet<>();
 
     public NingenUtaPower(AbstractCreature owner) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = -1;
+
         this.loadRegion("hymn");
-        this.updateDescription();
     }
 
     @Override

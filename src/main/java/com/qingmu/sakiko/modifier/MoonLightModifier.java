@@ -14,9 +14,19 @@ public class MoonLightModifier extends AbstractCardModifier {
     public static String ID = ModNameHelper.make(MoonLightModifier.class.getSimpleName());
     private static final TutorialStrings TUTORIAL_STRING = CardCrawlGame.languagePack.getTutorialString(ID);
 
+    private boolean isTmp;
+
+    public MoonLightModifier(boolean isTmp) {
+        this.isTmp = isTmp;
+    }
+
+    public MoonLightModifier() {
+        this(true);
+    }
+
     @Override
     public String modifyDescription(String rawDescription, AbstractCard card) {
-        return this.isLastModifier(card) ? rawDescription + " NL " + TUTORIAL_STRING.TEXT[0] : rawDescription;
+        return this.isLastModifier(card) ? rawDescription + " NL " + (this.isTmp ? TUTORIAL_STRING.TEXT[0] : TUTORIAL_STRING.TEXT[1]) : rawDescription;
     }
 
     @Override
@@ -31,7 +41,7 @@ public class MoonLightModifier extends AbstractCardModifier {
 
     @Override
     public AbstractCardModifier makeCopy() {
-        return new MoonLightModifier();
+        return new MoonLightModifier(this.isTmp);
     }
 
     @Override

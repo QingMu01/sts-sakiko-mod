@@ -2,17 +2,14 @@ package com.qingmu.sakiko.powers;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.PowerStrings;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-import com.qingmu.sakiko.stances.CreatorStance;
-import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-public class KingOfTingPower extends AbstractPower {
+public class KingOfTingPower extends AbstractSakikoPower {
 
     public static final String POWER_ID = ModNameHelper.make(KingOfTingPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -23,23 +20,15 @@ public class KingOfTingPower extends AbstractPower {
     private static final String path128 = "SakikoModResources/img/powers/KingOfTingPower128.png";
 
     public KingOfTingPower(AbstractCreature owner, int amount) {
-        this.name = NAME;
-        this.ID = POWER_ID;
+        super(POWER_ID, NAME, PowerType.BUFF);
+
         this.owner = owner;
-        this.type = PowerType.BUFF;
         this.amount = amount;
+
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
-
-        this.updateDescription();
     }
 
-    @Override
-    public void atStartOfTurn() {
-        if (DungeonHelper.getPlayer().stance.ID.equals(CreatorStance.STANCE_ID)) {
-            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new KirameiPower(this.owner, this.amount), this.amount));
-        }
-    }
 
     @Override
     public void updateDescription() {
@@ -47,19 +36,11 @@ public class KingOfTingPower extends AbstractPower {
     }
 
     @Override
-    public void stackPower(int stackAmount) {
-        this.amount += stackAmount;
-        if (this.amount >= 999) {
-            this.amount = 999;
+    public int onAttacked(DamageInfo info, int damageAmount) {
+        if (damageAmount > 0) {
+            this.flash();
+            this.addToBot(new ApplyPowerAction(this.owner, this.owner, new KirameiPower(this.owner, this.amount), this.amount));
         }
+        return super.onAttacked(info, damageAmount);
     }
-
-    @Override
-    public void reducePower(int reduceAmount) {
-        this.amount -= reduceAmount;
-        if (this.amount <= 0) {
-            this.addToTop(new RemoveSpecificPowerAction(this.owner, this.owner, this));
-        }
-    }
-
 }

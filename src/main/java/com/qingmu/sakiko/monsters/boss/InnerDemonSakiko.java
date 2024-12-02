@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.actions.animations.AnimateSlowAttackAction;
 import com.megacrit.cardcrawl.actions.animations.TalkAction;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.*;
+import com.megacrit.cardcrawl.actions.unique.CanLoseAction;
 import com.megacrit.cardcrawl.actions.unique.RemoveDebuffsAction;
 import com.megacrit.cardcrawl.actions.utility.HideHealthBarAction;
 import com.megacrit.cardcrawl.actions.utility.SFXAction;
@@ -26,9 +27,11 @@ import com.qingmu.sakiko.action.common.PlayBGMAction;
 import com.qingmu.sakiko.action.effect.OverrideBackgroundEffect;
 import com.qingmu.sakiko.action.monster.CrychicHonorAction;
 import com.qingmu.sakiko.action.monster.ExhaustDemonSakikoCardAction;
+import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.cards.music.monster.AbolitionCase;
-import com.qingmu.sakiko.cards.music.monster.AveMujica_Boss;
-import com.qingmu.sakiko.cards.music.monster.BlackBirthday_Boss;
+import com.qingmu.sakiko.cards.music.monster.DarkHeaven;
+import com.qingmu.sakiko.cards.music.monster.Daten;
+import com.qingmu.sakiko.cards.music.monster.Kings;
 import com.qingmu.sakiko.cards.other.DistantPast;
 import com.qingmu.sakiko.constant.MusicHelper;
 import com.qingmu.sakiko.constant.SakikoEnum;
@@ -36,6 +39,7 @@ import com.qingmu.sakiko.monsters.AbstractSakikoMonster;
 import com.qingmu.sakiko.monsters.helper.IntentAction;
 import com.qingmu.sakiko.monsters.helper.SpecialIntentAction;
 import com.qingmu.sakiko.monsters.member.*;
+import com.qingmu.sakiko.patch.filed.BossInfoFiled;
 import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.powers.monster.*;
 import com.qingmu.sakiko.utils.ActionHelper;
@@ -43,9 +47,7 @@ import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import com.qingmu.sakiko.utils.ModNameHelper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class InnerDemonSakiko extends AbstractSakikoMonster {
 
@@ -55,7 +57,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
     private static final String[] DIALOG = monsterStrings.DIALOG;
     private static final String[] MOVES = monsterStrings.MOVES;
 
-    private int baseAttack = 25, baseSlash = 60, baseMultiDamage = 5, multiCount = 12, baseBlock = 20, baseHp = 600;
+    private int baseAttack = 25, baseSlash = 60, baseMultiDamage = 5, multiCount = 12, baseBlock = 20, baseHp = 200;
 
     private static final String IMG = "SakikoModResources/img/monster/sakikoBoss.png";
 
@@ -69,8 +71,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p3.png"),
             ImageMaster.loadImage("SakikoModResources/img/bg/innerSakiko_p4.png")));
 
-//    private final ShaderProgram shaderProgram;
-//    private final Texture noise = ImageMaster.loadImage("SakikoModResources/shader/rain/noise.png");
     private float timer = 0f;
 
     public InnerDemonSakiko(float x, float y) {
@@ -78,12 +78,6 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         this.type = EnemyType.BOSS;
         this.canPlayMusic = true;
         this.setHp(this.baseHp);
-
-//        this.shaderProgram = new ShaderProgram(Gdx.files.internal("SakikoModResources/shader/rain/vertexShader.vert"), Gdx.files.internal("SakikoModResources/shader/rain/fragmentShader.frag"));
-//
-//        if (!this.shaderProgram.isCompiled()) {
-//            throw new IllegalArgumentException("Error compiling shader: " + this.shaderProgram.getLog());
-//        }
 
         this.damage.add(new DamageInfo(this, this.baseAttack));
         // 重击
@@ -94,14 +88,16 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
 
     @Override
     public void usePreBattleAction() {
+        BossInfoFiled.canBattleWithDemonSakiko.set(DungeonHelper.getPlayer(), false);
         AbstractDungeon.getCurrRoom().cannotLose = true;
         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2), 2));
+        this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
         ActionHelper.effectToList(bg);
     }
 
     @Override
-    public void die() {
-        super.die();
+    public void die(boolean triggerRelics) {
+        super.die(triggerRelics);
         if (!AbstractDungeon.getCurrRoom().cannotLose) {
             this.onBossVictoryLogic();
             this.onFinalBossVictoryLogic();
@@ -111,8 +107,8 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
 
     @Override
     protected IntentAction getRandomEffectiveIntent(int random) {
-        if (this.phase == 2 && MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty()) {
-            this.obtainMusic(AbstractDungeon.aiRng.randomBoolean() ? new AveMujica_Boss() : new BlackBirthday_Boss());
+        if (this.phase != 1 && MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).isEmpty()) {
+            this.obtainMusic(this.readyMusic());
         }
         return super.getRandomEffectiveIntent(random);
     }
@@ -146,22 +142,27 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
         this.isPlayBGM = false;
 
         if (this.phase == 1) {
-            this.maxHealth = 800;
+            this.maxHealth = 400;
             this.addToBot(new TalkAction(this, DIALOG[1], 2.0F, 2.0F));
         } else if (this.phase == 2) {
-            this.maxHealth = 1000;
+            this.maxHealth = 400;
             this.addToBot(new TalkAction(this, DIALOG[3], 2.0F, 2.0F));
         } else if (this.phase == 3) {
-            this.maxHealth = 1200;
+            this.maxHealth = 600;
             this.addToBot(new TalkAction(this, DIALOG[5], 2.0F, 2.0F));
         } else if (this.phase == 4) {
             this.addToBot(new TalkAction(this, DIALOG[7], 2.0F, 2.0F));
         }
-        // 清除debuff
-        this.powers.removeIf(power -> !power.ID.equals(IdealFukkenPower.POWER_ID)
-                && !power.ID.equals(FakeKirameiPower.POWER_ID)
-                && !power.ID.equals(StrengthPower.POWER_ID)
-        );
+        Set<String> powerIdsToKeep = new HashSet<>(Arrays.asList(
+                IdealFukkenPower.POWER_ID,
+                FakeKirameiPower.POWER_ID,
+                BeatOfDeathPower.POWER_ID,
+                ThornsPower.POWER_ID,
+                SharpHidePower.POWER_ID
+        ));
+
+        this.powers.removeIf(power -> !powerIdsToKeep.contains(power.ID));
+        this.powers.removeIf(power -> power.ID.equals(StrengthPower.POWER_ID) && power.amount < 0);
         // 清除歌单
         MusicBattleFiledPatch.MusicQueue.musicQueue.get(this).clear();
         // 清除爪牙
@@ -173,7 +174,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
             }
         }
         this.applyPowers();
-        // 立刻设置新意图
+        // 设置阶段切换意图
         this.specialIntentList.add(0, new SpecialIntentAction.Builder()
                 .setIntent(Intent.UNKNOWN)
                 .setPredicate(m -> true)
@@ -187,21 +188,7 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         this.addToBot(new PlayBGMAction(MusicHelper.AME, this));
                         this.addToBot(new TalkAction(this, DIALOG[2], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
-                        this.addToBot(new ExprAction(() -> {
-                            bg.changeBackground();
-//                            bg.setShaderProgram((texture) -> {
-//                                this.timer += Gdx.graphics.getDeltaTime() / 5.0f;
-//                                this.shaderProgram.begin();
-//                                texture.bind(0);
-//                                this.noise.bind();
-//                                this.shaderProgram.setUniformf("u_resolution", Settings.WIDTH, Settings.HEIGHT, 0.0f);
-//                                this.shaderProgram.setUniformf("u_time", this.timer);
-//                                this.shaderProgram.setUniformi("u_texture", 0);
-//                                this.shaderProgram.setUniformi("iChannel0", 0);
-//                                this.shaderProgram.end();
-//                                return this.shaderProgram;
-//                            });
-                        }));
+                        this.addToBot(new ExprAction(bg::changeBackground));
                     } else if (this.phase == 2) {
                         this.addToBot(new ApplyPowerAction(this, this, new ResiliencePower(this, 2, true), 2));
                         this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
@@ -214,6 +201,8 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                         this.addToBot(new TalkAction(this, DIALOG[6], 2.0F, 2.0F));
                         this.addToBot(new ApplyPowerAction(this, this, new FadingPower(this, (this.maxHealth / 200) + 2), (this.maxHealth / 200) + 2));
                         this.addToBot(new ApplyPowerAction(this, this, new InvinciblePower(this, 200), 200));
+                        this.addToBot(new ApplyPowerAction(this, this, new MusicalAbilityPower(this)));
+                        this.addToBot(new CanLoseAction());
                         this.addToBot(new ExprAction(bg::changeBackground));
                     }
                 })
@@ -488,5 +477,18 @@ public class InnerDemonSakiko extends AbstractSakikoMonster {
                 .setCallback(ia -> this.moveCount = 0)
                 .build());
         return specialIntentActions;
+    }
+
+    public AbstractMusic readyMusic() {
+        AbstractMusic music;
+        int rng = AbstractDungeon.aiRng.random(99);
+        if (rng < 30) {
+            music = new Daten();
+        } else if (rng < 65) {
+            music = new Kings();
+        } else {
+            music = new DarkHeaven();
+        }
+        return music;
     }
 }

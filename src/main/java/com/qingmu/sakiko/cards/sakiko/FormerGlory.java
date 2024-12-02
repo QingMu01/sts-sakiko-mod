@@ -19,12 +19,12 @@ public class FormerGlory extends AbstractSakikoCard {
 
     public FormerGlory() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 0, 4);
-        this.setUpgradeAttr(1, 0, 0, 2);
+        this.initBaseAttr(2, 0, 0, 0);
+        this.setUpgradeAttr(1, 0, 0, 0);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new ApplyPowerAction(p, p, new FormerGloryPower(p, this.magicNumber), this.magicNumber));
+        this.addToBot(new ApplyPowerAction(p, p, new FormerGloryPower(p)));
     }
 }

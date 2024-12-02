@@ -4,28 +4,59 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.inteface.TriggerOnInterrupt;
+import com.qingmu.sakiko.utils.CardsHelper;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 public class CleanMusicQueueAction extends AbstractGameAction {
 
+    private boolean isExhaust;
+    private Consumer<Integer> callback;
 
     public CleanMusicQueueAction(AbstractCreature target) {
+        this(target, false, (i) -> {
+        });
+    }
+
+    public CleanMusicQueueAction(AbstractCreature target, Consumer<Integer> callback) {
+        this(target, false, callback);
+    }
+
+    public CleanMusicQueueAction(AbstractCreature target, boolean isExhaust, Consumer<Integer> callback) {
         this.target = target;
+        this.isExhaust = isExhaust;
+        this.callback = callback;
     }
 
     @Override
     public void update() {
-        CardGroup cardGroup = MusicBattleFiledPatch.MusicQueue.musicQueue.get(this.target);
-        if (cardGroup.isEmpty()){
+        CardGroup cardGroup = CardsHelper.mq(this.target);
+        if (cardGroup.isEmpty()) {
             this.isDone = true;
         }
+        int count = 0;
         Iterator<AbstractCard> iterator = cardGroup.group.iterator();
         while (iterator.hasNext()) {
-            AbstractCard card = iterator.next();
+            AbstractMusic card = (AbstractMusic) iterator.next();
             iterator.remove();
-            cardGroup.moveToDiscardPile(card);
+            if (this.isExhaust) {
+                cardGroup.moveToExhaustPile(card);
+            } else {
+                cardGroup.moveToDiscardPile(card);
+            }
+            card.interruptReady();
+            for (AbstractPower power : this.target.powers) {
+                if (power instanceof TriggerOnInterrupt){
+                    ((TriggerOnInterrupt) power).triggerOnInterrupt(card);
+                }
+            }
+            count++;
         }
+        callback.accept(count);
+        this.isDone = true;
     }
 }

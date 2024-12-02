@@ -1,19 +1,17 @@
 package com.qingmu.sakiko.cards.sakiko;
 
-import com.megacrit.cardcrawl.actions.common.DiscardSpecificCardAction;
-import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
-import com.megacrit.cardcrawl.actions.utility.UnlimboAction;
+import com.megacrit.cardcrawl.actions.watcher.ChooseOneAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.cards.CardQueueItem;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.qingmu.sakiko.cards.AbstractMusic;
+import com.qingmu.sakiko.action.common.XAction;
 import com.qingmu.sakiko.cards.AbstractSakikoCard;
-import com.qingmu.sakiko.utils.CardsHelper;
-import com.qingmu.sakiko.utils.DungeonHelper;
+import com.qingmu.sakiko.cards.choose.CP;
+import com.qingmu.sakiko.cards.choose.Musical;
+import com.qingmu.sakiko.cards.choose.Topic;
 import com.qingmu.sakiko.utils.ModNameHelper;
+
+import java.util.ArrayList;
 
 public class Hype extends AbstractSakikoCard {
 
@@ -25,52 +23,25 @@ public class Hype extends AbstractSakikoCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.NONE;
 
-    private boolean isEnabled = true;
-
     public Hype() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(-2, 0, 0, 0);
-        this.setUpgradeAttr(-2, 0, 0, 0);
-
-        this.setExhaust(true, false);
+        this.initBaseAttr(-1, 0, 0, 0, new CP(), new Musical(), new Topic());
+        this.setUpgradeAttr(-1, 0, 0, 0, true);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-
-    }
-
-    @Override
-    public void triggerOnPlayMusic(AbstractMusic music) {
-        if (CardsHelper.h().contains(this) && this.isEnabled) {
-            this.isEnabled = false;
-            AbstractMonster m = AbstractDungeon.getRandomMonster();
-            AbstractCard tmp = music.makeSameInstanceOf();
-            DungeonHelper.getPlayer().limbo.addToBottom(tmp);
-            tmp.current_x = music.current_x;
-            tmp.current_y = music.current_y;
-            tmp.target_x = (float) Settings.WIDTH / 2.0F - 300.0F * Settings.scale;
-            tmp.target_y = (float) Settings.HEIGHT / 2.0F;
-            tmp.calculateCardDamage(m);
-            tmp.purgeOnUse = true;
-            AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(tmp, m, music.energyOnUse, true, true), true);
-            this.addToBot(new UnlimboAction(tmp));
+        this.addToBot(new XAction(p, this.freeToPlayOnce, this.energyOnUse, effect -> {
+            ArrayList<AbstractCard> cards = new ArrayList<>();
+            cards.add(new CP(effect));
+            cards.add(new Musical(effect));
+            cards.add(new Topic(effect));
             if (this.upgraded) {
-                this.addToTop(new DiscardSpecificCardAction(this));
-            } else {
-                this.addToTop(new ExhaustSpecificCardAction(this, CardsHelper.h()));
+                for (AbstractCard card : cards) {
+                    card.upgrade();
+                }
             }
-        }
-    }
-
-    @Override
-    public void onMoveToDiscard() {
-        this.isEnabled = true;
-    }
-
-    @Override
-    public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        this.cantUseMessage = EXTENDED_DESCRIPTION[0];
-        return false;
+            this.addToBot(new ChooseOneAction(cards));
+        }));
     }
 }
