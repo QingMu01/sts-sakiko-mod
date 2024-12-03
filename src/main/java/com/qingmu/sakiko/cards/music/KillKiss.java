@@ -52,6 +52,6 @@ public class KillKiss extends AbstractMusic {
 
     @Override
     public void interruptReady() {
-        this.addToTop(new PlayerPlayedMusicAction(this));
+        this.addToTop(new PlayerPlayedMusicAction(this,true));
     }
 }

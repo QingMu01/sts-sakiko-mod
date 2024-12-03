@@ -27,6 +27,8 @@ public class Hype extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
         this.initBaseAttr(-1, 0, 0, 0, new CP(), new Musical(), new Topic());
         this.setUpgradeAttr(-1, 0, 0, 0, true);
+
+        this.setExhaust(true, true);
     }
 
     @Override

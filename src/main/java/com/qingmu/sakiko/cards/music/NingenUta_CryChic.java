@@ -20,7 +20,7 @@ public class NingenUta_CryChic extends AbstractMusic {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
 
-        this.initMusicAttr(0, 0, 1, 0);
+        this.initMusicAttr(1, 1, 1, 0);
     }
 
     @Override

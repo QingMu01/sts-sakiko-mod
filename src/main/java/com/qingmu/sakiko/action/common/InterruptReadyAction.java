@@ -27,14 +27,14 @@ public class InterruptReadyAction extends AbstractGameAction {
             return;
         }
         AbstractMusic card = (AbstractMusic) musicQueue.getBottomCard();
-        if (this.isExhaust) {
+        if (this.isExhaust || card.exhaust) {
             musicQueue.moveToExhaustPile(card);
         } else {
             musicQueue.moveToDiscardPile(card);
         }
         card.interruptReady();
         for (AbstractPower power : this.target.powers) {
-            if (power instanceof TriggerOnInterrupt){
+            if (power instanceof TriggerOnInterrupt) {
                 ((TriggerOnInterrupt) power).triggerOnInterrupt(card);
             }
         }

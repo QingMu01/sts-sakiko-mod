@@ -50,7 +50,7 @@ public class CleanMusicQueueAction extends AbstractGameAction {
             }
             card.interruptReady();
             for (AbstractPower power : this.target.powers) {
-                if (power instanceof TriggerOnInterrupt){
+                if (power instanceof TriggerOnInterrupt) {
                     ((TriggerOnInterrupt) power).triggerOnInterrupt(card);
                 }
             }

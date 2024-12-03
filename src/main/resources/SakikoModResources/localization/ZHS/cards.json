@@ -421,7 +421,7 @@
   "SakikoMod:NingenUta_CryChic": {
     "NAME": "想要成为人类之歌",
     "MINI_TITLE": "CRYCHIC",
-    "DESCRIPTION": " sakikomod:音乐能力 NL 你首次获得增益状态时，额外获得 1 层。 NL sakikomod:临场 ：随机获得1层已有的增益状态。"
+    "DESCRIPTION": " sakikomod:音乐能力 NL 你首次获得增益状态时，额外获得 1 层。 NL sakikomod:临场 ：随机获得 !SakikoMod:MN! 层已有的增益状态。"
   },
   "SakikoMod:Haruhikage_CryChic": {
     "NAME": "春日影",

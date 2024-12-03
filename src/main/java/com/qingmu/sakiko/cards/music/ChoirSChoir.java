@@ -1,6 +1,7 @@
 package com.qingmu.sakiko.cards.music;
 
 import com.qingmu.sakiko.action.ChoirSChoirAction;
+import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.utils.ModNameHelper;
@@ -25,5 +26,10 @@ public class ChoirSChoir extends AbstractMusic {
     @Override
     public void play() {
         this.addToTop(new ChoirSChoirAction());
+    }
+
+    @Override
+    public void interruptReady() {
+        this.addToTop(new PlayerPlayedMusicAction(this,true));
     }
 }

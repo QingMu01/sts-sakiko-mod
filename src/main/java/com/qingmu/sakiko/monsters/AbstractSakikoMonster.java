@@ -159,6 +159,9 @@ public abstract class AbstractSakikoMonster extends CustomMonster {
 
     @Override
     public void damage(DamageInfo info) {
+        if (this.halfDead){
+            return;
+        }
         if (info.output > 0 && hasPower("IntangiblePlayer")) {
             info.output = 1;
         }

@@ -85,7 +85,7 @@ public class UseMusicCardActionPatch {
                     if (!___targetCard.hasTag(SakikoEnum.CardTagEnum.ENCORE)){
                         __instance.isDone = true;
                         ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
-                        return SpireReturn.Return();
+                        return SpireReturn.Continue();
                     }
                 }
                 CardGroup cardGroup = CardsHelper.mq();

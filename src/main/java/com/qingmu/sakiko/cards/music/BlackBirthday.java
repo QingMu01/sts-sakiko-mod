@@ -49,6 +49,6 @@ public class BlackBirthday extends AbstractMusic {
     @Override
     public void interruptReady() {
         this.isPlayed = false;
-        this.addToTop(new PlayerPlayedMusicAction(this));
+        this.addToTop(new PlayerPlayedMusicAction(this,true));
     }
 }

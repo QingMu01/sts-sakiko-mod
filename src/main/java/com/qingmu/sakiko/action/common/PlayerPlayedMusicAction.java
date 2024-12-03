@@ -35,9 +35,15 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     private final AbstractMusic music;
     public boolean exhaustCard;
+    private boolean isInterrupt;
 
     public PlayerPlayedMusicAction(AbstractMusic music) {
+        this(music, false);
+    }
+
+    public PlayerPlayedMusicAction(AbstractMusic music, boolean isInterrupt) {
         this.music = music;
+        this.isInterrupt = true;
         this.source = music.m_source == null ? DungeonHelper.getPlayer() : music.m_source;
         this.target = music.m_target;
         if (music.exhaustOnUseOnce || music.exhaust || CardModifierManager.hasModifier(this.music, ObliviousModifier.ID) || this.music.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS_FLAG)) {
@@ -132,11 +138,33 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 ((TriggerOnPlayMusic) relic).afterPlayedMusic(this.music);
             }
         }
-        CardGroup queue = CardsHelper.mq();
-        this.music.triggerOnExitQueue();
-        // 处理回忆赋予的移除
-        if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {
-            logger.info("remove music card :{}", this.music);
+        CardGroup queue = CardsHelper.dsp();
+        if (this.isInterrupt && queue.contains(this.music)) {
+            this.music.triggerOnExitQueue();
+            // 处理回忆赋予的移除
+            if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {
+                logger.info("remove music card :{}", this.music);
+                if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
+                    this.addToTop(new ShowCardAction(this.music));
+                    if (Settings.FAST_MODE) {
+                        this.addToTop(new WaitAction(0.1F));
+                    } else {
+                        this.addToTop(new WaitAction(0.7F));
+                    }
+                    queue.empower(this.music);
+                    this.isDone = true;
+                    CardGroup hand = CardsHelper.h();
+                    hand.applyPowers();
+                    hand.glowCheck();
+                    DungeonHelper.getPlayer().cardInUse = null;
+                } else {
+                    AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
+                    DungeonHelper.getPlayer().cardInUse = null;
+                    this.isDone = true;
+                }
+                return;
+            }
+
             if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
                 this.addToTop(new ShowCardAction(this.music));
                 if (Settings.FAST_MODE) {
@@ -144,56 +172,36 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 } else {
                     this.addToTop(new WaitAction(0.7F));
                 }
+
                 queue.empower(this.music);
                 this.isDone = true;
                 CardGroup hand = CardsHelper.h();
                 hand.applyPowers();
                 hand.glowCheck();
                 DungeonHelper.getPlayer().cardInUse = null;
-            } else {
+                return;
+            }
+            if (this.music.purgeOnUse) {
                 AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
                 DungeonHelper.getPlayer().cardInUse = null;
                 this.isDone = true;
+                return;
             }
-            return;
-        }
-
-        if (this.music.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)) {
-            this.addToTop(new ShowCardAction(this.music));
-            if (Settings.FAST_MODE) {
-                this.addToTop(new WaitAction(0.1F));
+            boolean spoonProc = false;
+            if (this.exhaustCard && DungeonHelper.getPlayer().hasRelic("Strange Spoon")) {
+                spoonProc = AbstractDungeon.cardRandomRng.randomBoolean();
+            }
+            if (this.exhaustCard && !spoonProc) {
+                this.music.triggerOnExhaust();
+                queue.moveToExhaustPile(this.music);
+                CardCrawlGame.dungeon.checkForPactAchievement();
             } else {
-                this.addToTop(new WaitAction(0.7F));
+                if (spoonProc) {
+                    DungeonHelper.getPlayer().getRelic("Strange Spoon").flash();
+                }
+                this.music.onMoveToDiscard();
+                queue.moveToDiscardPile(this.music);
             }
-
-            queue.empower(this.music);
-            this.isDone = true;
-            CardGroup hand = CardsHelper.h();
-            hand.applyPowers();
-            hand.glowCheck();
-            DungeonHelper.getPlayer().cardInUse = null;
-            return;
-        }
-        if (this.music.purgeOnUse) {
-            AbstractDungeon.effectList.add(new ExhaustCardEffect(this.music));
-            DungeonHelper.getPlayer().cardInUse = null;
-            this.isDone = true;
-            return;
-        }
-        boolean spoonProc = false;
-        if (this.exhaustCard && DungeonHelper.getPlayer().hasRelic("Strange Spoon")) {
-            spoonProc = AbstractDungeon.cardRandomRng.randomBoolean();
-        }
-        if (this.exhaustCard && !spoonProc) {
-            this.music.triggerOnExhaust();
-            queue.moveToExhaustPile(this.music);
-            CardCrawlGame.dungeon.checkForPactAchievement();
-        } else {
-            if (spoonProc) {
-                DungeonHelper.getPlayer().getRelic("Strange Spoon").flash();
-            }
-            this.music.onMoveToDiscard();
-            queue.moveToDiscardPile(this.music);
         }
         this.addToBot(new UnlimboAction(music));
         this.isDone = true;

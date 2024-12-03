@@ -33,6 +33,6 @@ public class Haruhikage_CryChic extends AbstractMusic {
     @Override
     public void interruptReady() {
         this.isInterrupt = true;
-        this.addToTop(new PlayerPlayedMusicAction(this));
+        this.addToTop(new PlayerPlayedMusicAction(this,true));
     }
 }
