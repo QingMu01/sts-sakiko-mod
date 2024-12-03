@@ -23,7 +23,7 @@ public class Angles extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(3, 1, 1, 1);
+        this.initMusicAttr(3, 1, 2, 0);
     }
 
     @Override

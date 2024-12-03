@@ -24,7 +24,7 @@ public class CardPoolsPatch {
         ArrayList<AbstractCard> musicCards = new ArrayList<>(BaseMod.getCustomCardsToAdd());
         musicCards.removeIf(card -> !(card instanceof AbstractMusic));
         musicCards.removeIf(card -> card.rarity == SakikoEnum.CardRarityEnum.MUSIC_BASIC || card.rarity == SakikoEnum.CardRarityEnum.MUSIC_SPECIAL);
-        if (DungeonHelper.isSakiko()) {
+        if (DungeonHelper.isSakiko() && SakikoModCore.SAKIKO_CONFIG.getBool("enableMoonLightRoguelike")) {
             ArrayList<AbstractCard> moonlight = new ArrayList<>();
             Random random = new Random(Settings.seed);
             while (moonlight.size() < 2) {

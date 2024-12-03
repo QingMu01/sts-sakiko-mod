@@ -18,7 +18,7 @@ public class AshPower extends AbstractSakikoPower {
     private static final String path128 = "SakikoModResources/img/powers/Blocked128.png";
 
     public AshPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.DEBUFF);
 
         this.owner = owner;
         this.amount = amount;

@@ -25,7 +25,7 @@ public class Topic extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
 
         this.initBaseAttr(-2, 0, 0, amount * 10);
-        this.setUpgradeAttr(-2, 0, 0, amount * 15);
+        this.setUpgradeAttr(-2, 0, 0, 10);
     }
 
     public Topic() {

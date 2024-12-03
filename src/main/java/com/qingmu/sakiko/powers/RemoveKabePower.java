@@ -14,10 +14,8 @@ public class RemoveKabePower extends AbstractSakikoPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     public RemoveKabePower(AbstractCreature owner) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
+        super(POWER_ID, NAME, -1, owner, PowerType.DEBUFF);
 
-        this.owner = owner;
-        this.amount = -1;
         this.priority = 99;
     }
 

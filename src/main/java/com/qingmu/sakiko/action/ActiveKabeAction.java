@@ -32,8 +32,10 @@ public class ActiveKabeAction extends AbstractGameAction {
         AbstractPower power = this.target.getPower(KokoroNoKabePower.POWER_ID);
         this.addToTop(new GainBlockAction(this.target, this.target, powerAmount));
         if (!this.isFree) {
-            if (this.target.hasPower(HaruhikagePower.POWER_ID)) {
-                this.target.getPower(HaruhikagePower.POWER_ID).flash();
+            if (this.target.hasPower(HaruhikagePower.POWER_ID + false)) {
+                this.target.getPower(HaruhikagePower.POWER_ID + false).flash();
+            } else if (this.target.hasPower(HaruhikagePower.POWER_ID + true)) {
+                this.target.getPower(HaruhikagePower.POWER_ID + true).flash();
             } else {
                 this.addToBot(new ReducePowerAction(this.target, this.target, power, power.amount / 2));
             }

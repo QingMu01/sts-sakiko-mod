@@ -20,10 +20,8 @@ public class LeaderPower extends AbstractSakikoPower {
     private static final String path128 = "SakikoModResources/img/powers/LeaderPower128.png";
 
     public LeaderPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.amountLimit = SakikoConst.MUSIC_QUEUE_LIMIT_USED;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

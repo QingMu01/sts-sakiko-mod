@@ -18,7 +18,7 @@ public class Expose_RAS extends AbstractMusic {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.ENCORE);
 
-        this.initMusicAttr(2, 0);
+        this.initMusicAttr(3, 2);
     }
 
     @Override
@@ -36,13 +36,5 @@ public class Expose_RAS extends AbstractMusic {
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
         this.addToBot(new GainBlockAction(this.m_source, this.block));
-
-    }
-
-    @Override
-    public void triggerOnInterrupt() {
-        if (this.upgraded){
-            this.addToBot(new GainBlockAction(this.m_source, this.block));
-        }
     }
 }

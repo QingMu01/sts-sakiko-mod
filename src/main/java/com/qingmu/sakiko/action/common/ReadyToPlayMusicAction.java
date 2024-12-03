@@ -15,7 +15,6 @@ import com.qingmu.sakiko.cards.AbstractMusic;
 import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.ObliviousModifier;
 import com.qingmu.sakiko.modifier.RememberModifier;
-import com.qingmu.sakiko.patch.filed.MusicBattleFiledPatch;
 import com.qingmu.sakiko.utils.CardsHelper;
 import com.qingmu.sakiko.utils.DungeonHelper;
 import org.apache.logging.log4j.LogManager;
@@ -48,7 +47,7 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
     }
 
     public ReadyToPlayMusicAction(int amount, AbstractCreature source, boolean isTurnEnd) {
-        this.queue = MusicBattleFiledPatch.MusicQueue.musicQueue.get(source);
+        this.queue = CardsHelper.mq(source);
         this.source = source;
         this.amount = Math.min(amount, this.queue.size());
         this.isTurnEnd = isTurnEnd;
@@ -71,7 +70,9 @@ public class ReadyToPlayMusicAction extends AbstractGameAction {
             this.isDone = true;
             return;
         }
-        this.queue.group.sort(Comparator.comparing(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
+        if (!this.isTurnEnd) {
+            this.queue.group.sort(Comparator.comparing(card -> card.hasTag(SakikoEnum.CardTagEnum.ENCORE)));
+        }
         AbstractMusic music = (AbstractMusic) this.queue.getBottomCard();
         this.queue.removeCard(music);
         music.triggerOnExitQueue();

@@ -20,10 +20,8 @@ public class IdealFukkenPower extends AbstractSakikoPower {
     private static final String path128 = "SakikoModResources/img/powers/Fukken128.png";
 
     public IdealFukkenPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.amountLimit = 100;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

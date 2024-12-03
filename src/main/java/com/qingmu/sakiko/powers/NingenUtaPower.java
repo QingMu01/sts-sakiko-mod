@@ -20,10 +20,7 @@ public class NingenUtaPower extends AbstractSakikoPower {
     private Set<String> applied = new HashSet<>();
 
     public NingenUtaPower(AbstractCreature owner) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = -1;
+        super(POWER_ID, NAME, -1, owner, PowerType.BUFF);
 
         this.loadRegion("hymn");
     }

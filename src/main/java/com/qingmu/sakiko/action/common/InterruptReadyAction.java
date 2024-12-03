@@ -32,6 +32,8 @@ public class InterruptReadyAction extends AbstractGameAction {
         } else {
             musicQueue.moveToDiscardPile(card);
         }
+        card.triggerOnExitQueue();
+
         card.interruptReady();
         for (AbstractPower power : this.target.powers) {
             if (power instanceof TriggerOnInterrupt) {

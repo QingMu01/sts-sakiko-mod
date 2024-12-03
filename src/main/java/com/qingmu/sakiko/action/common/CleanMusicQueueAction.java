@@ -43,6 +43,7 @@ public class CleanMusicQueueAction extends AbstractGameAction {
         while (iterator.hasNext()) {
             AbstractMusic card = (AbstractMusic) iterator.next();
             iterator.remove();
+            card.triggerOnExitQueue();
             if (this.isExhaust) {
                 cardGroup.moveToExhaustPile(card);
             } else {

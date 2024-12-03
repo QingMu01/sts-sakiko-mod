@@ -19,10 +19,7 @@ public class FallApartPower extends AbstractSakikoPower {
     private static final String path128 = "SakikoModResources/img/powers/FallApartPower128.png";
 
     public FallApartPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.DEBUFF);
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);

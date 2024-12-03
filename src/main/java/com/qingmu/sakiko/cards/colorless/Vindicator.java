@@ -34,7 +34,7 @@ public class Vindicator extends AbstractSakikoCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.addToBot(new VFXAction(new WeightyImpactEffect(DungeonHelper.getPlayer().hb.cX, DungeonHelper.getPlayer().hb.cY, DungeonHelper.getPlayer().getSlashAttackColor())));
+        this.addToBot(new VFXAction(new WeightyImpactEffect(m.hb.cX, m.hb.cY, DungeonHelper.getPlayer().getSlashAttackColor())));
         this.addToBot(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn)));
     }
 }

@@ -26,10 +26,7 @@ public class StiffPower extends AbstractSakikoPower implements ModifyBlockLastWi
     private static final String path128 = "SakikoModResources/img/powers/StiffPower128.png";
 
     public StiffPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.DEBUFF);
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
@@ -37,7 +34,7 @@ public class StiffPower extends AbstractSakikoPower implements ModifyBlockLastWi
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + (100.0f / Math.pow(2, this.amount)) + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
     @Override

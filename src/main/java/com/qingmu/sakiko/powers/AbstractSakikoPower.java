@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.powers.AbstractPower;
@@ -19,20 +20,21 @@ public abstract class AbstractSakikoPower extends AbstractPower {
     private final Color redColor = new Color(1.0F, 0.0F, 0.0F, 1.0F);
     private final Color greenColor = new Color(0.0F, 1.0F, 0.0F, 1.0F);
 
-    public AbstractSakikoPower(String id, String name, PowerType type) {
+    public AbstractSakikoPower(String id, String name, int amount, AbstractCreature owner, PowerType type) {
         this.ID = id;
         this.name = name;
         this.type = type;
+        this.amount = amount;
+        this.owner = owner;
 
         this.region48 = new TextureAtlas.AtlasRegion(FontBitmapHelper.getFontBitmap(this.name.charAt(0), FontBitmapHelper.Size.SMALL), 0, 0, 48, 48);
         this.region128 = new TextureAtlas.AtlasRegion(FontBitmapHelper.getFontBitmap(this.name.charAt(0), FontBitmapHelper.Size.LARGE), 0, 0, 128, 128);
 
         this.updateDescription();
-
     }
 
-    public AbstractSakikoPower(String id, String name, PowerType type, PowerType type2) {
-        this(id, name, type);
+    public AbstractSakikoPower(String id, String name, int amount, AbstractCreature owner, PowerType type, PowerType type2) {
+        this(id, name, amount, owner, type);
         this.type2 = type2;
     }
 

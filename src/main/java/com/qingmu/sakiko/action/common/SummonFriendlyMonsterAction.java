@@ -63,10 +63,10 @@ public class SummonFriendlyMonsterAction extends AbstractGameAction {
             float targetX;
             float targetY;
             if (slot == 0) {
-                targetX = this.CPX(DungeonHelper.getPlayer().hb_w + PADDING_X);
+                targetX = this.CPX(DungeonHelper.getPlayer().hb_w);
                 targetY = 0;
             } else {
-                targetX = this.CPX(DungeonHelper.getPlayer().hb_w * ((float) slot - 1.75f) + PADDING_X * slot);
+                targetX = this.CPX(DungeonHelper.getPlayer().hb_w * ((float) slot - 1.75f) + PADDING_X);
                 targetY = this.CPY(DungeonHelper.getPlayer().hb_h + PADDING_Y);
             }
             if (this.useAnimation) {
@@ -114,8 +114,8 @@ public class SummonFriendlyMonsterAction extends AbstractGameAction {
 
     private float CPX(float padding) {
         float a = DungeonHelper.getPlayer().drawX;
-        float b = Settings.WIDTH * 0.75F * Settings.xScale;
-        return -Math.abs(a - b + padding) / Settings.xScale;
+        float b = Settings.WIDTH * 0.75F - padding * Settings.xScale;
+        return -Math.abs(a - b) / Settings.xScale;
     }
 
     private float CPY(float padding) {

@@ -43,7 +43,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
 
     public PlayerPlayedMusicAction(AbstractMusic music, boolean isInterrupt) {
         this.music = music;
-        this.isInterrupt = true;
+        this.isInterrupt = isInterrupt;
         this.source = music.m_source == null ? DungeonHelper.getPlayer() : music.m_source;
         this.target = music.m_target;
         if (music.exhaustOnUseOnce || music.exhaust || CardModifierManager.hasModifier(this.music, ObliviousModifier.ID) || this.music.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS_FLAG)) {
@@ -140,7 +140,7 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
         }
         CardGroup queue = CardsHelper.dsp();
         if (this.isInterrupt && queue.contains(this.music)) {
-            this.music.triggerOnExitQueue();
+            this.addToBot(new UnlimboAction(music));
             // 处理回忆赋予的移除
             if (CardModifierManager.hasModifier(this.music, RememberModifier.ID)) {
                 logger.info("remove music card :{}", this.music);
@@ -203,7 +203,6 @@ public class PlayerPlayedMusicAction extends AbstractGameAction {
                 queue.moveToDiscardPile(this.music);
             }
         }
-        this.addToBot(new UnlimboAction(music));
         this.isDone = true;
     }
 }

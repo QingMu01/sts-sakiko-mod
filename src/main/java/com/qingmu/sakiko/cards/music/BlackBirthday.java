@@ -3,6 +3,7 @@ package com.qingmu.sakiko.cards.music;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.qingmu.sakiko.action.common.DamageCallbackAction;
 import com.qingmu.sakiko.action.common.PlayerPlayedMusicAction;
 import com.qingmu.sakiko.cards.AbstractMusic;
@@ -31,6 +32,22 @@ public class BlackBirthday extends AbstractMusic {
         this.initMusicAttr(6, 4);
         this.setExhaust(true, true);
     }
+
+    @Override
+    public void applyPowers() {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.applyPowers();
+        this.isDamageModified = (this.musicNumber != this.baseMusicNumber);
+    }
+
+    @Override
+    public void calculateCardDamage(AbstractMonster mo) {
+        this.applyPowersToMusicNumber();
+        this.baseDamage = this.musicNumber;
+        super.calculateCardDamage(mo);
+    }
+
 
     @Override
     public void play() {

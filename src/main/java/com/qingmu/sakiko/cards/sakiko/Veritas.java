@@ -23,7 +23,7 @@ public class Veritas extends AbstractSakikoCard implements CustomSavable<Integer
 
     public Veritas() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 14, 0, 2);
+        this.initBaseAttr(2, 15, 0, 3);
         this.setUpgradeAttr(2, 0, 0, 2);
     }
 

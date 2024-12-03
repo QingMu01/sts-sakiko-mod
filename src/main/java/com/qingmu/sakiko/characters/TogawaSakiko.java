@@ -19,8 +19,11 @@ import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
+import com.qingmu.sakiko.SakikoModCore;
 import com.qingmu.sakiko.cards.sakiko.TwoInOne;
 import com.qingmu.sakiko.constant.ColorHelp;
+import com.qingmu.sakiko.constant.SakikoConst;
+import com.qingmu.sakiko.constant.SakikoEnum;
 import com.qingmu.sakiko.modifier.MoonLightModifier;
 import com.qingmu.sakiko.patch.filed.MoonLightCardsFiled;
 import com.qingmu.sakiko.relics.ClassicPiano;
@@ -205,21 +208,25 @@ public class TogawaSakiko extends CustomPlayer {
 
     @Override
     public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> tmpPool) {
-        ArrayList<AbstractCard> cardPool = super.getCardPool(tmpPool);
+        if (SakikoModCore.SAKIKO_CONFIG.getBool("enableMoonLightRoguelike")) {
+            ArrayList<AbstractCard> cardPool = super.getCardPool(tmpPool);
 
-        Random random = new Random(Settings.seed);
+            Random random = new Random(Settings.seed);
 
-        // 攻击牌两张
-        List<AbstractCard> attack = getCardsByType(cardPool, AbstractCard.CardType.ATTACK, random);
-        // 技能牌两张
-        List<AbstractCard> skill = getCardsByType(cardPool, AbstractCard.CardType.SKILL, random);
-        // 能力牌一张
-        List<AbstractCard> power = getCardsByType(cardPool, AbstractCard.CardType.POWER, random);
+            // 攻击牌两张
+            List<AbstractCard> attack = getCardsByType(cardPool, AbstractCard.CardType.ATTACK, random);
+            // 技能牌两张
+            List<AbstractCard> skill = getCardsByType(cardPool, AbstractCard.CardType.SKILL, random);
+            // 能力牌一张
+            List<AbstractCard> power = getCardsByType(cardPool, AbstractCard.CardType.POWER, random);
 
-        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(attack);
-        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(skill);
-        MoonLightCardsFiled.moonLightPool.get(this).group.addAll(power);
-        return cardPool;
+            MoonLightCardsFiled.moonLightPool.get(this).group.addAll(attack);
+            MoonLightCardsFiled.moonLightPool.get(this).group.addAll(skill);
+            MoonLightCardsFiled.moonLightPool.get(this).group.addAll(power);
+            return cardPool;
+        } else {
+            return super.getCardPool(tmpPool);
+        }
     }
 
     public void switchMask(boolean isMask) {
@@ -244,7 +251,7 @@ public class TogawaSakiko extends CustomPlayer {
             ArrayList<AbstractCard> tmp = new ArrayList<>();
             while (tmp.size() < 2) {
                 AbstractCard card = typeCards.get(random.random(typeCards.size() - 1));
-                if (!tmp.contains(card)) {
+                if (!tmp.contains(card) && !card.hasTag(SakikoEnum.CardTagEnum.OBLIVIOUS) && !card.keywords.contains(SakikoConst.KEYWORD_PLAYER) && !card.keywords.contains(SakikoConst.KEYWORD_CREATOR)) {
                     if (!CardModifierManager.hasModifier(card, MoonLightModifier.ID)) {
                         CardModifierManager.addModifier(card, new MoonLightModifier(false));
                     }

@@ -25,10 +25,8 @@ public class AnonDasuruPower extends AbstractSakikoPower {
     private AbstractCreature source;
 
     public AnonDasuruPower(AbstractCreature owner, AbstractCreature source, int amount) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.DEBUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.source = source;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

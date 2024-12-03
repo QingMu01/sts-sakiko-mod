@@ -22,10 +22,8 @@ public class HaruhikagePower extends AbstractSakikoPower implements ModifiedMusi
     private boolean isInterrupt;
 
     public HaruhikagePower(AbstractCreature owner, int amount, boolean isInterrupt) {
-        super(POWER_ID + isInterrupt, NAME, PowerType.BUFF);
+        super(POWER_ID + isInterrupt, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.isInterrupt = isInterrupt;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
@@ -35,7 +33,7 @@ public class HaruhikagePower extends AbstractSakikoPower implements ModifiedMusi
     @Override
     public void updateDescription() {
         this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
-        if (isInterrupt){
+        if (isInterrupt) {
             this.description += DESCRIPTIONS[2];
         }
     }

@@ -19,8 +19,8 @@ public class Disguise extends AbstractSakikoCard {
 
     public Disguise() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 6, 1);
-        this.setUpgradeAttr(1, 0, 3, 1);
+        this.initBaseAttr(1, 0, 8, 1);
+        this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override

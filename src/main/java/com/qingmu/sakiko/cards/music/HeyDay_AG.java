@@ -20,7 +20,7 @@ public class HeyDay_AG extends AbstractMusic {
 
     public HeyDay_AG() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(2, 2);
+        this.initMusicAttr(2, 2, 1, 1);
         this.setExhaust(true, true);
     }
 
@@ -39,7 +39,7 @@ public class HeyDay_AG extends AbstractMusic {
         if (this.amount > 0) {
             this.amount--;
             AbstractMonster target = AbstractDungeon.getRandomMonster();
-            this.addToTop(new ApplyPowerAction(this.m_source, target, new StrengthPower(target, -1), -1));
+            this.addToTop(new ApplyPowerAction(this.m_source, target, new StrengthPower(target, -this.magicNumber), -this.magicNumber));
         }
     }
 }

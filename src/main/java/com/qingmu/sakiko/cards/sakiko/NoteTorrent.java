@@ -25,8 +25,8 @@ public class NoteTorrent extends AbstractSakikoCard {
 
     public NoteTorrent() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(0, 6, 0, 2);
-        this.setUpgradeAttr(0, 0, 0, 2);
+        this.initBaseAttr(0, 6, 0, 0);
+        this.setUpgradeAttr(0, 3, 0, 0);
     }
 
     @Override

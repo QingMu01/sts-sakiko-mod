@@ -23,8 +23,7 @@ public class AveMujica extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(CardTags.HEALING);
 
-        this.initMusicAttr(20, 30, 10, 15);
-        this.setExhaust(true, true);
+        this.initMusicAttr(20, 30, 10, 1);
     }
 
     @Override

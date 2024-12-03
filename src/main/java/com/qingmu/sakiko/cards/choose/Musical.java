@@ -24,7 +24,7 @@ public class Musical extends AbstractSakikoCard {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
 
         this.initBaseAttr(-2, 0, 0, amount);
-        this.setUpgradeAttr(-2, 0, 0, amount + 1);
+        this.setUpgradeAttr(-2, 0, 0, 1);
     }
 
     public Musical() {

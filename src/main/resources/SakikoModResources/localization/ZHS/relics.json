@@ -24,19 +24,19 @@
     "NAME": "便携音响",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "战斗开始时，从歌单中抽一张牌。"
+      "回合开始时，从歌单中抽一张牌。"
     ]
   },
   "SakikoMod:NoteBook": {
     "NAME": "奇怪的笔记本",
     "FLAVOR": "花，也是有生命的呢。",
     "DESCRIPTIONS": [
-      "战斗开始时，获得 3 层 #y闪耀 。"
+      "战斗开始时，获得 3 点闪耀 。"
     ]
   },
   "SakikoMod:OctopusSakiko": {
     "NAME": "翻面章鱼",
-    "FLAVOR": "为什么都说这个玩偶像我desuwa！",
+    "FLAVOR": "我可不是章鱼desuwa！",
     "DESCRIPTIONS": [
       "奇数回合的首次 #y演奏 使你抽 #b2 张牌。偶数回合的首次 #y演奏 使你获得 [E] 。"
     ]
@@ -52,14 +52,14 @@
     "NAME": "睦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。若叶睦能力的象征，战斗开始时获得 #b1 点 #y复权 。"
+      "这件遗物视为一位 #y队友 。若叶睦能力的象征，战斗开始时获得 #b1 点 #y复权 与 #b1 点 #y闪耀 。"
     ]
   },
   "SakikoMod:Nyamuchi": {
     "NAME": "若麦的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。祐天寺若麦能力的象征，战斗开始时获得 #b1 点 #y复权 。"
+      "这件遗物视为一位 #y队友 。祐天寺若麦能力的象征，战斗开始时获得 #b2 点 #y复权 。"
     ]
   },
   "SakikoMod:Uika": {
@@ -73,7 +73,7 @@
     "NAME": "海铃的玩偶",
     "FLAVOR": "",
     "DESCRIPTIONS": [
-      "这件遗物视为一位 #y队友 。八幡海铃能力的象征，战斗开始时获得 #b1 点 #y复权 。"
+      "这件遗物视为一位 #y队友 。八幡海铃能力的象征，战斗开始时获得 #b2 点 #y复权 。"
     ]
   },
   "SakikoMod:Tomori": {

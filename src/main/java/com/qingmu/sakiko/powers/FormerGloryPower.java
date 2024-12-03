@@ -20,11 +20,8 @@ public class FormerGloryPower extends AbstractSakikoPower implements TriggerOnPl
     private static final String path128 = "SakikoModResources/img/powers/FormerGloryPower128.png";
 
     public FormerGloryPower(AbstractCreature owner) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = -1;
-
+        super(POWER_ID, NAME, -1, owner, PowerType.BUFF);
+        
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);
     }

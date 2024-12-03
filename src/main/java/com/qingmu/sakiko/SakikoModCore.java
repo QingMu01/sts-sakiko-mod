@@ -109,6 +109,7 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
             Properties defaults = new Properties();
             defaults.setProperty("enableAnonCard", Boolean.toString(false));
             defaults.setProperty("enableBoss", Boolean.toString(false));
+            defaults.setProperty("enableMoonLightRoguelike", Boolean.toString(true));
             defaults.setProperty("ascensionUnlock", Boolean.toString(false));
             defaults.setProperty("modSound", Float.toString(1.00f));
             SAKIKO_CONFIG = new SpireConfig("SakikoMod", "Common", defaults);
@@ -345,6 +346,17 @@ public class SakikoModCore implements EditCardsSubscriber, EditRelicsSubscriber,
         });
         ascensionUnlock.tooltip = config.EXTRA_TEXT[1];
         modPanel.addUIElement(ascensionUnlock);
+        ModLabeledToggleButton enableMoonLightRoguelike = new ModLabeledToggleButton(config.TEXT[5], 390.0f, 470.0f, Color.WHITE, FontHelper.buttonLabelFont, SAKIKO_CONFIG.getBool("enableMoonLightRoguelike"), modPanel, (modLabel) -> {
+        }, (modToggleButton) -> {
+            SAKIKO_CONFIG.setBool("enableMoonLightRoguelike", modToggleButton.enabled);
+            try {
+                SAKIKO_CONFIG.save();
+            } catch (IOException e) {
+                logger.error(e);
+            }
+        });
+        enableMoonLightRoguelike.tooltip = config.EXTRA_TEXT[2];
+        modPanel.addUIElement(enableMoonLightRoguelike);
         BaseMod.registerModBadge(new Texture("SakikoModResources/img/sakikomod_badge32.png"), "sakikoMod", "QingMu", "sakikoMod", modPanel);
     }
 

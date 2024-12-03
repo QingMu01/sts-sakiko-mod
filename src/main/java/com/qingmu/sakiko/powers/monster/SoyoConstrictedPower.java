@@ -23,11 +23,8 @@ public class SoyoConstrictedPower extends AbstractSakikoPower {
     public AbstractCreature source;
 
     public SoyoConstrictedPower(AbstractCreature target, AbstractCreature source, int fadeAmt) {
-        super(POWER_ID, NAME, PowerType.DEBUFF);
+        super(POWER_ID, NAME, fadeAmt, target, PowerType.DEBUFF);
 
-        this.owner = target;
-        this.source = source;
-        this.amount = fadeAmt;
         this.priority = 105;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

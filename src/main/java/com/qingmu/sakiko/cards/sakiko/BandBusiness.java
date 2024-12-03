@@ -34,7 +34,8 @@ public class BandBusiness extends AbstractSakikoCard {
 
     @Override
     public void triggerOnPlayMusic(AbstractMusic music) {
-        if (CardsHelper.h().contains(this) && !CardsHelper.mq().isEmpty() && this.isEnabled) {
+        if (CardsHelper.h().contains(this) && this.isEnabled) {
+            this.isEnabled = false;
             this.addToBot(new GainEnergyAction(this.magicNumber));
             this.addToBot(new DiscardSpecificCardAction(this));
         }

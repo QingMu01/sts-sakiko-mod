@@ -82,8 +82,10 @@ public class UseMusicCardActionPatch {
                 if (___targetCard.hasTag(SakikoEnum.CardTagEnum.IMMEDIATELY_FLAG)) {
                     if (CardModifierManager.hasModifier(___targetCard, ImmediatelyPlayModifier.ID))
                         CardModifierManager.removeModifiersById(___targetCard, ImmediatelyPlayModifier.ID, false);
+                    if (___targetCard.hasTag(SakikoEnum.CardTagEnum.MUSIC_POWER)){
+                        ___targetCard.type = AbstractCard.CardType.POWER;
+                    }
                     if (!___targetCard.hasTag(SakikoEnum.CardTagEnum.ENCORE)){
-                        __instance.isDone = true;
                         ActionHelper.actionToBot(new PlayerPlayedMusicAction((AbstractMusic) ___targetCard));
                         return SpireReturn.Continue();
                     }

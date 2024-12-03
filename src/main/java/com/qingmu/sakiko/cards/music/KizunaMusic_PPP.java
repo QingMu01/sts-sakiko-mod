@@ -18,7 +18,7 @@ public class KizunaMusic_PPP extends AbstractMusic {
 
     public KizunaMusic_PPP() {
         super(ID, IMG_PATH, RARITY, TARGET);
-        this.initMusicAttr(2, 1, 2, 1);
+        this.initMusicAttr(3, 0, 2, 1);
     }
 
     @Override

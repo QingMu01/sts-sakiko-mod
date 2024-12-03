@@ -28,7 +28,12 @@ public class NoteBook extends AbstractSakikoRelic {
     @Override
     public void atBattleStart() {
         this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
-        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new KirameiPower(DungeonHelper.getPlayer(), 3)));
+        this.addToBot(new ApplyPowerAction(DungeonHelper.getPlayer(), DungeonHelper.getPlayer(), new KirameiPower(DungeonHelper.getPlayer(), 3 + this.amount), 3 + this.amount));
+    }
+
+    @Override
+    public void onEquip() {
+        this.amount = 0;
     }
 
     @Override

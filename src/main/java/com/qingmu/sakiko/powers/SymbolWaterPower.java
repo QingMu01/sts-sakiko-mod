@@ -10,16 +10,13 @@ import com.qingmu.sakiko.utils.ModNameHelper;
 
 public class SymbolWaterPower extends AbstractSakikoPower {
 
-    public static final String POWER_ID = ModNameHelper.make(HolyHymnPower.class.getSimpleName());
+    public static final String POWER_ID = ModNameHelper.make(SymbolWaterPower.class.getSimpleName());
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     private static final String NAME = powerStrings.NAME;
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     public SymbolWaterPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
         this.loadRegion("like_water");
     }

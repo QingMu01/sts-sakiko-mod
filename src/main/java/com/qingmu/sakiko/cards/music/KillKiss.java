@@ -24,7 +24,7 @@ public class KillKiss extends AbstractMusic {
         this.tags.add(SakikoEnum.CardTagEnum.AVE_MUJICA);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(4, 2, 3, 1);
+        this.initMusicAttr(6, 3, 3, 1);
     }
 
     @Override

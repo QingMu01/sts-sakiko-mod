@@ -18,13 +18,16 @@ public class Mujina extends AbstractSakikoCard {
 
     public Mujina() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 0, 8, 1);
+        this.initBaseAttr(1, 0, 7, 1);
         this.setUpgradeAttr(1, 0, 0, 1);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        this.submitActionsToBot(new GainBlockAction(p, p, this.block), new MujinaAction(p, this.block, this.magicNumber));
+        for (int i = 0; i < this.magicNumber; i++) {
+            this.addToBot(new GainBlockAction(p, p, this.block, true));
+        }
+        this.addToBot(new MujinaAction(p, this.block, 1));
     }
 
 }

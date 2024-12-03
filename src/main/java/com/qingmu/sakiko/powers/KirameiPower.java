@@ -20,10 +20,8 @@ public class KirameiPower extends AbstractSakikoPower implements ModifiedMusicNu
     private static final String path128 = "SakikoModResources/img/powers/Kiramei128.png";
 
     public KirameiPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.canGoNegative = true;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

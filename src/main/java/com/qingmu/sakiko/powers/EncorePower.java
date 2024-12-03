@@ -26,13 +26,11 @@ public class EncorePower extends AbstractSakikoPower {
     private static final String path128 = "SakikoModResources/img/powers/EncorePower128.png";
 
     private int residue = 0;
-    private boolean isSourceMember = false;
+    private boolean isSourceMember;
 
     public EncorePower(AbstractCreature owner, int amount, boolean isSourceMember) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.isSourceMember = isSourceMember;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
@@ -42,16 +40,6 @@ public class EncorePower extends AbstractSakikoPower {
     @Override
     public void updateDescription() {
         this.description = DESCRIPTIONS[0];
-    }
-
-    @Override
-    public void onInitialApplication() {
-        DungeonHelper.getPlayer().gameHandSize -= 2;
-    }
-
-    @Override
-    public void onRemove() {
-        DungeonHelper.getPlayer().gameHandSize += 2;
     }
 
     @Override
@@ -65,18 +53,29 @@ public class EncorePower extends AbstractSakikoPower {
     }
 
     @Override
+    public void atStartOfTurn() {
+        if (!this.isSourceMember) {
+            DungeonHelper.getPlayer().gameHandSize -= 2;
+        }
+    }
+
+    @Override
     public void atStartOfTurnPostDraw() {
         if (this.isSourceMember) {
             this.isSourceMember = false;
-        } else
+        } else {
             this.reducePower(1);
+            DungeonHelper.getPlayer().gameHandSize += 2;
+        }
     }
 
     @Override
     public void onEnergyRecharge() {
-        this.flash();
-        int i = (DungeonHelper.getPlayer().energy.energyMaster - 1);
-        this.addToTop(new LoseEnergyAction(i));
-        this.addToTop(new GainEnergyAction(this.residue));
+        if (!this.isSourceMember) {
+            this.flash();
+            int i = (DungeonHelper.getPlayer().energy.energyMaster - 1);
+            this.addToTop(new LoseEnergyAction(i));
+            this.addToTop(new GainEnergyAction(this.residue));
+        }
     }
 }

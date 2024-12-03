@@ -20,12 +20,10 @@ public class SekaikanPower extends AbstractSakikoPower {
 
     private boolean isUpgrade;
 
-    public SekaikanPower(AbstractCreature owner, int amount,boolean isUpgrade) {
-        super(POWER_ID + isUpgrade, NAME, PowerType.BUFF);
+    public SekaikanPower(AbstractCreature owner, int amount, boolean isUpgrade) {
+        super(POWER_ID + isUpgrade, NAME, amount, owner, PowerType.BUFF);
 
         this.isUpgrade = isUpgrade;
-        this.owner = owner;
-        this.amount = amount;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);

@@ -19,7 +19,7 @@ public class MujinaAction extends AbstractGameAction {
         int count = MemberHelper.getCount();
         if (count >= 4 || MemberHelper.hasBandRelic()) {
             for (int i = 0; i < this.times; i++) {
-                this.addToBot(new GainBlockAction(this.source, this.source, this.amount));
+                this.addToBot(new GainBlockAction(this.source, this.source, this.amount, true));
             }
         }
         this.isDone = true;

@@ -23,7 +23,7 @@ public class WalkThrough extends AbstractSakikoCard {
 
     public WalkThrough() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 6, 0, 1);
+        this.initBaseAttr(1, 7, 0, 1);
         this.setUpgradeAttr(1, 2, 0, 1);
     }
 

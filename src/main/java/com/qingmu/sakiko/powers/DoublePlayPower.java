@@ -20,10 +20,7 @@ public class DoublePlayPower extends AbstractSakikoPower implements TriggerOnPla
     private static final String path128 = "SakikoModResources/img/powers/DoublePlayPower128.png";
 
     public DoublePlayPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);

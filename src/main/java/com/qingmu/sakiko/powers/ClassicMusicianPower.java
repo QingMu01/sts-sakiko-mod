@@ -33,10 +33,7 @@ public class ClassicMusicianPower extends AbstractSakikoPower {
     private final List<AbstractMusic> usedMusicCardThisTurn;
 
     public ClassicMusicianPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
         this.region48 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path48), 0, 0, 48, 48);

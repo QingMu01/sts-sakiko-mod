@@ -25,10 +25,8 @@ public class ResiliencePower extends AbstractSakikoPower {
     private int count = 0;
 
     public ResiliencePower(AbstractCreature owner, int amount, boolean justApplied) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.justApplied = justApplied;
 
         this.loadRegion("malleable");

@@ -22,7 +22,7 @@ public class SoloPlay extends AbstractSakikoCard {
 
     public SoloPlay() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 14, 0, 1);
+        this.initBaseAttr(2, 13, 0, 1);
         this.setUpgradeAttr(2, 0, 0, 1);
     }
 

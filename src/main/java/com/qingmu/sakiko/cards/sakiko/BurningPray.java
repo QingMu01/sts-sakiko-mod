@@ -19,8 +19,8 @@ public class BurningPray extends AbstractSakikoCard {
 
     public BurningPray() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(1, 6, 0, 12);
-        this.setUpgradeAttr(1, 0, 0, 6);
+        this.initBaseAttr(1, 8, 0, 12);
+        this.setUpgradeAttr(1, 4, 0, 6);
     }
 
     @Override

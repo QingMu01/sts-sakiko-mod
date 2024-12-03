@@ -14,10 +14,7 @@ public class EtherPower extends AbstractSakikoPower {
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     public EtherPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = amount;
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
         this.loadRegion("establishment");
     }

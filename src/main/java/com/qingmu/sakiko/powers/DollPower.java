@@ -28,10 +28,8 @@ public class DollPower extends AbstractSakikoPower implements ModifiedMusicNumbe
     private boolean isUsed = false;
 
     public DollPower(AbstractCreature owner, int amount) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, amount, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = amount;
         this.amountLimit = 10;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);
@@ -40,7 +38,7 @@ public class DollPower extends AbstractSakikoPower implements ModifiedMusicNumbe
 
     @Override
     public void updateDescription() {
-        this.description = DESCRIPTIONS[0] + (this.amount + 1) + DESCRIPTIONS[1];
+        this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
     }
 
     @Override

@@ -63,7 +63,8 @@
   },
   "SakikoMod:Mujina": {
     "NAME": "一丘之貉",
-    "DESCRIPTION": "获得 !B! 点 格挡 。如果你的乐队已成 ，额外获得 !M! 次。"
+    "DESCRIPTION": "获得 !B! 点 格挡 。如果你的乐队已成 ，额外获得1次。",
+    "UPGRADE_DESCRIPTION": "获得 !B! 点 格挡 !M! 次。如果你的乐队已成 ，额外获得1次。"
   },
   "SakikoMod:Countermeasures": {
     "NAME": "反制",
@@ -71,7 +72,7 @@
   },
   "SakikoMod:WalkThrough": {
     "NAME": "协同排练",
-    "DESCRIPTION": "造成 !D! 点伤害。每有一位队友，这张牌的伤害提高 !M! 点。 NL 进入 sakikomod:演奏者 。"
+    "DESCRIPTION": "造成 !D! 点伤害。每有一位 sakikomod:队友 ，这张牌的伤害提高 !M! 点。 NL 进入 sakikomod:演奏者 。"
   },
   "SakikoMod:UntouchableMemories": {
     "NAME": "无法触及的回忆",
@@ -79,7 +80,7 @@
   },
   "SakikoMod:Ensemble": {
     "NAME": "合奏",
-    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL （每有一位 sakikomod:队友 ，额外造成一次伤害）"
+    "DESCRIPTION": "对随机目标造成 !D! 点伤害 !M! 次。 NL （次数也受 sakikomod:队友 影响）"
   },
   "SakikoMod:Boomerang": {
     "NAME": "回旋镖",
@@ -159,7 +160,7 @@
   },
   "SakikoMod:FallApart": {
     "NAME": "分崩离析",
-    "DESCRIPTION": "你每有一位 sakikomod:队友 ，获得 !M! 层 sakikomod:心之壁 。接下来两个回合，队友不再发挥作用。 NL 消耗 。",
+    "DESCRIPTION": "你每有一位 sakikomod:队友 ，获得 !M! 层 sakikomod:心之壁 。接下来两个回合， *队友 不再发挥作用。 NL 消耗 。",
     "EXTENDED_DESCRIPTION": [
       " NL （获得 %d 层心之壁）"
     ]
@@ -373,7 +374,7 @@
   "SakikoMod:AveMujica": {
     "NAME": "Ave Mujica",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": "召唤一名队友与你共同作战，队友继承 !SakikoMod:MN! %生命值，怪物会优先攻击队友。 NL sakikomod:临场 ：所有队友获得 !M! 点 格挡 。",
+    "DESCRIPTION": "召唤一名继承你 !SakikoMod:MN! %当前生命值的 sakikomod:队友 共同作战，，怪物会优先攻击 *队友 。 NL sakikomod:临场 ：所有 *队友 获得 !M! 点 格挡 。",
     "EXTENDED_DESCRIPTION": [
       "我还没有找到队友。",
       "我的队友都被召唤了。"
@@ -382,7 +383,7 @@
   "SakikoMod:Angles": {
     "NAME": "Angles",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": "造成 !D! 点伤害 !M! 次。 NL sakikomod:临场 ：增加一次 sakikomod:演奏 时的攻击次数。 NL （次数也受队友影响）"
+    "DESCRIPTION": "造成 !D! 点伤害 !M! 次。 NL sakikomod:临场 ：增加一次 sakikomod:演奏 时的攻击次数。 NL （次数也受 sakikomod:队友 影响）"
   },
   "SakikoMod:BlackBirthday": {
     "NAME": "黑色生日",
@@ -413,7 +414,7 @@
   "SakikoMod:Utopia": {
     "NAME": "乌托邦",
     "MINI_TITLE": "AVE MUJICA",
-    "DESCRIPTION": "造成 !D! 点伤害，然后将伤害翻倍。翻倍次数不会超过队友数量。 NL sakikomod:临场 ：获得 [E] 。",
+    "DESCRIPTION": "造成 !D! 点伤害，然后将伤害翻倍。翻倍次数不会超过 sakikomod:队友 数量。 NL sakikomod:临场 ：获得 [E] 。",
     "EXTENDED_DESCRIPTION": [
       " NL （已翻倍 %d 次）"
     ]
@@ -431,7 +432,7 @@
   "SakikoMod:KizunaMusic_PPP": {
     "NAME": "Kizuna Music",
     "MINI_TITLE": "Poppin'Party!",
-    "DESCRIPTION": "获得 !B! 点 格挡 !M! 次。 NL （次数受队友影响）"
+    "DESCRIPTION": "获得 !B! 点 格挡 !M! 次。 NL （次数也受 sakikomod:队友 影响）"
   },
   "SakikoMod:StarBeat_PPP": {
     "NAME": "星之鼓动",
@@ -441,7 +442,7 @@
   "SakikoMod:HeyDay_AG": {
     "NAME": "Hey-Day随想曲",
     "MINI_TITLE": "Afterglow",
-    "DESCRIPTION": " sakikomod:安可曲 ，演奏后 消耗 NL 这张牌位于待演奏区时，接下来 !SakikoMod:MN! 次 sakikomod:演奏 ，使随机目标失去 1 点 力量 。"
+    "DESCRIPTION": " sakikomod:安可曲 ，演奏后 消耗 NL 这张牌位于待演奏区时，接下来 !SakikoMod:MN! 次 sakikomod:演奏 ，使随机目标失去 !M! 点 力量 。"
   },
   "SakikoMod:YOLO_AG": {
     "NAME": "Y.O.L.O.",
@@ -497,8 +498,7 @@
   "SakikoMod:Expose_RAS": {
     "NAME": "EXPOSE 'Burn out!!!'",
     "MINI_TITLE": "RAISE A SUILEN",
-    "DESCRIPTION": " sakikomod:安可曲 ，无演奏效果 NL 这张牌在待演奏区时，每次 sakikomod:演奏 时，获得 !B! 点格挡。",
-    "UPGRADE_DESCRIPTION": " sakikomod:安可曲 ，无演奏效果 NL 这张牌在待演奏区时，每次 sakikomod:演奏 或 sakikomod:临场 时，获得 !B! 点格挡。"
+    "DESCRIPTION": " sakikomod:安可曲 ，无演奏效果 NL 这张牌在待演奏区时，每次 sakikomod:演奏 时，获得 !B! 点格挡。"
   },
   "SakikoMod:SilhouetteDance_MYGO": {
     "NAME": "影色舞",
@@ -568,7 +568,7 @@
   },
   "SakikoMod:CP": {
     "NAME": "炒CP",
-    "DESCRIPTION": "召唤一名队友与你共同作战，队友继承 !M! %生命值，怪物会优先攻击队友。"
+    "DESCRIPTION": "召唤一名继承你 !M! %当前生命值的 sakikomod:队友 共同作战，怪物会优先攻击 *队友 。"
   },
   "SakikoMod:Musical": {
     "NAME": "炒音乐性",

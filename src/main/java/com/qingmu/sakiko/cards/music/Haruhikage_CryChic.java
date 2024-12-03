@@ -21,6 +21,8 @@ public class Haruhikage_CryChic extends AbstractMusic {
     public Haruhikage_CryChic() {
         super(ID, IMG_PATH, RARITY, TARGET);
 
+        this.tags.add(SakikoEnum.CardTagEnum.MUSIC_POWER);
+
         this.initMusicAttr(3, 1);
     }
 
@@ -33,6 +35,6 @@ public class Haruhikage_CryChic extends AbstractMusic {
     @Override
     public void interruptReady() {
         this.isInterrupt = true;
-        this.addToTop(new PlayerPlayedMusicAction(this,true));
+        this.addToTop(new PlayerPlayedMusicAction(this, true));
     }
 }

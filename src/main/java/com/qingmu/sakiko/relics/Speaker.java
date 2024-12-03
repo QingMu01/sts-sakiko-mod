@@ -25,7 +25,7 @@ public class Speaker extends AbstractSakikoRelic {
     }
 
     @Override
-    public void atBattleStart() {
+    public void atTurnStart() {
         this.addToBot(new RelicAboveCreatureAction(DungeonHelper.getPlayer(), this));
         this.addToBot(new DrawMusicAction(1));
     }

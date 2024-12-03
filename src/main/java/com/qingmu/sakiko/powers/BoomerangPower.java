@@ -24,10 +24,8 @@ public class BoomerangPower extends AbstractSakikoPower {
 
 
     public BoomerangPower(AbstractCreature owner, int damage) {
-        super(POWER_ID, NAME, PowerType.BUFF);
+        super(POWER_ID, NAME, damage, owner, PowerType.BUFF);
 
-        this.owner = owner;
-        this.amount = damage;
         this.amount2 = 1;
 
         this.region128 = new TextureAtlas.AtlasRegion(ImageMaster.loadImage(path128), 0, 0, 128, 128);

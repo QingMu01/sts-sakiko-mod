@@ -35,9 +35,9 @@ public class Band_AVEMUJICA extends AbstractSakikoRelic implements ModifiedMusic
     @Override
     public void triggerOnPlayMusicCard(AbstractMusic music) {
         if (CardsHelper.isMusic(music)) {
-            this.amount++;
-            if (this.amount >= 3) {
-                this.amount = 0;
+            this.counter++;
+            if (this.counter >= 3) {
+                this.counter = 0;
                 this.flash();
                 AbstractPlayer player = DungeonHelper.getPlayer();
                 this.addToBot(new RelicAboveCreatureAction(player, this));
@@ -62,6 +62,6 @@ public class Band_AVEMUJICA extends AbstractSakikoRelic implements ModifiedMusic
 
     @Override
     public void onEquip() {
-        this.amount = 0;
+        this.counter = 0;
     }
 }

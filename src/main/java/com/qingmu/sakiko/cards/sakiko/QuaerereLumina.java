@@ -22,8 +22,8 @@ public class QuaerereLumina extends AbstractSakikoCard {
 
     public QuaerereLumina() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 15, 0, 2);
-        this.setUpgradeAttr(2, 5, 0, 0);
+        this.initBaseAttr(2, 13, 0, 2);
+        this.setUpgradeAttr(2, 4, 0, 0);
     }
 
     @Override

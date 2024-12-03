@@ -13,10 +13,7 @@ public class MemberPower extends AbstractSakikoPower{
     private static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
 
     public MemberPower(AbstractCreature owner) {
-        super(POWER_ID, NAME, PowerType.BUFF);
-
-        this.owner = owner;
-        this.amount = -1;
+        super(POWER_ID, NAME, -1, owner, PowerType.BUFF);
 
         this.loadRegion("minion");
     }

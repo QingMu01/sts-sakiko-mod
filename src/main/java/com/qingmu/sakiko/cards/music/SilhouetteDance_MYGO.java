@@ -25,7 +25,7 @@ public class SilhouetteDance_MYGO extends AbstractMusic {
         super(ID, IMG_PATH, RARITY, TARGET);
         this.tags.add(SakikoEnum.CardTagEnum.MUSIC_ATTACK);
 
-        this.initMusicAttr(8, 4, 3, 2);
+        this.initMusicAttr(6, 0, 2, 1);
     }
 
     @Override

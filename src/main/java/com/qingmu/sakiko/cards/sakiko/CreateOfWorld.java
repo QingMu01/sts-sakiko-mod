@@ -23,7 +23,7 @@ public class CreateOfWorld extends AbstractSakikoCard implements TriggerOnOblivi
 
     public CreateOfWorld() {
         super(ID, IMG_PATH, TYPE, RARITY, TARGET);
-        this.initBaseAttr(2, 0, 13, 1);
+        this.initBaseAttr(2, 0, 13, 2);
         this.setUpgradeAttr(2, 0, 0, 1);
     }
 
